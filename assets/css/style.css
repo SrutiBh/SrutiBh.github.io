@@ -140,7 +140,8 @@ body {
 } */
 
 a {
-  color: #882662;
+  color: #882662 !important;
+  margin: 0 !important; 
 }
 
 /* main blockqoute */
