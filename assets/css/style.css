@@ -873,3 +873,49 @@ button {
         color: rgba(255, 255, 255, 0.8) !important;
     }
 
+.project-contents {
+  display: none;
+}
+#loadMoreProjects {
+  width: 200px;
+  color: #fff;
+  display: block;
+  text-align: center;
+  margin: 20px auto;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background-color: #e24d8b;
+  transition: .3s;
+}
+#loadMoreProjects:hover {
+  color: #e24d8b;
+  background-color: #fff;
+  border: 1px solid #e24d8b;
+  text-decoration: none;
+}
+.noContent {
+  display: none !important;
+}
+.volunteer-contents{
+  display: none;
+}
+#loadMoreVolunteer {
+  width: 200px;
+  color: #fff;
+  display: block;
+  text-align: center;
+  margin: 20px auto;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background-color: #e24d8b;
+  transition: .3s;
+}
+#loadMoreVolunteer:hover {
+  color: #e24d8b;
+  background-color: #fff;
+  border: 1px solid #e24d8b;
+  text-decoration: none;
+}
+
