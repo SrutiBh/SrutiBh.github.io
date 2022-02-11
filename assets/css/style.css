@@ -483,7 +483,6 @@ a.hoverline:hover {
 
 #skills h4 {
   border-bottom: 1px solid #ddd;
-  margin-bottom: 30px;
   padding-bottom: 20px;
 }
 
@@ -1041,6 +1040,14 @@ button {
 .timeline-row .timeline-content .thumbs {
   margin-bottom: 20px;
   display: flex;
+}
+.skills-wrapper div.col{
+  margin: 45px auto 0 auto;
+  text-align: left;
+}
+.skills-wrapper {
+  margin-bottom: 0;
+  margin-top: -25px;
 }
 .timeline-row .timeline-content .thumbs img {
   margin: 5px;
