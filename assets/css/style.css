@@ -201,7 +201,7 @@ nav i {
 } */
 
 main {
-  background: url(../../assets/image/pink5.gif) repeat;
+  background: url(../../assets/img/mg.png) repeat;
   padding-left: 190px;
 }
 
@@ -885,7 +885,7 @@ button {
   padding: 10px;
   border-radius: 10px;
   border: 1px solid transparent;
-  background-color: #e24d8b;
+  background-color: #ff9ac9;
   transition: .3s;
 }
 #loadMoreProjects:hover {
@@ -909,13 +909,13 @@ button {
   padding: 10px;
   border-radius: 10px;
   border: 1px solid transparent;
-  background-color: #e24d8b;
+  background-color: #ff9ac9;
   transition: .3s;
 }
 #loadMoreVolunteer:hover {
   color: #e24d8b;
   background-color: #fff;
-  border: 1px solid #e24d8b;
+  border: 1px solid #ff9ac9;
   text-decoration: none;
 }
 
