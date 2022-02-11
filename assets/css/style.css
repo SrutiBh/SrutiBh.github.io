@@ -876,6 +876,9 @@ button {
 .project-contents {
   display: none;
 }
+.timeline-row{
+  display: none;
+}
 #loadMoreProjects {
   width: 200px;
   color: #fff;
@@ -889,6 +892,24 @@ button {
   transition: .3s;
 }
 #loadMoreProjects:hover {
+  color: #e24d8b;
+  background-color: #fff;
+  border: 1px solid #e24d8b;
+  text-decoration: none;
+}
+#loadMoreJourney{
+  width: 200px;
+  color: #fff;
+  display: block;
+  text-align: center;
+  margin: 20px auto;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background-color: #ff9ac9;
+  transition: .3s;
+}
+#loadMoreJourney:hover {
   color: #e24d8b;
   background-color: #fff;
   border: 1px solid #e24d8b;
@@ -1023,7 +1044,7 @@ button {
 }
 .timeline-row .timeline-content .thumbs img {
   margin: 5px;
-  max-width: 60px;
+  max-width: 90px;
 }
 .timeline-row .timeline-content .badge {
   color: #ffffff;

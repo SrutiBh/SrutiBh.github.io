@@ -165,8 +165,8 @@
         mdi-social-poll
         mdi-av-equalizer
         -->
-        <a aria-label="Navigate to the Skills section" href="#s kills" class="waves-effect waves-dark teal-text"><i
-            class="mdi-image-nature-people small"></i><span><b>Skills</b></span></a>
+        <a aria-label="Navigate to the Skills section" href="#skills" class="waves-effect waves-dark teal-text"><i
+            class="mdi-action-assessment small"></i><span><b>Skills</b></span></a>
       </li>
 
 
@@ -557,7 +557,7 @@
               </div>
               </div>
             </div>
-          </div>
+          <!--</div>-->
 
           <div class="timeline-row">
             <div class="timeline-time">
@@ -593,7 +593,7 @@
               </div>
               </div>
             </div>
-          </div>
+          <!--</div>-->
 
 
 
@@ -663,6 +663,11 @@
             </div>
           </div>
 
+        </div>
+
+        <div id="loadMoreJourney" style="text-align: center;">
+          <a href="#" >Load More</a>
+        </div>
 
       </div>
     </section>
@@ -2022,18 +2027,6 @@
   
   
   
-  
-    <li class="bold">
-      <!--
-      ICONS:
-      mdi-action-assessment
-      mdi-social-poll
-      mdi-av-equalizer
-      -->
-      <a aria-label="Navigate to the Skills section" href="#skills" class="waves-effect waves-dark teal-text"><i
-          class="mdi-action-assessment small"></i><span><b>Skills</b></span></a>
-    </li>
-    
 
 
 
@@ -2340,6 +2333,14 @@
       $(".project-contents:hidden").slice(0, 3).slideDown();
       if($(".project-contents:hidden").length == 0) {
         $("#loadMoreProjects").text("No Content").addClass("noContent");
+      }
+    });
+    $(".timeline-row").slice(0, 4).show();
+    $("#loadMoreJourney").on("click", function(e){
+      e.preventDefault();
+      $(".timeline-row:hidden").slice(0, 4).slideDown();
+      if($(".timeline-row:hidden").length == 0) {
+        $("#loadMoreJourney").text("No Content").addClass("noContent");
       }
     });
     $(".volunteer-contents").slice(0, 3).show();
