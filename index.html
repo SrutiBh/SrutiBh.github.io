@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sruti Bhattacharjee</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --navy: #1a2b5c;
+      --blue: #2952cc;
+      --blue-light: #e8edf9;
+      --accent: #c8d4f5;
+      --text: #1c1c2e;
+      --muted: #6b7280;
+      --bg: #f9f9fb;
+      --white: #ffffff;
+      --border: #e2e6f0;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px;
+      height: 56px;
+    }
+
+    .nav-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--blue);
+      letter-spacing: 0.01em;
+      text-decoration: none;
+    }
+
+    .nav-links { display: flex; gap: 36px; }
+
+    .nav-links a {
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 0.03em;
+      padding-bottom: 4px;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--navy);
+      border-bottom-color: var(--navy);
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 72px 48px; max-width: 900px; margin: 0 auto; }
+
+    section + section { padding-top: 0; }
+
+    /* ── ABOUT ── */
+    #about {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 48px;
+      align-items: start;
+      padding-top: 64px;
+    }
+
+    .about-photo {
+      width: 180px; height: 220px;
+      object-fit: cover;
+      border-radius: 4px;
+      display: block;
+      background: var(--blue-light);
+    }
+
+    .about-photo-placeholder {
+      width: 180px; height: 220px;
+      border-radius: 4px;
+      background: linear-gradient(135deg, var(--blue-light) 0%, var(--accent) 100%);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--blue); font-size: 2rem;
+    }
+
+    .about-text h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.6rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.15;
+      margin-bottom: 10px;
+    }
+
+    .about-title {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .about-title strong {
+      font-style: italic;
+      color: var(--navy);
+      font-weight: 400;
+    }
+
+    .about-email {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 24px;
+      font-family: monospace;
+      letter-spacing: 0.02em;
+    }
+
+    .about-bio {
+      font-size: 0.95rem;
+      color: var(--text);
+      margin-bottom: 12px;
+      line-height: 1.75;
+    }
+
+    /* ── DIVIDER ── */
+    .section-divider {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+
+    .section-divider hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 8px 0 48px;
+    }
+
+    /* ── SECTION HEADINGS ── */
+    .section-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 32px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--blue);
+      display: inline-block;
+    }
+
+    /* ── PORTFOLIO TABS ── */
+    #portfolio { padding-top: 56px; }
+
+    .tab-bar {
+      display: flex;
+      gap: 0;
+      margin-bottom: 36px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tab-btn {
+      padding: 10px 28px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      font-family: 'DM Sans', sans-serif;
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      color: var(--muted);
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      transition: all 0.2s;
+      margin-bottom: -1px;
+    }
+
+    .tab-btn.active {
+      color: var(--white);
+      background: var(--navy);
+      border-bottom-color: var(--navy);
+    }
+
+    .tab-btn:not(.active):hover {
+      color: var(--navy);
+      border-bottom-color: var(--accent);
+    }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ── PROJECT CARDS ── */
+    .project-list { display: flex; flex-direction: column; gap: 20px; }
+
+    .project-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 28px 32px;
+      display: grid;
+      grid-template-columns: 1fr 160px;
+      gap: 24px;
+      align-items: center;
+      transition: box-shadow 0.2s, transform 0.2s;
+      border-left: 4px solid var(--blue);
+    }
+
+    .project-card:hover {
+      box-shadow: 0 4px 20px rgba(41,82,204,0.1);
+      transform: translateY(-2px);
+    }
+
+    .project-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    .project-card p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .project-img-placeholder {
+      width: 160px; height: 100px;
+      border-radius: 4px;
+      background: linear-gradient(135deg, var(--blue-light), var(--accent));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem;
+      color: var(--blue);
+      text-align: center;
+      padding: 8px;
+      line-height: 1.4;
+    }
+
+    /* ── CV ── */
+    #cv { padding-top: 56px; }
+
+    .cv-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+    }
+
+    .cv-section h3 {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 20px;
+    }
+
+    .cv-entry {
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cv-entry:last-child { border-bottom: none; margin-bottom: 0; }
+
+    .cv-entry-title {
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+
+    .cv-entry-sub {
+      font-size: 0.83rem;
+      color: var(--navy);
+      font-style: italic;
+      margin: 2px 0;
+    }
+
+    .cv-entry-date {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .cv-entry-detail {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .cv-entry-detail span {
+      display: block;
+      margin-top: 2px;
+    }
+
+    /* ── CONTACT ── */
+    #contact { padding-top: 56px; }
+
+    .contact-body {
+      font-size: 0.95rem;
+      color: var(--text);
+      margin-bottom: 28px;
+      line-height: 1.75;
+      max-width: 580px;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.88rem;
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .contact-link:hover { text-decoration: underline; }
+
+    .contact-link .icon {
+      width: 28px; height: 28px;
+      background: var(--blue-light);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.78rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.6);
+      text-align: center;
+      padding: 18px;
+      font-size: 0.8rem;
+      margin-top: 48px;
+    }
+
+    footer span { color: rgba(255,255,255,0.9); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in { animation: fadeUp 0.55s ease both; }
+    .fade-in-2 { animation: fadeUp 0.55s ease 0.1s both; }
+    .fade-in-3 { animation: fadeUp 0.55s ease 0.2s both; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      nav { padding: 0 20px; }
+      section { padding: 48px 20px; }
+      .section-divider { padding: 0 20px; }
+      #about { grid-template-columns: 1fr; gap: 24px; }
+      .about-photo-placeholder { width: 120px; height: 150px; }
+      .cv-grid { grid-template-columns: 1fr; gap: 32px; }
+      .project-card { grid-template-columns: 1fr; }
+      .project-img-placeholder { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-name" href="#about">Sruti Bhattacharjee</a>
+    <div class="nav-links">
+      <a href="#about" class="active" onclick="setActive(this)">About</a>
+      <a href="#portfolio" onclick="setActive(this)">Portfolio</a>
+      <a href="#cv" onclick="setActive(this)">CV</a>
+      <a href="#contact" onclick="setActive(this)">Contact</a>
+    </div>
+  </nav>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-photo-placeholder fade-in">👤</div>
+    <div class="fade-in-2">
+      <h1>Sruti Bhattacharjee</h1>
+      <p class="about-title">Senior Graduate Scholar &nbsp;·&nbsp; <strong>KTH Royal Institute of Technology</strong></p>
+      <p class="about-email">srutib [at] kth [.] com</p>
+      <p class="about-bio">
+        With a boundless passion for interactive technology and new media, I find great joy in delving into cutting-edge technologies. My insatiable curiosity makes me eager to collaborate with like-minded individuals and organizations.
+      </p>
+      <p class="about-bio">
+        My background in problem solving and my interest in problem finding benefits me to ace the Double Diamond steps.
+      </p>
+      <p class="about-bio">
+        If you're interested in reaching out, hiring me for consulting work, or collaborating on your next endeavour, don't hesitate to contact me. I'm also happy to answer any questions or receive feedback on my previous work.
+      </p>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <div class="section-divider"><hr/></div>
+  <section id="portfolio">
+    <h2 class="section-heading">Portfolio</h2>
+
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('ux')">UX Research</button>
+      <button class="tab-btn" onclick="switchTab('interaction')">Interaction Design</button>
+      <button class="tab-btn" onclick="switchTab('visual')">Visual Computing</button>
+    </div>
+
+    <!-- UX Research -->
+    <div class="tab-panel active" id="tab-ux">
+      <div class="project-list">
+        <div class="project-card">
+          <div>
+            <h3>Re-Designing VRLE for Effective Pedagogy</h3>
+            <p>Formulating how virtual reality-based learning environments can provide pedagogical support in effective learning.</p>
+          </div>
+          <div class="project-img-placeholder">VR Learning<br/>Environment</div>
+        </div>
+        <div class="project-card">
+          <div>
+            <h3>EdTech for Novice Programming Learners in Hybrid Collaborative Classes</h3>
+            <p>Investigated design needs of EdTech to facilitate effective learning for novice programming students in hybrid collaborative learning environments.</p>
+          </div>
+          <div class="project-img-placeholder">Hybrid Class<br/>Research</div>
+        </div>
+        <div class="project-card">
+          <div>
+            <h3>Video Call, Virtual Reality and Telepresence Robot for Group Interactions and Creative Thinking</h3>
+            <p>Compared three existing multimodal media for remote communication and how they affect independent thinking.</p>
+          </div>
+          <div class="project-img-placeholder">Remote<br/>Communication</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interaction Design -->
+    <div class="tab-panel" id="tab-interaction">
+      <div class="project-list">
+        <div class="project-card">
+          <div>
+            <h3>Augmented City — Act to Protest</h3>
+            <p>Designed an app to deliver improvement in city urbanism and collaboration during collaborative public events like protests and to promote street arts.</p>
+          </div>
+          <div class="project-img-placeholder">Urban<br/>Interaction</div>
+        </div>
+        <div class="project-card">
+          <div>
+            <h3>Effect of Latency on Haptic Perception</h3>
+            <p>Implemented and analysed impact of latency and jitter on haptic stiffness perception in haptic teleoperation systems.</p>
+          </div>
+          <div class="project-img-placeholder">Haptic<br/>Systems</div>
+        </div>
+        <div class="project-card">
+          <div>
+            <h3>Re-Designing Video Call for Remote Learning</h3>
+            <p>Examined impact of Zoom and other video-based applications on teacher's experience and redesigned a new interface for improved usability.</p>
+          </div>
+          <div class="project-img-placeholder">Remote<br/>Learning UX</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Visual Computing -->
+    <div class="tab-panel" id="tab-visual">
+      <div class="project-list">
+        <div class="project-card">
+          <div>
+            <h3>Facial Expression Recognition in Virtual Reality using Machine Learning</h3>
+            <p>Developed a new database using FAC and a facial expression recognition model using LightGBM and Random Forest based on HTC Vive Facial Tracker and HTC Vive Pro HMD.</p>
+          </div>
+          <div class="project-img-placeholder">VR + ML<br/>Research</div>
+        </div>
+        <div class="project-card">
+          <div>
+            <h3>Venice Time Machine: 2020 Building Heights Detection</h3>
+            <p>Developed a 3D model of Venice to preserve current building height and geographical location based on Google Earth data.</p>
+          </div>
+          <div class="project-img-placeholder">3D City<br/>Modelling</div>
+        </div>
+        <div class="project-card">
+          <div>
+            <h3>Rogue-Mike Game</h3>
+            <p>Developed a Windows OS-based video game using C# and Unreal Engine.</p>
+          </div>
+          <div class="project-img-placeholder">Game<br/>Development</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CV -->
+  <div class="section-divider"><hr/></div>
+  <section id="cv">
+    <h2 class="section-heading">CV</h2>
+    <div class="cv-grid">
+
+      <!-- EDUCATION -->
+      <div class="cv-section">
+        <h3>Education</h3>
+
+        <div class="cv-entry">
+          <div class="cv-entry-title">Master of Science</div>
+          <div class="cv-entry-sub">Interactive Media Technology</div>
+          <div class="cv-entry-sub" style="font-style:normal; color:var(--muted); font-size:0.83rem;">KTH Royal Institute of Technology, Sweden</div>
+          <div class="cv-entry-date">2020 – Present</div>
+          <div class="cv-entry-detail">
+            <span>GPA: 4.4/5</span>
+            <span>Area: Human-Computer Interaction, Multimodal Perception</span>
+            <span>Thesis: Re-Designing VRLE for Effective Pedagogy (with EPFL)</span>
+          </div>
+        </div>
+
+        <div class="cv-entry">
+          <div class="cv-entry-title">Graduate Exchange</div>
+          <div class="cv-entry-sub">Computer and Communication Sciences</div>
+          <div class="cv-entry-sub" style="font-style:normal; color:var(--muted); font-size:0.83rem;">EPFL, Switzerland</div>
+          <div class="cv-entry-date">2021 – 2023</div>
+          <div class="cv-entry-detail">
+            <span>GPA: 4.6/6</span>
+            <span>Area: Education Technology, Digital Humanities, Virtual Reality</span>
+          </div>
+        </div>
+
+        <div class="cv-entry">
+          <div class="cv-entry-title">Bachelor of Technology</div>
+          <div class="cv-entry-sub">Information Technology</div>
+          <div class="cv-entry-sub" style="font-style:normal; color:var(--muted); font-size:0.83rem;">WBUT, India</div>
+          <div class="cv-entry-date">2014 – 2019</div>
+          <div class="cv-entry-detail">
+            <span>GPA: 6.8/10</span>
+            <span>Only student in a batch of 60 to study NLP, Robotics and Computer Vision</span>
+          </div>
+        </div>
+
+        <div class="cv-entry">
+          <div class="cv-entry-title">Undergrad Visiting Student</div>
+          <div class="cv-entry-sub">Computer Science & Engineering</div>
+          <div class="cv-entry-sub" style="font-style:normal; color:var(--muted); font-size:0.83rem;">IIT Kharagpur, India</div>
+          <div class="cv-entry-date">2017 – 2018</div>
+          <div class="cv-entry-detail">
+            <span>Area: Computer Vision, Image Processing</span>
+            <span>Thesis: Counterfeit Integrated Circuit (IC) Detection using Computer Vision</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- WORK EXPERIENCE -->
+      <div class="cv-section">
+        <h3>Work Experience</h3>
+
+        <div class="cv-entry">
+          <div class="cv-entry-title">Teaching Assistant</div>
+          <div class="cv-entry-sub">KTH Royal Institute of Technology, Sweden</div>
+          <div class="cv-entry-date">2020 – Present</div>
+          <div class="cv-entry-detail">Courses: Visualization, Computer Networking, Python Programming, Multimodal Technology Design, Multivariable Calculus, Machine Learning for Media Technology</div>
+        </div>
+
+        <div class="cv-entry">
+          <div class="cv-entry-title">Visiting Teacher</div>
+          <div class="cv-entry-sub">NSHM Knowledge Campus, Kolkata</div>
+          <div class="cv-entry-date">2019</div>
+          <div class="cv-entry-detail">Courses: 3D Computer Graphics using OpenGL and other Programming Languages (WBUT)</div>
+        </div>
+
+        <div class="cv-entry">
+          <div class="cv-entry-title">Research Assistant</div>
+          <div class="cv-entry-date">2019 – 2023</div>
+          <div class="cv-entry-detail">
+            <span>University of Lausanne (UNIL), Switzerland — 2022–2023</span>
+            <span>EPFL, Switzerland — 2021–2022</span>
+            <span>KTH Royal Institute of Technology, Sweden — 2020–2021</span>
+            <span>IIT Kharagpur, India — 2020</span>
+            <span>IIT Kanpur, India — 2019</span>
+          </div>
+        </div>
+
+        <div class="cv-entry">
+          <div class="cv-entry-title">Research Internship</div>
+          <div class="cv-entry-date">2015 – 2021</div>
+          <div class="cv-entry-detail">
+            <span>Ericsson, Sweden — 2021</span>
+            <span>IIT Kharagpur (Remote) — 2019</span>
+            <span>Université Claude Bernard Lyon 1 (Remote) — 2018–2019</span>
+            <span>University of Illinois Urbana-Champaign (Remote) — 2019</span>
+            <span>IIT Madras, India — 2016</span>
+            <span>IIT Kanpur, India — 2015–2017</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <div class="section-divider"><hr/></div>
+  <section id="contact">
+    <h2 class="section-heading">Contact</h2>
+    <p class="contact-body">
+      If you're interested in reaching out, hiring me for consulting work, or collaborating on your next endeavour, don't hesitate to get in touch. I'm also happy to answer any questions or receive feedback on my previous work.
+    </p>
+    <div class="contact-links">
+      <a class="contact-link" href="mailto:srutib@kth.com">
+        <span class="icon">✉</span> srutib [at] kth [.] com
+      </a>
+      <a class="contact-link" href="https://github.com/azuxmioy" target="_blank" rel="noopener">
+        <span class="icon">⌥</span> github.com/azuxmioy
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>© by <span>Sruti Bhattacharjee</span></footer>
+
+  <script>
+    function switchTab(tab) {
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('tab-' + tab).classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    function setActive(el) {
+      document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    // Update nav active on scroll
+    const sections = ['about','portfolio','cv','contact'];
+    window.addEventListener('scroll', () => {
+      let current = 'about';
+      sections.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && window.scrollY >= el.offsetTop - 80) current = id;
+      });
+      document.querySelectorAll('.nav-links a').forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+      });
+    });
+  </script>
+</body>
+</html>
