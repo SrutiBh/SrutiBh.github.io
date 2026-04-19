@@ -1,725 +1,421 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Sruti Bhattacharjee</title>
-  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
+  <title>Sruti Bhattacharjee | Personal Webpage</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+
   <style>
-    :root {
-      --bg: #ffffff;
-      --text: #1a1a1a;
-      --muted: #666666;
-      --light: #999999;
-      --accent: #4169e1;
-      --accent-hover: #2a4fc4;
-      --border: #e8e8e8;
-      --section-bg: #fafafa;
+    body { font-family: 'DM Sans', sans-serif; background-color: #f8fafc; }
+
+    .hero-bg {
+      background-color: #0f1117;
+      background-image:
+        radial-gradient(ellipse at 20% 50%, rgba(65,105,225,0.13) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(100,60,180,0.09) 0%, transparent 50%),
+        radial-gradient(ellipse at 60% 80%, rgba(30,80,160,0.11) 0%, transparent 50%);
+      background-attachment: fixed;
+      position: relative;
     }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      font-size: 15px;
-      line-height: 1.7;
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 32px;
-    }
-
-    /* ── HERO ── */
-    #hero {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      padding: 72px 0 56px;
-    }
-
-    .hero-photo {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      object-fit: cover;
-      background: linear-gradient(135deg, #c8d4f5, #e8edf9);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 3rem;
-      margin-bottom: 20px;
-      overflow: hidden;
-      border: 3px solid var(--border);
+    @media (hover: none) and (pointer: coarse) {
+      .hero-bg { background-attachment: scroll; }
     }
 
     .hero-name {
-      font-family: 'Source Serif 4', serif;
-      font-size: 2.4rem;
-      font-weight: 600;
-      color: var(--accent);
-      letter-spacing: -0.01em;
-      margin-bottom: 8px;
-    }
-
-    .hero-title {
-      font-size: 1rem;
-      color: var(--muted);
-      font-weight: 300;
-      margin-bottom: 20px;
-      font-style: italic;
-    }
-
-    .hero-links {
-      display: flex;
-      gap: 24px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .hero-links a {
-      font-size: 0.88rem;
-      color: var(--accent);
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.2s;
-      border-bottom: 1px solid transparent;
-      padding-bottom: 1px;
-    }
-
-    .hero-links a:hover {
-      color: var(--accent-hover);
-      border-bottom-color: var(--accent-hover);
-    }
-
-    /* ── DIVIDER ── */
-    hr.section-hr {
-      border: none;
-      border-top: 1px solid var(--border);
-      margin: 0 0 48px;
-    }
-
-    /* ── SECTIONS ── */
-    section {
-      padding-bottom: 56px;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
     }
 
     .section-title {
-      font-family: 'Source Serif 4', serif;
-      font-size: 1.65rem;
+      font-family: 'Cormorant Garamond', serif;
       font-weight: 600;
-      color: var(--text);
-      margin-bottom: 24px;
-      padding-bottom: 12px;
-      border-bottom: 2px solid var(--text);
+      letter-spacing: -0.01em;
     }
 
-    /* ── ABOUT ── */
-    #about p {
-      font-size: 0.97rem;
-      color: var(--text);
-      margin-bottom: 14px;
-      line-height: 1.8;
-      max-width: 720px;
+    .entry-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 0.75rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.07), 0 4px 16px rgba(0,0,0,0.04);
+      transition: box-shadow 0.25s;
     }
-
-    /* ── RESEARCH INTERESTS ── */
-    .interest-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin-top: 8px;
-    }
-
-    .interest-tag {
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 12px 16px;
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--text);
-      text-align: center;
-      background: var(--section-bg);
-      line-height: 1.4;
-    }
-
-    .interest-tag .tag-icon {
-      display: block;
-      font-size: 1.3rem;
-      margin-bottom: 4px;
-    }
-
-    /* ── EDUCATION & EXPERIENCE ── */
-    .timeline { display: flex; flex-direction: column; gap: 0; }
-
-    .timeline-item {
-      display: grid;
-      grid-template-columns: 56px 1fr;
-      gap: 0 20px;
-      padding: 20px 0;
-      border-bottom: 1px solid var(--border);
-      align-items: start;
-    }
-
-    .timeline-item:last-child { border-bottom: none; }
-
-    .timeline-logo {
-      width: 44px;
-      height: 44px;
-      border-radius: 8px;
-      background: var(--section-bg);
-      border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.65rem;
-      color: var(--muted);
-      text-align: center;
-      font-weight: 500;
-      line-height: 1.3;
-      overflow: hidden;
-      flex-shrink: 0;
-    }
-
-    .timeline-logo img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      padding: 4px;
-    }
-
-    .timeline-content {}
-
-    .timeline-title {
-      font-size: 0.97rem;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 2px;
-      line-height: 1.35;
-    }
-
-    .timeline-org {
-      font-size: 0.88rem;
-      color: var(--accent);
-      font-weight: 500;
-      margin-bottom: 2px;
-    }
-
-    .timeline-date {
-      font-size: 0.8rem;
-      color: var(--light);
-      margin-bottom: 6px;
-    }
-
-    .timeline-detail {
-      font-size: 0.83rem;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
-    .timeline-detail span {
-      display: block;
-    }
-
-    /* ── PUBLICATIONS / PORTFOLIO ── */
-    #portfolio { padding-bottom: 56px; }
-
-    .tab-bar {
-      display: flex;
-      gap: 0;
-      margin-bottom: 32px;
-      border-bottom: 1px solid var(--border);
-    }
+    .entry-card:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.1); }
 
     .tab-btn {
-      padding: 8px 22px;
-      font-size: 0.85rem;
+      padding: 7px 20px;
+      font-size: 0.83rem;
       font-weight: 500;
-      font-family: 'DM Sans', sans-serif;
       background: none;
       border: none;
       border-bottom: 2px solid transparent;
-      color: var(--muted);
+      color: #94a3b8;
       cursor: pointer;
-      letter-spacing: 0.02em;
       transition: all 0.18s;
       margin-bottom: -1px;
+      font-family: 'DM Sans', sans-serif;
+      letter-spacing: 0.02em;
     }
-
-    .tab-btn.active {
-      color: var(--accent);
-      border-bottom-color: var(--accent);
-    }
-
-    .tab-btn:not(.active):hover {
-      color: var(--text);
-    }
+    .tab-btn.active { color: #4169e1; border-bottom-color: #4169e1; }
+    .tab-btn:not(.active):hover { color: #334155; }
 
     .tab-panel { display: none; }
     .tab-panel.active { display: flex; flex-direction: column; gap: 0; }
 
-    /* Publication-style cards */
-    .pub-card {
-      display: grid;
-      grid-template-columns: 160px 1fr;
-      gap: 24px;
-      padding: 24px 0;
-      border-bottom: 1px solid var(--border);
-      align-items: start;
-    }
-
-    .pub-card:last-child { border-bottom: none; }
-
     .pub-teaser {
-      width: 160px;
-      height: 100px;
-      border-radius: 6px;
-      object-fit: cover;
+      width: 180px;
+      min-width: 180px;
+      height: 110px;
+      border-radius: 8px;
       background: linear-gradient(135deg, #e8edf9 0%, #c8d4f5 100%);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.7rem;
-      color: var(--accent);
+      font-size: 0.72rem;
+      color: #4169e1;
       text-align: center;
       padding: 10px;
       line-height: 1.5;
       font-weight: 500;
-      flex-shrink: 0;
-      border: 1px solid var(--border);
+      border: 1px solid #e2e8f0;
     }
 
-    .pub-info {}
-
-    .pub-title {
-      font-family: 'Source Serif 4', serif;
-      font-size: 1.05rem;
-      font-weight: 600;
-      color: var(--accent);
-      margin-bottom: 6px;
-      line-height: 1.35;
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
+    .fade-1 { animation: fadeUp 0.7s ease 0.05s both; }
+    .fade-2 { animation: fadeUp 0.7s ease 0.2s both; }
+    .fade-3 { animation: fadeUp 0.7s ease 0.35s both; }
+    .fade-4 { animation: fadeUp 0.7s ease 0.5s both; }
 
-    .pub-title:hover { color: var(--accent-hover); }
-
-    .pub-desc {
-      font-size: 0.85rem;
-      color: var(--muted);
-      margin-bottom: 10px;
-      line-height: 1.65;
+    @keyframes bounceY {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-9px); }
     }
-
-    .pub-venue {
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--text);
-      font-style: italic;
-      margin-bottom: 10px;
-    }
-
-    .pub-links {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-
-    .pub-link {
-      font-size: 0.78rem;
-      color: var(--accent);
-      text-decoration: none;
-      font-weight: 500;
-      border-bottom: 1px solid transparent;
-      padding-bottom: 1px;
-      transition: border-color 0.15s;
-    }
-
-    .pub-link:hover { border-bottom-color: var(--accent); }
-
-    .pub-link-sep {
-      color: var(--border);
-      font-size: 0.78rem;
-    }
-
-    /* ── CONTACT ── */
-    #contact p {
-      font-size: 0.97rem;
-      color: var(--text);
-      margin-bottom: 20px;
-      line-height: 1.8;
-      max-width: 620px;
-    }
-
-    .contact-row {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .contact-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 0.88rem;
-      color: var(--accent);
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    .contact-link:hover { text-decoration: underline; }
-
-    /* ── FOOTER ── */
-    footer {
-      text-align: center;
-      padding: 28px 0 36px;
-      font-size: 0.78rem;
-      color: var(--light);
-      border-top: 1px solid var(--border);
-      margin-top: 8px;
-    }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 640px) {
-      body { padding: 0 18px; }
-      .interest-grid { grid-template-columns: repeat(2, 1fr); }
-      .pub-card { grid-template-columns: 1fr; }
-      .pub-teaser { width: 100%; height: 110px; }
-      .timeline-item { grid-template-columns: 1fr; }
-      .timeline-logo { display: none; }
-    }
+    .bounce-icon { animation: bounceY 2.2s ease-in-out infinite; }
   </style>
 </head>
-<body>
+<body class="text-slate-700">
 
-  <!-- HERO -->
-  <div id="hero">
-    <div class="hero-photo">👤</div>
-    <h1 class="hero-name">Sruti Bhattacharjee</h1>
-    <p class="hero-title">Senior Graduate Scholar · KTH Royal Institute of Technology</p>
-    <div class="hero-links">
-      <a href="mailto:srutib@kth.com">Email</a>
-      <a href="#portfolio">Portfolio</a>
-      <a href="#education">CV</a>
-      <a href="https://github.com/azuxmioy" target="_blank">GitHub</a>
-      <a href="#contact">Contact</a>
+  <!-- ══════════════════ HERO ══════════════════ -->
+  <header class="hero-bg text-white min-h-[100dvh] flex flex-col items-center justify-center p-6 relative overflow-hidden">
+
+    <!-- Profile photo -->
+    <div class="fade-1 mb-6">
+      <div class="w-36 h-36 md:w-40 md:h-40 rounded-full border-4 border-white/20 shadow-2xl bg-slate-700 flex items-center justify-center overflow-hidden mx-auto">
+        <img src="images/profile.jpg" alt="Sruti Bhattacharjee"
+             class="w-full h-full object-cover"
+             onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=&quot;font-size:3.5rem&quot;>👩‍💻</span>'"/>
+      </div>
     </div>
-  </div>
 
-  <hr class="section-hr"/>
+    <!-- Name -->
+    <h1 class="hero-name text-5xl md:text-7xl fade-2 text-center">Sruti Bhattacharjee</h1>
 
-  <!-- ABOUT -->
-  <section id="about">
-    <h2 class="section-title">About Me</h2>
-    <p>
-      I'm open to new roles and collaborations. Feel free to reach out if my background aligns with your team's goals.
+    <!-- Title -->
+    <p class="mt-3 text-base md:text-xl text-slate-400 fade-3 font-light tracking-wide text-center">
+      Senior Graduate Scholar &nbsp;·&nbsp; KTH Royal Institute of Technology
     </p>
-    <p>
-      With a boundless passion for interactive technology and new media, I find great joy in delving into cutting-edge technologies. My research spans Human-Computer Interaction, Virtual Reality Learning Environments, multimodal perception, accessible design, and AI policy.
-    </p>
-    <p>
-      My background in problem solving and interest in problem finding benefits me across the Double Diamond design process. I'm currently completing my MSc thesis — Re-Designing VRLE for Effective Pedagogy — in collaboration with EPFL.
-    </p>
-    <p>
-      If you're interested in reaching out, hiring me for consulting work, or collaborating on your next endeavour, don't hesitate to contact me. I'm also happy to answer questions or receive feedback on my previous work.
-    </p>
-  </section>
 
-  <hr class="section-hr"/>
+    <!-- Links pill -->
+    <div class="mt-8 bg-black/30 backdrop-blur-sm px-6 py-3 rounded-2xl fade-4 border border-white/10">
+      <div class="flex flex-wrap justify-center items-center gap-5 md:gap-7">
 
-  <!-- RESEARCH INTERESTS -->
-  <section id="interests">
-    <h2 class="section-title">Research Interests</h2>
-    <div class="interest-grid">
-      <div class="interest-tag"><span class="tag-icon">🥽</span>Virtual Reality &amp; Immersive Learning</div>
-      <div class="interest-tag"><span class="tag-icon">🖱️</span>Human–Computer Interaction</div>
-      <div class="interest-tag"><span class="tag-icon">🎵</span>Multimodal Perception</div>
-      <div class="interest-tag"><span class="tag-icon">♿</span>Accessible &amp; Inclusive Design</div>
-      <div class="interest-tag"><span class="tag-icon">🤖</span>AI Policy &amp; Ethics</div>
-      <div class="interest-tag"><span class="tag-icon">📚</span>Education Technology</div>
-    </div>
-  </section>
+        <a href="mailto:srutib@kth.com" class="flex items-center gap-2 text-slate-300 hover:text-sky-300 transition-colors text-sm font-medium">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Email
+        </a>
 
-  <hr class="section-hr"/>
+        <a href="#cv" class="flex items-center gap-2 text-slate-300 hover:text-sky-300 transition-colors text-sm font-medium">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          CV
+        </a>
 
-  <!-- EDUCATION -->
-  <section id="education">
-    <h2 class="section-title">Education</h2>
-    <div class="timeline">
+        <a href="#portfolio" class="flex items-center gap-2 text-slate-300 hover:text-sky-300 transition-colors text-sm font-medium">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+          Portfolio
+        </a>
 
-      <div class="timeline-item">
-        <div class="timeline-logo">KTH</div>
-        <div class="timeline-content">
-          <div class="timeline-title">Master of Science, Interactive Media Technology</div>
-          <div class="timeline-org">KTH Royal Institute of Technology, Sweden</div>
-          <div class="timeline-date">2020 – Present</div>
-          <div class="timeline-detail">
-            <span>GPA: 4.4/5 &nbsp;·&nbsp; Human-Computer Interaction, Multimodal Perception</span>
-            <span>Thesis: Re-Designing VRLE for Effective Pedagogy (with EPFL)</span>
-          </div>
-        </div>
+        <a href="https://github.com/azuxmioy" target="_blank" class="flex items-center gap-2 text-slate-300 hover:text-sky-300 transition-colors text-sm font-medium">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          GitHub
+        </a>
+
+        <a href="https://linkedin.com" target="_blank" class="flex items-center gap-2 text-slate-300 hover:text-sky-300 transition-colors text-sm font-medium">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+
       </div>
-
-      <div class="timeline-item">
-        <div class="timeline-logo">EPFL</div>
-        <div class="timeline-content">
-          <div class="timeline-title">Graduate Exchange, Computer and Communication Sciences</div>
-          <div class="timeline-org">EPFL, Switzerland</div>
-          <div class="timeline-date">2021 – 2023</div>
-          <div class="timeline-detail">
-            <span>GPA: 4.6/6 &nbsp;·&nbsp; Education Technology, Digital Humanities, Virtual Reality</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-logo">WBUT</div>
-        <div class="timeline-content">
-          <div class="timeline-title">Bachelor of Technology, Information Technology</div>
-          <div class="timeline-org">WBUT, India</div>
-          <div class="timeline-date">2014 – 2019</div>
-          <div class="timeline-detail">
-            <span>GPA: 6.8/10 &nbsp;·&nbsp; Only student in a batch of 60 to study NLP, Robotics &amp; Computer Vision</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-logo">IIT KGP</div>
-        <div class="timeline-content">
-          <div class="timeline-title">Undergrad Visiting Student, Computer Science &amp; Engineering</div>
-          <div class="timeline-org">IIT Kharagpur, India</div>
-          <div class="timeline-date">2017 – 2018</div>
-          <div class="timeline-detail">
-            <span>Computer Vision, Image Processing</span>
-            <span>Thesis: Counterfeit Integrated Circuit Detection using Computer Vision</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <hr class="section-hr"/>
-
-  <!-- WORK EXPERIENCE -->
-  <section id="experience">
-    <h2 class="section-title">Work Experience</h2>
-    <div class="timeline">
-
-      <div class="timeline-item">
-        <div class="timeline-logo">KTH</div>
-        <div class="timeline-content">
-          <div class="timeline-title">Teaching Assistant</div>
-          <div class="timeline-org">KTH Royal Institute of Technology, Sweden</div>
-          <div class="timeline-date">2020 – Present</div>
-          <div class="timeline-detail">Visualization, Computer Networking, Python Programming, Multimodal Technology Design, Multivariable Calculus, Machine Learning for Media Technology</div>
-        </div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-logo">UNIL / EPFL / KTH</div>
-        <div class="timeline-content">
-          <div class="timeline-title">Research Assistant</div>
-          <div class="timeline-org">Multiple Institutions</div>
-          <div class="timeline-date">2019 – 2023</div>
-          <div class="timeline-detail">
-            <span>University of Lausanne (UNIL), Switzerland — 2022–2023</span>
-            <span>EPFL, Switzerland — 2021–2022</span>
-            <span>KTH Royal Institute of Technology, Sweden — 2020–2021</span>
-            <span>IIT Kharagpur, India — 2020 &nbsp;·&nbsp; IIT Kanpur, India — 2019</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-logo">Ericsson</div>
-        <div class="timeline-content">
-          <div class="timeline-title">Research Internship</div>
-          <div class="timeline-org">Multiple Institutions</div>
-          <div class="timeline-date">2015 – 2021</div>
-          <div class="timeline-detail">
-            <span>Ericsson, Sweden — 2021</span>
-            <span>IIT Kharagpur (Remote) — 2019</span>
-            <span>Université Claude Bernard Lyon 1 (Remote) — 2018–2019</span>
-            <span>University of Illinois Urbana-Champaign (Remote) — 2019</span>
-            <span>IIT Madras — 2016 &nbsp;·&nbsp; IIT Kanpur — 2015–2017</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-logo">NSHM</div>
-        <div class="timeline-content">
-          <div class="timeline-title">Visiting Teacher</div>
-          <div class="timeline-org">NSHM Knowledge Campus, Kolkata</div>
-          <div class="timeline-date">2019</div>
-          <div class="timeline-detail">3D Computer Graphics using OpenGL and other Programming Languages (WBUT)</div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <hr class="section-hr"/>
-
-  <!-- PORTFOLIO (unchanged content, new publication-style layout) -->
-  <section id="portfolio">
-    <h2 class="section-title">Portfolio</h2>
-
-    <div class="tab-bar">
-      <button class="tab-btn active" onclick="switchTab('ux', this)">UX Research</button>
-      <button class="tab-btn" onclick="switchTab('interaction', this)">Interaction Design</button>
-      <button class="tab-btn" onclick="switchTab('visual', this)">Visual Computing</button>
     </div>
 
-    <!-- UX Research -->
-    <div class="tab-panel active" id="tab-ux">
+    <!-- Bouncing arrow -->
+    <a href="#main-content" class="absolute bottom-10 text-white/40 hover:text-white/80 transition-colors bounce-icon z-10">
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 12 16 16 12"/><line x1="12" y1="8" x2="12" y2="16"/></svg>
+    </a>
+  </header>
 
-      <div class="pub-card">
-        <div class="pub-teaser">VR Learning<br/>Environment</div>
-        <div class="pub-info">
-          <div class="pub-title">Re-Designing VRLE for Effective Pedagogy</div>
-          <div class="pub-venue">MSc Thesis · KTH Royal Institute of Technology &amp; EPFL</div>
-          <div class="pub-desc">Formulating how virtual reality-based learning environments can provide pedagogical support in effective learning.</div>
-          <div class="pub-links">
-            <a class="pub-link" href="#">Project Page</a><span class="pub-link-sep"> | </span>
-            <a class="pub-link" href="#">Paper</a>
+  <!-- ══════════════════ MAIN ══════════════════ -->
+  <main id="main-content" class="container mx-auto max-w-4xl px-4 py-16 space-y-20">
+
+    <!-- ABOUT -->
+    <section id="about">
+      <h2 class="section-title text-3xl text-slate-800 mb-6 border-b-2 border-slate-200 pb-2">About Me</h2>
+      <div class="entry-card text-base leading-relaxed space-y-4 text-slate-600">
+        <p>I'm open to new roles and collaborations. Feel free to reach out if my background aligns with your team's goals.</p>
+        <p>With a boundless passion for interactive technology and new media, I find great joy in delving into cutting-edge technologies. My research spans Human-Computer Interaction, Virtual Reality Learning Environments, multimodal perception, accessible design, and AI policy. I am currently completing my MSc thesis — <em class="text-sky-600">Re-Designing VRLE for Effective Pedagogy</em> — in collaboration with EPFL.</p>
+        <p>My background in problem solving and interest in problem finding benefits me across the Double Diamond design process. If you're interested in reaching out, hiring me for consulting work, or collaborating on your next endeavour, don't hesitate to contact me.</p>
+      </div>
+    </section>
+
+    <!-- RESEARCH INTERESTS -->
+    <section id="research">
+      <h2 class="section-title text-3xl text-slate-800 mb-6 border-b-2 border-slate-200 pb-2">Research Interests</h2>
+      <div class="entry-card">
+        <p class="text-base leading-relaxed mb-5 text-slate-600">
+          My work focuses on designing and evaluating interactive systems that support learning, communication, and embodied experience. I work across three intersecting domains:
+          <span class="text-sky-600 font-semibold"> immersive environments</span>,
+          <span class="text-emerald-600 font-semibold"> multimodal interaction</span>, and
+          <span class="text-violet-600 font-semibold"> accessible design</span>.
+        </p>
+        <ul class="space-y-3 text-base text-slate-600">
+          <li class="flex gap-3"><span class="text-sky-600 font-bold mt-0.5">•</span><span>In <span class="text-sky-600 font-semibold">immersive environments</span>, I study how Virtual Reality Learning Environments can be redesigned for effective, pedagogically-grounded experiences.</span></li>
+          <li class="flex gap-3"><span class="text-emerald-600 font-bold mt-0.5">•</span><span>In <span class="text-emerald-600 font-semibold">multimodal interaction</span>, I explore haptic, audio, and visual channels — including haptic teleoperation at Ericsson and audio-tactile graph access for blind STEM students.</span></li>
+          <li class="flex gap-3"><span class="text-violet-600 font-bold mt-0.5">•</span><span>In <span class="text-violet-600 font-semibold">accessible &amp; inclusive design</span>, I design systems for users with disabilities, with an interest in AI policy and neurorights frameworks for immersive technologies.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section id="cv">
+      <h2 class="section-title text-3xl text-slate-800 mb-6 border-b-2 border-slate-200 pb-2">Education</h2>
+      <div class="space-y-5">
+
+        <div class="entry-card flex items-center gap-5">
+          <div class="w-16 h-16 flex-shrink-0 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center font-bold text-xs text-slate-500 text-center leading-tight p-2 shadow-inner">KTH</div>
+          <div>
+            <h3 class="font-semibold text-slate-900">Master of Science, Interactive Media Technology</h3>
+            <p class="text-sky-600 font-medium text-sm mt-0.5">KTH Royal Institute of Technology, Sweden</p>
+            <p class="text-slate-400 text-sm">2020 – Present &nbsp;·&nbsp; GPA: 4.4/5</p>
+            <p class="text-slate-500 text-sm mt-1">Thesis: Re-Designing VRLE for Effective Pedagogy (with EPFL) · HCI, Multimodal Perception</p>
+          </div>
+        </div>
+
+        <div class="entry-card flex items-center gap-5">
+          <div class="w-16 h-16 flex-shrink-0 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center font-bold text-xs text-slate-500 text-center leading-tight p-2 shadow-inner">EPFL</div>
+          <div>
+            <h3 class="font-semibold text-slate-900">Graduate Exchange, Computer and Communication Sciences</h3>
+            <p class="text-sky-600 font-medium text-sm mt-0.5">EPFL, Switzerland</p>
+            <p class="text-slate-400 text-sm">2021 – 2023 &nbsp;·&nbsp; GPA: 4.6/6</p>
+            <p class="text-slate-500 text-sm mt-1">Education Technology, Digital Humanities, Virtual Reality</p>
+          </div>
+        </div>
+
+        <div class="entry-card flex items-center gap-5">
+          <div class="w-16 h-16 flex-shrink-0 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center font-bold text-xs text-slate-500 text-center leading-tight p-2 shadow-inner">WBUT</div>
+          <div>
+            <h3 class="font-semibold text-slate-900">Bachelor of Technology, Information Technology</h3>
+            <p class="text-sky-600 font-medium text-sm mt-0.5">WBUT, India</p>
+            <p class="text-slate-400 text-sm">2014 – 2019 &nbsp;·&nbsp; GPA: 6.8/10</p>
+            <p class="text-slate-500 text-sm mt-1">Only student in a batch of 60 to study NLP, Robotics &amp; Computer Vision</p>
+          </div>
+        </div>
+
+        <div class="entry-card flex items-center gap-5">
+          <div class="w-16 h-16 flex-shrink-0 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center font-bold text-xs text-slate-500 text-center leading-tight p-2 shadow-inner">IIT KGP</div>
+          <div>
+            <h3 class="font-semibold text-slate-900">Undergrad Visiting Student, Computer Science &amp; Engineering</h3>
+            <p class="text-sky-600 font-medium text-sm mt-0.5">IIT Kharagpur, India</p>
+            <p class="text-slate-400 text-sm">2017 – 2018</p>
+            <p class="text-slate-500 text-sm mt-1">Thesis: Counterfeit IC Detection using Computer Vision</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- WORK EXPERIENCE -->
+    <section id="experience">
+      <h2 class="section-title text-3xl text-slate-800 mb-6 border-b-2 border-slate-200 pb-2">Work Experience</h2>
+      <div class="space-y-5">
+
+        <div class="entry-card flex items-center gap-5">
+          <div class="w-16 h-16 flex-shrink-0 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center font-bold text-xs text-slate-500 text-center leading-tight p-2 shadow-inner">KTH</div>
+          <div>
+            <h3 class="font-semibold text-slate-900">Teaching Assistant</h3>
+            <p class="text-sky-600 font-medium text-sm mt-0.5">KTH Royal Institute of Technology, Sweden</p>
+            <p class="text-slate-400 text-sm">2020 – Present</p>
+            <p class="text-slate-500 text-sm mt-1">Visualization · Computer Networking · Python · Multimodal Technology Design · ML for Media Technology</p>
+          </div>
+        </div>
+
+        <div class="entry-card flex items-center gap-5">
+          <div class="w-16 h-16 flex-shrink-0 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center font-bold text-xs text-slate-500 text-center leading-tight p-2 shadow-inner">Ericsson</div>
+          <div>
+            <h3 class="font-semibold text-slate-900">Research Internship — Haptic Teleoperation</h3>
+            <p class="text-sky-600 font-medium text-sm mt-0.5">Ericsson Research, Sweden</p>
+            <p class="text-slate-400 text-sm">2021</p>
+            <p class="text-slate-500 text-sm mt-1">Impact of latency and jitter on haptic stiffness perception in teleoperation systems</p>
+          </div>
+        </div>
+
+        <div class="entry-card flex items-center gap-5">
+          <div class="w-16 h-16 flex-shrink-0 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center font-bold text-xs text-slate-500 text-center leading-tight p-1 shadow-inner text-center leading-tight">UNIL EPFL KTH</div>
+          <div>
+            <h3 class="font-semibold text-slate-900">Research Assistant</h3>
+            <p class="text-sky-600 font-medium text-sm mt-0.5">Multiple Institutions</p>
+            <p class="text-slate-400 text-sm">2019 – 2023</p>
+            <p class="text-slate-500 text-sm mt-1">UNIL (2022–23) · EPFL (2021–22) · KTH (2020–21) · IIT Kharagpur (2020) · IIT Kanpur (2019)</p>
+          </div>
+        </div>
+
+        <div class="entry-card flex items-center gap-5">
+          <div class="w-16 h-16 flex-shrink-0 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center font-bold text-xs text-slate-500 text-center leading-tight p-2 shadow-inner">NSHM</div>
+          <div>
+            <h3 class="font-semibold text-slate-900">Visiting Teacher</h3>
+            <p class="text-sky-600 font-medium text-sm mt-0.5">NSHM Knowledge Campus, Kolkata</p>
+            <p class="text-slate-400 text-sm">2019</p>
+            <p class="text-slate-500 text-sm mt-1">3D Computer Graphics using OpenGL and other Programming Languages</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PORTFOLIO -->
+    <section id="portfolio">
+      <h2 class="section-title text-3xl text-slate-800 mb-6 border-b-2 border-slate-200 pb-2">Portfolio</h2>
+
+      <div class="flex border-b border-slate-200 mb-6">
+        <button class="tab-btn active" onclick="switchTab('ux',this)">UX Research</button>
+        <button class="tab-btn" onclick="switchTab('interaction',this)">Interaction Design</button>
+        <button class="tab-btn" onclick="switchTab('visual',this)">Visual Computing</button>
+      </div>
+
+      <!-- UX Research -->
+      <div class="tab-panel active" id="tab-ux">
+        <div class="entry-card flex flex-col md:flex-row gap-5 items-start mb-5">
+          <div class="pub-teaser flex-shrink-0">VR Learning<br/>Environment</div>
+          <div>
+            <h3 class="text-lg font-bold text-slate-900">Re-Designing VRLE for Effective Pedagogy</h3>
+            <p class="text-sm font-semibold text-slate-500 mt-1 italic">MSc Thesis · KTH &amp; EPFL</p>
+            <p class="text-sm text-slate-500 mt-2 leading-relaxed">Formulating how virtual reality-based learning environments can provide pedagogical support in effective learning.</p>
+            <div class="mt-3 flex gap-3 text-sm"><a href="#" class="text-sky-600 hover:underline">Project Page</a><span class="text-slate-300">|</span><a href="#" class="text-sky-600 hover:underline">Paper</a></div>
+          </div>
+        </div>
+        <div class="entry-card flex flex-col md:flex-row gap-5 items-start mb-5">
+          <div class="pub-teaser flex-shrink-0">Hybrid Class<br/>Research</div>
+          <div>
+            <h3 class="text-lg font-bold text-slate-900">EdTech for Novice Programming Learners in Hybrid Collaborative Classes</h3>
+            <p class="text-sm font-semibold text-slate-500 mt-1 italic">Research · University of Lausanne (UNIL)</p>
+            <p class="text-sm text-slate-500 mt-2 leading-relaxed">Investigated design needs of EdTech to facilitate effective learning for novice programming students in hybrid collaborative learning environments.</p>
+            <div class="mt-3 flex gap-3 text-sm"><a href="#" class="text-sky-600 hover:underline">Project Page</a><span class="text-slate-300">|</span><a href="#" class="text-sky-600 hover:underline">Paper</a></div>
+          </div>
+        </div>
+        <div class="entry-card flex flex-col md:flex-row gap-5 items-start">
+          <div class="pub-teaser flex-shrink-0">Remote<br/>Communication</div>
+          <div>
+            <h3 class="text-lg font-bold text-slate-900">Video Call, Virtual Reality and Telepresence Robot for Group Interactions and Creative Thinking</h3>
+            <p class="text-sm font-semibold text-slate-500 mt-1 italic">Research · EPFL</p>
+            <p class="text-sm text-slate-500 mt-2 leading-relaxed">Compared three existing multimodal media for remote communication and how they affect independent thinking.</p>
+            <div class="mt-3 flex gap-3 text-sm"><a href="#" class="text-sky-600 hover:underline">Project Page</a><span class="text-slate-300">|</span><a href="#" class="text-sky-600 hover:underline">Paper</a></div>
           </div>
         </div>
       </div>
 
-      <div class="pub-card">
-        <div class="pub-teaser">Hybrid Class<br/>Research</div>
-        <div class="pub-info">
-          <div class="pub-title">EdTech for Novice Programming Learners in Hybrid Collaborative Classes</div>
-          <div class="pub-venue">Research · University of Lausanne (UNIL)</div>
-          <div class="pub-desc">Investigated design needs of EdTech to facilitate effective learning for novice programming students in hybrid collaborative learning environments.</div>
-          <div class="pub-links">
-            <a class="pub-link" href="#">Project Page</a><span class="pub-link-sep"> | </span>
-            <a class="pub-link" href="#">Paper</a>
+      <!-- Interaction Design -->
+      <div class="tab-panel" id="tab-interaction">
+        <div class="entry-card flex flex-col md:flex-row gap-5 items-start mb-5">
+          <div class="pub-teaser flex-shrink-0">Urban<br/>Interaction</div>
+          <div>
+            <h3 class="text-lg font-bold text-slate-900">Augmented City — Act to Protest</h3>
+            <p class="text-sm font-semibold text-slate-500 mt-1 italic">Design Project · KTH</p>
+            <p class="text-sm text-slate-500 mt-2 leading-relaxed">Designed an app to deliver improvement in city urbanism and collaboration during collaborative public events like protests and to promote street arts.</p>
+            <div class="mt-3 flex gap-3 text-sm"><a href="#" class="text-sky-600 hover:underline">Project Page</a></div>
+          </div>
+        </div>
+        <div class="entry-card flex flex-col md:flex-row gap-5 items-start mb-5">
+          <div class="pub-teaser flex-shrink-0">Haptic<br/>Systems</div>
+          <div>
+            <h3 class="text-lg font-bold text-slate-900">Effect of Latency on Haptic Perception</h3>
+            <p class="text-sm font-semibold text-slate-500 mt-1 italic">Research Internship · Ericsson, Sweden</p>
+            <p class="text-sm text-slate-500 mt-2 leading-relaxed">Implemented and analysed impact of latency and jitter on haptic stiffness perception in haptic teleoperation systems.</p>
+            <div class="mt-3 flex gap-3 text-sm"><a href="#" class="text-sky-600 hover:underline">Paper</a><span class="text-slate-300">|</span><a href="#" class="text-sky-600 hover:underline">Code</a></div>
+          </div>
+        </div>
+        <div class="entry-card flex flex-col md:flex-row gap-5 items-start">
+          <div class="pub-teaser flex-shrink-0">Remote<br/>Learning UX</div>
+          <div>
+            <h3 class="text-lg font-bold text-slate-900">Re-Designing Video Call for Remote Learning</h3>
+            <p class="text-sm font-semibold text-slate-500 mt-1 italic">Design Project · KTH</p>
+            <p class="text-sm text-slate-500 mt-2 leading-relaxed">Examined impact of Zoom and other video-based applications on teacher's experience and redesigned a new interface for improved usability.</p>
+            <div class="mt-3 flex gap-3 text-sm"><a href="#" class="text-sky-600 hover:underline">Project Page</a></div>
           </div>
         </div>
       </div>
 
-      <div class="pub-card">
-        <div class="pub-teaser">Remote<br/>Communication</div>
-        <div class="pub-info">
-          <div class="pub-title">Video Call, Virtual Reality and Telepresence Robot for Group Interactions and Creative Thinking</div>
-          <div class="pub-venue">Research · EPFL</div>
-          <div class="pub-desc">Compared three existing multimodal media for remote communication and how they affect independent thinking.</div>
-          <div class="pub-links">
-            <a class="pub-link" href="#">Project Page</a><span class="pub-link-sep"> | </span>
-            <a class="pub-link" href="#">Paper</a>
+      <!-- Visual Computing -->
+      <div class="tab-panel" id="tab-visual">
+        <div class="entry-card flex flex-col md:flex-row gap-5 items-start mb-5">
+          <div class="pub-teaser flex-shrink-0">VR + ML<br/>Research</div>
+          <div>
+            <h3 class="text-lg font-bold text-slate-900">Facial Expression Recognition in Virtual Reality using Machine Learning</h3>
+            <p class="text-sm font-semibold text-slate-500 mt-1 italic">Research · EPFL</p>
+            <p class="text-sm text-slate-500 mt-2 leading-relaxed">Developed a new database using FAC and a facial expression recognition model using LightGBM and Random Forest based on HTC Vive Facial Tracker and HTC Vive Pro HMD.</p>
+            <div class="mt-3 flex gap-3 text-sm"><a href="#" class="text-sky-600 hover:underline">Paper</a><span class="text-slate-300">|</span><a href="#" class="text-sky-600 hover:underline">Code</a></div>
+          </div>
+        </div>
+        <div class="entry-card flex flex-col md:flex-row gap-5 items-start mb-5">
+          <div class="pub-teaser flex-shrink-0">3D City<br/>Modelling</div>
+          <div>
+            <h3 class="text-lg font-bold text-slate-900">Venice Time Machine: 2020 Building Heights Detection</h3>
+            <p class="text-sm font-semibold text-slate-500 mt-1 italic">Project · EPFL</p>
+            <p class="text-sm text-slate-500 mt-2 leading-relaxed">Developed a 3D model of Venice to preserve current building height and geographical location based on Google Earth data.</p>
+            <div class="mt-3 flex gap-3 text-sm"><a href="#" class="text-sky-600 hover:underline">Project Page</a><span class="text-slate-300">|</span><a href="#" class="text-sky-600 hover:underline">Code</a></div>
+          </div>
+        </div>
+        <div class="entry-card flex flex-col md:flex-row gap-5 items-start">
+          <div class="pub-teaser flex-shrink-0">Game<br/>Development</div>
+          <div>
+            <h3 class="text-lg font-bold text-slate-900">Rogue-Mike Game</h3>
+            <p class="text-sm font-semibold text-slate-500 mt-1 italic">Personal Project</p>
+            <p class="text-sm text-slate-500 mt-2 leading-relaxed">Developed a Windows OS-based video game using C# and Unreal Engine.</p>
+            <div class="mt-3 flex gap-3 text-sm"><a href="#" class="text-sky-600 hover:underline">Code</a></div>
           </div>
         </div>
       </div>
 
-    </div>
+    </section>
 
-    <!-- Interaction Design -->
-    <div class="tab-panel" id="tab-interaction">
-
-      <div class="pub-card">
-        <div class="pub-teaser">Urban<br/>Interaction</div>
-        <div class="pub-info">
-          <div class="pub-title">Augmented City — Act to Protest</div>
-          <div class="pub-venue">Design Project · KTH</div>
-          <div class="pub-desc">Designed an app to deliver improvement in city urbanism and collaboration during collaborative public events like protests and to promote street arts.</div>
-          <div class="pub-links">
-            <a class="pub-link" href="#">Project Page</a>
-          </div>
+    <!-- CONTACT -->
+    <section id="contact">
+      <h2 class="section-title text-3xl text-slate-800 mb-6 border-b-2 border-slate-200 pb-2">Contact</h2>
+      <div class="entry-card space-y-4 text-slate-600">
+        <p class="text-base leading-relaxed">If you're interested in reaching out, hiring me for consulting work, or collaborating on your next endeavour, don't hesitate to get in touch.</p>
+        <div class="flex flex-col gap-3 pt-1">
+          <a href="mailto:srutib@kth.com" class="flex items-center gap-3 text-sky-600 hover:text-sky-800 font-medium text-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            srutib [at] kth [.] com
+          </a>
+          <a href="https://github.com/azuxmioy" target="_blank" class="flex items-center gap-3 text-sky-600 hover:text-sky-800 font-medium text-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            github.com/SrutiBh
+          </a>
         </div>
       </div>
+    </section>
 
-      <div class="pub-card">
-        <div class="pub-teaser">Haptic<br/>Systems</div>
-        <div class="pub-info">
-          <div class="pub-title">Effect of Latency on Haptic Perception</div>
-          <div class="pub-venue">Research Internship · Ericsson, Sweden</div>
-          <div class="pub-desc">Implemented and analysed impact of latency and jitter on haptic stiffness perception in haptic teleoperation systems.</div>
-          <div class="pub-links">
-            <a class="pub-link" href="#">Paper</a><span class="pub-link-sep"> | </span>
-            <a class="pub-link" href="#">Code</a>
-          </div>
-        </div>
-      </div>
+  </main>
 
-      <div class="pub-card">
-        <div class="pub-teaser">Remote<br/>Learning UX</div>
-        <div class="pub-info">
-          <div class="pub-title">Re-Designing Video Call for Remote Learning</div>
-          <div class="pub-venue">Design Project · KTH</div>
-          <div class="pub-desc">Examined impact of Zoom and other video-based applications on teacher's experience and redesigned a new interface for improved usability.</div>
-          <div class="pub-links">
-            <a class="pub-link" href="#">Project Page</a>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Visual Computing -->
-    <div class="tab-panel" id="tab-visual">
-
-      <div class="pub-card">
-        <div class="pub-teaser">VR + ML<br/>Research</div>
-        <div class="pub-info">
-          <div class="pub-title">Facial Expression Recognition in Virtual Reality using Machine Learning</div>
-          <div class="pub-venue">Research · EPFL</div>
-          <div class="pub-desc">Developed a new database using FAC and a facial expression recognition model using LightGBM and Random Forest based on HTC Vive Facial Tracker and HTC Vive Pro HMD.</div>
-          <div class="pub-links">
-            <a class="pub-link" href="#">Paper</a><span class="pub-link-sep"> | </span>
-            <a class="pub-link" href="#">Code</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="pub-card">
-        <div class="pub-teaser">3D City<br/>Modelling</div>
-        <div class="pub-info">
-          <div class="pub-title">Venice Time Machine: 2020 Building Heights Detection</div>
-          <div class="pub-venue">Project · EPFL</div>
-          <div class="pub-desc">Developed a 3D model of Venice to preserve current building height and geographical location based on Google Earth data.</div>
-          <div class="pub-links">
-            <a class="pub-link" href="#">Project Page</a><span class="pub-link-sep"> | </span>
-            <a class="pub-link" href="#">Code</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="pub-card">
-        <div class="pub-teaser">Game<br/>Development</div>
-        <div class="pub-info">
-          <div class="pub-title">Rogue-Mike Game</div>
-          <div class="pub-venue">Personal Project</div>
-          <div class="pub-desc">Developed a Windows OS-based video game using C# and Unreal Engine.</div>
-          <div class="pub-links">
-            <a class="pub-link" href="#">Code</a>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <hr class="section-hr"/>
-
-  <!-- CONTACT -->
-  <section id="contact">
-    <h2 class="section-title">Contact</h2>
-    <p>
-      If you're interested in reaching out, hiring me for consulting work, or collaborating on your next endeavour, don't hesitate to get in touch. I'm happy to answer any questions or receive feedback on my previous work.
-    </p>
-    <div class="contact-row">
-      <a class="contact-link" href="mailto:srutib@kth.com">✉ &nbsp; srutib [at] kth [.] com</a>
-      <a class="contact-link" href="https://github.com/azuxmioy" target="_blank" rel="noopener">⌥ &nbsp; github.com/azuxmioy</a>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    © 2026 Sruti Bhattacharjee. All rights reserved.
+  <footer class="bg-slate-800 text-slate-400 text-center p-6 mt-8">
+    <p>© <span id="yr"></span> Sruti Bhattacharjee. All rights reserved.</p>
   </footer>
 
   <script>
@@ -729,6 +425,7 @@
       document.getElementById('tab-' + tab).classList.add('active');
       btn.classList.add('active');
     }
+    document.getElementById('yr').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
