@@ -3,813 +3,708 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<meta name="description" content="Sruti Bhattacharjee — Interactive Journey"/>
 <title>Sruti — Journey</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
-
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
 <style>
-/* ── Reset & Base ─────────────────────────────────────────────── */
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-:root {
-  --gold:   #c8a84b;
-  --blue:   #4a9eff;
-  --teal:   #2dd4a4;
-  --purple: #a78bfa;
-  --green:  #4ade80;
-  --pink:   #f472b6;
-  --bg:     #06070f;
-  --panel:  rgba(6,7,15,0.97);
-  --border: rgba(255,255,255,0.07);
-  --text:   rgba(255,255,255,0.85);
-  --muted:  rgba(255,255,255,0.30);
-  --r: 14px;
-}
-html, body {
-  width:100%; height:100%;
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'DM Sans', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  overscroll-behavior: none;
-}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html,body{width:100%;height:100%;overflow:hidden;background:#06070f;
+  font-family:'DM Sans',sans-serif;-webkit-font-smoothing:antialiased;}
+canvas{position:fixed;inset:0;display:block;width:100%!important;height:100%!important;}
 
-/* ── Layout ────────────────────────────────────────────────────── */
-#app {
-  display: grid;
-  grid-template-columns: 1fr 360px;
-  grid-template-rows: 100vh;
-  overflow: hidden;
-}
-@media (max-width: 768px) {
-  #app {
-    grid-template-columns: 1fr;
-    grid-template-rows: 52vh 1fr;
-    height: 100dvh;
-  }
-}
+/* ── Top bar ── */
+#brand{position:fixed;top:22px;left:26px;pointer-events:none;z-index:10;}
+#brand h1{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:300;
+  letter-spacing:.09em;color:rgba(255,255,255,.45);}
+#brand p{font-size:7.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(255,255,255,.16);margin-top:3px;}
 
-/* ── Globe side ─────────────────────────────────────────────────── */
-#globe-wrap {
-  position: relative;
-  overflow: hidden;
-}
-#globe-wrap canvas {
-  display: block;
-  width: 100% !important;
-  height: 100% !important;
-}
+/* ── Loading ── */
+#loading{position:fixed;inset:0;background:#06070f;z-index:100;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;}
+#loading p{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;
+  color:rgba(255,255,255,.4);letter-spacing:.08em;}
+#loading-bar-wrap{width:200px;height:1px;background:rgba(255,255,255,.08);}
+#loading-bar{height:100%;background:#c8a84b;width:0%;transition:width .3s;}
 
-/* Vignette */
-#globe-wrap::after {
-  content: '';
-  position: absolute; inset: 0;
-  background: radial-gradient(ellipse 60% 60% at 50% 50%,
-    transparent 40%, rgba(6,7,15,0.7) 100%);
-  pointer-events: none;
+/* ── Year strip ── */
+#strip{
+  position:fixed;bottom:0;left:0;right:0;
+  display:flex;align-items:flex-end;justify-content:center;gap:6px;
+  padding:36px 14px 18px;
+  background:linear-gradient(to top,rgba(6,7,15,.9) 0%,transparent 100%);
+  pointer-events:all;z-index:20;overflow-x:auto;scrollbar-width:none;
 }
+#strip::-webkit-scrollbar{display:none;}
+.yb{display:flex;flex-direction:column;align-items:center;gap:4px;
+  cursor:pointer;flex-shrink:0;background:none;border:none;
+  color:inherit;font-family:inherit;padding:0 3px;
+  transition:transform .22s cubic-bezier(.34,1.56,.64,1);}
+.yb:hover{transform:translateY(-4px);}
+.yb.active{transform:translateY(-8px);}
+.yb-gem{width:9px;height:9px;border-radius:2px;transform:rotate(45deg);
+  background:rgba(255,255,255,.18);transition:background .22s,box-shadow .22s;}
+.yb.has-ev .yb-gem{background:rgba(255,255,255,.5);}
+.yb.active .yb-gem{background:var(--ec,#c8a84b);box-shadow:0 0 10px var(--ec,#c8a84b);}
+.yb-yr{font-size:8.5px;letter-spacing:.08em;font-weight:500;
+  color:rgba(255,255,255,.25);transition:color .2s;white-space:nowrap;}
+.yb.active .yb-yr{color:var(--ec,#c8a84b);}
 
-/* Year orbit labels */
-#orbit {
-  position: absolute; inset: 0;
-  pointer-events: none;
-}
-.yr {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  pointer-events: all;
-  cursor: pointer;
-  user-select: none;
-  display: flex; align-items: center; gap: 5px;
-  padding: 4px 10px;
-  border-radius: 20px;
-  border: 1px solid transparent;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.09em;
-  color: var(--muted);
-  transition: color .25s, border-color .25s, background .25s;
-  white-space: nowrap;
-  will-change: transform, opacity;
-}
-.yr:hover  { color: rgba(255,255,255,0.9); }
-.yr.active {
-  color: var(--gold);
-  border-color: rgba(200,168,75,0.45);
-  background: rgba(200,168,75,0.07);
-}
-.yr-dot {
-  width: 5px; height: 5px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.2);
-  flex-shrink: 0;
-  transition: background .25s, box-shadow .25s;
-}
-.yr.has-ev .yr-dot  { background: rgba(255,255,255,0.5); }
-.yr.active .yr-dot  { background: var(--gold); box-shadow: 0 0 7px var(--gold); }
+/* ── Nav arrows ── */
+#nav{position:fixed;top:50%;left:0;right:0;
+  display:flex;justify-content:space-between;padding:0 16px;
+  transform:translateY(-50%);pointer-events:all;z-index:20;
+  opacity:0;transition:opacity .3s;}
+#nav.show{opacity:1;}
+.na{width:38px;height:38px;border-radius:50%;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  color:rgba(255,255,255,.45);font-size:15px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s,color .2s;font-family:inherit;}
+.na:hover{background:rgba(255,255,255,.14);color:#fff;}
+.na:disabled{opacity:.2;pointer-events:none;}
 
-/* Corner label */
-#globe-label {
-  position: absolute; bottom: 20px; left: 50%;
-  transform: translateX(-50%);
-  font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--muted); pointer-events: none; z-index: 5;
-  opacity: 0.7;
-}
+/* ── Hint ── */
+#hint{position:fixed;bottom:74px;left:50%;transform:translateX(-50%);
+  font-size:8px;letter-spacing:.15em;text-transform:uppercase;
+  color:rgba(255,255,255,.14);pointer-events:none;z-index:15;
+  white-space:nowrap;text-align:center;line-height:2;}
 
-/* Drag hint fade */
-#drag-hint {
-  position: absolute; bottom: 36px; left: 50%;
-  transform: translateX(-50%);
-  font-size: 9px; letter-spacing: 0.13em; text-transform: uppercase;
-  color: rgba(255,255,255,0.15); pointer-events: none; z-index: 5;
-}
+/* ── Panel ── */
+#panel{position:fixed;right:0;top:0;bottom:0;width:min(370px,90vw);
+  background:rgba(6,7,15,.97);border-left:1px solid rgba(255,255,255,.07);
+  z-index:30;display:flex;flex-direction:column;
+  transform:translateX(105%);will-change:transform;
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);}
+#p-bar{position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--pc,#c8a84b);opacity:.55;}
+#pcl{position:absolute;top:16px;left:-42px;width:32px;height:32px;
+  border-radius:50%;background:rgba(6,7,15,.92);
+  border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.35);
+  font-size:12px;cursor:pointer;display:flex;align-items:center;
+  justify-content:center;pointer-events:all;transition:color .2s;}
+#pcl:hover{color:#fff;}
+#p-head{padding:30px 24px 18px;border-bottom:1px solid rgba(255,255,255,.07);flex-shrink:0;}
+#p-yr{font-family:'Cormorant Garamond',serif;font-size:68px;font-weight:300;
+  line-height:.9;letter-spacing:-.03em;color:var(--pc,#c8a84b);opacity:.75;}
+#p-sub{font-size:8px;letter-spacing:.17em;text-transform:uppercase;
+  color:rgba(255,255,255,.22);margin-top:8px;}
+#p-cnt{font-size:9.5px;color:rgba(255,255,255,.17);margin-top:3px;}
+#p-body{flex:1;overflow-y:auto;padding:16px 24px 24px;
+  scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.07) transparent;}
+#p-body::-webkit-scrollbar{width:2px;}
+#p-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,.09);}
+.card{margin-bottom:14px;padding:14px 16px;
+  border:1px solid rgba(255,255,255,.07);border-radius:11px;
+  background:rgba(255,255,255,.02);transition:border-color .18s,background .18s;}
+.card:hover{border-color:rgba(255,255,255,.13);background:rgba(255,255,255,.04);}
+.card.milestone{border-color:rgba(200,168,75,.24);}
+.card.current{border-color:rgba(74,222,128,.26);background:rgba(74,222,128,.025);}
+.card.personal{border-color:rgba(244,114,182,.2);}
+.cb{font-size:7.5px;letter-spacing:.13em;text-transform:uppercase;
+  font-weight:500;margin-bottom:8px;display:inline-block;}
+.ct{font-family:'Cormorant Garamond',serif;font-size:15.5px;font-weight:400;
+  line-height:1.32;color:rgba(255,255,255,.9);margin-bottom:4px;}
+.co{font-size:11px;color:rgba(100,160,255,.72);margin-bottom:6px;}
+.cn{font-size:10px;color:rgba(255,255,255,.28);line-height:1.65;}
+.ctags{display:flex;flex-wrap:wrap;gap:3px;margin-top:9px;}
+.ctag{font-size:7.5px;letter-spacing:.07em;text-transform:uppercase;
+  padding:2px 6px;border-radius:20px;background:rgba(255,255,255,.04);
+  color:rgba(255,255,255,.22);border:1px solid rgba(255,255,255,.07);}
 
-/* ── Panel side ─────────────────────────────────────────────────── */
-#panel {
-  background: var(--panel);
-  border-left: 1px solid var(--border);
-  display: flex; flex-direction: column;
-  padding: 32px 26px 24px;
-  overflow: hidden;
-  position: relative;
+@media(max-width:560px){
+  #panel{width:100%;top:auto;height:65dvh;border-left:none;
+    border-top:1px solid rgba(255,255,255,.07);transform:translateY(105%);}
+  #pcl{top:-40px;left:50%;transform:translateX(-50%);}
+  #p-yr{font-size:50px;}
+  #strip{gap:3px;padding:28px 10px 14px;}
 }
-@media (max-width: 768px) {
-  #panel {
-    border-left: none;
-    border-top: 1px solid var(--border);
-    padding: 18px 18px 16px;
-  }
-}
-
-/* Panel header */
-#panel-yr {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 64px; font-weight: 300;
-  line-height: 1; letter-spacing: -0.02em;
-  color: rgba(255,255,255,0.06);
-  transition: color .5s;
-  flex-shrink: 0;
-}
-#panel-yr.lit { color: rgba(200,168,75,0.65); }
-@media (max-width: 768px) { #panel-yr { font-size: 42px; } }
-
-#panel-sub {
-  font-size: 9px; letter-spacing: 0.13em; text-transform: uppercase;
-  color: var(--muted); margin: 4px 0 22px; flex-shrink: 0;
-}
-@media (max-width: 768px) { #panel-sub { margin-bottom: 14px; } }
-
-/* Cards scroll area */
-#cards {
-  flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
-  display: flex; flex-direction: column; gap: 14px;
-  padding-right: 6px;
-  /* custom thin scrollbar */
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255,255,255,0.1) transparent;
-}
-#cards::-webkit-scrollbar { width: 3px; }
-#cards::-webkit-scrollbar-track { background: transparent; }
-#cards::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
-
-/* Empty state */
-.empty {
-  font-family: 'Cormorant Garamond', serif;
-  font-style: italic; font-size: 15px;
-  color: rgba(255,255,255,0.12);
-  padding-top: 8px;
-}
-
-/* Event card */
-.card {
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 15px 17px;
-  background: rgba(255,255,255,0.02);
-  opacity: 0;
-  transform: translateY(10px);
-  transition: border-color .2s, background .2s;
-  will-change: opacity, transform;
-}
-.card:hover {
-  border-color: rgba(255,255,255,0.14);
-  background: rgba(255,255,255,0.04);
-}
-.card.milestone { border-color: rgba(200,168,75,0.2); }
-.card.current   { border-color: rgba(74,222,128,0.25); background: rgba(74,222,128,0.03); }
-.card.personal  { border-color: rgba(244,114,182,0.18); }
-
-.c-type {
-  font-size: 8px; letter-spacing: 0.13em; text-transform: uppercase;
-  font-weight: 500; margin-bottom: 7px;
-}
-.c-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 16px; font-weight: 400;
-  color: rgba(255,255,255,0.9);
-  line-height: 1.32; margin-bottom: 5px;
-}
-.c-org  { font-size: 11px; color: rgba(120,170,255,0.75); margin-bottom: 6px; }
-.c-note { font-size: 10.5px; color: rgba(255,255,255,0.33); line-height: 1.6; }
-.c-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 10px; }
-.c-tag  {
-  font-size: 8px; letter-spacing: 0.07em; text-transform: uppercase;
-  padding: 2px 7px; border-radius: 20px;
-  background: rgba(255,255,255,0.05);
-  color: rgba(255,255,255,0.28);
-  border: 1px solid rgba(255,255,255,0.08);
-}
-
-/* Progress bar along top of panel */
-#progress {
-  position: absolute; top: 0; left: 0; right: 0;
-  height: 2px; background: rgba(255,255,255,0.04);
-  flex-shrink: 0; overflow: hidden;
-}
-#progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--gold), rgba(200,168,75,0.3));
-  width: 0%; transition: width 0.5s cubic-bezier(.4,0,.2,1);
-}
-
-/* WebXR button (only shown if supported) */
-#xr-btn {
-  position: absolute; top: 16px; right: 16px; z-index: 20;
-  padding: 6px 14px; border-radius: 20px;
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.15);
-  color: rgba(255,255,255,0.6);
-  font-size: 10px; font-family: 'DM Sans', sans-serif;
-  letter-spacing: 0.08em; text-transform: uppercase;
-  cursor: pointer; display: none;
-  transition: background .2s, color .2s;
-}
-#xr-btn:hover { background: rgba(255,255,255,0.13); color: #fff; }
-
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  .card, .yr, #panel-yr { transition: none !important; }
+@media(prefers-reduced-motion:reduce){
+  .card,#panel,.yb,#loading-bar{transition:none!important;}
 }
 </style>
 </head>
 <body>
-<div id="app">
 
-  <!-- LEFT: Globe -->
-  <div id="globe-wrap">
-    <div id="orbit" aria-hidden="true"></div>
-    <div id="drag-hint">Drag to spin · click a year</div>
-    <button id="xr-btn" aria-label="View in AR">AR View</button>
-  </div>
-
-  <!-- RIGHT: Panel -->
-  <section id="panel" aria-label="Journey details">
-    <div id="progress"><div id="progress-fill"></div></div>
-    <div id="panel-yr" aria-live="polite">—</div>
-    <div id="panel-sub">Select a year</div>
-    <div id="cards" role="list">
-      <p class="empty">Click any year on the globe to explore your journey.</p>
-    </div>
-  </section>
+<!-- Loading screen -->
+<div id="loading">
+  <p>Loading journey...</p>
+  <div id="loading-bar-wrap"><div id="loading-bar"></div></div>
 </div>
 
-<!-- Three.js r148 (lightweight, no extras needed) -->
-<script src="https://cdn.jsdelivr.net/npm/three@0.148.0/build/three.min.js"></script>
-<!-- GSAP 3 -->
+<div id="brand"><h1>Sruti Bhattacharjee</h1><p>Journey · 1994 — 2026</p></div>
+<div id="hint">Drag to orbit · scroll to zoom · click a year</div>
+<div id="nav">
+  <button class="na" id="pb">&#8592;</button>
+  <button class="na" id="nb">&#8594;</button>
+</div>
+<div id="strip"></div>
+
+<aside id="panel">
+  <div id="p-bar"></div>
+  <button id="pcl">✕</button>
+  <div id="p-head">
+    <div id="p-yr">—</div>
+    <div id="p-sub">Selected year</div>
+    <div id="p-cnt"></div>
+  </div>
+  <div id="p-body"></div>
+</aside>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.134.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/controls/OrbitControls.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
 
 <script>
 'use strict';
+
 // ── DATA ─────────────────────────────────────────────────────────────────────
-const EVENTS = {
-  1994:[{title:'Born in India',org:'West Bengal, India',note:'The beginning of everything.',type:'milestone',tags:['india']}],
-  2014:[{title:'Started BTech in Information Technology',org:'WBUT, India',note:'First step into tech — later the only student in a batch of 60 to study NLP, Robotics, and Computer Vision.',type:'education',tags:['india','education']}],
-  2015:[{title:'First Research Internship',org:'IIT Kanpur, India',note:'Music script generation from Harmonium video · Matlab, Python, PyTorch · perspective transformation.',type:'research',tags:['india','research']}],
-  2016:[{title:'Summer Internship',org:'IIT Madras, India',note:"Music listener's emotional reaction analysis · Matlab · audio-emotion signal processing.",type:'research',tags:['india','research']}],
+const EVENTS={
+  1994:[{title:'Born in India',org:'West Bengal, India',note:'A small town, a restless mind — the very beginning.',type:'milestone',tags:['india']}],
+  2014:[{title:'Started BTech in Information Technology',org:'WBUT, India',note:'The only student in a batch of 60 to study NLP, Robotics and Computer Vision.',type:'education',tags:['india','education']}],
+  2015:[{title:'First Research Internship',org:'IIT Kanpur, India',note:'Music script generation from Harmonium video · Matlab, Python, PyTorch.',type:'research',tags:['india','research']}],
+  2016:[{title:'Summer Internship',org:'IIT Madras, India',note:"Music listener's emotional reaction analysis · Matlab.",type:'research',tags:['india','research']}],
   2017:[
-    {title:'Visiting Studentship + BTech Thesis',org:'IIT Kharagpur, India',note:'Counterfeit IC Detection using Computer Vision · Masked RCNN, TensorFlow · image processing pipeline.',type:'milestone',tags:['india','research']},
-    {title:'Cloth Simulation Research',org:'IIT Kanpur, India',note:'OpenGL 4 · rigid-body and cloth collision using Bullet Physics · tessellation and 3D design thinking.',type:'research',tags:['india','research']},
+    {title:'Visiting Studentship + BTech Thesis',org:'IIT Kharagpur, India',note:'Counterfeit IC Detection using Computer Vision · Masked RCNN, TensorFlow.',type:'milestone',tags:['india','research']},
+    {title:'Cloth Simulation Research',org:'IIT Kanpur, India',note:'OpenGL 4 · rigid-body and cloth collision using Bullet Physics.',type:'research',tags:['india','research']},
   ],
   2018:[
-    {title:'BTech Thesis Defence',org:'IIT Kharagpur, India',note:'Successfully defended thesis on Counterfeit IC Detection using Computer Vision.',type:'education',tags:['india','education']},
-    {title:'Remote Internships',org:'Université Claude Bernard Lyon 1 · UIUC',note:'Infant vocal emotion detection using Pyramidal LSTM · XNMT, PyTorch, Dynet · symmetry literature review.',type:'research',tags:['remote','research']},
+    {title:'BTech Thesis Defence',org:'IIT Kharagpur, India',note:'Successfully defended on Counterfeit IC Detection.',type:'education',tags:['india','education']},
+    {title:'Remote Internships',org:'Université Claude Bernard Lyon 1 · UIUC',note:'Infant vocal emotion · XNMT, PyTorch · symmetry review.',type:'research',tags:['remote','research']},
   ],
   2019:[
-    {title:'Visiting Lecturer',org:'NSHM Knowledge Campus, Kolkata',note:'Taught 3D Computer Graphics using OpenGL and C++ to undergraduate students.',type:'education',tags:['india','education']},
-    {title:'Research Assistantship',org:'IIT Kanpur, India',note:'Tessellation · 3D high-dimensional design thinking · cloth and rigid-body simulation.',type:'research',tags:['india','research']},
-    {title:'Remote Internship',org:'IIT Kharagpur, India',note:'Computer vision research project · Python, PyTorch.',type:'research',tags:['india','research']},
+    {title:'Visiting Lecturer',org:'NSHM Knowledge Campus, Kolkata',note:'3D Computer Graphics using OpenGL, C++.',type:'education',tags:['india','education']},
+    {title:'Research Assistantship',org:'IIT Kanpur + NSHM',note:'Tessellation · 3D design thinking · cloth simulation.',type:'research',tags:['india','research']},
+    {title:'Remote Internship',org:'IIT Kharagpur, India',note:'Computer Vision · Python, PyTorch.',type:'research',tags:['india','research']},
   ],
   2020:[
-    {title:'Started MSc — Interactive Media Technology',org:'KTH Royal Institute of Technology, Sweden',note:'HCI, Multimodal Perception · Teaching Assistant (Visualization, Python, Networking, ML for Media Tech) · GPA 4.4/5',type:'milestone',tags:['sweden','education']},
-    {title:'Research Engineer',org:'IIT Kharagpur, India (Remote)',note:'DeepFake Face Video Detection · interframe difference for wrinkle movement detection · Python, PyTorch.',type:'research',tags:['india','research']},
+    {title:'Started MSc — Interactive Media Technology',org:'KTH Royal Institute of Technology, Sweden',note:'HCI · Multimodal Perception · Teaching Assistant across 6 courses · GPA 4.4/5.',type:'milestone',tags:['sweden','education']},
+    {title:'Research Engineer',org:'IIT Kharagpur (Remote)',note:'DeepFake Face Video Detection · Python, PyTorch.',type:'research',tags:['india','research']},
   ],
   2021:[
-    {title:'Summer R&D Intern — Haptic Teleoperation',org:'Ericsson Research, Sweden',note:'Changes in haptic stiffness perception based on network latency/jitter in teleoperation systems · ROS, Python, Figma.',type:'milestone',tags:['sweden','research']},
-    {title:'Graduate Exchange + Research Assistant',org:'EPFL, Switzerland',note:'Digital Humanities · Design Research · Computer Vision · ML in VR · facial expression recognition with LightGBM and Random Forest · GPA 4.6/6',type:'education',tags:['switzerland','education','research']},
+    {title:'Summer R&D Intern — Haptic Teleoperation',org:'Ericsson Research, Sweden',note:'Haptic stiffness perception over network latency · ROS, Python, Figma.',type:'milestone',tags:['sweden','research']},
+    {title:'Graduate Exchange + Research Assistant',org:'EPFL, Switzerland',note:'Digital Humanities · Design Research · ML in VR · GPA 4.6/6.',type:'education',tags:['switzerland','education','research']},
   ],
   2022:[
-    {title:'Research Assistant — EdTech',org:'University of Lausanne (UNIL), Switzerland',note:'Education Technology to support programming learning in hybrid university classes · Participatory Design workshops · interviews.',type:'research',tags:['switzerland','research','design']},
-    {title:'Teaching Assistant',org:'KTH Royal Institute of Technology',note:'Courses: Visualization · Computer Networking · Python · Multimodal Technology Design · Multivariable Calculus.',type:'education',tags:['sweden','education']},
+    {title:'Research Assistant — EdTech',org:'University of Lausanne, Switzerland',note:'EdTech for programming in hybrid classes · Participatory Design.',type:'research',tags:['switzerland','research','design']},
+    {title:'Teaching Assistant',org:'KTH Royal Institute of Technology',note:'Visualization · Networking · Python · Multimodal Tech Design.',type:'education',tags:['sweden','education']},
   ],
   2023:[
-    {title:'VRLE UX Research',org:'EPFL, Switzerland',note:'Virtual Reality Learning Environments user research · laying groundwork for MSc thesis.',type:'research',tags:['switzerland','research','design']},
-    {title:'Venice Time Machine',org:'EPFL, Switzerland',note:'3D model of Venice for preserving building height data based on Google Earth data.',type:'research',tags:['switzerland','research']},
+    {title:'VRLE UX Research',org:'EPFL, Switzerland',note:'VR Learning Environments research · groundwork for MSc thesis.',type:'research',tags:['switzerland','research','design']},
+    {title:'Venice Time Machine',org:'EPFL, Switzerland',note:'3D city model preserving Venice building height and geographic data.',type:'research',tags:['switzerland','research']},
   ],
-  2024:[
-    {title:'Self Care & Independent Research',org:'Paris, France',note:'Focused recovery, introspection, and independent deep reading in HCI, AI policy, and neurorights.',type:'personal',tags:['personal']},
-  ],
-  2025:[
-    {title:'Summer Trainee',org:'University of Jyväskylä, Finland',note:'Accessible Interactive Technology · Multimodal Accessibility Design · haptic-audio graph navigation for blind STEM students.',type:'research',tags:['finland','research','design']},
-  ],
-  2026:[
-    {title:'MSc Thesis — Re-Designing VRLE for Effective Pedagogy',org:'KTH Royal Institute of Technology + EPFL',note:'Studying how VR-based learning environments can provide genuine pedagogical support. ACM SIGCHI paper in progress.',type:'current',tags:['sweden','switzerland','design','research']},
-  ],
+  2024:[{title:'Self Care & Independent Research',org:'Paris, France',note:'Recovery · introspection · deep reading in HCI, AI policy, neurorights.',type:'personal',tags:['personal']}],
+  2025:[{title:'Summer Trainee',org:'University of Jyväskylä, Finland',note:'Accessible Interactive Tech · Multimodal Accessibility Design · haptic-audio navigation for blind STEM students.',type:'research',tags:['finland','research','design']}],
+  2026:[{title:'MSc Thesis — Re-Designing VRLE for Effective Pedagogy',org:'KTH Royal Institute of Technology + EPFL',note:'How VR learning environments can provide genuine pedagogical support. ACM SIGCHI paper in progress.',type:'current',tags:['sweden','switzerland','design','research']}],
+};
+const YEARS=[1994,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026];
+const ERA_HEX=['#c8a84b','#38e870','#38e870','#38e870','#38e870','#38e870','#38e870',
+               '#38e870','#38e870','#38e870','#38e870','#38e870','#2dd4a4','#4ade80'];
+const ERA_COL=[
+  [0.78,0.53,0.18],[0.22,0.82,0.38],[0.22,0.82,0.38],[0.22,0.82,0.38],
+  [0.22,0.82,0.38],[0.22,0.82,0.38],[0.22,0.82,0.38],[0.22,0.82,0.38],
+  [0.22,0.82,0.38],[0.22,0.82,0.38],[0.22,0.82,0.38],[0.22,0.82,0.38],
+  [0.18,0.80,0.60],[0.25,0.92,0.48],
+];
+const TYPE_META={
+  milestone:{label:'★  Milestone',color:'#c8a84b'},
+  education: {label:'Education',  color:'#5aadff'},
+  research:  {label:'Research',   color:'#2dd4a4'},
+  design:    {label:'HCI / Design',color:'#b99bff'},
+  current:   {label:'⬤  Current', color:'#4ade80'},
+  personal:  {label:'Personal',   color:'#f472b6'},
 };
 
-const YEARS = [1994,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026];
-const YEAR_MIN = YEARS[0], YEAR_MAX = YEARS[YEARS.length-1];
+// ── CAPABILITY ───────────────────────────────────────────────────────────────
+const LOW  = (navigator.hardwareConcurrency||4)<=2;
+const MOB  = /Mobi|Android/i.test(navigator.userAgent);
+const RED  = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+const DPR  = Math.min(devicePixelRatio||1, LOW?1:MOB?1.5:2);
 
-const TYPE_META = {
-  milestone: { label:'★  Milestone',     color:'#c8a84b' },
-  education:  { label:'Education',        color:'#4a9eff' },
-  research:   { label:'Research',         color:'#2dd4a4' },
-  design:     { label:'HCI / Design',     color:'#a78bfa' },
-  current:    { label:'⬤  Current',       color:'#4ade80' },
-  personal:   { label:'Personal',         color:'#f472b6' },
-};
+// ── THREE SETUP ──────────────────────────────────────────────────────────────
+const renderer = new THREE.WebGLRenderer({antialias:!LOW,alpha:false,powerPreference:'low-power'});
+renderer.setPixelRatio(DPR);
+renderer.setSize(window.innerWidth,window.innerHeight);
+renderer.shadowMap.enabled = !LOW;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.1;
 
-// ── CAPABILITY DETECTION ─────────────────────────────────────────────────────
-const prefersReduced = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
-const isLowEnd = navigator.hardwareConcurrency <= 2 || (navigator.deviceMemory && navigator.deviceMemory <= 2);
-const isMobile = /Mobi|Android/i.test(navigator.userAgent);
-const PIXEL_RATIO = Math.min(window.devicePixelRatio || 1, isLowEnd ? 1 : isMobile ? 1.5 : 2);
-const PARTICLE_COUNT = isLowEnd ? 0 : isMobile ? 40 : 90;
-const GLOBE_SEGMENTS = isLowEnd ? 20 : isMobile ? 28 : 40;
+document.body.insertBefore(renderer.domElement, document.body.firstChild);
 
-// ── THREE.JS SCENE ───────────────────────────────────────────────────────────
-const wrap = document.getElementById('globe-wrap');
-const renderer = new THREE.WebGLRenderer({ antialias: !isLowEnd, alpha: true, powerPreference: 'low-power' });
-renderer.setPixelRatio(PIXEL_RATIO);
-renderer.setClearColor(0x000000, 0);
-wrap.insertBefore(renderer.domElement, wrap.firstChild);
+const scene  = new THREE.Scene();
+scene.background = new THREE.Color(0x06070f);
+scene.fog = new THREE.FogExp2(0x06070f, LOW?0.008:0.006);
 
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);
-camera.position.z = 280;
+const camera = new THREE.PerspectiveCamera(50, window.innerWidth/window.innerHeight, 0.1, 800);
+camera.position.set(0, 18, 55);
 
-// Resize
-function resizeRenderer() {
-  const w = wrap.clientWidth, h = wrap.clientHeight;
-  renderer.setSize(w, h, false);
-  camera.aspect = w / h;
+// OrbitControls — built-in damping, no custom physics needed
+const controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.06;
+controls.minDistance = 8;
+controls.maxDistance = 120;
+controls.maxPolarAngle = Math.PI * 0.78;
+controls.minPolarAngle = 0.05;
+controls.target.set(0, 4, 0);
+controls.autoRotate = !RED;
+controls.autoRotateSpeed = 0.4;
+
+window.addEventListener('resize', () => {
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
-  positionOrbit();
-}
-window.addEventListener('resize', resizeRenderer);
-
-// ── GLOBE (custom GLSL wireframe) ────────────────────────────────────────────
-const GLOBE_R = 72;
-
-// Custom shader material for globe — glowing edges
-const globeMat = new THREE.ShaderMaterial({
-  uniforms: {
-    uTime:    { value: 0 },
-    uColor:   { value: new THREE.Color(0.3, 0.55, 1.0) },
-    uAlpha:   { value: 0.14 },
-  },
-  vertexShader: `
-    varying vec3 vPos;
-    void main() {
-      vPos = position;
-      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-    }
-  `,
-  fragmentShader: `
-    uniform float uTime;
-    uniform vec3  uColor;
-    uniform float uAlpha;
-    varying vec3  vPos;
-    void main() {
-      // Pulse glow on equator band
-      float eq = 1.0 - abs(vPos.y / ${GLOBE_R.toFixed(1)});
-      float pulse = 0.5 + 0.5 * sin(uTime * 0.8 + vPos.x * 0.05);
-      float a = uAlpha + eq * 0.06 * pulse;
-      gl_FragColor = vec4(uColor, a);
-    }
-  `,
-  transparent: true,
-  depthWrite: false,
 });
 
-// Build wireframe globe manually
-const globeGroup = new THREE.Group();
-scene.add(globeGroup);
+// ── LIGHTING ─────────────────────────────────────────────────────────────────
+const ambLight = new THREE.AmbientLight(0x111828, 1.4);
+scene.add(ambLight);
 
-// Latitude rings
-for (let lat = -80; lat <= 80; lat += 18) {
-  const phi = THREE.MathUtils.degToRad(lat);
-  const r = GLOBE_R * Math.cos(phi);
-  const y = GLOBE_R * Math.sin(phi);
-  const pts = [];
-  for (let i = 0; i <= GLOBE_SEGMENTS; i++) {
-    const th = (i / GLOBE_SEGMENTS) * Math.PI * 2;
-    pts.push(new THREE.Vector3(r * Math.cos(th), y, r * Math.sin(th)));
-  }
-  const geo = new THREE.BufferGeometry().setFromPoints(pts);
-  globeGroup.add(new THREE.Line(geo, globeMat));
+const sunLight = new THREE.DirectionalLight(0xfff0d8, 1.2);
+sunLight.position.set(60, 120, 40);
+sunLight.castShadow = !LOW;
+if(!LOW){
+  sunLight.shadow.mapSize.set(1024,1024);
+  sunLight.shadow.camera.near = 0.5;
+  sunLight.shadow.camera.far  = 400;
+  sunLight.shadow.camera.left = sunLight.shadow.camera.bottom = -120;
+  sunLight.shadow.camera.right = sunLight.shadow.camera.top  = 120;
+  sunLight.shadow.bias = -0.0005;
 }
-// Longitude meridians
-for (let lon = 0; lon < 360; lon += 18) {
-  const th = THREE.MathUtils.degToRad(lon);
-  const pts = [];
-  for (let i = 0; i <= GLOBE_SEGMENTS; i++) {
-    const phi = ((i / GLOBE_SEGMENTS) - 0.5) * Math.PI;
-    pts.push(new THREE.Vector3(
-      GLOBE_R * Math.cos(phi) * Math.cos(th),
-      GLOBE_R * Math.sin(phi),
-      GLOBE_R * Math.cos(phi) * Math.sin(th)
-    ));
+scene.add(sunLight);
+
+const fillLight = new THREE.DirectionalLight(0x1a3a6a, 0.4);
+fillLight.position.set(-40, 20, -60);
+scene.add(fillLight);
+
+// ── STAR FIELD ───────────────────────────────────────────────────────────────
+if(!LOW){
+  const starGeo = new THREE.BufferGeometry();
+  const N = MOB?600:1500;
+  const pos = new Float32Array(N*3);
+  for(let i=0;i<N;i++){
+    const phi = Math.acos(2*Math.random()-1);
+    const th  = Math.random()*Math.PI*2;
+    const r   = 350+Math.random()*50;
+    pos[i*3]   = r*Math.sin(phi)*Math.cos(th);
+    pos[i*3+1] = r*Math.cos(phi);
+    pos[i*3+2] = r*Math.sin(phi)*Math.sin(th);
   }
-  const geo = new THREE.BufferGeometry().setFromPoints(pts);
-  globeGroup.add(new THREE.Line(geo, globeMat));
+  starGeo.setAttribute('position', new THREE.BufferAttribute(pos,3));
+  const starMat = new THREE.PointsMaterial({color:0xffffff,size:0.6,sizeAttenuation:true,transparent:true,opacity:0.7});
+  scene.add(new THREE.Points(starGeo, starMat));
 }
 
-// ── YEAR NODES ON GLOBE SURFACE ──────────────────────────────────────────────
-const nodeMat = new THREE.ShaderMaterial({
-  uniforms: { uTime: { value: 0 } },
-  vertexShader: `
-    attribute float aSize;
-    attribute vec3  aColor;
-    attribute float aAlpha;
-    attribute float aSelected;
-    varying vec3  vColor;
-    varying float vAlpha;
-    varying float vSel;
-    uniform float uTime;
-    void main() {
-      vColor = aColor;
-      vAlpha = aAlpha;
-      vSel   = aSelected;
-      float pulse = aSelected > 0.5 ? 1.0 + 0.25 * sin(uTime * 3.0) : 1.0;
-      gl_PointSize = aSize * pulse;
-      gl_Position  = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+// ── PROCEDURAL ISLAND MESH ───────────────────────────────────────────────────
+// Build a stylised floating island procedurally since GLTF loading has CORS constraints
+// This looks great and loads instantly — Zelda Wind Waker aesthetic
+function buildIslandMesh(eraColor, seed) {
+  const group = new THREE.Group();
+  const ec = new THREE.Color(...eraColor);
+
+  // ── Top terrain (deformed hemisphere) ──────────────────────────────────
+  const topGeo = new THREE.SphereGeometry(5.5, LOW?10:18, LOW?6:10, 0, Math.PI*2, 0, Math.PI*0.52);
+  const tpa = topGeo.attributes.position.array;
+  for(let i=0;i<tpa.length;i+=3){
+    const x=tpa[i], y=tpa[i+1], z=tpa[i+2];
+    const r=Math.sqrt(x*x+z*z);
+    // Flatten + rocky noise
+    tpa[i+1] = y*0.42
+      + Math.sin(x*0.38+seed)*1.8
+      + Math.cos(z*0.32+seed*.7)*1.4
+      + Math.sin((x+z)*0.22+seed*.5)*1.0
+      + Math.cos(r*0.4)*0.6;
+    tpa[i]   += Math.sin(y*0.5+z*0.2+seed)*0.5;
+    tpa[i+2] += Math.cos(y*0.4+x*0.2+seed)*0.5;
+  }
+  topGeo.computeVertexNormals();
+
+  // Colour by height (grass top, rock sides)
+  const colors = new Float32Array(tpa.length);
+  const grass = new THREE.Color(0,0,0).lerpColors(
+    new THREE.Color(0.08,0.18,0.06), ec.clone().multiplyScalar(0.55), 0.6);
+  const rock  = new THREE.Color(0.15,0.14,0.17);
+  for(let i=0;i<tpa.length/3;i++){
+    const nx = topGeo.attributes.normal.array[i*3+1];
+    const t  = Math.max(0, Math.min(1, (nx+0.2)*1.5));
+    const col = rock.clone().lerp(grass, t);
+    colors[i*3]=col.r; colors[i*3+1]=col.g; colors[i*3+2]=col.b;
+  }
+  topGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+  const topMat = new THREE.MeshLambertMaterial({vertexColors:true});
+  const top = new THREE.Mesh(topGeo, topMat);
+  top.castShadow = !LOW;
+  top.receiveShadow = !LOW;
+  group.add(top);
+
+  // ── Underside (tapered rock) ────────────────────────────────────────────
+  const botGeo = new THREE.ConeGeometry(4.8, 7, LOW?7:12, 1);
+  const bpa = botGeo.attributes.position.array;
+  for(let i=0;i<bpa.length;i+=3){
+    bpa[i]   += Math.sin(bpa[i+1]*0.4+bpa[i+2]*0.3+seed)*1.4+Math.cos(bpa[i]*0.3)*0.8;
+    bpa[i+2] += Math.cos(bpa[i+1]*0.35+bpa[i]*0.28+seed*.8)*1.2+Math.sin(bpa[i+2]*0.25)*0.7;
+  }
+  botGeo.computeVertexNormals();
+  const botMat = new THREE.MeshLambertMaterial({color:0x111318});
+  const bot = new THREE.Mesh(botGeo, botMat);
+  bot.position.y = -3.8;
+  bot.castShadow = !LOW;
+  group.add(bot);
+
+  // ── Glow light underneath ───────────────────────────────────────────────
+  if(!LOW){
+    const glight = new THREE.PointLight(ec, 1.8, 24);
+    glight.position.set(0, -5, 0);
+    group.add(glight);
+    group.userData.glight = glight;
+  }
+
+  // ── Trees (Zelda-style stacked cones) ───────────────────────────────────
+  const numTrees = LOW?2:3;
+  const leafCol = ec.clone();
+  leafCol.g = Math.min(1, leafCol.g*1.15);
+  leafCol.multiplyScalar(0.85);
+  const leafMat = new THREE.MeshLambertMaterial({color:leafCol});
+  const trunkMat = new THREE.MeshLambertMaterial({color:new THREE.Color(0.22,0.14,0.07)});
+
+  for(let t=0;t<numTrees;t++){
+    const ang = seed*0.9 + t*2.2;
+    const rad = 2.2 + t*1.4 + (seed%1)*1.2;
+    const tx  = Math.sin(ang)*rad;
+    const tz  = Math.cos(ang)*rad;
+    const ty  = 0.5
+      + Math.sin(tx*0.38+seed)*1.8
+      + Math.cos(tz*0.32+seed*.7)*1.4;
+
+    const treeG = new THREE.Group();
+    treeG.position.set(tx, ty+1.2, tz);
+
+    // Trunk
+    const trunkGeo = new THREE.CylinderGeometry(0.12,0.18,1.6,5);
+    treeG.add(new THREE.Mesh(trunkGeo, trunkMat));
+
+    // 3 leaf tiers
+    [[1.6,0.95,1.9],[2.6,0.75,1.5],[3.4,0.58,1.1]].forEach(([y2,r2,h2])=>{
+      const lg = new THREE.ConeGeometry(r2, h2, 6);
+      const leaf = new THREE.Mesh(lg, leafMat);
+      leaf.position.y = y2;
+      treeG.add(leaf);
+    });
+    group.add(treeG);
+  }
+
+  // ── Floating debris rocks ────────────────────────────────────────────────
+  if(!LOW){
+    const numRocks = 3+Math.floor((seed*7)%3);
+    for(let r=0;r<numRocks;r++){
+      const rg = new THREE.DodecahedronGeometry(0.3+Math.random()*0.8, 0);
+      const rm = new THREE.MeshLambertMaterial({color:new THREE.Color(0.12,0.13,0.17)});
+      const rock = new THREE.Mesh(rg, rm);
+      const ra = Math.random()*Math.PI*2;
+      const rr = 6+Math.random()*4;
+      rock.position.set(Math.sin(ra)*rr, (Math.random()-0.5)*6-1, Math.cos(ra)*rr);
+      rock.rotation.set(Math.random()*6,Math.random()*6,Math.random()*6);
+      rock.userData.orbAngle = ra;
+      rock.userData.orbRadius = rr;
+      rock.userData.orbY = rock.position.y;
+      rock.userData.orbSpeed = (Math.random()-0.2)*0.006;
+      group.add(rock);
     }
-  `,
-  fragmentShader: `
-    varying vec3  vColor;
-    varying float vAlpha;
-    varying float vSel;
-    void main() {
-      vec2  uv = gl_PointCoord - 0.5;
-      float d  = length(uv) * 2.0;
-      if (d > 1.0) discard;
-      float core  = 1.0 - smoothstep(0.4, 0.9, d);
-      float ring  = smoothstep(0.65, 0.72, d) * (1.0 - smoothstep(0.84, 0.95, d));
-      float glow  = vSel * (1.0 - d) * 0.5;
-      float alpha = (core + ring * 0.7 + glow) * vAlpha;
-      gl_FragColor = vec4(vColor * (core + glow) + vec3(1.0) * ring * 0.6, alpha);
-    }
-  `,
-  transparent: true,
-  depthWrite:  false,
-  blending:    THREE.AdditiveBlending,
-});
+  }
 
-// Build point cloud for year nodes
-const yearPositions = new Float32Array(YEARS.length * 3);
-const yearSizes     = new Float32Array(YEARS.length);
-const yearColors    = new Float32Array(YEARS.length * 3);
-const yearAlphas    = new Float32Array(YEARS.length);
-const yearSelected  = new Float32Array(YEARS.length);
+  return group;
+}
 
-// 3D positions stored for orbit label placement
-const yearWorld = {}; // year → THREE.Vector3
+// ── BUILD ALL ISLANDS ─────────────────────────────────────────────────────────
+const islands = [];
+const TOTAL = YEARS.length;
 
-YEARS.forEach((y, i) => {
-  const frac = i / (YEARS.length - 1);
-  const lon  = frac * Math.PI * 2;
-  const lat  = Math.sin(i * 1.2) * 0.28;
-  const pos  = new THREE.Vector3(
-    GLOBE_R * Math.cos(lat) * Math.cos(lon),
-    GLOBE_R * Math.sin(lat),
-    GLOBE_R * Math.cos(lat) * Math.sin(lon)
+function islandWorldPos(i) {
+  const t = i/(TOTAL-1);
+  const angle = (t-0.5)*Math.PI*1.7;
+  const radius = 38 + Math.sin(t*Math.PI)*12;
+  return new THREE.Vector3(
+    Math.sin(angle)*radius,
+    Math.sin(t*Math.PI*2.1)*5 + Math.cos(i*1.8)*2.5,
+    -Math.cos(angle)*radius*0.55 + 6
   );
-  yearWorld[y] = pos;
-  yearPositions[i*3]   = pos.x;
-  yearPositions[i*3+1] = pos.y;
-  yearPositions[i*3+2] = pos.z;
-  yearSizes[i]     = (EVENTS[y]||[]).length > 0 ? 9 : 5;
-  yearColors[i*3]  = 0.7; yearColors[i*3+1] = 0.75; yearColors[i*3+2] = 1.0;
-  yearAlphas[i]    = (EVENTS[y]||[]).length ? 0.7 : 0.35;
-  yearSelected[i]  = 0;
+}
+
+YEARS.forEach((y,i)=>{
+  const isl = buildIslandMesh(ERA_COL[i], i*1.73+0.5);
+  const pos = islandWorldPos(i);
+  isl.position.copy(pos);
+  isl.userData.baseY = pos.y;
+  isl.userData.year  = y;
+  isl.userData.index = i;
+  scene.add(isl);
+  islands.push(isl);
 });
 
-const nodeGeo = new THREE.BufferGeometry();
-nodeGeo.setAttribute('position',  new THREE.BufferAttribute(yearPositions, 3));
-nodeGeo.setAttribute('aSize',     new THREE.BufferAttribute(yearSizes, 1));
-nodeGeo.setAttribute('aColor',    new THREE.BufferAttribute(yearColors, 3));
-nodeGeo.setAttribute('aAlpha',    new THREE.BufferAttribute(yearAlphas, 1));
-nodeGeo.setAttribute('aSelected', new THREE.BufferAttribute(yearSelected, 1));
-const nodeMesh = new THREE.Points(nodeGeo, nodeMat);
-globeGroup.add(nodeMesh);
-
-// ── PARTICLES ────────────────────────────────────────────────────────────────
-let particleMesh = null;
-if (PARTICLE_COUNT > 0) {
-  const ptGeo = new THREE.BufferGeometry();
-  const pPos  = new Float32Array(PARTICLE_COUNT * 3);
-  const pSize = new Float32Array(PARTICLE_COUNT);
-  const pAlpha= new Float32Array(PARTICLE_COUNT);
-  for (let i = 0; i < PARTICLE_COUNT; i++) {
-    const phi = Math.acos(2 * Math.random() - 1);
-    const th  = Math.random() * Math.PI * 2;
-    const r   = GLOBE_R * (1.15 + Math.random() * 0.85);
-    pPos[i*3]   = r * Math.sin(phi) * Math.cos(th);
-    pPos[i*3+1] = r * Math.cos(phi);
-    pPos[i*3+2] = r * Math.sin(phi) * Math.sin(th);
-    pSize[i]  = Math.random() * 1.8 + 0.4;
-    pAlpha[i] = Math.random() * 0.18 + 0.04;
+// ── LIGHT BRIDGE PATHS ────────────────────────────────────────────────────────
+if(!LOW){
+  for(let i=0;i<islands.length-1;i++){
+    const a = islands[i].position.clone().add(new THREE.Vector3(0,3,0));
+    const b = islands[i+1].position.clone().add(new THREE.Vector3(0,3,0));
+    const pts=[];
+    for(let s=0;s<=12;s++){
+      const k=s/12;
+      pts.push(new THREE.Vector3().lerpVectors(a,b,k).add(
+        new THREE.Vector3(0, Math.sin(k*Math.PI)*8, 0)));
+    }
+    const lineGeo = new THREE.BufferGeometry().setFromPoints(pts);
+    const lineMat = new THREE.LineBasicMaterial({
+      color:new THREE.Color(...ERA_COL[i]).lerp(new THREE.Color(...ERA_COL[i+1]),0.5),
+      transparent:true, opacity:0.15
+    });
+    scene.add(new THREE.Line(lineGeo, lineMat));
   }
-  const ptMat = new THREE.ShaderMaterial({
-    uniforms: { uTime: { value: 0 } },
-    vertexShader: `
-      attribute float aSize;
-      attribute float aAlpha;
-      varying float vAlpha;
-      void main() {
-        vAlpha = aAlpha;
-        gl_PointSize = aSize;
-        gl_Position  = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-      }
-    `,
-    fragmentShader: `
-      varying float vAlpha;
-      void main() {
-        float d = length(gl_PointCoord - 0.5) * 2.0;
-        if (d > 1.0) discard;
-        gl_FragColor = vec4(1.0, 1.0, 1.0, (1.0 - d) * vAlpha);
-      }
-    `,
-    transparent: true,
-    depthWrite:  false,
-    blending:    THREE.AdditiveBlending,
-  });
-  ptGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
-  ptGeo.setAttribute('aSize',    new THREE.BufferAttribute(pSize, 1));
-  ptGeo.setAttribute('aAlpha',   new THREE.BufferAttribute(pAlpha, 1));
-  particleMesh = new THREE.Points(ptGeo, ptMat);
-  scene.add(particleMesh);
 }
 
-// ── ORBIT LABELS (DOM) ───────────────────────────────────────────────────────
-const orbitEl  = document.getElementById('orbit');
-const yearBtns = {};
-const tempV    = new THREE.Vector3();
-
-YEARS.forEach(y => {
-  const el = document.createElement('div');
-  el.className = 'yr' + ((EVENTS[y]||[]).length ? ' has-ev' : '');
-  el.setAttribute('role', 'button');
-  el.setAttribute('aria-label', `Year ${y}`);
-  el.setAttribute('tabindex', '0');
-  el.innerHTML = `<span class="yr-dot"></span>${y}`;
-  el.addEventListener('click',  () => selectYear(y));
-  el.addEventListener('keydown', e => { if (e.key==='Enter'||e.key===' ') selectYear(y); });
-  orbitEl.appendChild(el);
-  yearBtns[y] = el;
-});
-
-function positionOrbit() {
-  const W = wrap.clientWidth, H = wrap.clientHeight;
-  YEARS.forEach(y => {
-    const worldPos = yearWorld[y].clone();
-    // Apply globe group rotation to world pos
-    worldPos.applyEuler(globeGroup.rotation);
-    tempV.copy(worldPos);
-    tempV.project(camera);
-    const sx = ( tempV.x * 0.5 + 0.5) * W;
-    const sy = (-tempV.y * 0.5 + 0.5) * H;
-    const depth = (tempV.z + 1) / 2; // 0=far, 1=near
-    const scale = 0.65 + depth * 0.45;
-    const el    = yearBtns[y];
-    el.style.left    = sx + 'px';
-    el.style.top     = sy + 'px';
-    el.style.transform = `translate(-50%,-50%) scale(${scale})`;
-    el.style.zIndex    = Math.round(depth * 20);
-    const base = y === selectedYear ? 1 :
-                 (EVENTS[y]||[]).length ? 0.25 + depth * 0.6 : 0.1 + depth * 0.3;
-    el.style.opacity = String(Math.min(1, base));
+// ── PARTICLE EMBERS ───────────────────────────────────────────────────────────
+const emberSystems = [];
+if(!LOW){
+  YEARS.forEach((y,i)=>{
+    const N = MOB?30:80;
+    const geo = new THREE.BufferGeometry();
+    const pos = new Float32Array(N*3);
+    const vel = new Float32Array(N*3); // store velocities for animation
+    const col = new Float32Array(N*3);
+    const ec  = ERA_COL[i];
+    const wpos = islandWorldPos(i);
+    for(let j=0;j<N;j++){
+      const ang = Math.random()*Math.PI*2;
+      const r   = Math.random()*7+2;
+      pos[j*3]   = wpos.x + Math.sin(ang)*r;
+      pos[j*3+1] = wpos.y + (Math.random()-0.3)*10;
+      pos[j*3+2] = wpos.z + Math.cos(ang)*r;
+      vel[j*3]   = (Math.random()-0.5)*0.01;
+      vel[j*3+1] = Math.random()*0.04+0.01;
+      vel[j*3+2] = (Math.random()-0.5)*0.01;
+      const br = 0.4+Math.random()*0.6;
+      col[j*3]=ec[0]*br; col[j*3+1]=ec[1]*br; col[j*3+2]=ec[2]*br;
+    }
+    geo.setAttribute('position', new THREE.BufferAttribute(pos,3));
+    geo.setAttribute('color',    new THREE.BufferAttribute(col,3));
+    const mat = new THREE.PointsMaterial({
+      size:0.18, vertexColors:true,
+      transparent:true, opacity:0.7,
+      sizeAttenuation:true, depthWrite:false
+    });
+    const pts = new THREE.Points(geo, mat);
+    pts.userData.vel = vel;
+    pts.userData.baseY = wpos.y;
+    pts.userData.rangeY = 10;
+    scene.add(pts);
+    emberSystems.push(pts);
   });
 }
 
-// ── INTERACTION ───────────────────────────────────────────────────────────────
-let selectedYear = null;
-let isDragging   = false;
-let lastX = 0, lastY = 0;
-let targetRotY   = 0;
-let autoSpin     = !prefersReduced;
-let autoSpinTimer = null;
+// ── RAYCASTING for click detection ───────────────────────────────────────────
+const raycaster = new THREE.Raycaster();
+const mouse     = new THREE.Vector2();
+let isPointerDown = false;
+let pointerMoved  = false;
 
-function resumeAutoSpin() {
-  clearTimeout(autoSpinTimer);
-  autoSpinTimer = setTimeout(() => { autoSpin = true; }, 4000);
+renderer.domElement.addEventListener('pointerdown', e=>{
+  isPointerDown=true; pointerMoved=false;
+});
+renderer.domElement.addEventListener('pointermove', e=>{
+  if(isPointerDown) pointerMoved=true;
+});
+renderer.domElement.addEventListener('pointerup', e=>{
+  if(!pointerMoved){
+    // Click — raycast to find island
+    const rect = renderer.domElement.getBoundingClientRect();
+    mouse.x =  ((e.clientX-rect.left)/rect.width)*2-1;
+    mouse.y = -((e.clientY-rect.top) /rect.height)*2+1;
+    raycaster.setFromCamera(mouse, camera);
+    // Collect all meshes in island groups
+    const meshes = [];
+    islands.forEach(isl=>isl.traverse(c=>{ if(c.isMesh) meshes.push(c); }));
+    const hits = raycaster.intersectObjects(meshes);
+    if(hits.length){
+      // Find which island this mesh belongs to
+      let obj = hits[0].object;
+      while(obj.parent && !obj.userData.year) obj = obj.parent;
+      if(obj.userData.year) selectYear(obj.userData.year);
+    }
+  }
+  isPointerDown=false;
+});
+
+// ── YEAR STRIP ────────────────────────────────────────────────────────────────
+const stripEl = document.getElementById('strip');
+const ybtns   = [];
+YEARS.forEach((y,i)=>{
+  const b = document.createElement('button');
+  b.className = 'yb'+((EVENTS[y]||[]).length?' has-ev':'');
+  b.setAttribute('type','button');
+  b.setAttribute('aria-label',`Year ${y}`);
+  b.style.setProperty('--ec', ERA_HEX[i]);
+  b.innerHTML = `<div class="yb-gem"></div><div class="yb-yr">${y}</div>`;
+  b.addEventListener('click', ()=>selectYear(y));
+  stripEl.appendChild(b);
+  ybtns.push(b);
+});
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let selIdx = -1;
+let selIsl = null;
+
+function selectYear(y){
+  const i = YEARS.indexOf(y);
+  if(i<0) return;
+  selIdx = i;
+  selIsl = islands[i];
+  controls.autoRotate = false;
+
+  // Fly camera to island
+  const target = islands[i].position.clone().add(new THREE.Vector3(0,4,0));
+  const camTarget = islands[i].position.clone().add(new THREE.Vector3(0,6,28));
+  gsap.to(controls.target, {x:target.x,y:target.y,z:target.z,duration:1.2,ease:'power3.inOut'});
+  gsap.to(camera.position, {x:camTarget.x,y:camTarget.y,z:camTarget.z,duration:1.2,ease:'power3.inOut'});
+
+  // Glow active island
+  islands.forEach((isl,j)=>{
+    const active = j===i;
+    if(isl.userData.glight){
+      gsap.to(isl.userData.glight, {intensity:active?4.5:1.2,duration:0.5});
+    }
+    // Scale up selected island slightly
+    gsap.to(isl.scale,{x:active?1.1:1,y:active?1.1:1,z:active?1.1:1,duration:0.5,ease:'back.out(1.4)'});
+  });
+
+  ybtns.forEach((b,j)=>b.classList.toggle('active',j===i));
+  document.getElementById('nav').classList.add('show');
+  document.getElementById('pb').disabled = i===0;
+  document.getElementById('nb').disabled = i===YEARS.length-1;
+  openPanel(y,i);
+  gsap.to('#hint',{opacity:0,duration:.3});
 }
 
-// Drag
-renderer.domElement.addEventListener('pointerdown', e => {
-  isDragging = true; lastX = e.clientX; lastY = e.clientY;
-  autoSpin   = false;
-  renderer.domElement.setPointerCapture(e.pointerId);
-});
-renderer.domElement.addEventListener('pointermove', e => {
-  if (!isDragging) return;
-  const dx = e.clientX - lastX;
-  const dy = e.clientY - lastY;
-  lastX = e.clientX; lastY = e.clientY;
-  gsap.to(globeGroup.rotation, {
-    y: globeGroup.rotation.y + dx * 0.007,
-    x: THREE.MathUtils.clamp(globeGroup.rotation.x + dy * 0.004, -0.8, 0.8),
-    duration: 0.1, overwrite: true,
+function deselect(){
+  selIdx = -1; selIsl = null;
+  controls.autoRotate = !RED;
+  gsap.to(controls.target,{x:0,y:4,z:0,duration:1,ease:'power2.inOut'});
+  gsap.to(camera.position, {x:0,y:18,z:55,duration:1,ease:'power2.inOut'});
+  islands.forEach(isl=>{
+    if(isl.userData.glight) gsap.to(isl.userData.glight,{intensity:1.2,duration:.4});
+    gsap.to(isl.scale,{x:1,y:1,z:1,duration:.4});
   });
-});
-renderer.domElement.addEventListener('pointerup',   () => { isDragging = false; resumeAutoSpin(); });
-renderer.domElement.addEventListener('pointerleave', () => { isDragging = false; });
+  document.getElementById('nav').classList.remove('show');
+  ybtns.forEach(b=>b.classList.remove('active'));
+  const prop = window.innerWidth>560?'x':'y';
+  gsap.to('#panel',{[prop]:'105%',duration:.42,ease:'power3.in'});
+  gsap.to('#hint',{opacity:1,duration:.5,delay:.4});
+}
 
-// Pinch zoom
-let lastPinch = 0;
-renderer.domElement.addEventListener('touchstart', e => {
-  if (e.touches.length === 2)
-    lastPinch = Math.hypot(e.touches[0].clientX - e.touches[1].clientX,
-                           e.touches[0].clientY - e.touches[1].clientY);
-}, { passive: true });
-renderer.domElement.addEventListener('touchmove', e => {
-  if (e.touches.length !== 2) return;
-  const d = Math.hypot(e.touches[0].clientX - e.touches[1].clientX,
-                       e.touches[0].clientY - e.touches[1].clientY);
-  if (lastPinch) camera.position.z = THREE.MathUtils.clamp(camera.position.z * (lastPinch / d), 150, 500);
-  lastPinch = d;
-}, { passive: true });
-
-// Scroll zoom
-renderer.domElement.addEventListener('wheel', e => {
-  e.preventDefault();
-  camera.position.z = THREE.MathUtils.clamp(camera.position.z + e.deltaY * 0.3, 150, 500);
-}, { passive: false });
-
-// ── SELECT YEAR ───────────────────────────────────────────────────────────────
-function selectYear(y) {
-  selectedYear = y;
-  autoSpin = false;
-  resumeAutoSpin();
-
-  // Update orbit button states
-  YEARS.forEach((yr, i) => {
-    yearBtns[yr].classList.toggle('active', yr === y);
-    // Update shader selected flag
-    yearSelected[i] = yr === y ? 1 : 0;
-    yearColors[i*3]   = yr === y ? 0.78 : 0.7;
-    yearColors[i*3+1] = yr === y ? 0.66 : 0.75;
-    yearColors[i*3+2] = yr === y ? 0.29 : 1.0;
-  });
-  nodeGeo.attributes.aSelected.needsUpdate = true;
-  nodeGeo.attributes.aColor.needsUpdate    = true;
-
-  // Rotate globe so selected year faces camera
-  const worldPos = yearWorld[y];
-  const targetY  = -Math.atan2(worldPos.x, worldPos.z);
-  gsap.to(globeGroup.rotation, {
-    y: targetY, duration: 1.1,
-    ease: 'power3.inOut',
-    overwrite: true,
-  });
-
-  // Progress bar
-  const frac = (YEARS.indexOf(y)) / (YEARS.length - 1);
-  gsap.to('#progress-fill', { width: (frac * 100) + '%', duration: 0.5, ease: 'power2.out' });
-
-  // Panel year
-  const panelYr = document.getElementById('panel-yr');
-  gsap.to(panelYr, { opacity: 0, y: -6, duration: 0.18, onComplete: () => {
-    panelYr.textContent = y;
-    panelYr.classList.add('lit');
-    document.getElementById('panel-sub').textContent =
-      y === 2026 ? 'Current — Ongoing' : `${(EVENTS[y]||[]).length} event${(EVENTS[y]||[]).length===1?'':'s'}`;
-    gsap.to(panelYr, { opacity: 1, y: 0, duration: 0.28, ease: 'power2.out' });
-  }});
-
-  // Cards
-  const list = document.getElementById('cards');
-  // Fade out existing
-  gsap.to(list.querySelectorAll('.card'), {
-    opacity: 0, y: -8, duration: 0.18, stagger: 0.04,
-    onComplete: () => {
-      list.innerHTML = '';
-      const evs = EVENTS[y] || [];
-      if (!evs.length) {
-        list.innerHTML = '<p class="empty">No recorded events for this year.</p>';
-        return;
-      }
-      evs.forEach((ev, i) => {
-        const card = document.createElement('article');
-        card.className = `card ${ev.type}`;
-        card.setAttribute('role', 'listitem');
-        const meta = TYPE_META[ev.type] || { label: ev.type, color: '#fff' };
-        card.innerHTML = `
-          <div class="c-type" style="color:${meta.color}">${meta.label}</div>
-          <div class="c-title">${ev.title}</div>
-          ${ev.org ? `<div class="c-org">${ev.org}</div>` : ''}
-          ${ev.note ? `<div class="c-note">${ev.note}</div>` : ''}
-          <div class="c-tags">${ev.tags.map(t=>`<span class="c-tag">${t}</span>`).join('')}</div>
-        `;
-        list.appendChild(card);
-        // GSAP stagger in
-        gsap.fromTo(card,
-          { opacity: 0, y: 14 },
-          { opacity: 1, y: 0, duration: 0.38, delay: i * 0.08, ease: 'power2.out' }
-        );
-      });
+function openPanel(y,i){
+  const evs = EVENTS[y]||[];
+  const col = ERA_HEX[i];
+  document.documentElement.style.setProperty('--pc',col);
+  document.getElementById('p-bar').style.background = col;
+  document.getElementById('p-yr').style.color = col;
+  gsap.fromTo('#p-yr',{opacity:0,y:7},{opacity:1,y:0,duration:.36,ease:'power2.out',
+    onStart:()=>{
+      document.getElementById('p-yr').textContent = y;
+      document.getElementById('p-sub').textContent = y===2026?'Current — Ongoing':'Selected year';
+      document.getElementById('p-cnt').textContent = evs.length?`${evs.length} event${evs.length>1?'s':''}`:' ';
     }
   });
-
-  // Drag hint fade
-  gsap.to('#drag-hint', { opacity: 0, duration: 0.4 });
+  const body = document.getElementById('p-body');
+  body.innerHTML = '';
+  evs.forEach((ev,j)=>{
+    const card = document.createElement('article');
+    card.className = `card ${ev.type}`;
+    const m = TYPE_META[ev.type]||{label:ev.type,color:'#fff'};
+    card.innerHTML = `
+      <div class="cb" style="color:${m.color};">${m.label}</div>
+      <div class="ct">${ev.title}</div>
+      ${ev.org?`<div class="co">${ev.org}</div>`:''}
+      ${ev.note?`<div class="cn">${ev.note}</div>`:''}
+      <div class="ctags">${ev.tags.map(t=>`<span class="ctag">${t}</span>`).join('')}</div>
+    `;
+    body.appendChild(card);
+    gsap.fromTo(card,{opacity:0,y:12},{opacity:1,y:0,duration:.34,delay:j*.07,ease:'power2.out'});
+  });
+  const prop = window.innerWidth>560?'x':'y';
+  gsap.to('#panel',{[prop]:'0%',duration:.5,ease:'power3.out'});
 }
 
-// ── WEBXR (graceful — only show if supported) ────────────────────────────────
-if (navigator.xr) {
-  navigator.xr.isSessionSupported('immersive-ar').then(supported => {
-    if (!supported) return;
-    const btn = document.getElementById('xr-btn');
-    btn.style.display = 'block';
-    let xrSession = null;
-    btn.addEventListener('click', async () => {
-      if (xrSession) { await xrSession.end(); return; }
-      try {
-        xrSession = await navigator.xr.requestSession('immersive-ar',
-          { requiredFeatures: ['local'], optionalFeatures: ['dom-overlay'],
-            domOverlay: { root: document.getElementById('app') } });
-        renderer.xr.enabled = true;
-        renderer.xr.setSession(xrSession);
-        btn.textContent = 'Exit AR';
-        xrSession.addEventListener('end', () => {
-          xrSession = null; renderer.xr.enabled = false; btn.textContent = 'AR View';
-        });
-      } catch(e) { console.warn('XR not available:', e); }
+document.getElementById('pcl').addEventListener('click',deselect);
+document.getElementById('pb').addEventListener('click',()=>{if(selIdx>0)selectYear(YEARS[selIdx-1]);});
+document.getElementById('nb').addEventListener('click',()=>{if(selIdx<YEARS.length-1)selectYear(YEARS[selIdx+1]);});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){deselect();return;}
+  if(selIdx<0)return;
+  if(e.key==='ArrowRight'&&selIdx<YEARS.length-1)selectYear(YEARS[selIdx+1]);
+  if(e.key==='ArrowLeft' &&selIdx>0)              selectYear(YEARS[selIdx-1]);
+});
+
+// ── RENDER LOOP ───────────────────────────────────────────────────────────────
+const clock = new THREE.Clock();
+let frame = 0;
+
+renderer.setAnimationLoop(()=>{
+  const t = clock.getElapsedTime();
+  frame++;
+
+  // Island bobbing
+  islands.forEach((isl,i)=>{
+    isl.position.y = isl.userData.baseY + Math.sin(t*0.55+i*0.88)*1.8;
+    // Slow world rotation
+    isl.rotation.y = t*0.007*(i%2===0?1:-1);
+
+    // Orbit debris rocks
+    isl.children.forEach(ch=>{
+      if(!ch.userData||ch.userData.orbSpeed===undefined) return;
+      ch.userData.orbAngle += ch.userData.orbSpeed;
+      ch.position.x = Math.sin(ch.userData.orbAngle)*ch.userData.orbRadius;
+      ch.position.z = Math.cos(ch.userData.orbAngle)*ch.userData.orbRadius;
+      ch.position.y = ch.userData.orbY + Math.sin(t*0.5+ch.userData.orbAngle)*1.5;
+      ch.rotation.y += 0.005;
     });
   });
-}
 
-// ── ANIMATION LOOP ────────────────────────────────────────────────────────────
-const clock = new THREE.Clock();
-let frameCount = 0;
+  // Ember particle drift
+  emberSystems.forEach((pts,i)=>{
+    const pos = pts.geometry.attributes.position.array;
+    const vel = pts.userData.vel;
+    const baseY = pts.userData.baseY;
+    for(let j=0;j<pos.length;j+=3){
+      pos[j]   += vel[j];
+      pos[j+1] += vel[j+1];
+      pos[j+2] += vel[j+2];
+      // Reset when drifted too high
+      if(pos[j+1]>baseY+pts.userData.rangeY){
+        pos[j+1] = baseY - 3;
+      }
+    }
+    pts.geometry.attributes.position.needsUpdate = true;
+  });
 
-function animate() {
-  renderer.setAnimationLoop(animate);
-  const t = clock.getElapsedTime();
-  frameCount++;
-
-  // Auto-spin (slow, pauses when user interacts)
-  if (autoSpin && !isDragging && !prefersReduced) {
-    globeGroup.rotation.y += 0.0025;
-  }
-
-  // Particle slow orbit
-  if (particleMesh) {
-    particleMesh.rotation.y = t * 0.04;
-    particleMesh.rotation.x = Math.sin(t * 0.02) * 0.1;
-  }
-
-  // Update shader uniforms
-  globeMat.uniforms.uTime.value   = t;
-  nodeMat.uniforms.uTime.value    = t;
-
-  // Update orbit label positions (every 2 frames on mobile, every frame on desktop)
-  if (!isMobile || frameCount % 2 === 0) positionOrbit();
-
+  controls.update();
   renderer.render(scene, camera);
-}
-
-// ── INIT ─────────────────────────────────────────────────────────────────────
-resizeRenderer();
-animate();
-
-// Keyboard navigation
-document.addEventListener('keydown', e => {
-  if (!selectedYear) return;
-  const idx = YEARS.indexOf(selectedYear);
-  if (e.key === 'ArrowRight' && idx < YEARS.length - 1) selectYear(YEARS[idx + 1]);
-  if (e.key === 'ArrowLeft'  && idx > 0)                selectYear(YEARS[idx - 1]);
 });
 
-// Default: select 2026 after a short delay
-setTimeout(() => selectYear(2026), 600);
-
-// Fade in drag hint
-gsap.from('#drag-hint', { opacity: 0, duration: 1, delay: 1.2 });
+// ── HIDE LOADING ──────────────────────────────────────────────────────────────
+// Procedural — no async loading needed, just wait one frame for GPU init
+let loadPct = 0;
+const loadInterval = setInterval(()=>{
+  loadPct = Math.min(100, loadPct + 8 + Math.random()*12);
+  document.getElementById('loading-bar').style.width = loadPct+'%';
+  if(loadPct>=100){
+    clearInterval(loadInterval);
+    gsap.to('#loading',{opacity:0,duration:.6,onComplete:()=>{
+      document.getElementById('loading').style.display='none';
+    }});
+    gsap.from('#brand',{opacity:0,y:-8,duration:1.2,ease:'power2.out'});
+    gsap.from('#strip',{opacity:0,y:10,duration:1,delay:.2,ease:'power2.out'});
+    gsap.from('#hint',{opacity:0,duration:1.4,delay:.5});
+    setTimeout(()=>selectYear(2026), 800);
+  }
+},80);
 </script>
 </body>
 </html>
