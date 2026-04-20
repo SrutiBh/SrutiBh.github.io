@@ -13,10 +13,7 @@
     overflow: hidden;
     font-family: Inter, system-ui, sans-serif;
     color: #fff;
-    background:
-      radial-gradient(circle at 18% 18%, rgba(126,169,255,.08), transparent 28%),
-      radial-gradient(circle at 84% 26%, rgba(113,230,170,.06), transparent 22%),
-      linear-gradient(180deg, #0b1020 0%, #0a0d18 48%, #090b14 100%);
+    background: #0b1020;
   }
 
   :root{
@@ -25,8 +22,22 @@
     --blue-strong:#5aadff;
     --line:rgba(255,255,255,.08);
     --panel:rgba(10,13,23,.88);
-    --text-soft:rgba(255,255,255,.48);
-    --text-faint:rgba(255,255,255,.28);
+
+    --sky-top: #0c1430;
+    --sky-mid: #141d3b;
+    --sky-bottom: #232845;
+
+    --glow-left: rgba(100,130,255,.08);
+    --glow-right: rgba(205,225,255,.22);
+
+    --moon-opacity: .98;
+    --sun-opacity: .0;
+    --stars-opacity: .62;
+
+    --cloud-back-opacity: .22;
+    --cloud-front-opacity: .28;
+
+    --mist-opacity: .18;
   }
 
   #loading {
@@ -65,18 +76,164 @@
     100% { transform: translateX(280%); }
   }
 
-  #atmosphere{
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    z-index:1;
-    background:
-      radial-gradient(circle at 30% 40%, rgba(255,255,255,0.04), transparent 40%),
-      radial-gradient(circle at 70% 60%, rgba(255,200,150,0.05), transparent 45%),
-      radial-gradient(circle at 50% 90%, rgba(120,160,255,0.04), transparent 50%);
-    filter: blur(40px);
-    opacity:.7;
+  #sky{
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
   }
+  .sky-gradient,
+  .sky-glow,
+  .sky-sun,
+  .sky-moon,
+  .sky-stars,
+  .sky-clouds,
+  .sky-mist {
+    transition:
+      background 2.8s ease,
+      opacity 2.8s ease,
+      transform 2.8s ease,
+      filter 2.8s ease;
+  }
+
+  .sky-gradient{
+    position:absolute;
+    inset:0;
+    background:
+      radial-gradient(circle at 20% 18%, color-mix(in srgb, var(--glow-left) 48%, transparent), transparent 26%),
+      radial-gradient(circle at 80% 22%, color-mix(in srgb, var(--glow-right) 52%, transparent), transparent 28%),
+      linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 48%, var(--sky-bottom) 100%);
+  }
+
+  .sky-glow{
+    position:absolute;
+    width:46vw;
+    height:46vw;
+    border-radius:50%;
+    filter: blur(70px);
+    opacity:.55;
+  }
+  .sky-glow-left{
+    left:-8vw;
+    top:2vh;
+    background: radial-gradient(circle, var(--glow-left), transparent 70%);
+  }
+  .sky-glow-right{
+    right:-10vw;
+    top:8vh;
+    background: radial-gradient(circle, var(--glow-right), transparent 70%);
+  }
+
+  .sky-sun{
+    position:absolute;
+    left:10vw;
+    top:10vh;
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    background:
+      radial-gradient(circle, rgba(255,242,188,.96) 0%, rgba(255,220,130,.82) 46%, rgba(255,190,100,.28) 72%, transparent 100%);
+    opacity: var(--sun-opacity);
+    filter: blur(1px);
+    box-shadow: 0 0 60px rgba(255,210,120,.18);
+  }
+
+  .sky-moon{
+    position:absolute;
+    right:10vw;
+    top:10vh;
+    width:110px;
+    height:110px;
+    border-radius:50%;
+    background:
+      radial-gradient(circle at 35% 35%, rgba(255,255,255,.98), rgba(243,244,255,.92) 55%, rgba(220,228,255,.78) 78%, rgba(190,205,255,.22) 100%);
+    box-shadow:
+      0 0 36px rgba(255,255,255,.22),
+      0 0 95px rgba(180,210,255,.14);
+    opacity: var(--moon-opacity);
+    filter: blur(.2px);
+  }
+
+  .sky-stars{
+    position:absolute;
+    inset:0;
+    opacity: var(--stars-opacity);
+    background-image:
+      radial-gradient(circle at 10% 20%, rgba(255,255,255,.82) 0 1px, transparent 1.6px),
+      radial-gradient(circle at 18% 42%, rgba(255,255,255,.62) 0 1px, transparent 1.6px),
+      radial-gradient(circle at 28% 14%, rgba(255,255,255,.72) 0 1px, transparent 1.6px),
+      radial-gradient(circle at 36% 32%, rgba(255,255,255,.55) 0 1px, transparent 1.6px),
+      radial-gradient(circle at 47% 18%, rgba(255,255,255,.70) 0 1px, transparent 1.6px),
+      radial-gradient(circle at 56% 10%, rgba(255,255,255,.64) 0 1px, transparent 1.6px),
+      radial-gradient(circle at 63% 26%, rgba(255,255,255,.82) 0 1px, transparent 1.6px),
+      radial-gradient(circle at 72% 16%, rgba(255,255,255,.60) 0 1px, transparent 1.6px),
+      radial-gradient(circle at 82% 24%, rgba(255,255,255,.72) 0 1px, transparent 1.6px),
+      radial-gradient(circle at 91% 14%, rgba(255,255,255,.55) 0 1px, transparent 1.6px),
+      radial-gradient(circle at 12% 66%, rgba(255,255,255,.62) 0 1px, transparent 1.6px),
+      radial-gradient(circle at 32% 74%, rgba(255,255,255,.74) 0 1px, transparent 1.6px),
+      radial-gradient(circle at 54% 68%, rgba(255,255,255,.58) 0 1px, transparent 1.6px),
+      radial-gradient(circle at 74% 62%, rgba(255,255,255,.68) 0 1px, transparent 1.6px),
+      radial-gradient(circle at 88% 72%, rgba(255,255,255,.58) 0 1px, transparent 1.6px);
+  }
+
+  .sky-clouds{
+    position:absolute;
+    left:-10%;
+    width:120%;
+    border-radius:50%;
+    filter: blur(34px);
+  }
+  .sky-clouds-back{
+    bottom:-8%;
+    height:35%;
+    opacity: var(--cloud-back-opacity);
+    background:
+      radial-gradient(circle at 8% 40%, rgba(255,255,255,.18), transparent 18%),
+      radial-gradient(circle at 24% 52%, rgba(255,255,255,.16), transparent 20%),
+      radial-gradient(circle at 42% 42%, rgba(255,255,255,.16), transparent 18%),
+      radial-gradient(circle at 58% 50%, rgba(255,255,255,.14), transparent 20%),
+      radial-gradient(circle at 76% 44%, rgba(255,255,255,.18), transparent 18%),
+      radial-gradient(circle at 92% 54%, rgba(255,255,255,.14), transparent 19%);
+  }
+  .sky-clouds-front{
+    bottom:-16%;
+    height:42%;
+    opacity: var(--cloud-front-opacity);
+    background:
+      radial-gradient(circle at 14% 40%, rgba(255,245,240,.22), transparent 20%),
+      radial-gradient(circle at 34% 52%, rgba(255,240,235,.20), transparent 22%),
+      radial-gradient(circle at 56% 46%, rgba(255,245,240,.18), transparent 22%),
+      radial-gradient(circle at 78% 50%, rgba(255,240,235,.22), transparent 22%);
+  }
+
+  .sky-mist{
+    position:absolute;
+    inset:auto 0 0 0;
+    height:44%;
+    opacity: var(--mist-opacity);
+    background:
+      linear-gradient(180deg, transparent 0%, rgba(255,255,255,.03) 35%, rgba(255,255,255,.10) 100%);
+    filter: blur(20px);
+  }
+
+  @keyframes driftBack {
+    0% { transform: translateX(0px) translateY(0px); }
+    50% { transform: translateX(18px) translateY(-6px); }
+    100% { transform: translateX(0px) translateY(0px); }
+  }
+  @keyframes driftFront {
+    0% { transform: translateX(0px) translateY(0px); }
+    50% { transform: translateX(-24px) translateY(8px); }
+    100% { transform: translateX(0px) translateY(0px); }
+  }
+  @keyframes starPulse {
+    0%, 100% { opacity: var(--stars-opacity); }
+    50% { opacity: calc(var(--stars-opacity) + .04); }
+  }
+  .sky-clouds-back { animation: driftBack 28s ease-in-out infinite; }
+  .sky-clouds-front { animation: driftFront 34s ease-in-out infinite; }
+  .sky-stars { animation: starPulse 10s ease-in-out infinite; }
 
   #brand {
     position: fixed;
@@ -125,7 +282,7 @@
   }
   .ctl {
     border: 1px solid var(--line);
-    background: rgba(10,14,24,.72);
+    background: rgba(10,14,24,.66);
     color: rgba(255,255,255,.82);
     border-radius: 999px;
     padding: 9px 12px;
@@ -133,8 +290,8 @@
     letter-spacing: .12em;
     text-transform: uppercase;
     cursor: pointer;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
   }
   .ctl:hover {
     background: rgba(255,255,255,.10);
@@ -428,7 +585,7 @@
     justify-content: center;
     gap: 8px;
     padding: 22px 16px 18px;
-    background: linear-gradient(180deg, transparent 0%, rgba(8,10,18,.88) 45%, rgba(8,10,18,.96) 100%);
+    background: linear-gradient(180deg, transparent 0%, rgba(8,10,18,.78) 45%, rgba(8,10,18,.92) 100%);
     overflow-x: auto;
     scrollbar-width: none;
   }
@@ -684,7 +841,17 @@
   <div class="bar"></div>
 </div>
 
-<div id="atmosphere"></div>
+<div id="sky">
+  <div class="sky-gradient"></div>
+  <div class="sky-glow sky-glow-left"></div>
+  <div class="sky-glow sky-glow-right"></div>
+  <div class="sky-sun"></div>
+  <div class="sky-moon"></div>
+  <div class="sky-stars"></div>
+  <div class="sky-clouds sky-clouds-back"></div>
+  <div class="sky-clouds sky-clouds-front"></div>
+  <div class="sky-mist"></div>
+</div>
 
 <div id="brand">
   <h1>Sruti Bhattacharjee</h1>
@@ -700,6 +867,7 @@
 <div id="controls">
   <button class="ctl" id="fitBtn">Fit view</button>
   <button class="ctl" id="resetBtn">Reset</button>
+  <button class="ctl" id="skyBtn">Change sky</button>
 </div>
 
 <div id="viewport">
@@ -724,6 +892,85 @@
 </aside>
 
 <script>
+const SKY_MOODS = [
+  {
+    name: "dawn",
+    top: "#2a3252",
+    mid: "#5e5972",
+    bottom: "#c88a6f",
+    glowLeft: "rgba(255,180,95,.36)",
+    glowRight: "rgba(255,220,170,.12)",
+    moonOpacity: ".14",
+    sunOpacity: ".80",
+    starsOpacity: ".04",
+    cloudBackOpacity: ".30",
+    cloudFrontOpacity: ".44",
+    mistOpacity: ".14"
+  },
+  {
+    name: "sunset",
+    top: "#3a3f5e",
+    mid: "#7e6072",
+    bottom: "#d98d62",
+    glowLeft: "rgba(255,165,84,.42)",
+    glowRight: "rgba(255,210,145,.16)",
+    moonOpacity: ".00",
+    sunOpacity: ".72",
+    starsOpacity: ".02",
+    cloudBackOpacity: ".34",
+    cloudFrontOpacity: ".48",
+    mistOpacity: ".16"
+  },
+  {
+    name: "twilight",
+    top: "#22304f",
+    mid: "#3d4561",
+    bottom: "#6b5363",
+    glowLeft: "rgba(255,185,110,.30)",
+    glowRight: "rgba(155,190,255,.18)",
+    moonOpacity: ".55",
+    sunOpacity: ".00",
+    starsOpacity: ".18",
+    cloudBackOpacity: ".34",
+    cloudFrontOpacity: ".42",
+    mistOpacity: ".18"
+  },
+  {
+    name: "night",
+    top: "#0c1430",
+    mid: "#141d3b",
+    bottom: "#232845",
+    glowLeft: "rgba(100,130,255,.08)",
+    glowRight: "rgba(205,225,255,.22)",
+    moonOpacity: ".98",
+    sunOpacity: ".00",
+    starsOpacity: ".62",
+    cloudBackOpacity: ".22",
+    cloudFrontOpacity: ".28",
+    mistOpacity: ".18"
+  }
+];
+
+let currentSky = 3;
+
+function applySkyMood(index){
+  currentSky = (index + SKY_MOODS.length) % SKY_MOODS.length;
+  const m = SKY_MOODS[currentSky];
+  const root = document.documentElement;
+
+  root.style.setProperty("--sky-top", m.top);
+  root.style.setProperty("--sky-mid", m.mid);
+  root.style.setProperty("--sky-bottom", m.bottom);
+  root.style.setProperty("--glow-left", m.glowLeft);
+  root.style.setProperty("--glow-right", m.glowRight);
+  root.style.setProperty("--moon-opacity", m.moonOpacity);
+  root.style.setProperty("--sun-opacity", m.sunOpacity);
+  root.style.setProperty("--stars-opacity", m.starsOpacity);
+  root.style.setProperty("--cloud-back-opacity", m.cloudBackOpacity);
+  root.style.setProperty("--cloud-front-opacity", m.cloudFrontOpacity);
+  root.style.setProperty("--mist-opacity", m.mistOpacity);
+}
+
 const PLACES = [
   {
     city: "Kanpur",
@@ -1222,6 +1469,8 @@ function deselect(){
 document.getElementById('closePanel').addEventListener('click', deselect);
 document.getElementById('fitBtn').addEventListener('click', fitAll);
 document.getElementById('resetBtn').addEventListener('click', resetView);
+document.getElementById('skyBtn').addEventListener('click', () => applySkyMood(currentSky + 1));
+
 document.getElementById('prevBtn').addEventListener('click', () => {
   if(selectedPlaceIndex > 0) selectPlace(islandEls[selectedPlaceIndex - 1].city);
 });
@@ -1338,12 +1587,18 @@ function animate(){
 
 window.addEventListener('resize', fitAll);
 
+applySkyMood(currentSky);
+
 setTimeout(() => {
   document.getElementById('loading').style.display = 'none';
   fitAll();
   selectPlace('Stockholm');
   animate();
 }, 650);
+
+setInterval(() => {
+  applySkyMood(currentSky + 1);
+}, 600000);
 </script>
 </body>
 </html>
