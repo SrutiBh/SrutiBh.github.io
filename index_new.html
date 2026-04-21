@@ -105,28 +105,65 @@
        JOURNEY MAP
     ════════════════════════════════════════ */
     .jshell {
+      position: relative;
       background: linear-gradient(180deg,#0d1328 0%,#111936 46%,#15203d 100%);
-      border-radius: 1rem; overflow: hidden;
-      border: 1px solid rgba(148,163,184,0.14);
+      border-radius: 1rem;
+      overflow: hidden;
       box-shadow: 0 16px 40px rgba(15,23,42,0.14);
+      transition: all 0.28s ease;
     }
+
+    .jshell.is-maximized {
+      position: fixed;
+      inset: 1rem;
+      z-index: 80;
+      border-radius: 1rem;
+      box-shadow: 0 24px 80px rgba(15,23,42,0.28);
+    }
+
     .jtoolbar {
-      display: flex; justify-content: flex-end; align-items: center;
-      padding: 0.9rem 1rem 0.75rem; gap: 0.5rem;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+      position: absolute;
+      top: 0.9rem;
+      right: 1rem;
+      z-index: 12;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 0;
+      border-bottom: none;
+      background: transparent;
     }
-    .jbtn {
-      border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.05);
-      color: rgba(255,255,255,0.85); border-radius: 999px; padding: 0.4rem 0.85rem;
-      font-size: 0.67rem; text-transform: uppercase; letter-spacing: 0.11em;
-      cursor: pointer; transition: background 0.15s, transform 0.15s;
+
+    .jicon-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(10,16,32,0.26);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      color: rgba(255,255,255,0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.15s, border-color 0.15s;
       font-family: 'DM Sans', system-ui, sans-serif;
+      font-size: 0.9rem;
+      line-height: 1;
     }
-    .jbtn:hover { background: rgba(255,255,255,0.11); transform: translateY(-1px); }
+    .jicon-btn:hover {
+      background: rgba(10,16,32,0.38);
+      border-color: rgba(255,255,255,0.16);
+      transform: translateY(-1px);
+    }
 
     .jvp {
-      position: relative; height: 580px; overflow: hidden;
-      touch-action: none; cursor: grab;
+      position: relative;
+      height: 580px;
+      overflow: hidden;
+      touch-action: none;
+      cursor: grab;
       background:
         radial-gradient(circle at 84% 12%, rgba(255,255,255,.16) 0 48px, rgba(200,215,255,.05) 49px, transparent 100px),
         radial-gradient(circle at 10% 18%, rgba(255,255,255,.11) 0 1px, transparent 2px),
@@ -138,7 +175,12 @@
         radial-gradient(circle at 90% 18%, rgba(255,255,255,.08) 0 1px, transparent 2px),
         radial-gradient(circle at 18% 22%, rgba(116,144,255,0.10), transparent 26%),
         linear-gradient(180deg, #091127 0%, #101a36 48%, #15203d 100%);
+      transition: height 0.28s ease;
     }
+    .jshell.is-maximized .jvp {
+      height: calc(100vh - 2rem);
+    }
+
     .jvp.dragging { cursor: grabbing; }
 
     .jworld {
@@ -247,7 +289,14 @@
       user-select: none;
     }
     .jdetail-header:active { cursor: grabbing; }
-    .jdetail-body { padding: 0.75rem 1.1rem 1rem; overflow-y: auto; flex: 1; }
+    .jdetail-body {
+      padding: 0.75rem 1.1rem 1rem;
+      overflow-y: auto;
+      flex: 1;
+      cursor: auto;
+      user-select: text;
+      -webkit-user-select: text;
+    }
 
     .jresize {
       position: absolute;
@@ -308,21 +357,133 @@
     }
     .jdsubtitle { margin-top: 0.32rem; font-size: 0.67rem; letter-spacing: .17em; text-transform: uppercase; color: #6d7f97; }
     .jcards-wrap { margin-top: 0; display: grid; gap: 0.75rem; }
-    .jcard { background: white; border: 1px solid #e9edf1; border-radius: 10px; padding: 0.85rem 0.9rem; box-shadow: 0 1px 6px rgba(20,40,70,.04); }
-    .jct { font-weight: 500; font-size: 0.97rem; color: #0f203a; }
-    .jco { margin-top: 0.15rem; font-size: 0.86rem; color: #0073d6; }
-    .jcy { margin-top: 0.08rem; font-size: 0.82rem; color: #7b8ca3; }
-    .jcn { margin-top: 0.4rem; font-size: 0.85rem; line-height: 1.52; color: #5b6e87; }
-    .jtags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.6rem; }
+
+    .jcard {
+      background: white;
+      border: 1px solid #e9edf1;
+      border-radius: 10px;
+      padding: 0;
+      box-shadow: 0 1px 6px rgba(20,40,70,.04);
+      overflow: hidden;
+    }
+
+    .jcard-head {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      padding: 0.95rem 1rem 0.85rem;
+      border-bottom: 1px solid #eef2f6;
+      background: linear-gradient(180deg, rgba(248,250,252,0.9), rgba(255,255,255,0.98));
+    }
+
+    .jlogo {
+      width: 4rem;
+      height: 4rem;
+      min-width: 4rem;
+      flex-shrink: 0;
+      border-radius: 999px;
+      background: #f8fafc;
+      border: 1px solid #f1f5f9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.45rem;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.06);
+      overflow: hidden;
+      color: #64748b;
+    }
+
+    .jlogo img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .jorg-wrap {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .jorg {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #0f203a;
+      line-height: 1.35;
+    }
+
+    .jorg-sub {
+      margin-top: 0.12rem;
+      font-size: 0.78rem;
+      color: #7b8ca3;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .jroles {
+      display: grid;
+      gap: 0;
+    }
+
+    .jrole {
+      padding: 0.9rem 1rem 0.95rem;
+    }
+
+    .jrole + .jrole {
+      border-top: 1px solid #eef2f6;
+    }
+
+    .jct {
+      font-weight: 600;
+      font-size: 0.97rem;
+      color: #0f203a;
+      line-height: 1.35;
+    }
+
+    .jcy {
+      margin-top: 0.12rem;
+      font-size: 0.82rem;
+      color: #7b8ca3;
+    }
+
+    .jcn {
+      margin-top: 0.4rem;
+      font-size: 0.85rem;
+      line-height: 1.52;
+      color: #5b6e87;
+    }
+
+    .jtags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: 0.6rem;
+    }
+
     .jtag {
-      border: 1px solid #dbe3ea; background: #f7f9fb; color: #7387a0;
-      border-radius: 999px; padding: 0.18rem 0.45rem;
-      font-size: 0.6rem; letter-spacing: .04em; text-transform: uppercase;
+      border: 1px solid #dbe3ea;
+      background: #f7f9fb;
+      color: #7387a0;
+      border-radius: 999px;
+      padding: 0.18rem 0.45rem;
+      font-size: 0.6rem;
+      letter-spacing: .04em;
+      text-transform: uppercase;
     }
 
     @media (max-width: 640px) {
       .jvp { height: 440px; }
+      .jshell.is-maximized .jvp { height: calc(100vh - 1.2rem); }
       .jdetail { width: calc(100% - 20px) !important; left: 10px !important; }
+      .jlogo {
+        width: 3.3rem;
+        height: 3.3rem;
+        min-width: 3.3rem;
+      }
+      .jshell.is-maximized {
+        inset: 0.6rem;
+        border-radius: 0.9rem;
+      }
     }
   </style>
 </head>
@@ -331,7 +492,6 @@
   <!-- ══════════════════ HERO ══════════════════ -->
   <header class="hero-bg text-white min-h-[100dvh] flex flex-col items-center justify-center p-6 relative overflow-hidden">
 
-    <!-- Profile photo -->
     <div class="fade-1 mb-6">
       <div class="w-36 h-36 md:w-40 md:h-40 rounded-full border-4 border-white/20 shadow-2xl bg-slate-700 flex items-center justify-center overflow-hidden mx-auto">
         <img src="images/profile/glass_profile.jpeg" alt="Sruti Bhattacharjee"
@@ -340,15 +500,12 @@
       </div>
     </div>
 
-    <!-- Name -->
     <h1 class="hero-name text-5xl md:text-7xl fade-2 text-center">Sruti Bhattacharjee</h1>
 
-    <!-- Title -->
     <p class="mt-3 text-base md:text-xl text-slate-400 fade-3 font-light tracking-wide text-center">
        Graduate Student &nbsp;·&nbsp; KTH Royal Institute of Technology
     </p>
 
-    <!-- Links pill -->
     <div class="mt-8 bg-black/30 backdrop-blur-sm px-6 py-3 rounded-2xl fade-4 border border-white/10">
       <div class="flex flex-wrap justify-center items-center gap-5 md:gap-7">
 
@@ -380,7 +537,6 @@
       </div>
     </div>
 
-    <!-- Bouncing arrow -->
     <a href="#main-content" class="absolute bottom-10 text-white/40 hover:text-white/80 transition-colors bounce-icon z-10">
       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 12 16 16 12"/><line x1="12" y1="8" x2="12" y2="16"/></svg>
     </a>
@@ -389,7 +545,6 @@
   <!-- ══════════════════ MAIN ══════════════════ -->
   <main id="main-content" class="container mx-auto max-w-4xl px-4 py-16 space-y-20">
 
-    <!-- ABOUT -->
     <section id="about">
       <h2 class="section-title text-3xl text-slate-800 mb-6 border-b-2 border-slate-200 pb-2">About Me</h2>
       <div class="entry-card text-base leading-relaxed space-y-4 text-slate-600">
@@ -399,7 +554,6 @@
       </div>
     </section>
 
-    <!-- RESEARCH INTERESTS -->
     <section id="research">
       <h2 class="section-title text-3xl text-slate-800 mb-6 border-b-2 border-slate-200 pb-2">Research Interests</h2>
       <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
@@ -430,7 +584,6 @@
       </div>
     </section>
 
-    <!-- EDUCATION -->
     <section id="cv">
       <h2 class="section-title text-3xl text-slate-800 mb-6 border-b-2 border-slate-200 pb-2">Education</h2>
       <div class="space-y-5">
@@ -486,13 +639,11 @@
       </div>
     </section>
 
-    <!-- WORK EXPERIENCE -->
     <section id="experience">
       <h2 class="section-title text-3xl text-slate-800 mb-6 border-b-2 border-slate-200 pb-2">Selected Experiences</h2>
-      <div class="jshell">
+      <div class="jshell" id="jshell">
         <div class="jtoolbar">
-          <button class="jbtn" id="fitBtn" type="button">Fit view</button>
-          <button class="jbtn" id="resetBtn" type="button">Reset</button>
+          <button class="jicon-btn" id="toggleMapSize" type="button" title="Maximize map" aria-label="Maximize map">[ ]</button>
         </div>
         <div class="jvp" id="jvp">
           <div class="jworld" id="jworld"></div>
@@ -508,7 +659,7 @@
                 <button class="jclose" id="jclose" type="button" title="Close">✕</button>
               </div>
             </div>
-            <div class="jdetail-body">
+            <div class="jdetail-body" id="jdetailBody">
               <div class="jcards-wrap" id="jcards"></div>
             </div>
 
@@ -529,7 +680,6 @@
       </div>
     </section>
 
-    <!-- PORTFOLIO -->
     <section id="portfolio">
       <h2 class="section-title text-3xl text-slate-800 mb-6 border-b-2 border-slate-200 pb-2">Portfolio</h2>
 
@@ -539,7 +689,6 @@
         <button class="tab-btn" onclick="switchTab('visual',this)">Visual Computing</button>
       </div>
 
-      <!-- UX Research -->
       <div class="tab-panel active" id="tab-ux">
         <div class="entry-card flex flex-col md:flex-row gap-5 items-start mb-5">
           <div class="pub-teaser flex-shrink-0">VR Learning<br/>Environment</div>
@@ -570,7 +719,6 @@
         </div>
       </div>
 
-      <!-- Interaction Design -->
       <div class="tab-panel" id="tab-interaction">
         <div class="entry-card flex flex-col md:flex-row gap-5 items-start mb-5">
           <div class="pub-teaser flex-shrink-0">Urban<br/>Interaction</div>
@@ -601,7 +749,6 @@
         </div>
       </div>
 
-      <!-- Visual Computing -->
       <div class="tab-panel" id="tab-visual">
         <div class="entry-card flex flex-col md:flex-row gap-5 items-start mb-5">
           <div class="pub-teaser flex-shrink-0">VR + ML<br/>Research</div>
@@ -634,7 +781,6 @@
 
     </section>
 
-    <!-- CONTACT -->
     <section id="contact">
       <h2 class="section-title text-3xl text-slate-800 mb-6 border-b-2 border-slate-200 pb-2">Contact</h2>
       <div class="entry-card space-y-4 text-slate-600">
@@ -669,92 +815,162 @@
 
     const PLACES = [
       {
-        city: "Kanpur", tagline: "Foundations in signal & visual systems", mark: "spire",
-        top: "#BFEA7A", rim: "#9ED65A",
+        city: "Kanpur",
+        tagline: "Foundations in signal & visual systems",
+        mark: "spire",
+        top: "#BFEA7A",
+        rim: "#9ED65A",
         years: ["2015","2017","2019"],
+        org: "IIT Kanpur, India",
+        orgLabel: "Institute",
+        logo: "images/logos/iitk.png",
+        alt: "IIT Kanpur",
         experiences: [
-          { title: "Research Exploration", org: "IIT Kanpur, India", year: "2015", note: "Tessellation, Symmetry 1D → 2D → 3D → 4D → nD", tags: ["Geometry","Symmetry","Theory"] },
-          { title: "Core Processing Systems", org: "IIT Kanpur, India", year: "2017", note: "Signal Processing, Image Processing, Video Processing", tags: ["Signal","Image","Video"] },
-          { title: "Advanced Video Analysis", org: "IIT Kanpur, India", year: "2019", note: "Extended work in Video Processing and computational visual analysis", tags: ["Video","Analysis"] }
+          { title: "Research Exploration", year: "2015", note: "Tessellation, Symmetry 1D → 2D → 3D → 4D → nD", tags: ["Geometry","Symmetry","Theory"] },
+          { title: "Core Processing Systems", year: "2017", note: "Signal Processing, Image Processing, Video Processing", tags: ["Signal","Image","Video"] },
+          { title: "Advanced Video Analysis", year: "2019", note: "Extended work in Video Processing and computational visual analysis", tags: ["Video","Analysis"] }
         ]
       },
       {
-        city: "Chennai", tagline: "Graphics & physical simulation", mark: "arch",
-        top: "#C7F66C", rim: "#9BE548",
+        city: "Chennai",
+        tagline: "Graphics & physical simulation",
+        mark: "arch",
+        top: "#C7F66C",
+        rim: "#9BE548",
         years: ["2016"],
+        org: "IIT Madras, India",
+        orgLabel: "Institute",
+        logo: "images/logos/iitm.png",
+        alt: "IIT Madras",
         experiences: [
-          { title: "Graphics & Simulation Internship", org: "IIT Madras, India", year: "2016", note: "3D Computer Graphics, OpenGL, Cloth Simulation, Bullet Physics, Visual C++", tags: ["OpenGL","Simulation","C++","Physics"] }
+          { title: "Graphics & Simulation Internship", year: "2016", note: "3D Computer Graphics, OpenGL, Cloth Simulation, Bullet Physics, Visual C++", tags: ["OpenGL","Simulation","C++","Physics"] }
         ]
       },
       {
-        city: "Kharagpur", tagline: "Computer vision & technical depth", mark: "spire",
-        top: "#AEEF57", rim: "#84D933",
+        city: "Kharagpur",
+        tagline: "Computer vision & technical depth",
+        mark: "spire",
+        top: "#AEEF57",
+        rim: "#84D933",
         years: ["2017","2018","2019","2020"],
+        org: "IIT Kharagpur, India",
+        orgLabel: "Institute",
+        logo: "images/logos/iitkgp.jpg",
+        alt: "IIT Kharagpur",
         experiences: [
-          { title: "Vision Foundations", org: "IIT Kharagpur, India", year: "2017", note: "Image Processing Matlab, TensorFlow Masked RCNN, OpenCV", tags: ["Matlab","TensorFlow","OpenCV"] },
-          { title: "Hardware Intelligence", org: "IIT Kharagpur, India", year: "2018", note: "Counterfeit IC, IC Textures, LaTeX, PyBPDL, PyTorch Introduction", tags: ["Counterfeit IC","LaTeX","PyTorch"] },
-          { title: "Remote Analytical Research", org: "IIT Kharagpur, India", year: "2019", note: "Music Perception, Signal Processing, Data Analytics, Matlab", tags: ["Music Perception","Signal","Analytics"] },
-          { title: "DeepFake Video Systems", org: "IIT Kharagpur, India", year: "2020", note: "DeepFakeFace Video, PyTorch, Python, Interframe Difference", tags: ["DeepFake","Video","PyTorch"] }
+          { title: "Vision Foundations", year: "2017", note: "Image Processing Matlab, TensorFlow Masked RCNN, OpenCV", tags: ["Matlab","TensorFlow","OpenCV"] },
+          { title: "Hardware Intelligence", year: "2018", note: "Counterfeit IC, IC Textures, LaTeX, PyBPDL, PyTorch Introduction", tags: ["Counterfeit IC","LaTeX","PyTorch"] },
+          { title: "Remote Analytical Research", year: "2019", note: "Music Perception, Signal Processing, Data Analytics, Matlab", tags: ["Music Perception","Signal","Analytics"] },
+          { title: "Research Engineer", year: "2020", note: "DeepFake Video Detection using Computer Vision, using temporal analysis and inter-frame differences.", tags: ["DeepFake","Video","PyTorch"] }
         ]
       },
       {
-        city: "Chicago", tagline: "AI & vocal signal interpretation", mark: "pavilion",
-        top: "#C8D6C8", rim: "#AABCAA",
+        city: "Chicago",
+        tagline: "AI & vocal signal interpretation",
+        mark: "pavilion",
+        top: "#C8D6C8",
+        rim: "#AABCAA",
         years: ["2018","2019"],
+        org: "UIUC, USA",
+        orgLabel: "Institute",
+        logo: "images/logos/uiuc.png",
+        alt: "UIUC",
         experiences: [
-          { title: "Remote Research", org: "UIUC, USA", year: "2018–2019", note: "Python, PyTorch, LSTM, Infant Voice & Needs Expression modelling", tags: ["Python","PyTorch","LSTM","Signal"] }
+          { title: "Remote Research", year: "2018–2019", note: "Python, PyTorch, LSTM, Infant Voice & Needs Expression modelling", tags: ["Python","PyTorch","LSTM","Signal"] }
         ]
       },
       {
-        city: "Lyon", tagline: "Theory, patterns & symmetry", mark: "arch",
-        top: "#D5E2D1", rim: "#B8C8B3",
+        city: "Lyon",
+        tagline: "Theory, patterns & symmetry",
+        mark: "arch",
+        top: "#D5E2D1",
+        rim: "#B8C8B3",
         years: ["2019"],
+        org: "Claude Bernard Lyon 1 / CNRS, France",
+        orgLabel: "Institute",
+        logo: "images/logos/cnrs.png",
+        alt: "CNRS",
         experiences: [
-          { title: "Remote Research", org: "Claude Bernard Lyon 1 / CNRS, France", year: "2019", note: "Symmetry, Asymmetry, Literature Review, Convex-Concave, Graphical Patterns", tags: ["Symmetry","Literature Review","Patterns"] }
+          { title: "Remote Research", year: "2019", note: "Symmetry, Asymmetry, Literature Review, Convex-Concave, Graphical Patterns", tags: ["Symmetry","Literature Review","Patterns"] }
         ]
       },
       {
-        city: "Kolkata", tagline: "Teaching & knowledge transfer", mark: "pavilion",
-        top: "#85B7EB", rim: "#378ADD",
+        city: "Kolkata",
+        tagline: "Teaching & knowledge transfer",
+        mark: "pavilion",
+        top: "#85B7EB",
+        rim: "#378ADD",
         years: ["2019"],
+        org: "NSHM College, India",
+        orgLabel: "Institute",
+        logo: "images/logos/nshm.png",
+        alt: "NSHM",
         experiences: [
-          { title: "Teaching Computer Graphics", org: "NSHM College, India", year: "2019", note: "Teaching Computer Graphics and OpenGL to bachelor students", tags: ["Teaching","Computer Graphics","OpenGL"] }
+          { title: "Teaching Computer Graphics", year: "2019", note: "Teaching Computer Graphics and OpenGL to bachelor students", tags: ["Teaching","Computer Graphics","OpenGL"] }
         ]
       },
       {
-        city: "Stockholm", tagline: "HCI, systems & applied research", mark: "spire",
-        top: "#FF9A2E", rim: "#E07010",
+        city: "Stockholm",
+        tagline: "HCI, systems & applied research",
+        mark: "spire",
+        top: "#FF9A2E",
+        rim: "#E07010",
         years: ["2020","2021","2022","2024","2025","2026"],
+        org: "KTH Royal Institute of Technology / Ericsson, Sweden",
+        orgLabel: "Institute / Industry",
+        logo: "images/logos/kth.png",
+        alt: "KTH",
         experiences: [
-          { title: "Teaching Assistant", org: "KTH, Sweden", year: "2020–2025", note: "TA across multiple KTH courses", tags: ["Teaching","KTH"] },
-          { title: "Research Assistant", org: "KTH / Karolinska Institute, Sweden", year: "2021", note: "PyQT and Python-based research work", tags: ["Python","PyQT","Research"] },
-          { title: "Summer R&D Intern", org: "Ericsson, Sweden", year: "2021", note: "Teleoperation Robotics & haptic systems", tags: ["Ericsson","Teleoperation","Robotics"] }
+          { title: "Teaching Assistant", year: "2020–2025", note: "TA across multiple KTH courses", tags: ["Teaching","KTH"] },
+          { title: "Research Assistant", year: "2021", note: "PyQT and Python-based research work at KTH / Karolinska Institute", tags: ["Python","PyQT","Research"] },
+          { title: "Summer R&D Intern", year: "2021", note: "Teleoperation robotics and haptic systems at Ericsson", tags: ["Ericsson","Teleoperation","Robotics"] }
         ]
       },
       {
-        city: "Lausanne", tagline: "Design research & systems thinking", mark: "pavilion",
-        top: "#F9E04B", rim: "#E6C418",
+        city: "Lausanne",
+        tagline: "Design research & systems thinking",
+        mark: "pavilion",
+        top: "#F9E04B",
+        rim: "#E6C418",
         years: ["2021","2022","2023"],
+        org: "EPFL / University of Lausanne, Switzerland",
+        orgLabel: "Institute",
+        logo: "images/logos/epfl.png",
+        alt: "EPFL",
         experiences: [
-          { title: "Graduate Exchange + Research", org: "EPFL, Switzerland", year: "2021–2022", note: "Research across design, systems, and emerging technology", tags: ["EPFL","Exchange","Research"] },
-          { title: "Research Assistant", org: "University of Lausanne, Switzerland", year: "2023", note: "EdTech to Support Programming Learning in Hybrid University Classes", tags: ["UNIL","EdTech","Research"] }
+          { title: "Graduate Exchange + Research", year: "2021–2022", note: "Research across design, systems, and emerging technology at EPFL", tags: ["EPFL","Exchange","Research"] },
+          { title: "Research Assistant", year: "2023", note: "EdTech to Support Programming Learning in Hybrid University Classes at UNIL", tags: ["UNIL","EdTech","Research"] }
         ]
       },
       {
-        city: "Jyväskylä", tagline: "Accessibility & multimodal interaction", mark: "arch",
-        top: "#F9E04B", rim: "#E6C418",
+        city: "Jyväskylä",
+        tagline: "Accessibility & multimodal interaction",
+        mark: "arch",
+        top: "#F9E04B",
+        rim: "#E6C418",
         years: ["2025"],
+        org: "University of Jyväskylä, Finland",
+        orgLabel: "Institute",
+        logo: "images/logos/jyu_transparent.png",
+        alt: "JYU",
         experiences: [
-          { title: "Summer Trainee", org: "University of Jyväskylä, Finland", year: "2025", note: "Accessible Interactive Technology, Multimodal Accessibility Design", tags: ["Accessibility","Multimodal","Interactive Tech"] }
+          { title: "Summer Trainee", year: "2025", note: "Accessible Interactive Technology, Multimodal Accessibility Design", tags: ["Accessibility","Multimodal","Interactive Tech"] }
         ]
       },
       {
-        city: "Paris", tagline: "Language, reflection & future direction", mark: "arch",
-        top: "#E8B6C6", rim: "#D48CA5",
+        city: "Paris",
+        tagline: "Language, reflection & future direction",
+        mark: "arch",
+        top: "#E8B6C6",
+        rim: "#D48CA5",
         years: ["2025","2026"],
+        org: "Paris, France",
+        orgLabel: "Chapter",
+        logo: "images/logos/france.png",
+        alt: "France",
         experiences: [
-          { title: "French Language Learning", org: "Paris, France", year: "2025", note: "Language learning and broader cultural fluency", tags: ["French","Language","Growth"] },
-          { title: "Family Building Chapter", org: "Paris, France", year: "2026", note: "A slower, intentional chapter centered on life direction and family building", tags: ["Reflection","Family","Future"] }
+          { title: "French Language Learning", year: "2025", note: "Language learning and broader cultural fluency", tags: ["French","Language","Growth"] },
+          { title: "Family Building Chapter", year: "2026", note: "A slower, intentional chapter centered on life direction and family building", tags: ["Reflection","Family","Future"] }
         ]
       }
     ];
@@ -774,15 +990,17 @@
 
     const WW = 3000, WH = 1800;
 
+    const shell  = document.getElementById('jshell');
     const world  = document.getElementById('jworld');
     const vp     = document.getElementById('jvp');
     const detail = document.getElementById('jdetail');
+    const detailBody = document.getElementById('jdetailBody');
     const dtitle = document.getElementById('jdtitle');
     const dsub   = document.getElementById('jdsubtitle');
     const dcards = document.getElementById('jcards');
+    const mapToggleBtn = document.getElementById('toggleMapSize');
 
     const S = { s: 1, x: 0, y: 0, ts: 1, tx: 0, ty: 0, minS: 0.28, maxS: 2.2 };
-
     const islands = PLACES.map((p, i) => ({ ...p, ...POSITIONS[i], el: null }));
 
     function markHTML(type) {
@@ -855,14 +1073,32 @@
       islands.forEach((is, j) => is.el.classList.toggle('sel', j === i));
       dtitle.textContent = p.city;
       dsub.textContent = p.tagline;
-      dcards.innerHTML = p.experiences.map(e => `
+
+      dcards.innerHTML = `
         <div class="jcard">
-          <div class="jct">${e.title}</div>
-          <div class="jco">${e.org}</div>
-          <div class="jcy">${e.year}</div>
-          <div class="jcn">${e.note}</div>
-          <div class="jtags">${(e.tags || []).map(t => `<span class="jtag">${t}</span>`).join('')}</div>
-        </div>`).join('');
+          <div class="jcard-head">
+            <div class="jlogo">
+              <img src="${p.logo || ''}" alt="${p.alt || p.org || p.city}"
+                   onerror="this.style.display='none'; this.parentElement.innerHTML='🏛️'; this.parentElement.style.fontSize='1.25rem';">
+            </div>
+            <div class="jorg-wrap">
+              <div class="jorg">${p.org || p.city}</div>
+              <div class="jorg-sub">${p.orgLabel || 'Institute'}</div>
+            </div>
+          </div>
+
+          <div class="jroles">
+            ${p.experiences.map(e => `
+              <div class="jrole">
+                <div class="jct">${e.title}</div>
+                <div class="jcy">${e.year}</div>
+                <div class="jcn">${e.note}</div>
+                <div class="jtags">${(e.tags || []).map(t => `<span class="jtag">${t}</span>`).join('')}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
 
       const wasOpen = detail.classList.contains('open');
       if (wasOpen) {
@@ -872,11 +1108,8 @@
         requestAnimationFrame(() => { detail.style.transition = ''; });
       } else {
         detail.classList.add('open');
-        if (cardState.left !== null) {
-          applyCardState();
-        } else {
-          positionDetail();
-        }
+        if (cardState.left !== null) applyCardState();
+        else positionDetail();
       }
       focusOn(p.x, p.y, 1.1);
       setTimeout(() => { suppressClose = false; }, 50);
@@ -905,7 +1138,10 @@
       S.ty = (vh - WH * S.ts) * 0.5;
     }
 
-    function resetView() { fitAll(); closeDetail(); }
+    function resetView() {
+      fitAll();
+      closeDetail();
+    }
 
     let drag = false, moved = false, dsx = 0, dsy = 0, startTx = 0, startTy = 0;
 
@@ -930,9 +1166,13 @@
 
     detail.addEventListener('pointerdown', e => e.stopPropagation());
     detail.addEventListener('click', e => e.stopPropagation());
-    document.getElementById('jclose').addEventListener('click', e => { e.stopPropagation(); resetView(); });
-    document.getElementById('fitBtn').addEventListener('click', e => { e.stopPropagation(); fitAll(); });
-    document.getElementById('resetBtn').addEventListener('click', e => { e.stopPropagation(); resetView(); });
+    detail.addEventListener('dblclick', e => e.stopPropagation());
+    detail.addEventListener('wheel', e => e.stopPropagation(), { passive: true });
+    detail.addEventListener('touchstart', e => e.stopPropagation(), { passive: true });
+    detail.addEventListener('touchmove', e => e.stopPropagation(), { passive: true });
+    detailBody.addEventListener('pointerdown', e => e.stopPropagation());
+    detailBody.addEventListener('wheel', e => e.stopPropagation(), { passive: true });
+    document.getElementById('jclose').addEventListener('click', e => { e.stopPropagation(); closeDetail(); });
 
     const detailHeader = document.getElementById('jdetailHeader');
     let ddrag = false, ddx = 0, ddy = 0, dStartL = 0, dStartT = 0;
@@ -973,7 +1213,6 @@
     detailHeader.addEventListener('pointerup', e => { ddrag = false; e.stopPropagation(); });
 
     const resizeHandles = detail.querySelectorAll('.jresize');
-
     let rdrag = false;
     let resizeDir = '';
     let rdx = 0, rdy = 0;
@@ -1015,13 +1254,8 @@
         let newL = rStartL;
         let newT = rStartT;
 
-        if (resizeDir.includes('e')) {
-          newW = Math.max(MIN_W, Math.min(vw - newL, rStartW + dx));
-        }
-
-        if (resizeDir.includes('s')) {
-          newH = Math.max(MIN_H, Math.min(vh - newT, rStartH + dy));
-        }
+        if (resizeDir.includes('e')) newW = Math.max(MIN_W, Math.min(vw - newL, rStartW + dx));
+        if (resizeDir.includes('s')) newH = Math.max(MIN_H, Math.min(vh - newT, rStartH + dy));
 
         if (resizeDir.includes('w')) {
           const proposedL = rStartL + dx;
@@ -1063,6 +1297,7 @@
       SIZE_STEPS.forEach((s, i) => { if (Math.abs(s - w) < Math.abs(SIZE_STEPS[closest] - w)) closest = i; });
       return closest;
     }
+
     document.getElementById('jShrink').addEventListener('click', e => {
       e.stopPropagation();
       const step = Math.max(0, currentSizeStep() - 1);
@@ -1071,6 +1306,7 @@
       clampDetailPos();
       saveCardState();
     });
+
     document.getElementById('jGrow').addEventListener('click', e => {
       e.stopPropagation();
       const step = Math.min(SIZE_STEPS.length - 1, currentSizeStep() + 1);
@@ -1111,6 +1347,7 @@
         pinchWC = { wx: (cx - S.tx) / S.ts, wy: (cy - S.ty) / S.ts, cx, cy };
       }
     }, { passive: false });
+
     vp.addEventListener('touchmove', e => {
       if (e.touches.length === 2 && pinchWC) {
         e.preventDefault();
@@ -1123,6 +1360,7 @@
         S.ts = ns; S.tx = cx - pinchWC.wx * ns; S.ty = cy - pinchWC.wy * ns;
       }
     }, { passive: false });
+
     vp.addEventListener('touchend', () => { pinchWC = null; });
 
     function tick() {
@@ -1134,11 +1372,50 @@
       requestAnimationFrame(tick);
     }
 
+    let isMapMaximized = false;
+    function updateMapToggleUI() {
+      mapToggleBtn.textContent = isMapMaximized ? '—' : '[ ]';
+      mapToggleBtn.title = isMapMaximized ? 'Minimize map' : 'Maximize map';
+      mapToggleBtn.setAttribute('aria-label', isMapMaximized ? 'Minimize map' : 'Maximize map');
+    }
+
+    function toggleMapSize() {
+      const wasMaximized = isMapMaximized;
+      isMapMaximized = !isMapMaximized;
+      shell.classList.toggle('is-maximized', isMapMaximized);
+      document.body.style.overflow = isMapMaximized ? 'hidden' : '';
+      updateMapToggleUI();
+
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        if (wasMaximized && !isMapMaximized) {
+          resetView();
+        } else if (detail.classList.contains('open') && selectedIdx !== -1) {
+          const p = islands[selectedIdx];
+          focusOn(p.x, p.y, 1.1);
+          clampDetailPos();
+        } else {
+          fitAll();
+        }
+      }));
+    }
+
+    mapToggleBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      toggleMapSize();
+    });
+
+    window.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && isMapMaximized) {
+        toggleMapSize();
+      }
+    });
+
     buildIslands();
 
     function initMap() {
       fitAll();
       S.s = S.ts; S.x = S.tx; S.y = S.ty;
+      updateMapToggleUI();
       tick();
     }
 
@@ -1146,6 +1423,7 @@
 
     window.addEventListener('resize', () => {
       if (!detail.classList.contains('open')) fitAll();
+      else clampDetailPos();
     });
   </script>
 </body>
