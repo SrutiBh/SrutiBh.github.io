@@ -4,271 +4,111 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1.0" />
 <title>Sruti — Atlas of Learning</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
+
   html, body {
     width: 100%;
     height: 100%;
     overflow: hidden;
     font-family: Inter, system-ui, sans-serif;
-    color: #fff;
     background: #0b1020;
+    color: white;
   }
 
   :root{
-    --green:#4fd78a;
-    --blue:#7bb8ff;
-    --blue-strong:#5aadff;
-    --line:rgba(255,255,255,.08);
-    --panel:rgba(10,13,23,.88);
+    --line: rgba(255,255,255,.08);
+    --blue: #6aa9ff;
+  }
 
-    --sky-top: #0c1430;
-    --sky-mid: #141d3b;
-    --sky-bottom: #232845;
+  body{
+    background:
+      radial-gradient(circle at 78% 14%, rgba(220,230,255,.18) 0, rgba(220,230,255,.05) 14%, transparent 28%),
+      radial-gradient(circle at 18% 20%, rgba(120,140,255,.10) 0, transparent 22%),
+      linear-gradient(180deg, #091127 0%, #101a36 48%, #15203d 100%);
+  }
 
-    --glow-left: rgba(100,130,255,.08);
-    --glow-right: rgba(205,225,255,.22);
-
-    --moon-opacity: .98;
-    --sun-opacity: .0;
-    --stars-opacity: .62;
-
-    --cloud-back-opacity: .22;
-    --cloud-front-opacity: .28;
-
-    --mist-opacity: .18;
+  /* very light sky */
+  #sky{
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background:
+      radial-gradient(circle at 84% 16%, rgba(255,255,255,.14) 0 52px, rgba(200,215,255,.04) 53px, transparent 105px),
+      radial-gradient(circle at 10% 22%, rgba(255,255,255,.12) 0 1px, transparent 2px),
+      radial-gradient(circle at 18% 36%, rgba(255,255,255,.10) 0 1px, transparent 2px),
+      radial-gradient(circle at 28% 14%, rgba(255,255,255,.13) 0 1px, transparent 2px),
+      radial-gradient(circle at 36% 22%, rgba(255,255,255,.11) 0 1px, transparent 2px),
+      radial-gradient(circle at 46% 12%, rgba(255,255,255,.10) 0 1px, transparent 2px),
+      radial-gradient(circle at 58% 20%, rgba(255,255,255,.12) 0 1px, transparent 2px),
+      radial-gradient(circle at 68% 10%, rgba(255,255,255,.10) 0 1px, transparent 2px),
+      radial-gradient(circle at 88% 30%, rgba(255,255,255,.10) 0 1px, transparent 2px),
+      linear-gradient(180deg, rgba(255,255,255,.03), transparent 40%);
   }
 
   #loading {
     position: fixed;
     inset: 0;
     z-index: 100;
-    background: #090c16;
+    background: #0b1020;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    gap: 16px;
+    gap: 14px;
   }
+
   #loading .title {
     font-family: "Cormorant Garamond", serif;
     font-size: 24px;
-    color: rgba(255,255,255,.78);
+    color: rgba(255,255,255,.82);
   }
+
   #loading .bar {
-    width: 180px;
+    width: 170px;
     height: 2px;
     background: rgba(255,255,255,.08);
     overflow: hidden;
     position: relative;
   }
+
   #loading .bar::after {
     content: "";
     position: absolute;
     inset: 0;
-    width: 42%;
-    background: linear-gradient(90deg, transparent, var(--green), transparent);
-    animation: loadMove 1.1s linear infinite;
+    width: 40%;
+    background: linear-gradient(90deg, transparent, #78c89b, transparent);
+    animation: loadMove 1s linear infinite;
   }
+
   @keyframes loadMove {
     0% { transform: translateX(-140%); }
     100% { transform: translateX(280%); }
   }
 
-  #sky{
-    position: fixed;
-    inset: 0;
-    overflow: hidden;
-    pointer-events: none;
-    z-index: 0;
-  }
-  .sky-gradient,
-  .sky-glow,
-  .sky-sun,
-  .sky-moon,
-  .sky-stars,
-  .sky-clouds,
-  .sky-mist {
-    transition:
-      background 2.8s ease,
-      opacity 2.8s ease,
-      transform 2.8s ease,
-      filter 2.8s ease;
-  }
-
-  .sky-gradient{
-    position:absolute;
-    inset:0;
-    background:
-      radial-gradient(circle at 20% 18%, color-mix(in srgb, var(--glow-left) 48%, transparent), transparent 26%),
-      radial-gradient(circle at 80% 22%, color-mix(in srgb, var(--glow-right) 52%, transparent), transparent 28%),
-      linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 48%, var(--sky-bottom) 100%);
-  }
-
-  .sky-glow{
-    position:absolute;
-    width:46vw;
-    height:46vw;
-    border-radius:50%;
-    filter: blur(70px);
-    opacity:.55;
-  }
-  .sky-glow-left{
-    left:-8vw;
-    top:2vh;
-    background: radial-gradient(circle, var(--glow-left), transparent 70%);
-  }
-  .sky-glow-right{
-    right:-10vw;
-    top:8vh;
-    background: radial-gradient(circle, var(--glow-right), transparent 70%);
-  }
-
-  .sky-sun{
-    position:absolute;
-    left:10vw;
-    top:10vh;
-    width:120px;
-    height:120px;
-    border-radius:50%;
-    background:
-      radial-gradient(circle, rgba(255,242,188,.96) 0%, rgba(255,220,130,.82) 46%, rgba(255,190,100,.28) 72%, transparent 100%);
-    opacity: var(--sun-opacity);
-    filter: blur(1px);
-    box-shadow: 0 0 60px rgba(255,210,120,.18);
-  }
-
-  .sky-moon{
-    position:absolute;
-    right:10vw;
-    top:10vh;
-    width:110px;
-    height:110px;
-    border-radius:50%;
-    background:
-      radial-gradient(circle at 35% 35%, rgba(255,255,255,.98), rgba(243,244,255,.92) 55%, rgba(220,228,255,.78) 78%, rgba(190,205,255,.22) 100%);
-    box-shadow:
-      0 0 36px rgba(255,255,255,.22),
-      0 0 95px rgba(180,210,255,.14);
-    opacity: var(--moon-opacity);
-    filter: blur(.2px);
-  }
-
-  .sky-stars{
-    position:absolute;
-    inset:0;
-    opacity: var(--stars-opacity);
-    background-image:
-      radial-gradient(circle at 10% 20%, rgba(255,255,255,.82) 0 1px, transparent 1.6px),
-      radial-gradient(circle at 18% 42%, rgba(255,255,255,.62) 0 1px, transparent 1.6px),
-      radial-gradient(circle at 28% 14%, rgba(255,255,255,.72) 0 1px, transparent 1.6px),
-      radial-gradient(circle at 36% 32%, rgba(255,255,255,.55) 0 1px, transparent 1.6px),
-      radial-gradient(circle at 47% 18%, rgba(255,255,255,.70) 0 1px, transparent 1.6px),
-      radial-gradient(circle at 56% 10%, rgba(255,255,255,.64) 0 1px, transparent 1.6px),
-      radial-gradient(circle at 63% 26%, rgba(255,255,255,.82) 0 1px, transparent 1.6px),
-      radial-gradient(circle at 72% 16%, rgba(255,255,255,.60) 0 1px, transparent 1.6px),
-      radial-gradient(circle at 82% 24%, rgba(255,255,255,.72) 0 1px, transparent 1.6px),
-      radial-gradient(circle at 91% 14%, rgba(255,255,255,.55) 0 1px, transparent 1.6px),
-      radial-gradient(circle at 12% 66%, rgba(255,255,255,.62) 0 1px, transparent 1.6px),
-      radial-gradient(circle at 32% 74%, rgba(255,255,255,.74) 0 1px, transparent 1.6px),
-      radial-gradient(circle at 54% 68%, rgba(255,255,255,.58) 0 1px, transparent 1.6px),
-      radial-gradient(circle at 74% 62%, rgba(255,255,255,.68) 0 1px, transparent 1.6px),
-      radial-gradient(circle at 88% 72%, rgba(255,255,255,.58) 0 1px, transparent 1.6px);
-  }
-
-  .sky-clouds{
-    position:absolute;
-    left:-10%;
-    width:120%;
-    border-radius:50%;
-    filter: blur(34px);
-  }
-  .sky-clouds-back{
-    bottom:-8%;
-    height:35%;
-    opacity: var(--cloud-back-opacity);
-    background:
-      radial-gradient(circle at 8% 40%, rgba(255,255,255,.18), transparent 18%),
-      radial-gradient(circle at 24% 52%, rgba(255,255,255,.16), transparent 20%),
-      radial-gradient(circle at 42% 42%, rgba(255,255,255,.16), transparent 18%),
-      radial-gradient(circle at 58% 50%, rgba(255,255,255,.14), transparent 20%),
-      radial-gradient(circle at 76% 44%, rgba(255,255,255,.18), transparent 18%),
-      radial-gradient(circle at 92% 54%, rgba(255,255,255,.14), transparent 19%);
-  }
-  .sky-clouds-front{
-    bottom:-16%;
-    height:42%;
-    opacity: var(--cloud-front-opacity);
-    background:
-      radial-gradient(circle at 14% 40%, rgba(255,245,240,.22), transparent 20%),
-      radial-gradient(circle at 34% 52%, rgba(255,240,235,.20), transparent 22%),
-      radial-gradient(circle at 56% 46%, rgba(255,245,240,.18), transparent 22%),
-      radial-gradient(circle at 78% 50%, rgba(255,240,235,.22), transparent 22%);
-  }
-
-  .sky-mist{
-    position:absolute;
-    inset:auto 0 0 0;
-    height:44%;
-    opacity: var(--mist-opacity);
-    background:
-      linear-gradient(180deg, transparent 0%, rgba(255,255,255,.03) 35%, rgba(255,255,255,.10) 100%);
-    filter: blur(20px);
-  }
-
-  @keyframes driftBack {
-    0% { transform: translateX(0px) translateY(0px); }
-    50% { transform: translateX(18px) translateY(-6px); }
-    100% { transform: translateX(0px) translateY(0px); }
-  }
-  @keyframes driftFront {
-    0% { transform: translateX(0px) translateY(0px); }
-    50% { transform: translateX(-24px) translateY(8px); }
-    100% { transform: translateX(0px) translateY(0px); }
-  }
-  @keyframes starPulse {
-    0%, 100% { opacity: var(--stars-opacity); }
-    50% { opacity: calc(var(--stars-opacity) + .04); }
-  }
-  .sky-clouds-back { animation: driftBack 28s ease-in-out infinite; }
-  .sky-clouds-front { animation: driftFront 34s ease-in-out infinite; }
-  .sky-stars { animation: starPulse 10s ease-in-out infinite; }
-
   #brand {
     position: fixed;
     top: 22px;
     left: 24px;
-    z-index: 30;
+    z-index: 20;
     pointer-events: none;
   }
+
   #brand h1 {
     font-family: "Cormorant Garamond", serif;
     font-size: 22px;
-    font-weight: 400;
-    letter-spacing: .03em;
-    color: rgba(255,255,255,.84);
+    font-weight: 500;
+    color: rgba(255,255,255,.9);
   }
+
   #brand p {
     margin-top: 4px;
     font-size: 10px;
     letter-spacing: .22em;
     text-transform: uppercase;
-    color: rgba(255,255,255,.32);
-  }
-
-  #hint {
-    position: fixed;
-    top: 22px;
-    right: 24px;
-    z-index: 30;
-    text-align: right;
-    font-size: 10px;
-    letter-spacing: .15em;
-    text-transform: uppercase;
-    line-height: 1.8;
-    color: rgba(255,255,255,.28);
-    pointer-events: none;
+    color: rgba(255,255,255,.34);
   }
 
   #controls {
@@ -276,42 +116,44 @@
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 35;
+    z-index: 25;
     display: flex;
     gap: 8px;
   }
+
   .ctl {
     border: 1px solid var(--line);
-    background: rgba(10,14,24,.66);
-    color: rgba(255,255,255,.82);
+    background: rgba(10,14,24,.62);
+    color: rgba(255,255,255,.84);
     border-radius: 999px;
     padding: 9px 12px;
     font-size: 10px;
     letter-spacing: .12em;
     text-transform: uppercase;
     cursor: pointer;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
   }
+
   .ctl:hover {
     background: rgba(255,255,255,.10);
-    color: white;
   }
 
   #viewport {
     position: fixed;
     inset: 0;
     overflow: hidden;
-    cursor: grab;
     touch-action: none;
     z-index: 5;
+    cursor: grab;
   }
+
   #viewport.dragging { cursor: grabbing; }
 
   #world {
     position: absolute;
-    width: 3400px;
-    height: 2200px;
+    width: 3800px;
+    height: 2400px;
     left: 0;
     top: 0;
     transform-origin: 0 0;
@@ -322,25 +164,15 @@
     position: absolute;
     height: 2px;
     transform-origin: left center;
-    background: linear-gradient(90deg, rgba(123,184,255,.16), rgba(79,215,138,.14));
+    background: rgba(180,210,255,.18);
     border-radius: 999px;
-    opacity: .45;
-  }
-
-  .route-dot {
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    border-radius: 999px;
-    background: rgba(255,255,255,.16);
-    box-shadow: 0 0 0 1px rgba(255,255,255,.04);
-    transform: translate(-50%, -50%);
+    opacity: .7;
   }
 
   .island {
     position: absolute;
     width: 250px;
-    height: 200px;
+    height: 206px;
     transform: translate(-50%, -50%);
     cursor: pointer;
     user-select: none;
@@ -349,124 +181,104 @@
   .island-inner {
     position: absolute;
     inset: 0;
-    transition: transform .28s ease, filter .28s ease, opacity .28s ease;
+    transition: transform .22s ease, filter .22s ease;
   }
 
   .island:hover .island-inner {
-    transform: translateY(-3px) scale(1.01);
+    transform: translateY(-2px);
   }
 
   .island.selected .island-inner {
     transform: scale(1.04);
-    filter: drop-shadow(0 20px 44px rgba(90,173,255,.18));
+    filter: drop-shadow(0 16px 26px rgba(100,160,255,.18));
   }
-
-  .island.selected .island-inner::after{
-    content:"";
-    position:absolute;
-    left:50%;
-    top:60%;
-    width:180px;
-    height:180px;
-    transform:translate(-50%,-50%);
-    border-radius:50%;
-    background: radial-gradient(circle, rgba(120,170,255,0.18), transparent 70%);
-    filter: blur(20px);
-    z-index:-1;
-  }
-
-  .island[data-depth="1"] .island-inner { opacity: .86; }
-  .island[data-depth="2"] .island-inner { opacity: .93; }
-  .island[data-depth="3"] .island-inner { opacity: 1; }
 
   .top {
     position: absolute;
     left: 50%;
-    top: 24px;
-    width: 160px;
-    height: 96px;
+    top: 28px;
+    width: 162px;
+    height: 98px;
     transform: translateX(-50%);
     background: var(--top, #9bdcb3);
     clip-path: polygon(10% 24%, 25% 10%, 67% 6%, 88% 20%, 94% 48%, 81% 76%, 40% 91%, 13% 77%, 5% 48%);
-    border: 2px solid rgba(255,255,255,.09);
-    box-shadow:
-      inset 0 2px 0 rgba(255,255,255,.10),
-      0 10px 20px rgba(0,0,0,.18);
-    filter: saturate(.85) brightness(.95);
+    border: 2px solid rgba(255,255,255,.08);
+    box-shadow: inset 0 2px 0 rgba(255,255,255,.08);
   }
 
   .rim {
     position: absolute;
     left: 50%;
-    top: 95px;
-    width: 174px;
+    top: 99px;
+    width: 176px;
     height: 14px;
     transform: translateX(-50%);
     background: var(--rim, #4fd78a);
     clip-path: polygon(6% 24%, 23% 2%, 68% 0%, 91% 18%, 96% 54%, 79% 100%, 34% 100%, 10% 82%, 4% 52%);
-    opacity: .95;
-    filter: saturate(.9);
+    opacity: .96;
   }
 
   .bottom {
     position: absolute;
     left: 50%;
-    top: 101px;
-    width: 110px;
-    height: 84px;
+    top: 106px;
+    width: 112px;
+    height: 86px;
     transform: translateX(-50%);
     background: linear-gradient(180deg, #36404f 0%, #232b38 100%);
     clip-path: polygon(26% 0, 77% 0, 100% 19%, 84% 55%, 63% 100%, 40% 92%, 17% 58%, 0 18%);
-    filter: drop-shadow(0 16px 18px rgba(0,0,0,.24));
   }
 
   .tree {
     position: absolute;
-    width: 18px;
-    height: 40px;
-    opacity:.9;
+    width: 14px;
+    height: 32px;
+    opacity:.78;
   }
+
   .tree::before {
     content: "";
     position: absolute;
-    left: 7px;
+    left: 5px;
     bottom: 0;
     width: 4px;
-    height: 14px;
+    height: 11px;
     background: #6a4726;
     border-radius: 3px;
   }
+
   .tree::after {
     content: "";
     position: absolute;
     left: 0;
     top: 0;
-    width: 18px;
-    height: 26px;
+    width: 14px;
+    height: 21px;
     background: #2cb75f;
     clip-path: polygon(50% 0, 100% 44%, 76% 44%, 100% 100%, 0 100%, 24% 44%, 0 44%);
-    border-radius: 3px;
   }
 
   .stone {
     position: absolute;
-    width: 10px;
-    height: 8px;
+    width: 8px;
+    height: 7px;
     background: #b4c2d0;
     border-radius: 4px;
-    opacity: .7;
+    opacity: .48;
   }
 
   .landmark {
     position: absolute;
   }
+
   .landmark.spire {
     width: 8px;
     height: 42px;
     left: 50%;
-    top: 45px;
+    top: 49px;
     transform: translateX(-50%);
   }
+
   .landmark.spire::before {
     content: "";
     position: absolute;
@@ -476,78 +288,62 @@
     height: 30px;
     background: rgba(236,242,250,.88);
   }
+
   .landmark.spire::after {
     content: "";
     position: absolute;
     left: 50%;
     top: 0;
-    width: 12px;
-    height: 12px;
+    width: 11px;
+    height: 11px;
     transform: translateX(-50%);
     border-radius: 999px;
-    background: var(--marker, #5aadff);
-    box-shadow: 0 0 14px rgba(90,173,255,.22);
+    background: rgba(225,236,255,.95);
   }
 
   .landmark.arch {
     left: 50%;
-    top: 64px;
+    top: 68px;
     width: 28px;
     height: 22px;
     transform: translateX(-50%);
-    border: 3px solid rgba(238,244,248,.75);
+    border: 3px solid rgba(238,244,248,.72);
     border-bottom: none;
     border-radius: 18px 18px 0 0;
-    opacity: .9;
   }
 
   .landmark.pavilion {
     left: 50%;
-    top: 58px;
+    top: 62px;
     width: 28px;
     height: 18px;
     transform: translateX(-50%);
-    background: rgba(240,244,250,.78);
+    background: rgba(240,244,250,.72);
     clip-path: polygon(50% 0, 100% 34%, 86% 34%, 86% 100%, 14% 100%, 14% 34%, 0 34%);
-    border-radius: 2px;
   }
 
   .city-label {
     position: absolute;
     left: 50%;
-    top: -2px;
+    top: 4px;
     transform: translateX(-50%);
-    width: max-content;
-    max-width: 230px;
     text-align: center;
     pointer-events: none;
   }
+
   .city-name {
     font-family: "Cormorant Garamond", serif;
-    font-size: 25px;
+    font-size: 26px;
     font-weight: 500;
-    letter-spacing: .01em;
-    color: rgba(255,255,255,.92);
+    color: rgba(255,255,255,.95);
     text-shadow: 0 2px 14px rgba(0,0,0,.16);
-  }
-  .city-learn {
-    margin-top: 7px;
-    border: 1px solid rgba(255,255,255,.08);
-    background: rgba(10,14,24,.55);
-    color: rgba(255,255,255,.78);
-    border-radius: 999px;
-    padding: 6px 12px;
-    font-size: 9.5px;
-    letter-spacing: .06em;
     white-space: nowrap;
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
   }
 
   .year-row {
     position: absolute;
     left: 50%;
-    bottom: 2px;
+    bottom: 0;
     transform: translateX(-50%);
     display: flex;
     gap: 6px;
@@ -558,21 +354,20 @@
 
   .year-chip {
     border: 1px solid rgba(255,255,255,.08);
-    background: rgba(10,14,24,.60);
+    background: rgba(10,14,24,.58);
     color: rgba(255,255,255,.78);
     border-radius: 999px;
-    padding: 5px 9px;
-    font-size: 9px;
+    padding: 5px 8px;
+    font-size: 8.5px;
     letter-spacing: .12em;
     text-transform: uppercase;
     white-space: nowrap;
-    transition: background .22s ease, color .22s ease, border-color .22s ease;
   }
 
   .island.selected .year-chip {
-    background: rgba(90,173,255,.18);
-    color: var(--blue-strong);
-    border-color: rgba(90,173,255,.42);
+    background: rgba(90,173,255,.16);
+    color: var(--blue);
+    border-color: rgba(90,173,255,.34);
   }
 
   #strip {
@@ -580,15 +375,16 @@
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 40;
+    z-index: 30;
     display: flex;
     justify-content: center;
     gap: 8px;
     padding: 22px 16px 18px;
-    background: linear-gradient(180deg, transparent 0%, rgba(8,10,18,.78) 45%, rgba(8,10,18,.92) 100%);
+    background: linear-gradient(180deg, transparent 0%, rgba(8,10,18,.72) 45%, rgba(8,10,18,.90) 100%);
     overflow-x: auto;
     scrollbar-width: none;
   }
+
   #strip::-webkit-scrollbar { display: none; }
 
   .yb {
@@ -601,36 +397,38 @@
     gap: 5px;
     cursor: pointer;
     padding: 0 2px;
-    transition: transform .18s ease;
     font-family: inherit;
     flex: 0 0 auto;
   }
-  .yb:hover { transform: translateY(-3px); }
-  .yb.active { transform: translateY(-7px); }
+
+  .yb.active { transform: translateY(-6px); }
+
   .yb .gem {
-    width: 10px;
-    height: 10px;
+    width: 9px;
+    height: 9px;
     border-radius: 2px;
     transform: rotate(45deg);
-    background: var(--green);
-    box-shadow: 0 0 12px rgba(79,215,138,.25);
+    background: rgba(125,205,155,.88);
   }
+
   .yb.active .gem {
-    background: var(--blue-strong);
-    box-shadow: 0 0 12px rgba(90,173,255,.45);
+    background: var(--blue);
   }
+
   .yb .label {
-    font-size: 10px;
+    font-size: 9.5px;
     letter-spacing: .08em;
   }
-  .yb.active .label { color: var(--blue-strong); }
+
+  .yb.active .label { color: var(--blue); }
 
   #nav {
     position: fixed;
     inset: 0;
-    z-index: 38;
+    z-index: 26;
     pointer-events: none;
   }
+
   .navBtn {
     position: absolute;
     top: 50%;
@@ -647,30 +445,31 @@
     display: grid;
     place-items: center;
     opacity: 0;
-    transition: opacity .2s ease, background .18s ease;
   }
+
   .navBtn.show { opacity: 1; }
-  .navBtn:hover { background: rgba(255,255,255,.10); }
   .navBtn:disabled { opacity: .18; pointer-events: none; }
+
   #prevBtn { left: 16px; }
   #nextBtn { right: 16px; }
 
+  /* Panel */
   #panel {
     position: fixed;
     right: 0;
     top: 0;
     bottom: 0;
-    width: min(390px, 92vw);
-    z-index: 50;
-    background: var(--panel);
-    border-left: 1px solid var(--line);
+    width: min(520px, 96vw);
+    z-index: 40;
+    background: #f4f6f8;
+    color: #132642;
+    border-left: 1px solid rgba(20,40,70,.08);
     transform: translateX(105%);
-    transition: transform .35s ease;
-    backdrop-filter: blur(28px);
-    -webkit-backdrop-filter: blur(28px);
+    transition: transform .28s ease;
     display: flex;
     flex-direction: column;
   }
+
   #panel.open { transform: translateX(0%); }
 
   #closePanel {
@@ -680,157 +479,183 @@
     width: 32px;
     height: 32px;
     border-radius: 999px;
-    border: 1px solid var(--line);
+    border: 1px solid rgba(255,255,255,.10);
     background: rgba(8,10,18,.92);
-    color: rgba(255,255,255,.62);
+    color: rgba(255,255,255,.75);
     cursor: pointer;
   }
 
   #panelHead {
-    padding: 28px 24px 18px;
-    border-bottom: 1px solid rgba(255,255,255,.06);
+    padding: 28px 28px 16px;
+    background: #f4f6f8;
   }
+
   #panelPlace {
     font-family: "Cormorant Garamond", serif;
-    font-size: 44px;
+    font-size: 42px;
     font-weight: 500;
     line-height: .95;
-    color: rgba(255,255,255,.92);
+    color: #102744;
   }
+
   #panelWhen {
-    margin-top: 6px;
+    margin-top: 10px;
     font-size: 10px;
     letter-spacing: .18em;
     text-transform: uppercase;
-    color: var(--blue-strong);
-  }
-  #panelWhere {
-    display: none;
+    color: #6d7f97;
   }
 
   #panelBody {
     overflow: auto;
-    padding: 18px 24px 28px;
+    padding: 0 28px 34px;
+    background: #f4f6f8;
   }
+
   .sec {
-    margin-bottom: 22px;
+    margin-bottom: 28px;
   }
+
   .secLabel {
-    font-size: 10px;
-    letter-spacing: .16em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,.28);
-    margin-bottom: 10px;
-  }
-  .learnList {
-    display: grid;
-    gap: 10px;
-  }
-  .learnItem {
-    border: 1px solid rgba(255,255,255,.08);
-    background: rgba(255,255,255,.025);
-    border-radius: 14px;
-    padding: 12px 14px;
-    font-size: 13px;
-    line-height: 1.6;
-    color: rgba(255,255,255,.82);
+    font-family: "Cormorant Garamond", serif;
+    font-size: 28px;
+    font-weight: 500;
+    color: #102744;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #d8e0e8;
+    margin-bottom: 18px;
   }
 
   .yearCards {
     display: grid;
-    gap: 14px;
+    gap: 22px;
   }
+
   .yearCard {
-    border: 1px solid rgba(255,255,255,.08);
-    background: rgba(255,255,255,.025);
-    border-radius: 14px;
-    padding: 14px;
+    background: #fff;
+    border: 1px solid #e9edf1;
+    border-radius: 18px;
+    box-shadow: 0 2px 10px rgba(20,40,70,.05);
+    padding: 22px 24px;
   }
-  .yearHead {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 10px;
-  }
-  .yearValue {
-    font-family: "Cormorant Garamond", serif;
-    font-size: 28px;
-    color: var(--blue-strong);
-    line-height: 1;
-  }
-  .yearMini {
-    font-size: 9px;
-    letter-spacing: .14em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,.30);
-  }
+
   .event {
-    margin-top: 12px;
-    padding-top: 12px;
-    border-top: 1px solid rgba(255,255,255,.06);
+    display: flex;
+    gap: 18px;
+    align-items: center;
   }
-  .event:first-of-type {
-    margin-top: 10px;
-    padding-top: 0;
-    border-top: none;
+
+  .eventLogo {
+    width: 64px;
+    height: 64px;
+    flex: 0 0 64px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #eef2f5 0%, #e6ebef 100%);
+    border: 1px solid #e1e7ec;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #8ea0b4;
+    font-size: 11px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    font-weight: 600;
+    text-align: center;
+    padding: 4px;
   }
+
+  .eventMeta {
+    min-width: 0;
+    flex: 1;
+  }
+
   .eventTitle {
-    font-family: "Cormorant Garamond", serif;
-    font-size: 19px;
-    color: rgba(255,255,255,.92);
-    line-height: 1.2;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.25;
+    color: #0f203a;
   }
+
   .eventOrg {
-    margin-top: 4px;
-    font-size: 12px;
-    color: rgba(123,184,255,.82);
+    margin-top: 5px;
+    font-size: 14px;
+    line-height: 1.45;
+    color: #0073d6;
   }
+
+  .eventYearLine {
+    margin-top: 2px;
+    font-size: 13px;
+    line-height: 1.4;
+    color: #7b8ca3;
+  }
+
   .eventNote {
     margin-top: 7px;
-    font-size: 13px;
-    line-height: 1.6;
-    color: rgba(255,255,255,.44);
+    font-size: 14px;
+    line-height: 1.55;
+    color: #5b6e87;
   }
+
   .tags {
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
     margin-top: 10px;
   }
+
   .tag {
-    border: 1px solid rgba(255,255,255,.08);
-    background: rgba(255,255,255,.03);
-    color: rgba(255,255,255,.34);
+    border: 1px solid #dbe3ea;
+    background: #f7f9fb;
+    color: #7387a0;
     border-radius: 999px;
-    padding: 3px 8px;
-    font-size: 9px;
-    letter-spacing: .06em;
+    padding: 4px 8px;
+    font-size: 10px;
+    letter-spacing: .04em;
     text-transform: uppercase;
   }
 
-  @media (max-width: 680px) {
+  @media (max-width: 780px) {
     #hint { display: none; }
+
     #controls {
       top: auto;
       bottom: 86px;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 88vw;
     }
+
     #panel {
       width: 100%;
       top: auto;
-      height: 62dvh;
+      height: 70dvh;
       border-left: none;
-      border-top: 1px solid var(--line);
+      border-top: 1px solid rgba(20,40,70,.08);
       transform: translateY(105%);
       right: 0;
       bottom: 0;
     }
+
     #panel.open { transform: translateY(0%); }
+
     #closePanel {
       left: 50%;
       top: -40px;
       transform: translateX(-50%);
     }
-    #panelPlace { font-size: 38px; }
+
+    #panelPlace { font-size: 36px; }
+
+    .event {
+      align-items: flex-start;
+    }
+
+    .eventLogo {
+      width: 56px;
+      height: 56px;
+      flex-basis: 56px;
+    }
   }
 </style>
 </head>
@@ -841,17 +666,7 @@
   <div class="bar"></div>
 </div>
 
-<div id="sky">
-  <div class="sky-gradient"></div>
-  <div class="sky-glow sky-glow-left"></div>
-  <div class="sky-glow sky-glow-right"></div>
-  <div class="sky-sun"></div>
-  <div class="sky-moon"></div>
-  <div class="sky-stars"></div>
-  <div class="sky-clouds sky-clouds-back"></div>
-  <div class="sky-clouds sky-clouds-front"></div>
-  <div class="sky-mist"></div>
-</div>
+<div id="sky"></div>
 
 <div id="brand">
   <h1>Sruti Bhattacharjee</h1>
@@ -867,7 +682,6 @@
 <div id="controls">
   <button class="ctl" id="fitBtn">Fit view</button>
   <button class="ctl" id="resetBtn">Reset</button>
-  <button class="ctl" id="skyBtn">Change sky</button>
 </div>
 
 <div id="viewport">
@@ -886,321 +700,132 @@
   <div id="panelHead">
     <div id="panelPlace">—</div>
     <div id="panelWhen">—</div>
-    <div id="panelWhere"></div>
   </div>
   <div id="panelBody"></div>
 </aside>
 
 <script>
-const SKY_MOODS = [
-  {
-    name: "dawn",
-    top: "#2a3252",
-    mid: "#5e5972",
-    bottom: "#c88a6f",
-    glowLeft: "rgba(255,180,95,.36)",
-    glowRight: "rgba(255,220,170,.12)",
-    moonOpacity: ".14",
-    sunOpacity: ".80",
-    starsOpacity: ".04",
-    cloudBackOpacity: ".30",
-    cloudFrontOpacity: ".44",
-    mistOpacity: ".14"
-  },
-  {
-    name: "sunset",
-    top: "#3a3f5e",
-    mid: "#7e6072",
-    bottom: "#d98d62",
-    glowLeft: "rgba(255,165,84,.42)",
-    glowRight: "rgba(255,210,145,.16)",
-    moonOpacity: ".00",
-    sunOpacity: ".72",
-    starsOpacity: ".02",
-    cloudBackOpacity: ".34",
-    cloudFrontOpacity: ".48",
-    mistOpacity: ".16"
-  },
-  {
-    name: "twilight",
-    top: "#22304f",
-    mid: "#3d4561",
-    bottom: "#6b5363",
-    glowLeft: "rgba(255,185,110,.30)",
-    glowRight: "rgba(155,190,255,.18)",
-    moonOpacity: ".55",
-    sunOpacity: ".00",
-    starsOpacity: ".18",
-    cloudBackOpacity: ".34",
-    cloudFrontOpacity: ".42",
-    mistOpacity: ".18"
-  },
-  {
-    name: "night",
-    top: "#0c1430",
-    mid: "#141d3b",
-    bottom: "#232845",
-    glowLeft: "rgba(100,130,255,.08)",
-    glowRight: "rgba(205,225,255,.22)",
-    moonOpacity: ".98",
-    sunOpacity: ".00",
-    starsOpacity: ".62",
-    cloudBackOpacity: ".22",
-    cloudFrontOpacity: ".28",
-    mistOpacity: ".18"
-  }
-];
-
-let currentSky = 3;
-
-function applySkyMood(index){
-  currentSky = (index + SKY_MOODS.length) % SKY_MOODS.length;
-  const m = SKY_MOODS[currentSky];
-  const root = document.documentElement;
-
-  root.style.setProperty("--sky-top", m.top);
-  root.style.setProperty("--sky-mid", m.mid);
-  root.style.setProperty("--sky-bottom", m.bottom);
-  root.style.setProperty("--glow-left", m.glowLeft);
-  root.style.setProperty("--glow-right", m.glowRight);
-  root.style.setProperty("--moon-opacity", m.moonOpacity);
-  root.style.setProperty("--sun-opacity", m.sunOpacity);
-  root.style.setProperty("--stars-opacity", m.starsOpacity);
-  root.style.setProperty("--cloud-back-opacity", m.cloudBackOpacity);
-  root.style.setProperty("--cloud-front-opacity", m.cloudFrontOpacity);
-  root.style.setProperty("--mist-opacity", m.mistOpacity);
-}
-
 const PLACES = [
   {
     city: "Kanpur",
-    years: ["2015", "2017", "2019"],
-    tagline: "Research foundations",
+    years: ["2015","2017","2019"],
+    tagline: "Foundations in signal & visual systems",
     landmark: "spire",
     depth: 2,
     theme: { top: "#BFEA7A", rim: "#9ED65A" },
-    learn: [
-      "How to turn technical curiosity into structured research questions.",
-      "How experiments, iteration, and mentorship shape problem-solving discipline.",
-      "How computational thinking can support creative and embodied systems."
-    ],
-    yearDetails: {
-      "2015": [
-        {
-          title: "First Research Internship",
-          org: "IIT Kanpur, India",
-          note: "Music script generation from harmonium video using Matlab, Python, PyTorch.",
-          tags: ["Research", "Music", "Vision"]
-        }
-      ],
-      "2017": [
-        {
-          title: "Cloth Simulation Research",
-          org: "IIT Kanpur, India",
-          note: "OpenGL 4, rigid-body and cloth collision using Bullet Physics.",
-          tags: ["Graphics", "Simulation", "OpenGL"]
-        }
-      ],
-      "2019": [
-        {
-          title: "Research Assistantship",
-          org: "IIT Kanpur + NSHM",
-          note: "Tessellation, 3D design thinking, cloth simulation.",
-          tags: ["3D", "Research", "Design Thinking"]
-        }
-      ]
-    }
+    experiences: [
+      { title: "Research Exploration", org: "IIT Kanpur, India", year: "2015", note: "Tessellation, Symmetry 1D → 2D → 3D → 4D → nD", tags:["Geometry","Symmetry","Theory"], logoText:"IITK" },
+      { title: "Core Processing Systems", org: "IIT Kanpur, India", year: "2017", note: "Signal Processing, Image Processing, Video Processing", tags:["Signal","Image","Video"], logoText:"IITK" },
+      { title: "Advanced Video Analysis", org: "IIT Kanpur, India", year: "2019", note: "Extended work in Video Processing and computational visual analysis", tags:["Video","Analysis"], logoText:"IITK" }
+    ]
   },
   {
     city: "Chennai",
     years: ["2016"],
-    tagline: "Emotion in data",
+    tagline: "Graphics & physical simulation",
     landmark: "arch",
     depth: 1,
     theme: { top: "#C7F66C", rim: "#9BE548" },
-    learn: [
-      "How human feeling and signal interpretation can be studied through technical methods.",
-      "How subtle behavioural patterns matter as much as raw computational output.",
-      "How specialised work deepens precision and patience."
-    ],
-    yearDetails: {
-      "2016": [
-        {
-          title: "Summer Internship",
-          org: "IIT Madras, India",
-          note: "Music listener's emotional reaction analysis using Matlab.",
-          tags: ["Emotion", "Signals", "Research"]
-        }
-      ]
-    }
+    experiences: [
+      { title: "Graphics & Simulation Internship", org: "IIT Madras, India", year: "2016", note: "3D Computer Graphics, OpenGL, Cloth Simulation, Cloth Modeling, Visual Studio, Visual C++, Bullet Physics, Cloth-Object-Collision", tags:["OpenGL","Simulation","C++","Physics"], logoText:"IITM" }
+    ]
   },
   {
     city: "Kharagpur",
-    years: ["2018"],
-    tagline: "Technical depth",
+    years: ["2017","2018","2019","2020"],
+    tagline: "Computer vision & technical depth",
     landmark: "spire",
     depth: 3,
     theme: { top: "#AEEF57", rim: "#84D933" },
-    learn: [
-      "How computer vision can solve real technical problems beyond classroom settings.",
-      "How thesis work builds independence, rigor, and resilience.",
-      "How research engineering sharpens implementation under practical constraints."
-    ],
-    yearDetails: {
-      "2018": [
-        {
-          title: "BTech Thesis Defence",
-          org: "IIT Kharagpur, India",
-          note: "Successfully defended thesis on counterfeit IC detection.",
-          tags: ["Defence", "Research"]
-        }
-      ]
-    }
+    experiences: [
+      { title: "Vision Foundations", org: "IIT Kharagpur, India", year: "2017", note: "Image Processing Matlab, TensorFlow Masked RCNN, Dataset making, OpenCV", tags:["Matlab","TensorFlow","OpenCV"], logoText:"IITKGP" },
+      { title: "Hardware Intelligence", org: "IIT Kharagpur, India", year: "2018", note: "Counterfeit IC, IC Textures, Types of Damages on Hardwares, Overleaf LaTeX, PyBPDL, PyTorch Introduction", tags:["Counterfeit IC","Textures","LaTeX","PyTorch"], logoText:"IITKGP" },
+      { title: "Remote Analytical Research", org: "IIT Kharagpur, India", year: "2019", note: "Music Perception, Signal Processing, Data Analytics, Matlab", tags:["Music Perception","Signal","Analytics"], logoText:"IITKGP" },
+      { title: "DeepFake Video Systems", org: "IIT Kharagpur, India", year: "2020", note: "DeepFakeFace Video, Video Processing, PyTorch, Python, Interframe Difference, Human Facial Texture", tags:["DeepFake","Video","PyTorch","Python"], logoText:"IITKGP" }
+    ]
   },
   {
     city: "Chicago",
-    years: ["2018"],
-    tagline: "Academic reach",
+    years: ["2018","2019"],
+    tagline: "AI & vocal signal interpretation",
     landmark: "pavilion",
     depth: 1,
     theme: { top: "#C8D6C8", rim: "#AABCAA" },
-    learn: [
-      "How research connections can extend across geography and still remain meaningful.",
-      "How intellectual collaboration is not limited by physical location.",
-      "How remote academic engagement builds confidence and initiative."
-    ],
-    yearDetails: {
-      "2018": [
-        {
-          title: "Remote Academic Collaboration",
-          org: "UIUC / Chicago connection",
-          note: "Part of a broader remote research phase expanding international academic exposure.",
-          tags: ["Remote", "International", "Academic"]
-        }
-      ]
-    }
+    experiences: [
+      { title: "Remote Research", org: "UIUC, USA", year: "2018", note: "Python, PyTorch, LSTM, Signal Processing, Infant Voice, Infant Cries, Infant Needs Expression", tags:["Python","PyTorch","LSTM","Signal"], logoText:"UIUC" },
+      { title: "Extended Modelling", org: "UIUC, USA", year: "2019", note: "Continued work on Infant Voice and needs expression modelling", tags:["AI","Infant Voice","Expression"], logoText:"UIUC" }
+    ]
   },
   {
     city: "Lyon",
-    years: ["2018"],
-    tagline: "International expansion",
+    years: ["2019"],
+    tagline: "Theory, patterns & symmetry",
     landmark: "arch",
     depth: 2,
     theme: { top: "#D5E2D1", rim: "#B8C8B3" },
-    learn: [
-      "How working across institutions broadens both perspective and ambition.",
-      "How to adapt quickly to new research cultures and expectations.",
-      "How international collaboration can refine independence."
-    ],
-    yearDetails: {
-      "2018": [
-        {
-          title: "Remote Internship",
-          org: "Université Claude Bernard Lyon 1",
-          note: "Infant vocal emotion research using XNMT and PyTorch.",
-          tags: ["Research", "Emotion", "International"]
-        }
-      ]
-    }
+    experiences: [
+      { title: "Remote Research", org: "Claude Bernard Lyon 1 / CNRS, France", year: "2019", note: "Symmetry, Asymmetry, Literature Review, Convex-Concave, Graphical Patterns", tags:["Symmetry","Literature Review","Patterns"], logoText:"LYON" }
+    ]
+  },
+  {
+    city: "Kolkata",
+    years: ["2019"],
+    tagline: "Teaching & knowledge transfer",
+    landmark: "pavilion",
+    depth: 1,
+    theme: { top: "#F0D894", rim: "#DCBA63" },
+    experiences: [
+      { title: "Teaching Computer Graphics", org: "NSHM College, India", year: "2019", note: "Teaching Computer Graphics and OpenGL to bachelor students", tags:["Teaching","Computer Graphics","OpenGL"], logoText:"NSHM" }
+    ]
   },
   {
     city: "Stockholm",
-    years: ["2020", "2026"],
-    tagline: "HCI, systems, teaching",
+    years: ["2020","2021","2022","2024","2025"],
+    tagline: "HCI, systems & applied research",
     landmark: "spire",
     depth: 3,
     theme: { top: "#EFD28A", rim: "#D9A84C" },
-    learn: [
-      "How engineering, perception, and interaction design come together in HCI.",
-      "How teaching deepens clarity, communication, and mastery.",
-      "How a long academic chapter can become a platform for interdisciplinary identity."
-    ],
-    yearDetails: {
-      "2020": [
-        {
-          title: "Started MSc — Interactive Media Technology",
-          org: "KTH Royal Institute of Technology, Sweden",
-          note: "HCI, multimodal perception, teaching assistant across six courses, GPA 4.4/5.",
-          tags: ["KTH", "MSc", "HCI"]
-        }
-      ],
-      "2026": [
-        {
-          title: "MSc Thesis — Re-Designing VRLE for Effective Pedagogy",
-          org: "KTH Royal Institute of Technology + EPFL",
-          note: "How VR learning environments can provide genuine pedagogical support. ACM SIGCHI paper in progress.",
-          tags: ["Thesis", "VRLE", "CHI"]
-        }
-      ]
-    }
+    experiences: [
+      { title: "Teaching Assistant", org: "KTH, Sweden", year: "2020–2025", note: "Teaching Assistant across multiple KTH courses: XX, YY, ZZ, GG, GHJK", tags:["Teaching","KTH"], logoText:"KTH" },
+      { title: "Research Assistant", org: "KTH / Karolinska Institute, Sweden", year: "2021", note: "PyQT and Python-based research work", tags:["Python","PyQT","Research"], logoText:"KI" },
+      { title: "Summer R & D Intern", org: "Ericsson, Sweden", year: "2021", note: "Teleoperation Robotics", tags:["Ericsson","Teleoperation","Robotics"], logoText:"ERIC" }
+    ]
   },
   {
     city: "Lausanne",
-    years: ["2021", "2022", "2023"],
-    tagline: "Research synthesis",
+    years: ["2021","2022","2023"],
+    tagline: "Design research & systems thinking",
     landmark: "pavilion",
     depth: 3,
     theme: { top: "#F4D98A", rim: "#E7B955" },
-    learn: [
-      "How participatory design reveals needs that technology alone cannot predict.",
-      "How interdisciplinary research connects education, design, and emerging media.",
-      "How synthesis, not just production, creates lasting insight."
-    ],
-    yearDetails: {
-      "2021": [
-        {
-          title: "Graduate Exchange + Research Assistant",
-          org: "EPFL, Switzerland",
-          note: "Digital Humanities, design research, machine learning in VR, GPA 4.6/6.",
-          tags: ["EPFL", "Exchange", "Research"]
-        }
-      ],
-      "2022": [
-        {
-          title: "Research Assistant — EdTech",
-          org: "University of Lausanne, Switzerland",
-          note: "EdTech for programming in hybrid classes through participatory design.",
-          tags: ["EdTech", "Participatory Design", "Research"]
-        }
-      ],
-      "2023": [
-        {
-          title: "VRLE UX Research",
-          org: "EPFL, Switzerland",
-          note: "VR learning environments research and groundwork for MSc thesis.",
-          tags: ["UX Research", "VRLE", "Design"]
-        },
-        {
-          title: "Venice Time Machine",
-          org: "EPFL, Switzerland",
-          note: "3D city model preserving Venice building height and geographic data.",
-          tags: ["3D", "Digital Humanities", "Data"]
-        }
-      ]
-    }
+    experiences: [
+      { title: "Graduate Exchange + Research", org: "EPFL, Switzerland", year: "2021", note: "Research exposure across design, systems, and emerging technology contexts", tags:["EPFL","Exchange","Research"], logoText:"EPFL" },
+      { title: "Continued Research Chapter", org: "EPFL, Switzerland", year: "2022", note: "Extended interdisciplinary work across design and systems", tags:["Interdisciplinary","Design"], logoText:"EPFL" },
+      { title: "Research Assistant", org: "University of Lausanne, Switzerland", year: "2023", note: "Education Technology to Support Programming Learning in Hybrid University Classes", tags:["UNIL","EdTech","Research"], logoText:"UNIL" }
+    ]
+  },
+  {
+    city: "Jyväskylä",
+    years: ["2025"],
+    tagline: "Accessibility & multimodal interaction",
+    landmark: "arch",
+    depth: 2,
+    theme: { top: "#EFD28A", rim: "#D9A84C" },
+    experiences: [
+      { title: "Summer Trainee", org: "University of Jyväskylä, Finland", year: "2025", note: "Accessible Interactive Technology, Multimodal Accessibility Design", tags:["Accessibility","Multimodal","Interactive Tech"], logoText:"JYU" }
+    ]
   },
   {
     city: "Paris",
-    years: ["2024"],
-    tagline: "Reflection and reset",
+    years: ["2025","2026"],
+    tagline: "Language, reflection & future direction",
     landmark: "arch",
     depth: 2,
     theme: { top: "#E8B6C6", rim: "#D48CA5" },
-    learn: [
-      "How recovery can also be a form of strategic growth.",
-      "How reflection sharpens direction, taste, and long-term intention.",
-      "How depth sometimes matters more than visible speed."
-    ],
-    yearDetails: {
-      "2024": [
-        {
-          title: "Self Care & Independent Research",
-          org: "Paris, France",
-          note: "Recovery, introspection, and deep reading in HCI, AI policy, and neurorights.",
-          tags: ["Reflection", "Independent Research", "Transition"]
-        }
-      ]
-    }
+    experiences: [
+      { title: "French Language Learning", org: "Paris, France", year: "2025", note: "Language learning and broader cultural fluency", tags:["French","Language","Growth"], logoText:"FR" },
+      { title: "Family Building Chapter", org: "Paris, France", year: "2026", note: "A slower, intentional chapter centered on life direction and family building", tags:["Reflection","Family","Future"], logoText:"PAR" }
+    ]
   }
 ];
 
@@ -1209,48 +834,51 @@ const YEAR_TO_PLACE = {
   "2016":"Chennai",
   "2017":"Kanpur",
   "2018":"Kharagpur",
-  "2019":"Kanpur",
-  "2020":"Stockholm",
+  "2019":"Kolkata",
+  "2020":"Kharagpur",
   "2021":"Lausanne",
-  "2022":"Lausanne",
+  "2022":"Stockholm",
   "2023":"Lausanne",
-  "2024":"Paris",
-  "2026":"Stockholm"
+  "2024":"Stockholm",
+  "2025":"Jyväskylä",
+  "2026":"Paris"
 };
 
-const TIMELINE_YEARS = ["2015","2016","2017","2018","2019","2020","2021","2022","2023","2024","2026"];
+const TIMELINE_YEARS = ["2015","2016","2017","2018","2019","2020","2021","2022","2023","2024","2025","2026"];
 
-const WORLD_W = 3400;
-const WORLD_H = 2200;
+const WORLD_W = 3800;
+const WORLD_H = 2400;
 
 const world = document.getElementById('world');
 const viewport = document.getElementById('viewport');
 const strip = document.getElementById('strip');
 
 let selectedPlaceIndex = -1;
-let selectedTimelineYear = null;
 
 const state = {
-  scale: 0.64,
-  targetScale: 0.64,
+  scale: 0.58,
+  targetScale: 0.58,
   x: 0,
   y: 0,
   targetX: 0,
   targetY: 0,
-  minScale: 0.38,
-  maxScale: 1.7,
+  minScale: 0.36,
+  maxScale: 1.5
 };
 
 function placePos(i){
   const preset = [
-    {x: 620,  y: 1200},
-    {x: 880,  y: 1500},
-    {x: 1080, y: 1080},
-    {x: 1540, y: 860 },
-    {x: 1820, y: 1180},
-    {x: 2360, y: 820 },
-    {x: 2570, y: 1140},
-    {x: 2830, y: 1380}
+    {x: 520,  y: 930},   // Kanpur
+    {x: 510,  y: 1480},  // Chennai
+    {x: 860,  y: 1180},  // Kharagpur
+    {x: 1170, y: 760},   // Chicago
+    {x: 1190, y: 1740},  // Kolkata -> connector to middle
+    {x: 1710, y: 1220},  // Lyon swapped
+
+    {x: 2450, y: 1240},  // Stockholm middle
+    {x: 2820, y: 760},   // Lausanne upper claw
+    {x: 2810, y: 1710},  // Jyväskylä lower claw
+    {x: 3360, y: 1240}   // Paris right endpoint
   ];
   return preset[i];
 }
@@ -1271,21 +899,11 @@ function createRoute(a, b){
   route.style.width = `${len}px`;
   route.style.transform = `rotate(${ang}deg)`;
   world.appendChild(route);
-
-  const steps = Math.max(2, Math.floor(len / 220));
-  for(let i=1;i<steps;i++){
-    const t = i/steps;
-    const dot = document.createElement('div');
-    dot.className = 'route-dot';
-    dot.style.left = `${a.x + dx*t}px`;
-    dot.style.top = `${a.y + dy*t}px`;
-    world.appendChild(dot);
-  }
 }
 
 function createIsland(place, i){
   const pos = placePos(i);
-  const palette = place.theme || { top: "#9bdcb3", rim: "#4fd78a" };
+  const palette = place.theme;
   const yearsHTML = place.years.map(y => `<span class="year-chip">${y}</span>`).join('');
 
   const island = document.createElement('div');
@@ -1298,19 +916,18 @@ function createIsland(place, i){
     <div class="island-inner">
       <div class="city-label">
         <div class="city-name">${place.city}</div>
-        <div class="city-learn">${place.tagline}</div>
       </div>
 
       <div class="top" style="--top:${palette.top}"></div>
       <div class="rim" style="--rim:${palette.rim}"></div>
       <div class="bottom"></div>
-      <div class="landmark ${place.landmark || 'spire'}" style="--marker:#5aadff"></div>
+      <div class="landmark ${place.landmark}"></div>
 
-      <div class="tree" style="left:78px;top:68px;"></div>
-      <div class="tree" style="left:118px;top:54px;transform:scale(1.04);"></div>
-      <div class="stone" style="left:98px;top:96px;"></div>
-      <div class="stone" style="left:110px;top:100px;"></div>
-      <div class="stone" style="left:138px;top:88px;"></div>
+      <div class="tree" style="left:82px;top:72px;"></div>
+      <div class="tree" style="left:118px;top:58px;transform:scale(1.02);"></div>
+      <div class="stone" style="left:100px;top:100px;"></div>
+      <div class="stone" style="left:110px;top:104px;"></div>
+      <div class="stone" style="left:138px;top:92px;"></div>
 
       <div class="year-row">${yearsHTML}</div>
     </div>
@@ -1326,9 +943,7 @@ function createIsland(place, i){
 }
 
 PLACES.forEach(createIsland);
-for(let i = 0; i < islandEls.length - 1; i++){
-  createRoute(islandEls[i], islandEls[i + 1]);
-}
+for(let i = 0; i < islandEls.length - 1; i++) createRoute(islandEls[i], islandEls[i + 1]);
 
 TIMELINE_YEARS.forEach(year => {
   const btn = document.createElement('button');
@@ -1341,44 +956,29 @@ TIMELINE_YEARS.forEach(year => {
 
 function setPanel(place){
   document.getElementById('panelPlace').textContent = place.city;
-  document.getElementById('panelWhen').textContent = `${place.years[0]} — ${place.years[place.years.length - 1]}`;
-  document.getElementById('panelWhere').textContent = '';
+  document.getElementById('panelWhen').textContent = place.tagline;
 
-  const body = document.getElementById('panelBody');
-  body.innerHTML = `
+  document.getElementById('panelBody').innerHTML = `
     <section class="sec">
-      <div class="secLabel">What learned</div>
-      <div class="learnList">
-        ${place.learn.map(item => `<div class="learnItem">${item}</div>`).join('')}
-      </div>
-    </section>
-
-    <section class="sec">
-      <div class="secLabel">When</div>
+      <div class="secLabel">Selected Experiences</div>
       <div class="yearCards">
-        ${place.years.map(year => {
-          const events = place.yearDetails[year] || [];
-          return `
-            <article class="yearCard">
-              <div class="yearHead">
-                <div class="yearValue">${year}</div>
-                <div class="yearMini">Chapter</div>
+        ${place.experiences.map(exp => `
+          <article class="yearCard">
+            <div class="event">
+              <div class="eventLogo">${exp.logoText || "Logo"}</div>
+              <div class="eventMeta">
+                <div class="eventTitle">${exp.title}</div>
+                <div class="eventOrg">${exp.org}</div>
+                <div class="eventYearLine">${exp.year}</div>
+                <div class="eventNote">${exp.note}</div>
+                <div class="tags">${(exp.tags || []).map(t => `<span class="tag">${t}</span>`).join('')}</div>
               </div>
-              ${events.map(ev => `
-                <div class="event">
-                  <div class="eventTitle">${ev.title}</div>
-                  ${ev.org ? `<div class="eventOrg">${ev.org}</div>` : ''}
-                  ${ev.note ? `<div class="eventNote">${ev.note}</div>` : ''}
-                  <div class="tags">${(ev.tags || []).map(t => `<span class="tag">${t}</span>`).join('')}</div>
-                </div>
-              `).join('')}
-            </article>
-          `;
-        }).join('')}
+            </div>
+          </article>
+        `).join('')}
       </div>
     </section>
   `;
-
   document.getElementById('panel').classList.add('open');
 }
 
@@ -1396,7 +996,7 @@ function updateNav(){
   next.disabled = selectedPlaceIndex < 0 || selectedPlaceIndex >= islandEls.length - 1;
 }
 
-function focusOnPoint(worldX, worldY, zoom = 0.96){
+function focusOnPoint(worldX, worldY, zoom = 0.92){
   const vw = viewport.clientWidth;
   const vh = viewport.clientHeight;
   state.targetScale = Math.max(state.minScale, Math.min(state.maxScale, zoom));
@@ -1407,10 +1007,7 @@ function focusOnPoint(worldX, worldY, zoom = 0.96){
 function fitAll(){
   const vw = viewport.clientWidth;
   const vh = viewport.clientHeight;
-  const sx = vw / WORLD_W;
-  const sy = vh / WORLD_H;
-  const s = Math.min(sx, sy) * 0.88;
-
+  const s = Math.min(vw / WORLD_W, vh / WORLD_H) * 0.84;
   state.targetScale = Math.max(state.minScale, Math.min(state.maxScale, s));
   state.targetX = (vw - WORLD_W * state.targetScale) * 0.5;
   state.targetY = (vh - WORLD_H * state.targetScale) * 0.5;
@@ -1419,34 +1016,27 @@ function fitAll(){
 function resetView(){
   if(selectedPlaceIndex >= 0){
     const item = islandEls[selectedPlaceIndex];
-    focusOnPoint(item.x, item.y, 0.96);
+    focusOnPoint(item.x, item.y, 0.92);
   } else {
     fitAll();
   }
 }
 
 function highlightTimelineYear(year){
-  selectedTimelineYear = year;
   timelineButtons.forEach(item => item.el.classList.toggle('active', item.year === year));
 }
 
 function selectPlace(city){
   const idx = islandEls.findIndex(item => item.city === city);
   if(idx < 0) return;
-
   selectedPlaceIndex = idx;
   const item = islandEls[idx];
 
-  islandEls.forEach((island, i) => {
-    island.el.classList.toggle('selected', i === idx);
-  });
-
+  islandEls.forEach((island, i) => island.el.classList.toggle('selected', i === idx));
   setPanel(item.data);
   updateNav();
-  focusOnPoint(item.x, item.y, 0.96);
-
-  const matchingYear = item.data.years[item.data.years.length - 1];
-  highlightTimelineYear(matchingYear);
+  focusOnPoint(item.x, item.y, 0.92);
+  highlightTimelineYear(item.data.years[item.data.years.length - 1]);
 }
 
 function selectYear(year){
@@ -1458,7 +1048,6 @@ function selectYear(year){
 
 function deselect(){
   selectedPlaceIndex = -1;
-  selectedTimelineYear = null;
   islandEls.forEach(item => item.el.classList.remove('selected'));
   timelineButtons.forEach(item => item.el.classList.remove('active'));
   closePanel();
@@ -1469,7 +1058,6 @@ function deselect(){
 document.getElementById('closePanel').addEventListener('click', deselect);
 document.getElementById('fitBtn').addEventListener('click', fitAll);
 document.getElementById('resetBtn').addEventListener('click', resetView);
-document.getElementById('skyBtn').addEventListener('click', () => applySkyMood(currentSky + 1));
 
 document.getElementById('prevBtn').addEventListener('click', () => {
   if(selectedPlaceIndex > 0) selectPlace(islandEls[selectedPlaceIndex - 1].city);
@@ -1501,10 +1089,8 @@ viewport.addEventListener('pointerdown', (e) => {
 
 window.addEventListener('pointermove', (e) => {
   if(!isDragging) return;
-  const dx = e.clientX - dragStartX;
-  const dy = e.clientY - dragStartY;
-  state.targetX = startTargetX + dx;
-  state.targetY = startTargetY + dy;
+  state.targetX = startTargetX + (e.clientX - dragStartX);
+  state.targetY = startTargetY + (e.clientY - dragStartY);
 });
 
 window.addEventListener('pointerup', () => {
@@ -1514,7 +1100,6 @@ window.addEventListener('pointerup', () => {
 
 viewport.addEventListener('wheel', (e) => {
   e.preventDefault();
-
   const rect = viewport.getBoundingClientRect();
   const px = e.clientX - rect.left;
   const py = e.clientY - rect.top;
@@ -1522,8 +1107,8 @@ viewport.addEventListener('wheel', (e) => {
   const worldX = (px - state.targetX) / state.targetScale;
   const worldY = (py - state.targetY) / state.targetScale;
 
-  const zoomFactor = e.deltaY > 0 ? 0.92 : 1.08;
-  let newScale = state.targetScale * zoomFactor;
+  const factor = e.deltaY > 0 ? 0.92 : 1.08;
+  let newScale = state.targetScale * factor;
   newScale = Math.max(state.minScale, Math.min(state.maxScale, newScale));
 
   state.targetX = px - worldX * newScale;
@@ -1587,18 +1172,14 @@ function animate(){
 
 window.addEventListener('resize', fitAll);
 
-applySkyMood(currentSky);
-
-setTimeout(() => {
-  document.getElementById('loading').style.display = 'none';
+requestAnimationFrame(() => {
   fitAll();
   selectPlace('Stockholm');
   animate();
-}, 650);
-
-setInterval(() => {
-  applySkyMood(currentSky + 1);
-}, 600000);
+  setTimeout(() => {
+    document.getElementById('loading').style.display = 'none';
+  }, 180);
+});
 </script>
 </body>
 </html>
