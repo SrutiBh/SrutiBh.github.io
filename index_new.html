@@ -176,9 +176,44 @@
         radial-gradient(circle at 18% 22%, rgba(116,144,255,0.10), transparent 26%),
         linear-gradient(180deg, #091127 0%, #101a36 48%, #15203d 100%);
       transition: height 0.28s ease;
+      isolation: isolate;
     }
     .jshell.is-maximized .jvp {
-      height: calc(100vh - 2rem);
+      height: calc(100vh - 1.2rem);
+    }
+
+    .jvp::before,
+    .jvp::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .jvp::before {
+      z-index: 0;
+      background:
+        radial-gradient(circle at 18% 30%, rgba(126, 156, 255, 0.12), transparent 26%),
+        radial-gradient(circle at 72% 64%, rgba(110, 214, 196, 0.08), transparent 28%),
+        radial-gradient(circle at 85% 22%, rgba(255,255,255,0.05), transparent 18%);
+      animation: journeyDrift 18s ease-in-out infinite alternate;
+      opacity: 0.95;
+    }
+
+    .jvp::after {
+      z-index: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+      background-size: 84px 84px;
+      mask-image: radial-gradient(circle at center, rgba(0,0,0,0.85), transparent 92%);
+      -webkit-mask-image: radial-gradient(circle at center, rgba(0,0,0,0.85), transparent 92%);
+      opacity: 0.35;
+    }
+
+    @keyframes journeyDrift {
+      0%   { transform: translate3d(0, 0, 0) scale(1); }
+      100% { transform: translate3d(-36px, 24px, 0) scale(1.04); }
     }
 
     .jvp.dragging { cursor: grabbing; }
@@ -187,6 +222,7 @@
       position: absolute; left: 0; top: 0;
       width: 3000px; height: 1800px;
       transform-origin: 0 0; will-change: transform;
+      z-index: 1;
     }
 
     .jisland {
@@ -268,7 +304,7 @@
 
     .jdetail {
       position: absolute;
-      width: 380px; min-width: 240px; max-width: calc(100% - 20px);
+      width: 420px; min-width: 240px; max-width: calc(100% - 20px);
       min-height: 80px; max-height: calc(100% - 20px);
       overflow: hidden;
       background: rgba(244,246,248,0.98); color: #132642;
@@ -278,6 +314,7 @@
       transition: opacity 0.26s ease, transform 0.26s ease;
       box-shadow: 0 20px 50px rgba(15,23,42,0.22);
       display: flex; flex-direction: column;
+      z-index: 3;
     }
     .jdetail.open { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
 
@@ -289,6 +326,7 @@
       user-select: none;
     }
     .jdetail-header:active { cursor: grabbing; }
+
     .jdetail-body {
       padding: 0.75rem 1.1rem 1rem;
       overflow-y: auto;
@@ -341,21 +379,14 @@
     .jresize svg { opacity: 0.35; pointer-events: none; }
     .jresize:hover svg { opacity: 0.7; }
 
-    .jdetail-actions { display: flex; gap: 5px; align-items: center; flex-shrink: 0; padding-top: 2px; }
-    .jclose, .jsize-btn {
-      width: 26px; height: 26px; border-radius: 999px;
-      border: 1px solid #d9e1e8; background: white;
-      color: #60748c; cursor: pointer; font-size: 0.8rem;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0; transition: background 0.15s, color 0.15s;
-    }
-    .jclose:hover, .jsize-btn:hover { background: #f0f4f8; color: #1e3a5f; }
+    .jdetail-actions { display: none; }
 
     .jdtitle {
       font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.9rem;
       color: #102744; line-height: 1;
     }
-    .jdsubtitle { margin-top: 0.32rem; font-size: 0.67rem; letter-spacing: .17em; text-transform: uppercase; color: #6d7f97; }
+    .jdsubtitle { display: none; }
+
     .jcards-wrap { margin-top: 0; display: grid; gap: 0.75rem; }
 
     .jcard {
@@ -412,14 +443,6 @@
       line-height: 1.35;
     }
 
-    .jorg-sub {
-      margin-top: 0.12rem;
-      font-size: 0.78rem;
-      color: #7b8ca3;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-
     .jroles {
       display: grid;
       gap: 0;
@@ -451,6 +474,7 @@
       font-size: 0.85rem;
       line-height: 1.52;
       color: #5b6e87;
+      white-space: pre-line;
     }
 
     .jtags {
@@ -483,6 +507,9 @@
       .jshell.is-maximized {
         inset: 0.6rem;
         border-radius: 0.9rem;
+      }
+      .jvp::after {
+        background-size: 64px 64px;
       }
     }
   </style>
@@ -651,13 +678,9 @@
             <div class="jdetail-header" id="jdetailHeader">
               <div>
                 <div class="jdtitle" id="jdtitle">—</div>
-                <div class="jdsubtitle" id="jdsubtitle">—</div>
+                <div class="jdsubtitle" id="jdsubtitle"></div>
               </div>
-              <div class="jdetail-actions">
-                <button class="jsize-btn" id="jShrink" type="button" title="Make smaller">−</button>
-                <button class="jsize-btn" id="jGrow" type="button" title="Make larger">+</button>
-                <button class="jclose" id="jclose" type="button" title="Close">✕</button>
-              </div>
+              <div class="jdetail-actions"></div>
             </div>
             <div class="jdetail-body" id="jdetailBody">
               <div class="jcards-wrap" id="jcards"></div>
@@ -821,14 +844,17 @@
         top: "#BFEA7A",
         rim: "#9ED65A",
         years: ["2015","2017","2019"],
-        org: "IIT Kanpur, India",
-        orgLabel: "Institute",
-        logo: "images/logos/iitk.png",
-        alt: "IIT Kanpur",
-        experiences: [
-          { title: "Research Exploration", year: "2015", note: "Tessellation, Symmetry 1D → 2D → 3D → 4D → nD", tags: ["Geometry","Symmetry","Theory"] },
-          { title: "Core Processing Systems", year: "2017", note: "Signal Processing, Image Processing, Video Processing", tags: ["Signal","Image","Video"] },
-          { title: "Advanced Video Analysis", year: "2019", note: "Extended work in Video Processing and computational visual analysis", tags: ["Video","Analysis"] }
+        groups: [
+          {
+            org: "IIT Kanpur, India",
+            logo: "images/logos/iitk.png",
+            alt: "IIT Kanpur",
+            experiences: [
+              { title: "Research Exploration", year: "2015", note: "Tessellation, Symmetry 1D → 2D → 3D → 4D → nD", tags: ["Geometry","Symmetry","Theory"] },
+              { title: "Core Processing Systems", year: "2017", note: "Signal Processing, Image Processing, Video Processing", tags: ["Signal","Image","Video"] },
+              { title: "Advanced Video Analysis", year: "2019", note: "Extended work in video processing and computational visual analysis", tags: ["Video","Analysis"] }
+            ]
+          }
         ]
       },
       {
@@ -838,12 +864,15 @@
         top: "#C7F66C",
         rim: "#9BE548",
         years: ["2016"],
-        org: "IIT Madras, India",
-        orgLabel: "Institute",
-        logo: "images/logos/iitm.png",
-        alt: "IIT Madras",
-        experiences: [
-          { title: "Graphics & Simulation Internship", year: "2016", note: "3D Computer Graphics, OpenGL, Cloth Simulation, Bullet Physics, Visual C++", tags: ["OpenGL","Simulation","C++","Physics"] }
+        groups: [
+          {
+            org: "IIT Madras, India",
+            logo: "images/logos/iitm.png",
+            alt: "IIT Madras",
+            experiences: [
+              { title: "Graphics & Simulation Internship", year: "2016", note: "3D Computer Graphics, OpenGL, Cloth Simulation, Bullet Physics, Visual C++", tags: ["OpenGL","Simulation","C++","Physics"] }
+            ]
+          }
         ]
       },
       {
@@ -853,15 +882,18 @@
         top: "#AEEF57",
         rim: "#84D933",
         years: ["2017","2018","2019","2020"],
-        org: "IIT Kharagpur, India",
-        orgLabel: "Institute",
-        logo: "images/logos/iitkgp.jpg",
-        alt: "IIT Kharagpur",
-        experiences: [
-          { title: "Vision Foundations", year: "2017", note: "Image Processing Matlab, TensorFlow Masked RCNN, OpenCV", tags: ["Matlab","TensorFlow","OpenCV"] },
-          { title: "Hardware Intelligence", year: "2018", note: "Counterfeit IC, IC Textures, LaTeX, PyBPDL, PyTorch Introduction", tags: ["Counterfeit IC","LaTeX","PyTorch"] },
-          { title: "Remote Analytical Research", year: "2019", note: "Music Perception, Signal Processing, Data Analytics, Matlab", tags: ["Music Perception","Signal","Analytics"] },
-          { title: "Research Engineer", year: "2020", note: "DeepFake Video Detection using Computer Vision, using temporal analysis and inter-frame differences.", tags: ["DeepFake","Video","PyTorch"] }
+        groups: [
+          {
+            org: "IIT Kharagpur, India",
+            logo: "images/logos/iitkgp.jpg",
+            alt: "IIT Kharagpur",
+            experiences: [
+              { title: "Vision Foundations", year: "2017", note: "Image Processing Matlab, TensorFlow Masked RCNN, OpenCV", tags: ["Matlab","TensorFlow","OpenCV"] },
+              { title: "Hardware Intelligence", year: "2018", note: "Counterfeit IC, IC Textures, LaTeX, PyBPDL, PyTorch Introduction", tags: ["Counterfeit IC","LaTeX","PyTorch"] },
+              { title: "Remote Analytical Research", year: "2019", note: "Music Perception, Signal Processing, Data Analytics, Matlab", tags: ["Music Perception","Signal","Analytics"] },
+              { title: "Research Engineer", year: "2020", note: "DeepFake video detection using computer vision and inter-frame temporal analysis", tags: ["DeepFake","Video","PyTorch"] }
+            ]
+          }
         ]
       },
       {
@@ -871,12 +903,15 @@
         top: "#C8D6C8",
         rim: "#AABCAA",
         years: ["2018","2019"],
-        org: "UIUC, USA",
-        orgLabel: "Institute",
-        logo: "images/logos/uiuc.png",
-        alt: "UIUC",
-        experiences: [
-          { title: "Remote Research", year: "2018–2019", note: "Python, PyTorch, LSTM, Infant Voice & Needs Expression modelling", tags: ["Python","PyTorch","LSTM","Signal"] }
+        groups: [
+          {
+            org: "UIUC, USA",
+            logo: "images/logos/uiuc.png",
+            alt: "UIUC",
+            experiences: [
+              { title: "Remote Research", year: "2018–2019", note: "Python, PyTorch, LSTM, infant voice and needs expression modelling", tags: ["Python","PyTorch","LSTM","Signal"] }
+            ]
+          }
         ]
       },
       {
@@ -886,60 +921,106 @@
         top: "#D5E2D1",
         rim: "#B8C8B3",
         years: ["2019"],
-        org: "Claude Bernard Lyon 1 / CNRS, France",
-        orgLabel: "Institute",
-        logo: "images/logos/cnrs.png",
-        alt: "CNRS",
-        experiences: [
-          { title: "Remote Research", year: "2019", note: "Symmetry, Asymmetry, Literature Review, Convex-Concave, Graphical Patterns", tags: ["Symmetry","Literature Review","Patterns"] }
+        groups: [
+          {
+            org: "Claude Bernard Lyon 1 / CNRS, France",
+            logo: "images/logos/cnrs.png",
+            alt: "CNRS",
+            experiences: [
+              { title: "Remote Research", year: "2019", note: "Symmetry, asymmetry, literature review, convex-concave structures, graphical patterns", tags: ["Symmetry","Literature Review","Patterns"] }
+            ]
+          }
         ]
       },
       {
         city: "Kolkata",
-        tagline: "Teaching & knowledge transfer",
+        tagline: "Origins, undergraduate foundation & early teaching",
         mark: "pavilion",
         top: "#85B7EB",
         rim: "#378ADD",
-        years: ["2019"],
-        org: "NSHM College, India",
-        orgLabel: "Institute",
-        logo: "images/logos/nshm.png",
-        alt: "NSHM",
-        experiences: [
-          { title: "Teaching Computer Graphics", year: "2019", note: "Teaching Computer Graphics and OpenGL to bachelor students", tags: ["Teaching","Computer Graphics","OpenGL"] }
+        years: ["1996","2014","2019"],
+        groups: [
+          {
+            org: "Born & Grew Up, Kolkata, India",
+            logo: "images/logos/kolkata.png",
+            alt: "Kolkata",
+            experiences: [
+              { title: "Born & Grew Up", year: "1996 – Present", note: "(personal roots, values, early exposure, formative environment)", tags: ["Roots","Identity","Foundation"] }
+            ]
+          },
+          {
+            org: "WBUT, India",
+            logo: "images/logos/wbutnew_edited.jpg",
+            alt: "WBUT",
+            experiences: [
+              { title: "Undergraduate Studies", year: "2014 – 2019", note: "(undergraduate studies, activities, technical foundation, learning outcomes)", tags: ["BTech","Foundation","Activities"] }
+            ]
+          },
+          {
+            org: "NSHM College, India",
+            logo: "images/logos/nshm.png",
+            alt: "NSHM",
+            experiences: [
+              { title: "Teaching Experience", year: "2019", note: "(teaching experience, computer graphics, OpenGL, mentoring)", tags: ["Teaching","Graphics","OpenGL"] }
+            ]
+          }
         ]
       },
       {
         city: "Stockholm",
-        tagline: "HCI, systems & applied research",
+        tagline: "Graduate studies, teaching, research & industry",
         mark: "spire",
         top: "#FF9A2E",
         rim: "#E07010",
         years: ["2020","2021","2022","2024","2025","2026"],
-        org: "KTH Royal Institute of Technology / Ericsson, Sweden",
-        orgLabel: "Institute / Industry",
-        logo: "images/logos/kth.png",
-        alt: "KTH",
-        experiences: [
-          { title: "Teaching Assistant", year: "2020–2025", note: "TA across multiple KTH courses", tags: ["Teaching","KTH"] },
-          { title: "Research Assistant", year: "2021", note: "PyQT and Python-based research work at KTH / Karolinska Institute", tags: ["Python","PyQT","Research"] },
-          { title: "Summer R&D Intern", year: "2021", note: "Teleoperation robotics and haptic systems at Ericsson", tags: ["Ericsson","Teleoperation","Robotics"] }
+        groups: [
+          {
+            org: "KTH Royal Institute of Technology, Sweden",
+            logo: "images/logos/kth.png",
+            alt: "KTH",
+            experiences: [
+              { title: "Master’s Studies", year: "2020 – Present", note: "(master’s studies, immersive media, HCI, coursework, activities)", tags: ["Master’s","HCI","IMT"] },
+              { title: "Teaching Assistant", year: "2020 – 2025", note: "(TA work, course support, mentoring, academic contribution)", tags: ["TA","Teaching","Mentoring"] },
+              { title: "Research Assistant", year: "2021", note: "(RA work, research support, Python, PyQT, interdisciplinary collaboration)", tags: ["RA","Python","Research"] },
+              { title: "Activities", year: "2020 – Present", note: "(student life, projects, events, broader academic activities)", tags: ["Activities","Projects","Community"] }
+            ]
+          },
+          {
+            org: "Ericsson, Sweden",
+            logo: "images/logos/Ericsson2.jpg",
+            alt: "Ericsson",
+            experiences: [
+              { title: "Summer R&D Intern", year: "2021", note: "(haptics, teleoperation, networked interaction, applied research)", tags: ["Ericsson","Haptics","R&D"] }
+            ]
+          }
         ]
       },
       {
         city: "Lausanne",
-        tagline: "Design research & systems thinking",
+        tagline: "Exchange, thesis and research collaborations",
         mark: "pavilion",
         top: "#F9E04B",
         rim: "#E6C418",
         years: ["2021","2022","2023"],
-        org: "EPFL / University of Lausanne, Switzerland",
-        orgLabel: "Institute",
-        logo: "images/logos/epfl.png",
-        alt: "EPFL",
-        experiences: [
-          { title: "Graduate Exchange + Research", year: "2021–2022", note: "Research across design, systems, and emerging technology at EPFL", tags: ["EPFL","Exchange","Research"] },
-          { title: "Research Assistant", year: "2023", note: "EdTech to Support Programming Learning in Hybrid University Classes at UNIL", tags: ["UNIL","EdTech","Research"] }
+        groups: [
+          {
+            org: "EPFL, Switzerland",
+            logo: "images/logos/epfl.png",
+            alt: "EPFL",
+            experiences: [
+              { title: "Graduate Exchange", year: "2021 – 2022", note: "(exchange semester, advanced coursework, interdisciplinary exploration)", tags: ["Exchange","Coursework","EPFL"] },
+              { title: "Thesis Collaboration", year: "2023 – Present", note: "(thesis collaboration, VRLE, pedagogy, design research)", tags: ["Thesis","VRLE","Research"] },
+              { title: "Activities", year: "2021 – 2023", note: "(student activities, projects, labs, collaborations)", tags: ["Activities","Projects","Labs"] }
+            ]
+          },
+          {
+            org: "University of Lausanne (UNIL), Switzerland",
+            logo: "images/logos/UNIL.jpg",
+            alt: "UNIL",
+            experiences: [
+              { title: "Research Assistant", year: "2023", note: "(RA work, EdTech, programming learning, hybrid classrooms)", tags: ["UNIL","RA","EdTech"] }
+            ]
+          }
         ]
       },
       {
@@ -949,28 +1030,41 @@
         top: "#F9E04B",
         rim: "#E6C418",
         years: ["2025"],
-        org: "University of Jyväskylä, Finland",
-        orgLabel: "Institute",
-        logo: "images/logos/jyu_transparent.png",
-        alt: "JYU",
-        experiences: [
-          { title: "Summer Trainee", year: "2025", note: "Accessible Interactive Technology, Multimodal Accessibility Design", tags: ["Accessibility","Multimodal","Interactive Tech"] }
+        groups: [
+          {
+            org: "University of Jyväskylä, Finland",
+            logo: "images/logos/jyu_transparent.png",
+            alt: "JYU",
+            experiences: [
+              { title: "Summer Trainee", year: "2025", note: "Accessible Interactive Technology, Multimodal Accessibility Design", tags: ["Accessibility","Multimodal","Interactive Tech"] }
+            ]
+          }
         ]
       },
       {
         city: "Paris",
-        tagline: "Language, reflection & future direction",
+        tagline: "Language learning and family settlement",
         mark: "arch",
         top: "#E8B6C6",
         rim: "#D48CA5",
         years: ["2025","2026"],
-        org: "Paris, France",
-        orgLabel: "Chapter",
-        logo: "images/logos/france.png",
-        alt: "France",
-        experiences: [
-          { title: "French Language Learning", year: "2025", note: "Language learning and broader cultural fluency", tags: ["French","Language","Growth"] },
-          { title: "Family Building Chapter", year: "2026", note: "A slower, intentional chapter centered on life direction and family building", tags: ["Reflection","Family","Future"] }
+        groups: [
+          {
+            org: "CAEL - Centre d'Animation Expression Loisirs de Bourg-La-Reine",
+            logo: "images/logos/cael.png",
+            alt: "CAEL",
+            experiences: [
+              { title: "French Language Training", year: "2025", note: "(French language learning, communication, integration, cultural fluency)", tags: ["French","Language","Training"] }
+            ]
+          },
+          {
+            org: "Paris, France",
+            logo: "images/logos/france.png",
+            alt: "Paris",
+            experiences: [
+              { title: "Family Settlement", year: "2026", note: "(family settlement, new life chapter, long-term grounding, transition)", tags: ["Family","Settlement","Future"] }
+            ]
+          }
         ]
       }
     ];
@@ -1011,15 +1105,7 @@
 
     function yearsLabel(p) {
       if (p.years && p.years.length) return p.years.join(', ');
-      const all = new Set();
-      p.experiences.forEach(e => {
-        const m = e.year.match(/(\d{4})[–-](\d{4})/);
-        if (m) { for (let yr = +m[1]; yr <= +m[2]; yr++) all.add(yr); }
-        else { const s = e.year.match(/(\d{4})/g); if (s) s.forEach(y => all.add(+y)); }
-      });
-      const sorted = [...all].sort((a,b)=>a-b);
-      if (sorted.length <= 4) return sorted.join(', ');
-      return sorted[0] + ', … , ' + sorted[sorted.length-1];
+      return '';
     }
 
     function buildIslands() {
@@ -1072,23 +1158,22 @@
       const p = islands[i];
       islands.forEach((is, j) => is.el.classList.toggle('sel', j === i));
       dtitle.textContent = p.city;
-      dsub.textContent = p.tagline;
+      dsub.textContent = '';
 
-      dcards.innerHTML = `
+      dcards.innerHTML = (p.groups || []).map(group => `
         <div class="jcard">
           <div class="jcard-head">
             <div class="jlogo">
-              <img src="${p.logo || ''}" alt="${p.alt || p.org || p.city}"
+              <img src="${group.logo || ''}" alt="${group.alt || group.org || p.city}"
                    onerror="this.style.display='none'; this.parentElement.innerHTML='🏛️'; this.parentElement.style.fontSize='1.25rem';">
             </div>
             <div class="jorg-wrap">
-              <div class="jorg">${p.org || p.city}</div>
-              <div class="jorg-sub">${p.orgLabel || 'Institute'}</div>
+              <div class="jorg">${group.org || p.city}</div>
             </div>
           </div>
 
           <div class="jroles">
-            ${p.experiences.map(e => `
+            ${(group.experiences || []).map(e => `
               <div class="jrole">
                 <div class="jct">${e.title}</div>
                 <div class="jcy">${e.year}</div>
@@ -1098,7 +1183,7 @@
             `).join('')}
           </div>
         </div>
-      `;
+      `).join('');
 
       const wasOpen = detail.classList.contains('open');
       if (wasOpen) {
@@ -1111,6 +1196,7 @@
         if (cardState.left !== null) applyCardState();
         else positionDetail();
       }
+
       focusOn(p.x, p.y, 1.1);
       setTimeout(() => { suppressClose = false; }, 50);
     }
@@ -1146,20 +1232,27 @@
     let drag = false, moved = false, dsx = 0, dsy = 0, startTx = 0, startTy = 0;
 
     vp.addEventListener('pointerdown', e => {
+      if (detail.contains(e.target)) return;
       drag = true; moved = false;
       vp.classList.add('dragging');
       dsx = e.clientX; dsy = e.clientY;
       startTx = S.tx; startTy = S.ty;
     });
+
     window.addEventListener('pointermove', e => {
       if (!drag) return;
       const dx = e.clientX - dsx, dy = e.clientY - dsy;
       if (Math.abs(dx) > 3 || Math.abs(dy) > 3) moved = true;
       S.tx = startTx + dx; S.ty = startTy + dy;
     });
-    window.addEventListener('pointerup', () => { drag = false; vp.classList.remove('dragging'); });
 
-    vp.addEventListener('click', () => {
+    window.addEventListener('pointerup', () => {
+      drag = false;
+      vp.classList.remove('dragging');
+    });
+
+    vp.addEventListener('click', e => {
+      if (detail.contains(e.target)) return;
       if (suppressClose || moved) return;
       if (detail.classList.contains('open')) resetView();
     });
@@ -1172,7 +1265,6 @@
     detail.addEventListener('touchmove', e => e.stopPropagation(), { passive: true });
     detailBody.addEventListener('pointerdown', e => e.stopPropagation());
     detailBody.addEventListener('wheel', e => e.stopPropagation(), { passive: true });
-    document.getElementById('jclose').addEventListener('click', e => { e.stopPropagation(); closeDetail(); });
 
     const detailHeader = document.getElementById('jdetailHeader');
     let ddrag = false, ddx = 0, ddy = 0, dStartL = 0, dStartT = 0;
@@ -1198,6 +1290,7 @@
       ddx = e.clientX; ddy = e.clientY;
       e.stopPropagation();
     });
+
     detailHeader.addEventListener('pointermove', e => {
       if (!ddrag) return;
       const dx = e.clientX - ddx, dy = e.clientY - ddy;
@@ -1210,7 +1303,11 @@
       saveCardState();
       e.stopPropagation();
     });
-    detailHeader.addEventListener('pointerup', e => { ddrag = false; e.stopPropagation(); });
+
+    detailHeader.addEventListener('pointerup', e => {
+      ddrag = false;
+      e.stopPropagation();
+    });
 
     const resizeHandles = detail.querySelectorAll('.jresize');
     let rdrag = false;
@@ -1290,32 +1387,6 @@
       });
     });
 
-    const SIZE_STEPS = [280, 340, 400, 460, 520];
-    function currentSizeStep() {
-      const w = detail.offsetWidth;
-      let closest = 0;
-      SIZE_STEPS.forEach((s, i) => { if (Math.abs(s - w) < Math.abs(SIZE_STEPS[closest] - w)) closest = i; });
-      return closest;
-    }
-
-    document.getElementById('jShrink').addEventListener('click', e => {
-      e.stopPropagation();
-      const step = Math.max(0, currentSizeStep() - 1);
-      detail.style.width = SIZE_STEPS[step] + 'px';
-      detail.style.height = '';
-      clampDetailPos();
-      saveCardState();
-    });
-
-    document.getElementById('jGrow').addEventListener('click', e => {
-      e.stopPropagation();
-      const step = Math.min(SIZE_STEPS.length - 1, currentSizeStep() + 1);
-      detail.style.width = SIZE_STEPS[step] + 'px';
-      detail.style.height = '';
-      clampDetailPos();
-      saveCardState();
-    });
-
     function clampDetailPos() {
       const vw = vp.clientWidth, vh = vp.clientHeight;
       const dw = detail.offsetWidth, dh = detail.offsetHeight;
@@ -1326,6 +1397,7 @@
     }
 
     vp.addEventListener('wheel', e => {
+      if (detail.contains(e.target)) return;
       e.preventDefault();
       const rect = vp.getBoundingClientRect();
       const px = e.clientX - rect.left, py = e.clientY - rect.top;
@@ -1337,6 +1409,7 @@
 
     let pinchDist = 0, pinchScale = 1, pinchWC = null;
     vp.addEventListener('touchstart', e => {
+      if (detail.contains(e.target)) return;
       if (e.touches.length === 2) {
         const a = e.touches[0], b = e.touches[1];
         pinchDist = Math.hypot(b.clientX - a.clientX, b.clientY - a.clientY);
@@ -1350,6 +1423,7 @@
 
     vp.addEventListener('touchmove', e => {
       if (e.touches.length === 2 && pinchWC) {
+        if (detail.contains(e.target)) return;
         e.preventDefault();
         const a = e.touches[0], b = e.touches[1];
         const d = Math.hypot(b.clientX - a.clientX, b.clientY - a.clientY);
