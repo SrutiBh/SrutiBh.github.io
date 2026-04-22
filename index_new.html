@@ -111,6 +111,7 @@
       overflow: hidden;
       box-shadow: 0 16px 40px rgba(15,23,42,0.14);
       transition: all 0.28s ease;
+      overscroll-behavior: contain;
     }
 
     .jshell.is-maximized {
@@ -163,6 +164,7 @@
       height: 580px;
       overflow: hidden;
       touch-action: none;
+      overscroll-behavior: contain;
       cursor: grab;
       background:
         radial-gradient(circle at 84% 12%, rgba(255,255,255,.16) 0 48px, rgba(200,215,255,.05) 49px, transparent 100px),
@@ -1398,13 +1400,23 @@
 
     vp.addEventListener('wheel', e => {
       if (detail.contains(e.target)) return;
+
       e.preventDefault();
+      e.stopPropagation();
+
       const rect = vp.getBoundingClientRect();
-      const px = e.clientX - rect.left, py = e.clientY - rect.top;
-      const wx = (px - S.tx) / S.ts, wy = (py - S.ty) / S.ts;
+      const px = e.clientX - rect.left;
+      const py = e.clientY - rect.top;
+
+      const wx = (px - S.tx) / S.ts;
+      const wy = (py - S.ty) / S.ts;
+
       const factor = e.deltaY > 0 ? 0.91 : 1.1;
-      let ns = Math.max(S.minS, Math.min(S.maxS, S.ts * factor));
-      S.tx = px - wx * ns; S.ty = py - wy * ns; S.ts = ns;
+      const ns = Math.max(S.minS, Math.min(S.maxS, S.ts * factor));
+
+      S.tx = px - wx * ns;
+      S.ty = py - wy * ns;
+      S.ts = ns;
     }, { passive: false });
 
     let pinchDist = 0, pinchScale = 1, pinchWC = null;
@@ -1425,13 +1437,17 @@
       if (e.touches.length === 2 && pinchWC) {
         if (detail.contains(e.target)) return;
         e.preventDefault();
+        e.stopPropagation();
+
         const a = e.touches[0], b = e.touches[1];
         const d = Math.hypot(b.clientX - a.clientX, b.clientY - a.clientY);
         const rect = vp.getBoundingClientRect();
         const cx = (a.clientX + b.clientX) * 0.5 - rect.left;
         const cy = (a.clientY + b.clientY) * 0.5 - rect.top;
         let ns = Math.max(S.minS, Math.min(S.maxS, pinchScale * (d / pinchDist)));
-        S.ts = ns; S.tx = cx - pinchWC.wx * ns; S.ty = cy - pinchWC.wy * ns;
+        S.ts = ns;
+        S.tx = cx - pinchWC.wx * ns;
+        S.ty = cy - pinchWC.wy * ns;
       }
     }, { passive: false });
 
@@ -1453,11 +1469,17 @@
       mapToggleBtn.setAttribute('aria-label', isMapMaximized ? 'Minimize map' : 'Maximize map');
     }
 
+    function applyBodyOverflowState() {
+      const hoveringMap = shell.matches(':hover');
+      document.body.style.overflow = (isMapMaximized || hoveringMap) ? 'hidden' : '';
+    }
+
     function toggleMapSize() {
       const wasMaximized = isMapMaximized;
       isMapMaximized = !isMapMaximized;
       shell.classList.toggle('is-maximized', isMapMaximized);
-      document.body.style.overflow = isMapMaximized ? 'hidden' : '';
+
+      applyBodyOverflowState();
       updateMapToggleUI();
 
       requestAnimationFrame(() => requestAnimationFrame(() => {
@@ -1476,6 +1498,18 @@
     mapToggleBtn.addEventListener('click', e => {
       e.stopPropagation();
       toggleMapSize();
+    });
+
+    shell.addEventListener('wheel', e => {
+      e.preventDefault();
+    }, { passive: false });
+
+    vp.addEventListener('mouseenter', () => {
+      applyBodyOverflowState();
+    });
+
+    vp.addEventListener('mouseleave', () => {
+      if (!isMapMaximized) applyBodyOverflowState();
     });
 
     window.addEventListener('keydown', e => {
