@@ -1,1185 +1,1013 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1.0" />
-<title>Sruti — Atlas of Learning</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html, body {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    font-family: Inter, system-ui, sans-serif;
-    background: #0b1020;
-    color: white;
-  }
-
-  :root{
-    --line: rgba(255,255,255,.08);
-    --blue: #6aa9ff;
-  }
-
-  body{
-    background:
-      radial-gradient(circle at 78% 14%, rgba(220,230,255,.18) 0, rgba(220,230,255,.05) 14%, transparent 28%),
-      radial-gradient(circle at 18% 20%, rgba(120,140,255,.10) 0, transparent 22%),
-      linear-gradient(180deg, #091127 0%, #101a36 48%, #15203d 100%);
-  }
-
-  /* very light sky */
-  #sky{
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 0;
-    background:
-      radial-gradient(circle at 84% 16%, rgba(255,255,255,.14) 0 52px, rgba(200,215,255,.04) 53px, transparent 105px),
-      radial-gradient(circle at 10% 22%, rgba(255,255,255,.12) 0 1px, transparent 2px),
-      radial-gradient(circle at 18% 36%, rgba(255,255,255,.10) 0 1px, transparent 2px),
-      radial-gradient(circle at 28% 14%, rgba(255,255,255,.13) 0 1px, transparent 2px),
-      radial-gradient(circle at 36% 22%, rgba(255,255,255,.11) 0 1px, transparent 2px),
-      radial-gradient(circle at 46% 12%, rgba(255,255,255,.10) 0 1px, transparent 2px),
-      radial-gradient(circle at 58% 20%, rgba(255,255,255,.12) 0 1px, transparent 2px),
-      radial-gradient(circle at 68% 10%, rgba(255,255,255,.10) 0 1px, transparent 2px),
-      radial-gradient(circle at 88% 30%, rgba(255,255,255,.10) 0 1px, transparent 2px),
-      linear-gradient(180deg, rgba(255,255,255,.03), transparent 40%);
-  }
-
-  #loading {
-    position: fixed;
-    inset: 0;
-    z-index: 100;
-    background: #0b1020;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 14px;
-  }
-
-  #loading .title {
-    font-family: "Cormorant Garamond", serif;
-    font-size: 24px;
-    color: rgba(255,255,255,.82);
-  }
-
-  #loading .bar {
-    width: 170px;
-    height: 2px;
-    background: rgba(255,255,255,.08);
-    overflow: hidden;
-    position: relative;
-  }
-
-  #loading .bar::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    width: 40%;
-    background: linear-gradient(90deg, transparent, #78c89b, transparent);
-    animation: loadMove 1s linear infinite;
-  }
-
-  @keyframes loadMove {
-    0% { transform: translateX(-140%); }
-    100% { transform: translateX(280%); }
-  }
-
-  #brand {
-    position: fixed;
-    top: 22px;
-    left: 24px;
-    z-index: 20;
-    pointer-events: none;
-  }
-
-  #brand h1 {
-    font-family: "Cormorant Garamond", serif;
-    font-size: 22px;
-    font-weight: 500;
-    color: rgba(255,255,255,.9);
-  }
-
-  #brand p {
-    margin-top: 4px;
-    font-size: 10px;
-    letter-spacing: .22em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,.34);
-  }
-
-  #controls {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 25;
-    display: flex;
-    gap: 8px;
-  }
-
-  .ctl {
-    border: 1px solid var(--line);
-    background: rgba(10,14,24,.62);
-    color: rgba(255,255,255,.84);
-    border-radius: 999px;
-    padding: 9px 12px;
-    font-size: 10px;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    cursor: pointer;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-  }
-
-  .ctl:hover {
-    background: rgba(255,255,255,.10);
-  }
-
-  #viewport {
-    position: fixed;
-    inset: 0;
-    overflow: hidden;
-    touch-action: none;
-    z-index: 5;
-    cursor: grab;
-  }
-
-  #viewport.dragging { cursor: grabbing; }
-
-  #world {
-    position: absolute;
-    width: 3800px;
-    height: 2400px;
-    left: 0;
-    top: 0;
-    transform-origin: 0 0;
-    will-change: transform;
-  }
-
-  .route {
-    position: absolute;
-    height: 2px;
-    transform-origin: left center;
-    background: rgba(180,210,255,.18);
-    border-radius: 999px;
-    opacity: .7;
-  }
-
-  .island {
-    position: absolute;
-    width: 250px;
-    height: 206px;
-    transform: translate(-50%, -50%);
-    cursor: pointer;
-    user-select: none;
-  }
-
-  .island-inner {
-    position: absolute;
-    inset: 0;
-    transition: transform .22s ease, filter .22s ease;
-  }
-
-  .island:hover .island-inner {
-    transform: translateY(-2px);
-  }
-
-  .island.selected .island-inner {
-    transform: scale(1.04);
-    filter: drop-shadow(0 16px 26px rgba(100,160,255,.18));
-  }
-
-  .top {
-    position: absolute;
-    left: 50%;
-    top: 28px;
-    width: 162px;
-    height: 98px;
-    transform: translateX(-50%);
-    background: var(--top, #9bdcb3);
-    clip-path: polygon(10% 24%, 25% 10%, 67% 6%, 88% 20%, 94% 48%, 81% 76%, 40% 91%, 13% 77%, 5% 48%);
-    border: 2px solid rgba(255,255,255,.08);
-    box-shadow: inset 0 2px 0 rgba(255,255,255,.08);
-  }
-
-  .rim {
-    position: absolute;
-    left: 50%;
-    top: 99px;
-    width: 176px;
-    height: 14px;
-    transform: translateX(-50%);
-    background: var(--rim, #4fd78a);
-    clip-path: polygon(6% 24%, 23% 2%, 68% 0%, 91% 18%, 96% 54%, 79% 100%, 34% 100%, 10% 82%, 4% 52%);
-    opacity: .96;
-  }
-
-  .bottom {
-    position: absolute;
-    left: 50%;
-    top: 106px;
-    width: 112px;
-    height: 86px;
-    transform: translateX(-50%);
-    background: linear-gradient(180deg, #36404f 0%, #232b38 100%);
-    clip-path: polygon(26% 0, 77% 0, 100% 19%, 84% 55%, 63% 100%, 40% 92%, 17% 58%, 0 18%);
-  }
-
-  .tree {
-    position: absolute;
-    width: 14px;
-    height: 32px;
-    opacity:.78;
-  }
-
-  .tree::before {
-    content: "";
-    position: absolute;
-    left: 5px;
-    bottom: 0;
-    width: 4px;
-    height: 11px;
-    background: #6a4726;
-    border-radius: 3px;
-  }
-
-  .tree::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 14px;
-    height: 21px;
-    background: #2cb75f;
-    clip-path: polygon(50% 0, 100% 44%, 76% 44%, 100% 100%, 0 100%, 24% 44%, 0 44%);
-  }
-
-  .stone {
-    position: absolute;
-    width: 8px;
-    height: 7px;
-    background: #b4c2d0;
-    border-radius: 4px;
-    opacity: .48;
-  }
-
-  .landmark {
-    position: absolute;
-  }
-
-  .landmark.spire {
-    width: 8px;
-    height: 42px;
-    left: 50%;
-    top: 49px;
-    transform: translateX(-50%);
-  }
-
-  .landmark.spire::before {
-    content: "";
-    position: absolute;
-    left: 3px;
-    bottom: 0;
-    width: 2px;
-    height: 30px;
-    background: rgba(236,242,250,.88);
-  }
-
-  .landmark.spire::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: 0;
-    width: 11px;
-    height: 11px;
-    transform: translateX(-50%);
-    border-radius: 999px;
-    background: rgba(225,236,255,.95);
-  }
-
-  .landmark.arch {
-    left: 50%;
-    top: 68px;
-    width: 28px;
-    height: 22px;
-    transform: translateX(-50%);
-    border: 3px solid rgba(238,244,248,.72);
-    border-bottom: none;
-    border-radius: 18px 18px 0 0;
-  }
-
-  .landmark.pavilion {
-    left: 50%;
-    top: 62px;
-    width: 28px;
-    height: 18px;
-    transform: translateX(-50%);
-    background: rgba(240,244,250,.72);
-    clip-path: polygon(50% 0, 100% 34%, 86% 34%, 86% 100%, 14% 100%, 14% 34%, 0 34%);
-  }
-
-  .city-label {
-    position: absolute;
-    left: 50%;
-    top: 4px;
-    transform: translateX(-50%);
-    text-align: center;
-    pointer-events: none;
-  }
-
-  .city-name {
-    font-family: "Cormorant Garamond", serif;
-    font-size: 26px;
-    font-weight: 500;
-    color: rgba(255,255,255,.95);
-    text-shadow: 0 2px 14px rgba(0,0,0,.16);
-    white-space: nowrap;
-  }
-
-  .year-row {
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 220px;
-  }
-
-  .year-chip {
-    border: 1px solid rgba(255,255,255,.08);
-    background: rgba(10,14,24,.58);
-    color: rgba(255,255,255,.78);
-    border-radius: 999px;
-    padding: 5px 8px;
-    font-size: 8.5px;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
-
-  .island.selected .year-chip {
-    background: rgba(90,173,255,.16);
-    color: var(--blue);
-    border-color: rgba(90,173,255,.34);
-  }
-
-  #strip {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 30;
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    padding: 22px 16px 18px;
-    background: linear-gradient(180deg, transparent 0%, rgba(8,10,18,.72) 45%, rgba(8,10,18,.90) 100%);
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-
-  #strip::-webkit-scrollbar { display: none; }
-
-  .yb {
-    border: none;
-    background: transparent;
-    color: rgba(255,255,255,.34);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-    cursor: pointer;
-    padding: 0 2px;
-    font-family: inherit;
-    flex: 0 0 auto;
-  }
-
-  .yb.active { transform: translateY(-6px); }
-
-  .yb .gem {
-    width: 9px;
-    height: 9px;
-    border-radius: 2px;
-    transform: rotate(45deg);
-    background: rgba(125,205,155,.88);
-  }
-
-  .yb.active .gem {
-    background: var(--blue);
-  }
-
-  .yb .label {
-    font-size: 9.5px;
-    letter-spacing: .08em;
-  }
-
-  .yb.active .label { color: var(--blue); }
-
-  #nav {
-    position: fixed;
-    inset: 0;
-    z-index: 26;
-    pointer-events: none;
-  }
-
-  .navBtn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: auto;
-    width: 42px;
-    height: 42px;
-    border-radius: 999px;
-    border: 1px solid var(--line);
-    background: rgba(255,255,255,.05);
-    color: rgba(255,255,255,.78);
-    cursor: pointer;
-    font-size: 16px;
-    display: grid;
-    place-items: center;
-    opacity: 0;
-  }
-
-  .navBtn.show { opacity: 1; }
-  .navBtn:disabled { opacity: .18; pointer-events: none; }
-
-  #prevBtn { left: 16px; }
-  #nextBtn { right: 16px; }
-
-  /* Panel */
-  #panel {
-    position: fixed;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    width: min(520px, 96vw);
-    z-index: 40;
-    background: #f4f6f8;
-    color: #132642;
-    border-left: 1px solid rgba(20,40,70,.08);
-    transform: translateX(105%);
-    transition: transform .28s ease;
-    display: flex;
-    flex-direction: column;
-  }
-
-  #panel.open { transform: translateX(0%); }
-
-  #closePanel {
-    position: absolute;
-    left: -42px;
-    top: 16px;
-    width: 32px;
-    height: 32px;
-    border-radius: 999px;
-    border: 1px solid rgba(255,255,255,.10);
-    background: rgba(8,10,18,.92);
-    color: rgba(255,255,255,.75);
-    cursor: pointer;
-  }
-
-  #panelHead {
-    padding: 28px 28px 16px;
-    background: #f4f6f8;
-  }
-
-  #panelPlace {
-    font-family: "Cormorant Garamond", serif;
-    font-size: 42px;
-    font-weight: 500;
-    line-height: .95;
-    color: #102744;
-  }
-
-  #panelWhen {
-    margin-top: 10px;
-    font-size: 10px;
-    letter-spacing: .18em;
-    text-transform: uppercase;
-    color: #6d7f97;
-  }
-
-  #panelBody {
-    overflow: auto;
-    padding: 0 28px 34px;
-    background: #f4f6f8;
-  }
-
-  .sec {
-    margin-bottom: 28px;
-  }
-
-  .secLabel {
-    font-family: "Cormorant Garamond", serif;
-    font-size: 28px;
-    font-weight: 500;
-    color: #102744;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #d8e0e8;
-    margin-bottom: 18px;
-  }
-
-  .yearCards {
-    display: grid;
-    gap: 22px;
-  }
-
-  .yearCard {
-    background: #fff;
-    border: 1px solid #e9edf1;
-    border-radius: 18px;
-    box-shadow: 0 2px 10px rgba(20,40,70,.05);
-    padding: 22px 24px;
-  }
-
-  .event {
-    display: flex;
-    gap: 18px;
-    align-items: center;
-  }
-
-  .eventLogo {
-    width: 64px;
-    height: 64px;
-    flex: 0 0 64px;
-    border-radius: 999px;
-    background: linear-gradient(180deg, #eef2f5 0%, #e6ebef 100%);
-    border: 1px solid #e1e7ec;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #8ea0b4;
-    font-size: 11px;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    font-weight: 600;
-    text-align: center;
-    padding: 4px;
-  }
-
-  .eventMeta {
-    min-width: 0;
-    flex: 1;
-  }
-
-  .eventTitle {
-    font-size: 18px;
-    font-weight: 700;
-    line-height: 1.25;
-    color: #0f203a;
-  }
-
-  .eventOrg {
-    margin-top: 5px;
-    font-size: 14px;
-    line-height: 1.45;
-    color: #0073d6;
-  }
-
-  .eventYearLine {
-    margin-top: 2px;
-    font-size: 13px;
-    line-height: 1.4;
-    color: #7b8ca3;
-  }
-
-  .eventNote {
-    margin-top: 7px;
-    font-size: 14px;
-    line-height: 1.55;
-    color: #5b6e87;
-  }
-
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 10px;
-  }
-
-  .tag {
-    border: 1px solid #dbe3ea;
-    background: #f7f9fb;
-    color: #7387a0;
-    border-radius: 999px;
-    padding: 4px 8px;
-    font-size: 10px;
-    letter-spacing: .04em;
-    text-transform: uppercase;
-  }
-
-  @media (max-width: 780px) {
-    #hint { display: none; }
-
-    #controls {
-      top: auto;
-      bottom: 86px;
-      flex-wrap: wrap;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Journey Map — Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: 'DM Sans', sans-serif; background-color: #f8fafc; }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    /* ════════════════════════════════════════
+       JOURNEY MAP
+    ════════════════════════════════════════ */
+    .jshell {
+      position: relative;
+      background: linear-gradient(180deg,#0d1328 0%,#111936 46%,#15203d 100%);
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 16px 40px rgba(15,23,42,0.14);
+      transition: all 0.28s ease;
+      overscroll-behavior: contain;
+    }
+
+    .jshell.is-maximized {
+      position: fixed;
+      inset: 1rem;
+      z-index: 80;
+      border-radius: 1rem;
+      box-shadow: 0 24px 80px rgba(15,23,42,0.28);
+    }
+
+    .jtoolbar {
+      position: absolute;
+      top: 0.9rem;
+      right: 1rem;
+      z-index: 12;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    .jicon-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(10,16,32,0.26);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      color: rgba(255,255,255,0.9);
+      display: flex;
+      align-items: center;
       justify-content: center;
-      max-width: 88vw;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.15s, border-color 0.15s;
+      font-family: 'DM Sans', system-ui, sans-serif;
+      font-size: 0.9rem;
+      line-height: 1;
+    }
+    .jicon-btn:hover {
+      background: rgba(10,16,32,0.38);
+      border-color: rgba(255,255,255,0.16);
+      transform: translateY(-1px);
     }
 
-    #panel {
-      width: 100%;
-      top: auto;
-      height: 70dvh;
-      border-left: none;
-      border-top: 1px solid rgba(20,40,70,.08);
-      transform: translateY(105%);
-      right: 0;
-      bottom: 0;
+    .jvp {
+      position: relative;
+      height: 620px;
+      overflow: hidden;
+      touch-action: none;
+      overscroll-behavior: contain;
+      cursor: grab;
+      background:
+        radial-gradient(circle at 88% 19%, #fffde8 0 58px, rgba(255,250,200,.18) 59px, transparent 130px),
+        radial-gradient(circle at 10% 18%, rgba(255,255,255,.55) 0 1.5px, transparent 2.5px),
+        radial-gradient(circle at 22% 32%, rgba(255,255,255,.45) 0 1.5px, transparent 2.5px),
+        radial-gradient(circle at 38% 10%, rgba(255,255,255,.60) 0 1.5px, transparent 2.5px),
+        radial-gradient(circle at 52% 22%, rgba(255,255,255,.45) 0 1.5px, transparent 2.5px),
+        radial-gradient(circle at 67% 8%,  rgba(255,255,255,.50) 0 1.5px, transparent 2.5px),
+        radial-gradient(circle at 30% 55%, rgba(255,255,255,.40) 0 1px, transparent 2px),
+        radial-gradient(circle at 78% 28%, rgba(255,255,255,.45) 0 1.5px, transparent 2.5px),
+        radial-gradient(circle at 90% 18%, rgba(255,255,255,.40) 0 1px, transparent 2px),
+        radial-gradient(circle at 15% 70%, rgba(255,255,255,.35) 0 1px, transparent 2px),
+        radial-gradient(circle at 60% 75%, rgba(255,255,255,.40) 0 1px, transparent 2px),
+        linear-gradient(180deg, #06102a 0%, #0c1840 50%, #111e48 100%);
+      transition: height 0.28s ease;
+    }
+    .jshell.is-maximized .jvp {
+      height: calc(100vh - 1.2rem);
     }
 
-    #panel.open { transform: translateY(0%); }
+    .jvp.dragging { cursor: grabbing; }
 
-    #closePanel {
+    .jworld {
+      position: absolute; left: 0; top: 0;
+      width: 3600px; height: 1800px;
+      transform-origin: 0 0; will-change: transform;
+    }
+
+    /* ── ISLAND ── */
+    .jisland {
+      position: absolute;
+      width: 380px;
+      height: 370px;
+      transform: translate(-50%, -50%);
+      cursor: pointer;
+      user-select: none;
+    }
+    .jinner { position: absolute; inset: 0; transition: transform 0.22s ease; }
+    .jisland:hover .jinner { transform: translateY(-6px); }
+    .jisland.sel .jinner { transform: scale(1.07); }
+
+    /* ── CITY LABEL: clearly above the island ── */
+    .jlabel {
+      position: absolute;
       left: 50%;
-      top: -40px;
+      top: -72px;
       transform: translateX(-50%);
+      text-align: center;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    .jcity {
+      font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+      font-size: 3.6rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      color: #ffffff;
+      text-shadow: 0 2px 0 rgba(0,0,0,1), 0 4px 20px rgba(0,0,0,0.85);
+      -webkit-font-smoothing: antialiased;
     }
 
-    #panelPlace { font-size: 36px; }
-
-    .event {
-      align-items: flex-start;
+    /* ── ISLAND PARTS ── */
+    .jtop {
+      position: absolute; left: 50%; top: 28px;
+      width: 248px; height: 148px;
+      transform: translateX(-50%);
+      clip-path: polygon(10% 24%,25% 10%,67% 6%,88% 20%,94% 48%,81% 76%,40% 91%,13% 77%,5% 48%);
+      border: none;
+    }
+    .jrim {
+      position: absolute; left: 50%; top: 155px;
+      width: 268px; height: 22px;
+      transform: translateX(-50%);
+      clip-path: polygon(6% 24%,23% 2%,68% 0%,91% 18%,96% 54%,79% 100%,34% 100%,10% 82%,4% 52%);
+      opacity: 1;
+    }
+    .jbot {
+      position: absolute; left: 50%; top: 164px;
+      width: 172px; height: 130px;
+      transform: translateX(-50%);
+      background: linear-gradient(180deg, #a0714f 0%, #7a5235 50%, #5c3d22 100%);
+      clip-path: polygon(26% 0,77% 0,100% 19%,84% 55%,63% 100%,40% 92%,17% 58%,0 18%);
     }
 
-    .eventLogo {
-      width: 56px;
-      height: 56px;
-      flex-basis: 56px;
+    .jtree { position: absolute; width: 18px; height: 44px; opacity: 1; }
+    .jtree::before {
+      content: ""; position: absolute; left: 7px; bottom: 0;
+      width: 5px; height: 15px; background: #6b4423; border-radius: 2px;
     }
-  }
-</style>
+    .jtree::after {
+      content: ""; position: absolute; left: 0; top: 0;
+      width: 18px; height: 28px; background: #22a855;
+      clip-path: polygon(50% 0,100% 44%,76% 44%,100% 100%,0 100%,24% 44%,0 44%);
+    }
+    .jstone { position: absolute; width: 10px; height: 8px; background: #c8d6e0; border-radius: 4px; opacity: .6; }
+
+    /* ── YEARS ── */
+    .jyears {
+      position: absolute; left: 50%; top: 314px;
+      transform: translateX(-50%);
+      width: 340px;
+      font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+      font-size: 2.1rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      color: #ffffff;
+      text-shadow: 0 2px 0 rgba(0,0,0,1), 0 4px 14px rgba(0,0,0,0.9);
+      -webkit-text-stroke: 0.5px rgba(255,255,255,0.6);
+      white-space: normal; pointer-events: none;
+      text-align: center;
+      line-height: 1.3;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .jmark-spire { position: absolute; left: 50%; top: 42px; transform: translateX(-50%); width: 8px; height: 38px; }
+    .jmark-spire::before {
+      content: ""; position: absolute; left: 3px; bottom: 0;
+      width: 2px; height: 28px; background: rgba(240,246,255,.85);
+    }
+    .jmark-spire::after {
+      content: ""; position: absolute; left: 50%; top: 0;
+      width: 10px; height: 10px; transform: translateX(-50%);
+      border-radius: 999px; background: rgba(225,238,255,.92);
+    }
+    .jmark-arch {
+      position: absolute; left: 50%; top: 58px; width: 26px; height: 20px;
+      transform: translateX(-50%);
+      border: 3px solid rgba(238,244,248,.68); border-bottom: none;
+      border-radius: 16px 16px 0 0;
+    }
+    .jmark-pavilion {
+      position: absolute; left: 50%; top: 54px; width: 26px; height: 16px;
+      transform: translateX(-50%); background: rgba(240,244,250,.70);
+      clip-path: polygon(50% 0,100% 34%,86% 34%,86% 100%,14% 100%,14% 34%,0 34%);
+    }
+
+    .jdetail {
+      position: absolute;
+      width: 420px; min-width: 240px; max-width: calc(100% - 20px);
+      min-height: 80px; max-height: calc(100% - 20px);
+      overflow: hidden;
+      background: rgba(244,246,248,0.98); color: #132642;
+      border: 1px solid rgba(20,40,70,.10); border-radius: 12px;
+      opacity: 0; transform: translateY(18px) scale(0.97);
+      pointer-events: none;
+      transition: opacity 0.26s ease, transform 0.26s ease;
+      box-shadow: 0 20px 50px rgba(15,23,42,0.22);
+      display: flex; flex-direction: column;
+      z-index: 3;
+    }
+    .jdetail.open { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+
+    .jdetail-header {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      padding: 0.9rem 0.9rem 0.6rem 1.1rem;
+      cursor: grab; flex-shrink: 0;
+      border-bottom: 1px solid rgba(20,40,70,.06);
+      user-select: none;
+    }
+    .jdetail-header:active { cursor: grabbing; }
+
+    .jdetail-body {
+      padding: 0.75rem 1.1rem 1rem;
+      overflow-y: auto;
+      flex: 1;
+      cursor: auto;
+      user-select: text;
+      -webkit-user-select: text;
+    }
+
+    .jresize { position: absolute; z-index: 5; touch-action: none; }
+    .jresize-n, .jresize-s { left: 12px; right: 12px; height: 10px; }
+    .jresize-n { top: -5px; cursor: n-resize; }
+    .jresize-s { bottom: -5px; cursor: s-resize; }
+    .jresize-e, .jresize-w { top: 12px; bottom: 12px; width: 10px; }
+    .jresize-e { right: -5px; cursor: e-resize; }
+    .jresize-w { left: -5px; cursor: w-resize; }
+    .jresize-ne,.jresize-nw,.jresize-se,.jresize-sw { width: 16px; height: 16px; display: flex; align-items: flex-end; justify-content: flex-end; }
+    .jresize-ne { top: -5px; right: -5px; cursor: ne-resize; }
+    .jresize-nw { top: -5px; left: -5px; cursor: nw-resize; }
+    .jresize-se { bottom: -5px; right: -5px; cursor: se-resize; padding: 4px; }
+    .jresize-sw { bottom: -5px; left: -5px; cursor: sw-resize; }
+    .jresize svg { opacity: 0.35; pointer-events: none; }
+    .jresize:hover svg { opacity: 0.7; }
+
+    .jdetail-actions { display: none; }
+
+    .jdtitle {
+      font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.9rem;
+      color: #102744; line-height: 1;
+    }
+    .jdsubtitle { display: none; }
+
+    .jcards-wrap { margin-top: 0; display: grid; gap: 0.75rem; }
+
+    .jcard {
+      background: white;
+      border: 1px solid #e9edf1;
+      border-radius: 10px;
+      padding: 0;
+      box-shadow: 0 1px 6px rgba(20,40,70,.04);
+      overflow: hidden;
+    }
+
+    .jcard-head {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      padding: 0.95rem 1rem 0.85rem;
+      border-bottom: 1px solid #eef2f6;
+      background: linear-gradient(180deg, rgba(248,250,252,0.9), rgba(255,255,255,0.98));
+    }
+
+    .jlogo {
+      width: 4rem; height: 4rem; min-width: 4rem; flex-shrink: 0;
+      border-radius: 999px; background: #f8fafc; border: 1px solid #f1f5f9;
+      display: flex; align-items: center; justify-content: center;
+      padding: 0.45rem; box-shadow: inset 0 1px 3px rgba(0,0,0,0.06);
+      overflow: hidden; color: #64748b;
+    }
+    .jlogo img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
+    .jorg-wrap { min-width: 0; flex: 1; }
+    .jorg { font-weight: 600; font-size: 0.95rem; color: #0f203a; line-height: 1.35; }
+    .jroles { display: grid; gap: 0; }
+    .jrole { padding: 0.9rem 1rem 0.95rem; }
+    .jrole + .jrole { border-top: 1px solid #eef2f6; }
+    .jct { font-weight: 600; font-size: 0.97rem; color: #0f203a; line-height: 1.35; }
+    .jcy { margin-top: 0.12rem; font-size: 0.82rem; color: #7b8ca3; }
+    .jcn { margin-top: 0.4rem; font-size: 0.85rem; line-height: 1.52; color: #5b6e87; white-space: pre-line; }
+    .jtags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.6rem; }
+    .jtag {
+      border: 1px solid #dbe3ea; background: #f7f9fb; color: #7387a0;
+      border-radius: 999px; padding: 0.18rem 0.45rem;
+      font-size: 0.6rem; letter-spacing: .04em; text-transform: uppercase;
+    }
+
+    @media (max-width: 640px) {
+      .jvp { height: 440px; }
+      .jshell.is-maximized .jvp { height: calc(100vh - 1.2rem); }
+      .jdetail { width: calc(100% - 20px) !important; left: 10px !important; }
+      .jlogo { width: 3.3rem; height: 3.3rem; min-width: 3.3rem; }
+      .jshell.is-maximized { inset: 0.6rem; border-radius: 0.9rem; }
+      .jvp::after { background-size: 64px 64px; }
+    }
+  </style>
 </head>
-<body>
+<body class="text-slate-700">
 
-<div id="loading">
-  <div class="title">Loading atlas</div>
-  <div class="bar"></div>
-</div>
-
-<div id="sky"></div>
-
-<div id="brand">
-  <h1>Sruti Bhattacharjee</h1>
-  <p>Atlas of Learning</p>
-</div>
-
-<div id="hint">
-  Drag to move<br>
-  Scroll / pinch to zoom<br>
-  Click city or year
-</div>
-
-<div id="controls">
-  <button class="ctl" id="fitBtn">Fit view</button>
-  <button class="ctl" id="resetBtn">Reset</button>
-</div>
-
-<div id="viewport">
-  <div id="world"></div>
-</div>
-
-<div id="nav">
-  <button id="prevBtn" class="navBtn">&#8592;</button>
-  <button id="nextBtn" class="navBtn">&#8594;</button>
-</div>
-
-<div id="strip"></div>
-
-<aside id="panel">
-  <button id="closePanel">✕</button>
-  <div id="panelHead">
-    <div id="panelPlace">—</div>
-    <div id="panelWhen">—</div>
-  </div>
-  <div id="panelBody"></div>
-</aside>
-
-<script>
-const PLACES = [
-  {
-    city: "Kanpur",
-    years: ["2015","2017","2019"],
-    tagline: "Foundations in signal & visual systems",
-    landmark: "spire",
-    depth: 2,
-    theme: { top: "#BFEA7A", rim: "#9ED65A" },
-    experiences: [
-      { title: "Research Exploration", org: "IIT Kanpur, India", year: "2015", note: "Tessellation, Symmetry 1D → 2D → 3D → 4D → nD", tags:["Geometry","Symmetry","Theory"], logoText:"IITK" },
-      { title: "Core Processing Systems", org: "IIT Kanpur, India", year: "2017", note: "Signal Processing, Image Processing, Video Processing", tags:["Signal","Image","Video"], logoText:"IITK" },
-      { title: "Advanced Video Analysis", org: "IIT Kanpur, India", year: "2019", note: "Extended work in Video Processing and computational visual analysis", tags:["Video","Analysis"], logoText:"IITK" }
-    ]
-  },
-  {
-    city: "Chennai",
-    years: ["2016"],
-    tagline: "Graphics & physical simulation",
-    landmark: "arch",
-    depth: 1,
-    theme: { top: "#C7F66C", rim: "#9BE548" },
-    experiences: [
-      { title: "Graphics & Simulation Internship", org: "IIT Madras, India", year: "2016", note: "3D Computer Graphics, OpenGL, Cloth Simulation, Cloth Modeling, Visual Studio, Visual C++, Bullet Physics, Cloth-Object-Collision", tags:["OpenGL","Simulation","C++","Physics"], logoText:"IITM" }
-    ]
-  },
-  {
-    city: "Kharagpur",
-    years: ["2017","2018","2019","2020"],
-    tagline: "Computer vision & technical depth",
-    landmark: "spire",
-    depth: 3,
-    theme: { top: "#AEEF57", rim: "#84D933" },
-    experiences: [
-      { title: "Vision Foundations", org: "IIT Kharagpur, India", year: "2017", note: "Image Processing Matlab, TensorFlow Masked RCNN, Dataset making, OpenCV", tags:["Matlab","TensorFlow","OpenCV"], logoText:"IITKGP" },
-      { title: "Hardware Intelligence", org: "IIT Kharagpur, India", year: "2018", note: "Counterfeit IC, IC Textures, Types of Damages on Hardwares, Overleaf LaTeX, PyBPDL, PyTorch Introduction", tags:["Counterfeit IC","Textures","LaTeX","PyTorch"], logoText:"IITKGP" },
-      { title: "Remote Analytical Research", org: "IIT Kharagpur, India", year: "2019", note: "Music Perception, Signal Processing, Data Analytics, Matlab", tags:["Music Perception","Signal","Analytics"], logoText:"IITKGP" },
-      { title: "DeepFake Video Systems", org: "IIT Kharagpur, India", year: "2020", note: "DeepFakeFace Video, Video Processing, PyTorch, Python, Interframe Difference, Human Facial Texture", tags:["DeepFake","Video","PyTorch","Python"], logoText:"IITKGP" }
-    ]
-  },
-  {
-    city: "Chicago",
-    years: ["2018","2019"],
-    tagline: "AI & vocal signal interpretation",
-    landmark: "pavilion",
-    depth: 1,
-    theme: { top: "#C8D6C8", rim: "#AABCAA" },
-    experiences: [
-      { title: "Remote Research", org: "UIUC, USA", year: "2018", note: "Python, PyTorch, LSTM, Signal Processing, Infant Voice, Infant Cries, Infant Needs Expression", tags:["Python","PyTorch","LSTM","Signal"], logoText:"UIUC" },
-      { title: "Extended Modelling", org: "UIUC, USA", year: "2019", note: "Continued work on Infant Voice and needs expression modelling", tags:["AI","Infant Voice","Expression"], logoText:"UIUC" }
-    ]
-  },
-  {
-    city: "Lyon",
-    years: ["2019"],
-    tagline: "Theory, patterns & symmetry",
-    landmark: "arch",
-    depth: 2,
-    theme: { top: "#D5E2D1", rim: "#B8C8B3" },
-    experiences: [
-      { title: "Remote Research", org: "Claude Bernard Lyon 1 / CNRS, France", year: "2019", note: "Symmetry, Asymmetry, Literature Review, Convex-Concave, Graphical Patterns", tags:["Symmetry","Literature Review","Patterns"], logoText:"LYON" }
-    ]
-  },
-  {
-    city: "Kolkata",
-    years: ["2019"],
-    tagline: "Teaching & knowledge transfer",
-    landmark: "pavilion",
-    depth: 1,
-    theme: { top: "#F0D894", rim: "#DCBA63" },
-    experiences: [
-      { title: "Teaching Computer Graphics", org: "NSHM College, India", year: "2019", note: "Teaching Computer Graphics and OpenGL to bachelor students", tags:["Teaching","Computer Graphics","OpenGL"], logoText:"NSHM" }
-    ]
-  },
-  {
-    city: "Stockholm",
-    years: ["2020","2021","2022","2024","2025"],
-    tagline: "HCI, systems & applied research",
-    landmark: "spire",
-    depth: 3,
-    theme: { top: "#EFD28A", rim: "#D9A84C" },
-    experiences: [
-      { title: "Teaching Assistant", org: "KTH, Sweden", year: "2020–2025", note: "Teaching Assistant across multiple KTH courses: XX, YY, ZZ, GG, GHJK", tags:["Teaching","KTH"], logoText:"KTH" },
-      { title: "Research Assistant", org: "KTH / Karolinska Institute, Sweden", year: "2021", note: "PyQT and Python-based research work", tags:["Python","PyQT","Research"], logoText:"KI" },
-      { title: "Summer R & D Intern", org: "Ericsson, Sweden", year: "2021", note: "Teleoperation Robotics", tags:["Ericsson","Teleoperation","Robotics"], logoText:"ERIC" }
-    ]
-  },
-  {
-    city: "Lausanne",
-    years: ["2021","2022","2023"],
-    tagline: "Design research & systems thinking",
-    landmark: "pavilion",
-    depth: 3,
-    theme: { top: "#F4D98A", rim: "#E7B955" },
-    experiences: [
-      { title: "Graduate Exchange + Research", org: "EPFL, Switzerland", year: "2021", note: "Research exposure across design, systems, and emerging technology contexts", tags:["EPFL","Exchange","Research"], logoText:"EPFL" },
-      { title: "Continued Research Chapter", org: "EPFL, Switzerland", year: "2022", note: "Extended interdisciplinary work across design and systems", tags:["Interdisciplinary","Design"], logoText:"EPFL" },
-      { title: "Research Assistant", org: "University of Lausanne, Switzerland", year: "2023", note: "Education Technology to Support Programming Learning in Hybrid University Classes", tags:["UNIL","EdTech","Research"], logoText:"UNIL" }
-    ]
-  },
-  {
-    city: "Jyväskylä",
-    years: ["2025"],
-    tagline: "Accessibility & multimodal interaction",
-    landmark: "arch",
-    depth: 2,
-    theme: { top: "#EFD28A", rim: "#D9A84C" },
-    experiences: [
-      { title: "Summer Trainee", org: "University of Jyväskylä, Finland", year: "2025", note: "Accessible Interactive Technology, Multimodal Accessibility Design", tags:["Accessibility","Multimodal","Interactive Tech"], logoText:"JYU" }
-    ]
-  },
-  {
-    city: "Paris",
-    years: ["2025","2026"],
-    tagline: "Language, reflection & future direction",
-    landmark: "arch",
-    depth: 2,
-    theme: { top: "#E8B6C6", rim: "#D48CA5" },
-    experiences: [
-      { title: "French Language Learning", org: "Paris, France", year: "2025", note: "Language learning and broader cultural fluency", tags:["French","Language","Growth"], logoText:"FR" },
-      { title: "Family Building Chapter", org: "Paris, France", year: "2026", note: "A slower, intentional chapter centered on life direction and family building", tags:["Reflection","Family","Future"], logoText:"PAR" }
-    ]
-  }
-];
-
-const YEAR_TO_PLACE = {
-  "2015":"Kanpur",
-  "2016":"Chennai",
-  "2017":"Kanpur",
-  "2018":"Kharagpur",
-  "2019":"Kolkata",
-  "2020":"Kharagpur",
-  "2021":"Lausanne",
-  "2022":"Stockholm",
-  "2023":"Lausanne",
-  "2024":"Stockholm",
-  "2025":"Jyväskylä",
-  "2026":"Paris"
-};
-
-const TIMELINE_YEARS = ["2015","2016","2017","2018","2019","2020","2021","2022","2023","2024","2025","2026"];
-
-const WORLD_W = 3800;
-const WORLD_H = 2400;
-
-const world = document.getElementById('world');
-const viewport = document.getElementById('viewport');
-const strip = document.getElementById('strip');
-
-let selectedPlaceIndex = -1;
-
-const state = {
-  scale: 0.58,
-  targetScale: 0.58,
-  x: 0,
-  y: 0,
-  targetX: 0,
-  targetY: 0,
-  minScale: 0.36,
-  maxScale: 1.5
-};
-
-function placePos(i){
-  const preset = [
-    {x: 520,  y: 930},   // Kanpur
-    {x: 510,  y: 1480},  // Chennai
-    {x: 860,  y: 1180},  // Kharagpur
-    {x: 1170, y: 760},   // Chicago
-    {x: 1190, y: 1740},  // Kolkata -> connector to middle
-    {x: 1710, y: 1220},  // Lyon swapped
-
-    {x: 2450, y: 1240},  // Stockholm middle
-    {x: 2820, y: 760},   // Lausanne upper claw
-    {x: 2810, y: 1710},  // Jyväskylä lower claw
-    {x: 3360, y: 1240}   // Paris right endpoint
-  ];
-  return preset[i];
-}
-
-const islandEls = [];
-const timelineButtons = [];
-
-function createRoute(a, b){
-  const dx = b.x - a.x;
-  const dy = b.y - a.y;
-  const len = Math.hypot(dx, dy);
-  const ang = Math.atan2(dy, dx) * 180 / Math.PI;
-
-  const route = document.createElement('div');
-  route.className = 'route';
-  route.style.left = `${a.x}px`;
-  route.style.top = `${a.y}px`;
-  route.style.width = `${len}px`;
-  route.style.transform = `rotate(${ang}deg)`;
-  world.appendChild(route);
-}
-
-function createIsland(place, i){
-  const pos = placePos(i);
-  const palette = place.theme;
-  const yearsHTML = place.years.map(y => `<span class="year-chip">${y}</span>`).join('');
-
-  const island = document.createElement('div');
-  island.className = 'island';
-  island.dataset.depth = String(place.depth || 2);
-  island.style.left = `${pos.x}px`;
-  island.style.top = `${pos.y}px`;
-
-  island.innerHTML = `
-    <div class="island-inner">
-      <div class="city-label">
-        <div class="city-name">${place.city}</div>
-      </div>
-
-      <div class="top" style="--top:${palette.top}"></div>
-      <div class="rim" style="--rim:${palette.rim}"></div>
-      <div class="bottom"></div>
-      <div class="landmark ${place.landmark}"></div>
-
-      <div class="tree" style="left:82px;top:72px;"></div>
-      <div class="tree" style="left:118px;top:58px;transform:scale(1.02);"></div>
-      <div class="stone" style="left:100px;top:100px;"></div>
-      <div class="stone" style="left:110px;top:104px;"></div>
-      <div class="stone" style="left:138px;top:92px;"></div>
-
-      <div class="year-row">${yearsHTML}</div>
-    </div>
-  `;
-
-  island.addEventListener('click', (e) => {
-    e.stopPropagation();
-    selectPlace(place.city);
-  });
-
-  world.appendChild(island);
-  islandEls.push({ city: place.city, el: island, x: pos.x, y: pos.y, data: place });
-}
-
-PLACES.forEach(createIsland);
-for(let i = 0; i < islandEls.length - 1; i++) createRoute(islandEls[i], islandEls[i + 1]);
-
-TIMELINE_YEARS.forEach(year => {
-  const btn = document.createElement('button');
-  btn.className = 'yb';
-  btn.innerHTML = `<span class="gem"></span><span class="label">${year}</span>`;
-  btn.addEventListener('click', () => selectYear(year));
-  strip.appendChild(btn);
-  timelineButtons.push({year, el: btn});
-});
-
-function setPanel(place){
-  document.getElementById('panelPlace').textContent = place.city;
-  document.getElementById('panelWhen').textContent = place.tagline;
-
-  document.getElementById('panelBody').innerHTML = `
-    <section class="sec">
-      <div class="secLabel">Selected Experiences</div>
-      <div class="yearCards">
-        ${place.experiences.map(exp => `
-          <article class="yearCard">
-            <div class="event">
-              <div class="eventLogo">${exp.logoText || "Logo"}</div>
-              <div class="eventMeta">
-                <div class="eventTitle">${exp.title}</div>
-                <div class="eventOrg">${exp.org}</div>
-                <div class="eventYearLine">${exp.year}</div>
-                <div class="eventNote">${exp.note}</div>
-                <div class="tags">${(exp.tags || []).map(t => `<span class="tag">${t}</span>`).join('')}</div>
+  <main class="container mx-auto max-w-4xl px-4 py-16">
+    <section id="experience">
+      <h2 class="section-title text-3xl text-slate-800 mb-6 border-b-2 border-slate-200 pb-2">Selected Experiences</h2>
+      <div class="jshell" id="jshell">
+        <div class="jtoolbar">
+          <button class="jicon-btn" id="toggleMapSize" type="button" title="Maximize map" aria-label="Maximize map">[ ]</button>
+        </div>
+        <div class="jvp" id="jvp">
+          <div class="jworld" id="jworld"></div>
+          <div class="jdetail" id="jdetail">
+            <div class="jdetail-header" id="jdetailHeader">
+              <div>
+                <div class="jdtitle" id="jdtitle">—</div>
+                <div class="jdsubtitle" id="jdsubtitle"></div>
               </div>
+              <div class="jdetail-actions"></div>
             </div>
-          </article>
-        `).join('')}
+            <div class="jdetail-body" id="jdetailBody">
+              <div class="jcards-wrap" id="jcards"></div>
+            </div>
+            <div class="jresize jresize-n" data-dir="n"></div>
+            <div class="jresize jresize-s" data-dir="s"></div>
+            <div class="jresize jresize-e" data-dir="e"></div>
+            <div class="jresize jresize-w" data-dir="w"></div>
+            <div class="jresize jresize-ne" data-dir="ne"></div>
+            <div class="jresize jresize-nw" data-dir="nw"></div>
+            <div class="jresize jresize-se" data-dir="se">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                <path d="M9 1L1 9M9 5L5 9" stroke="#60748c" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="jresize jresize-sw" data-dir="sw"></div>
+          </div>
+        </div>
       </div>
     </section>
-  `;
-  document.getElementById('panel').classList.add('open');
-}
+  </main>
 
-function closePanel(){
-  document.getElementById('panel').classList.remove('open');
-}
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {    const PLACES = [
+      {
+        city: "Kanpur",
+        tagline: "Foundations in signal & visual systems",
+        mark: "spire",
+        top: "#BFEA7A",
+        rim: "#9ED65A",
+        years: ["2015","2017","2019"],
+        groups: [
+          {
+            org: "IIT Kanpur, India",
+            logo: "images/logos/iitk.png",
+            alt: "IIT Kanpur",
+            experiences: [
+              { title: "Research Exploration", year: "2015", note: "Tessellation, Symmetry 1D → 2D → 3D → 4D → nD", tags: ["Geometry","Symmetry","Theory"] },
+              { title: "Core Processing Systems", year: "2017", note: "Signal Processing, Image Processing, Video Processing", tags: ["Signal","Image","Video"] },
+              { title: "Advanced Video Analysis", year: "2019", note: "Extended work in video processing and computational visual analysis", tags: ["Video","Analysis"] }
+            ]
+          }
+        ]
+      },
+      {
+        city: "Chennai",
+        tagline: "Graphics & physical simulation",
+        mark: "arch",
+        top: "#C7F66C",
+        rim: "#9BE548",
+        years: ["2016"],
+        groups: [
+          {
+            org: "IIT Madras, India",
+            logo: "images/logos/iitm.png",
+            alt: "IIT Madras",
+            experiences: [
+              { title: "Graphics & Simulation Internship", year: "2016", note: "3D Computer Graphics, OpenGL, Cloth Simulation, Bullet Physics, Visual C++", tags: ["OpenGL","Simulation","C++","Physics"] }
+            ]
+          }
+        ]
+      },
+      {
+        city: "Kharagpur",
+        tagline: "Computer vision & technical depth",
+        mark: "spire",
+        top: "#AEEF57",
+        rim: "#84D933",
+        years: ["2017","2018","2019","2020"],
+        groups: [
+          {
+            org: "IIT Kharagpur, India",
+            logo: "images/logos/iitkgp.jpg",
+            alt: "IIT Kharagpur",
+            experiences: [
+              { title: "Vision Foundations", year: "2017", note: "Image Processing Matlab, TensorFlow Masked RCNN, OpenCV", tags: ["Matlab","TensorFlow","OpenCV"] },
+              { title: "Hardware Intelligence", year: "2018", note: "Counterfeit IC, IC Textures, LaTeX, PyBPDL, PyTorch Introduction", tags: ["Counterfeit IC","LaTeX","PyTorch"] },
+              { title: "Remote Analytical Research", year: "2019", note: "Music Perception, Signal Processing, Data Analytics, Matlab", tags: ["Music Perception","Signal","Analytics"] },
+              { title: "Research Engineer", year: "2020", note: "DeepFake video detection using computer vision and inter-frame temporal analysis", tags: ["DeepFake","Video","PyTorch"] }
+            ]
+          }
+        ]
+      },
+      {
+        city: "Chicago",
+        tagline: "AI & vocal signal interpretation",
+        mark: "pavilion",
+        top: "#b8bfb8",
+        rim: "#969d96",
+        years: ["2018","2019"],
+        groups: [
+          {
+            org: "UIUC, USA",
+            logo: "images/logos/uiuc.png",
+            alt: "UIUC",
+            experiences: [
+              { title: "Remote Research", year: "2018–2019", note: "Python, PyTorch, LSTM, infant voice and needs expression modelling", tags: ["Python","PyTorch","LSTM","Signal"] }
+            ]
+          }
+        ]
+      },
+      {
+        city: "Lyon",
+        tagline: "Theory, patterns & symmetry",
+        mark: "arch",
+        top: "#c2c9c0",
+        rim: "#a0a89e",
+        years: ["2019"],
+        groups: [
+          {
+            org: "Claude Bernard Lyon 1 / CNRS, France",
+            logo: "images/logos/cnrs.png",
+            alt: "CNRS",
+            experiences: [
+              { title: "Remote Research", year: "2019", note: "Symmetry, asymmetry, literature review, convex-concave structures, graphical patterns", tags: ["Symmetry","Literature Review","Patterns"] }
+            ]
+          }
+        ]
+      },
+      {
+        city: "Kolkata",
+        tagline: "Origins, undergraduate foundation & early teaching",
+        mark: "pavilion",
+        top: "#85B7EB",
+        rim: "#378ADD",
+        years: ["1996","2014","2019"],
+        groups: [
+          {
+            org: "Born & Grew Up, Kolkata, India",
+            logo: "images/logos/kolkata.png",
+            alt: "Kolkata",
+            experiences: [
+              { title: "Born & Grew Up", year: "1996 – Present", note: "(personal roots, values, early exposure, formative environment)", tags: ["Roots","Identity","Foundation"] }
+            ]
+          },
+          {
+            org: "WBUT, India",
+            logo: "images/logos/wbutnew_edited.jpg",
+            alt: "WBUT",
+            experiences: [
+              { title: "Undergraduate Studies", year: "2014 – 2019", note: "(undergraduate studies, activities, technical foundation, learning outcomes)", tags: ["BTech","Foundation","Activities"] }
+            ]
+          },
+          {
+            org: "NSHM College, India",
+            logo: "images/logos/nshm.png",
+            alt: "NSHM",
+            experiences: [
+              { title: "Teaching Experience", year: "2019", note: "(teaching experience, computer graphics, OpenGL, mentoring)", tags: ["Teaching","Graphics","OpenGL"] }
+            ]
+          }
+        ]
+      },
+      {
+        city: "Stockholm",
+        tagline: "Graduate studies, teaching, research & industry",
+        mark: "spire",
+        top: "#FF9A2E",
+        rim: "#E07010",
+        years: ["2020","2021","2022","2024","2025","2026"],
+        groups: [
+          {
+            org: "KTH Royal Institute of Technology, Sweden",
+            logo: "images/logos/kth.png",
+            alt: "KTH",
+            experiences: [
+              { title: "Master's Studies", year: "2020 – Present", note: "(master's studies, immersive media, HCI, coursework, activities)", tags: ["Master's","HCI","IMT"] },
+              { title: "Teaching Assistant", year: "2020 – 2025", note: "(TA work, course support, mentoring, academic contribution)", tags: ["TA","Teaching","Mentoring"] },
+              { title: "Research Assistant", year: "2021", note: "(RA work, research support, Python, PyQT, interdisciplinary collaboration)", tags: ["RA","Python","Research"] },
+              { title: "Activities", year: "2020 – Present", note: "(student life, projects, events, broader academic activities)", tags: ["Activities","Projects","Community"] }
+            ]
+          },
+          {
+            org: "Ericsson, Sweden",
+            logo: "images/logos/Ericsson2.jpg",
+            alt: "Ericsson",
+            experiences: [
+              { title: "Summer R&D Intern", year: "2021", note: "(haptics, teleoperation, networked interaction, applied research)", tags: ["Ericsson","Haptics","R&D"] }
+            ]
+          }
+        ]
+      },
+      {
+        city: "Lausanne",
+        tagline: "Exchange, thesis and research collaborations",
+        mark: "pavilion",
+        top: "#F9E04B",
+        rim: "#E6C418",
+        years: ["2021","2022","2023"],
+        groups: [
+          {
+            org: "EPFL, Switzerland",
+            logo: "images/logos/epfl.png",
+            alt: "EPFL",
+            experiences: [
+              { title: "Graduate Exchange", year: "2021 – 2022", note: "(exchange semester, advanced coursework, interdisciplinary exploration)", tags: ["Exchange","Coursework","EPFL"] },
+              { title: "Thesis Collaboration", year: "2023 – Present", note: "(thesis collaboration, VRLE, pedagogy, design research)", tags: ["Thesis","VRLE","Research"] },
+              { title: "Activities", year: "2021 – 2023", note: "(student activities, projects, labs, collaborations)", tags: ["Activities","Projects","Labs"] }
+            ]
+          },
+          {
+            org: "University of Lausanne (UNIL), Switzerland",
+            logo: "images/logos/UNIL.jpg",
+            alt: "UNIL",
+            experiences: [
+              { title: "Research Assistant", year: "2023", note: "(RA work, EdTech, programming learning, hybrid classrooms)", tags: ["UNIL","RA","EdTech"] }
+            ]
+          }
+        ]
+      },
+      {
+        city: "Jyväskylä",
+        tagline: "Accessibility & multimodal interaction",
+        mark: "arch",
+        top: "#F9E04B",
+        rim: "#E6C418",
+        years: ["2025"],
+        groups: [
+          {
+            org: "University of Jyväskylä, Finland",
+            logo: "images/logos/jyu_transparent.png",
+            alt: "JYU",
+            experiences: [
+              { title: "Summer Trainee", year: "2025", note: "Accessible Interactive Technology, Multimodal Accessibility Design", tags: ["Accessibility","Multimodal","Interactive Tech"] }
+            ]
+          }
+        ]
+      },
+      {
+        city: "Paris",
+        tagline: "Language learning and family settlement",
+        mark: "arch",
+        top: "#E8B6C6",
+        rim: "#D48CA5",
+        years: ["2025","2026"],
+        groups: [
+          {
+            org: "CAEL - Centre d'Animation Expression Loisirs de Bourg-La-Reine",
+            logo: "images/logos/cael.png",
+            alt: "CAEL",
+            experiences: [
+              { title: "French Language Training", year: "2025", note: "(French language learning, communication, integration, cultural fluency)", tags: ["French","Language","Training"] }
+            ]
+          },
+          {
+            org: "Paris, France",
+            logo: "images/logos/france.png",
+            alt: "Paris",
+            experiences: [
+              { title: "Family Settlement", year: "2026", note: "(family settlement, new life chapter, long-term grounding, transition)", tags: ["Family","Settlement","Future"] }
+            ]
+          }
+        ]
+      }
+    ];
 
-function updateNav(){
-  const prev = document.getElementById('prevBtn');
-  const next = document.getElementById('nextBtn');
-  const show = selectedPlaceIndex >= 0;
-  prev.classList.toggle('show', show);
-  next.classList.toggle('show', show);
-  prev.disabled = selectedPlaceIndex <= 0;
-  next.disabled = selectedPlaceIndex < 0 || selectedPlaceIndex >= islandEls.length - 1;
-}
+    const POSITIONS = [
+      { x: -100,  y: 500  },
+      { x: -100,  y: 1300 },
+      { x: 400,  y: 900  },
+      { x: 820,  y: 350  },
+      { x: 820,  y: 1450 },
+      { x: 1400, y: 900  },
+      { x: 2500, y: 900  },
+      { x: 1950, y: 500  },
+      { x: 1950, y: 1300 },
+      { x: 3100, y: 900  }
+    ];
 
-function focusOnPoint(worldX, worldY, zoom = 0.92){
-  const vw = viewport.clientWidth;
-  const vh = viewport.clientHeight;
-  state.targetScale = Math.max(state.minScale, Math.min(state.maxScale, zoom));
-  state.targetX = vw * 0.5 - worldX * state.targetScale;
-  state.targetY = vh * 0.5 - worldY * state.targetScale;
-}
+    const WW = 3600, WH = 1800;
 
-function fitAll(){
-  const vw = viewport.clientWidth;
-  const vh = viewport.clientHeight;
-  const s = Math.min(vw / WORLD_W, vh / WORLD_H) * 0.84;
-  state.targetScale = Math.max(state.minScale, Math.min(state.maxScale, s));
-  state.targetX = (vw - WORLD_W * state.targetScale) * 0.5;
-  state.targetY = (vh - WORLD_H * state.targetScale) * 0.5;
-}
+    const shell  = document.getElementById('jshell');
+    const world  = document.getElementById('jworld');
+    const vp     = document.getElementById('jvp');
+    const detail = document.getElementById('jdetail');
+    const detailBody = document.getElementById('jdetailBody');
+    const dtitle = document.getElementById('jdtitle');
+    const dsub   = document.getElementById('jdsubtitle');
+    const dcards = document.getElementById('jcards');
+    const mapToggleBtn = document.getElementById('toggleMapSize');
 
-function resetView(){
-  if(selectedPlaceIndex >= 0){
-    const item = islandEls[selectedPlaceIndex];
-    focusOnPoint(item.x, item.y, 0.92);
-  } else {
-    fitAll();
-  }
-}
+    const S = { s: 1, x: 0, y: 0, ts: 1, tx: 0, ty: 0, minS: 0.28, maxS: 2.2 };
+    const islands = PLACES.map((p, i) => ({ ...p, ...POSITIONS[i], el: null }));
 
-function highlightTimelineYear(year){
-  timelineButtons.forEach(item => item.el.classList.toggle('active', item.year === year));
-}
+    function markHTML(type) {
+      if (type === 'spire') return '<div class="jmark-spire"></div>';
+      if (type === 'arch')  return '<div class="jmark-arch"></div>';
+      return '<div class="jmark-pavilion"></div>';
+    }
 
-function selectPlace(city){
-  const idx = islandEls.findIndex(item => item.city === city);
-  if(idx < 0) return;
-  selectedPlaceIndex = idx;
-  const item = islandEls[idx];
+    function yearsLabel(p) {
+      if (!p.years || !p.years.length) return '';
+      const lines = [];
+      for (let i = 0; i < p.years.length; i += 2) {
+        lines.push(p.years.slice(i, i + 2).join(', '));
+      }
+      return lines.join('<br>');
+    }
 
-  islandEls.forEach((island, i) => island.el.classList.toggle('selected', i === idx));
-  setPanel(item.data);
-  updateNav();
-  focusOnPoint(item.x, item.y, 0.92);
-  highlightTimelineYear(item.data.years[item.data.years.length - 1]);
-}
+    function buildIslands() {
+      islands.forEach((p, i) => {
+        const el = document.createElement('div');
+        el.className = 'jisland';
+        el.style.cssText = `left:${p.x}px;top:${p.y}px`;
+        el.innerHTML = `
+          <div class="jinner">
+            <div class="jlabel"><div class="jcity">${p.city}</div></div>
+            <div class="jtop" style="background:${p.top}"></div>
+            <div class="jrim" style="background:${p.rim}"></div>
+            <div class="jbot"></div>
+            ${markHTML(p.mark)}
+            <div class="jtree" style="left:114px;top:108px"></div>
+            <div class="jtree" style="left:168px;top:88px;transform:scale(1.15)"></div>
+            <div class="jtree" style="left:82px;top:96px;transform:scale(0.85)"></div>
+            <div class="jstone" style="left:158px;top:162px"></div>
+            <div class="jstone" style="left:178px;top:170px"></div>
+          </div>
+          <div class="jyears">${yearsLabel(p)}</div>`;
+        el.addEventListener('click', e => { e.stopPropagation(); selectPlace(i); });
+        world.appendChild(el);
+        p.el = el;
+      });
+    }
 
-function selectYear(year){
-  const city = YEAR_TO_PLACE[year];
-  if(!city) return;
-  highlightTimelineYear(year);
-  selectPlace(city);
-}
+    let selectedIdx = -1;
+    let suppressClose = false;
+    const cardState = { left: null, top: null, width: null, height: null };
 
-function deselect(){
-  selectedPlaceIndex = -1;
-  islandEls.forEach(item => item.el.classList.remove('selected'));
-  timelineButtons.forEach(item => item.el.classList.remove('active'));
-  closePanel();
-  updateNav();
-  fitAll();
-}
+    function saveCardState() {
+      if (!detail.classList.contains('open')) return;
+      cardState.left   = detail.style.left;
+      cardState.top    = detail.style.top;
+      cardState.width  = detail.style.width;
+      cardState.height = detail.style.height;
+    }
 
-document.getElementById('closePanel').addEventListener('click', deselect);
-document.getElementById('fitBtn').addEventListener('click', fitAll);
-document.getElementById('resetBtn').addEventListener('click', resetView);
+    function applyCardState() {
+      if (cardState.left   !== null) detail.style.left   = cardState.left;
+      if (cardState.top    !== null) detail.style.top    = cardState.top;
+      if (cardState.width  !== null) detail.style.width  = cardState.width;
+      if (cardState.height !== null) detail.style.height = cardState.height;
+    }
 
-document.getElementById('prevBtn').addEventListener('click', () => {
-  if(selectedPlaceIndex > 0) selectPlace(islandEls[selectedPlaceIndex - 1].city);
-});
-document.getElementById('nextBtn').addEventListener('click', () => {
-  if(selectedPlaceIndex >= 0 && selectedPlaceIndex < islandEls.length - 1) {
-    selectPlace(islandEls[selectedPlaceIndex + 1].city);
-  }
-});
+    function selectPlace(i) {
+      suppressClose = true;
+      selectedIdx = i;
+      const p = islands[i];
+      islands.forEach((is, j) => is.el.classList.toggle('sel', j === i));
+      dtitle.textContent = p.city;
+      if (dsub) dsub.textContent = '';
 
-viewport.addEventListener('click', (e) => {
-  if(e.target === viewport) deselect();
-});
+      dcards.innerHTML = (p.groups || []).map(group => `
+        <div class="jcard">
+          <div class="jcard-head">
+            <div class="jlogo">
+              <img src="${group.logo || ''}" alt="${group.alt || group.org || p.city}"
+                   onerror="this.style.display='none'; this.parentElement.innerHTML='🏛️'; this.parentElement.style.fontSize='1.25rem';">
+            </div>
+            <div class="jorg-wrap">
+              <div class="jorg">${group.org || p.city}</div>
+            </div>
+          </div>
+          <div class="jroles">
+            ${(group.experiences || []).map(e => `
+              <div class="jrole">
+                <div class="jct">${e.title}</div>
+                <div class="jcy">${e.year}</div>
+                <div class="jcn">${e.note}</div>
+                <div class="jtags">${(e.tags || []).map(t => `<span class="jtag">${t}</span>`).join('')}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `).join('');
 
-let isDragging = false;
-let dragStartX = 0;
-let dragStartY = 0;
-let startTargetX = 0;
-let startTargetY = 0;
+      const wasOpen = detail.classList.contains('open');
+      if (wasOpen) {
+        saveCardState();
+        detail.style.transition = 'none';
+        applyCardState();
+        requestAnimationFrame(() => { detail.style.transition = ''; });
+      } else {
+        detail.classList.add('open');
+        if (cardState.left !== null) applyCardState();
+        else positionDetail();
+      }
 
-viewport.addEventListener('pointerdown', (e) => {
-  isDragging = true;
-  viewport.classList.add('dragging');
-  dragStartX = e.clientX;
-  dragStartY = e.clientY;
-  startTargetX = state.targetX;
-  startTargetY = state.targetY;
-});
+      focusOn(p.x, p.y, 1.1);
+      setTimeout(() => { suppressClose = false; }, 50);
+    }
 
-window.addEventListener('pointermove', (e) => {
-  if(!isDragging) return;
-  state.targetX = startTargetX + (e.clientX - dragStartX);
-  state.targetY = startTargetY + (e.clientY - dragStartY);
-});
+    function closeDetail() {
+      if (detail.classList.contains('open')) saveCardState();
+      detail.classList.remove('open');
+      islands.forEach(is => is.el.classList.remove('sel'));
+      selectedIdx = -1;
+    }
 
-window.addEventListener('pointerup', () => {
-  isDragging = false;
-  viewport.classList.remove('dragging');
-});
+    function focusOn(wx, wy, zoom) {
+      const vw = vp.clientWidth, vh = vp.clientHeight;
+      S.ts = Math.max(S.minS, Math.min(S.maxS, zoom));
+      S.tx = vw * 0.5 - wx * S.ts;
+      S.ty = vh * 0.5 - wy * S.ts;
+    }
 
-viewport.addEventListener('wheel', (e) => {
-  e.preventDefault();
-  const rect = viewport.getBoundingClientRect();
-  const px = e.clientX - rect.left;
-  const py = e.clientY - rect.top;
+    function fitAll() {
+      const vw = vp.clientWidth || 680;
+      const vh = vp.clientHeight || 580;
+      const s = Math.min(vw / WW, vh / WH) * 0.86;
+      S.ts = Math.max(S.minS, Math.min(S.maxS, s));
+      S.tx = (vw - WW * S.ts) * 0.5 + 70;
+      S.ty = (vh - WH * S.ts) * 0.5 + 10;
+    }
 
-  const worldX = (px - state.targetX) / state.targetScale;
-  const worldY = (py - state.targetY) / state.targetScale;
+    function resetView() { fitAll(); closeDetail(); }
 
-  const factor = e.deltaY > 0 ? 0.92 : 1.08;
-  let newScale = state.targetScale * factor;
-  newScale = Math.max(state.minScale, Math.min(state.maxScale, newScale));
+    let drag = false, moved = false, dsx = 0, dsy = 0, startTx = 0, startTy = 0;
 
-  state.targetX = px - worldX * newScale;
-  state.targetY = py - worldY * newScale;
-  state.targetScale = newScale;
-}, { passive: false });
+    vp.addEventListener('pointerdown', e => {
+      if (detail.contains(e.target)) return;
+      drag = true; moved = false;
+      vp.classList.add('dragging');
+      dsx = e.clientX; dsy = e.clientY;
+      startTx = S.tx; startTy = S.ty;
+    });
 
-let pinchStartDist = 0;
-let pinchStartScale = 1;
-let pinchWorldCenter = null;
+    window.addEventListener('pointermove', e => {
+      if (!drag) return;
+      const dx = e.clientX - dsx, dy = e.clientY - dsy;
+      if (Math.abs(dx) > 3 || Math.abs(dy) > 3) moved = true;
+      S.tx = startTx + dx; S.ty = startTy + dy;
+    });
 
-viewport.addEventListener('touchstart', (e) => {
-  if(e.touches.length === 2){
-    const a = e.touches[0];
-    const b = e.touches[1];
-    pinchStartDist = Math.hypot(b.clientX - a.clientX, b.clientY - a.clientY);
-    pinchStartScale = state.targetScale;
+    window.addEventListener('pointerup', () => {
+      drag = false;
+      vp.classList.remove('dragging');
+    });
 
-    const rect = viewport.getBoundingClientRect();
-    const cx = (a.clientX + b.clientX) * 0.5 - rect.left;
-    const cy = (a.clientY + b.clientY) * 0.5 - rect.top;
+    vp.addEventListener('click', e => {
+      if (detail.contains(e.target)) return;
+      if (suppressClose || moved) return;
+      if (detail.classList.contains('open')) resetView();
+    });
 
-    pinchWorldCenter = {
-      wx: (cx - state.targetX) / state.targetScale,
-      wy: (cy - state.targetY) / state.targetScale
-    };
-  }
-}, { passive: false });
+    detail.addEventListener('pointerdown', e => e.stopPropagation());
+    detail.addEventListener('click', e => e.stopPropagation());
+    detail.addEventListener('dblclick', e => e.stopPropagation());
+    detail.addEventListener('wheel', e => e.stopPropagation(), { passive: true });
+    detail.addEventListener('touchstart', e => e.stopPropagation(), { passive: true });
+    detail.addEventListener('touchmove', e => e.stopPropagation(), { passive: true });
+    detailBody.addEventListener('pointerdown', e => e.stopPropagation());
+    detailBody.addEventListener('wheel', e => e.stopPropagation(), { passive: true });
 
-viewport.addEventListener('touchmove', (e) => {
-  if(e.touches.length === 2 && pinchWorldCenter){
-    e.preventDefault();
-    const a = e.touches[0];
-    const b = e.touches[1];
-    const dist = Math.hypot(b.clientX - a.clientX, b.clientY - a.clientY);
+    const detailHeader = document.getElementById('jdetailHeader');
+    let ddrag = false, ddx = 0, ddy = 0, dStartL = 0, dStartT = 0;
 
-    let newScale = pinchStartScale * (dist / pinchStartDist);
-    newScale = Math.max(state.minScale, Math.min(state.maxScale, newScale));
+    function positionDetail() {
+      const vw = vp.clientWidth, vh = vp.clientHeight;
+      const dw = detail.offsetWidth, dh = detail.offsetHeight;
+      detail.style.left = (vw - dw - 14) + 'px';
+      detail.style.top  = (vh - dh - 14) + 'px';
+      detail.style.right  = 'auto';
+      detail.style.bottom = 'auto';
+      saveCardState();
+    }
 
-    const rect = viewport.getBoundingClientRect();
-    const cx = (a.clientX + b.clientX) * 0.5 - rect.left;
-    const cy = (a.clientY + b.clientY) * 0.5 - rect.top;
+    detailHeader.addEventListener('pointerdown', e => {
+      if (e.target.closest('button')) return;
+      ddrag = true;
+      detailHeader.setPointerCapture(e.pointerId);
+      const rect = detail.getBoundingClientRect();
+      const vpRect = vp.getBoundingClientRect();
+      dStartL = rect.left - vpRect.left;
+      dStartT = rect.top  - vpRect.top;
+      ddx = e.clientX; ddy = e.clientY;
+      e.stopPropagation();
+    });
 
-    state.targetScale = newScale;
-    state.targetX = cx - pinchWorldCenter.wx * newScale;
-    state.targetY = cy - pinchWorldCenter.wy * newScale;
-  }
-}, { passive: false });
+    detailHeader.addEventListener('pointermove', e => {
+      if (!ddrag) return;
+      const dx = e.clientX - ddx, dy = e.clientY - ddy;
+      const vw = vp.clientWidth, vh = vp.clientHeight;
+      const dw = detail.offsetWidth, dh = detail.offsetHeight;
+      const newL = Math.max(0, Math.min(vw - dw, dStartL + dx));
+      const newT = Math.max(0, Math.min(vh - dh, dStartT + dy));
+      detail.style.left = newL + 'px';
+      detail.style.top  = newT + 'px';
+      saveCardState();
+      e.stopPropagation();
+    });
 
-viewport.addEventListener('touchend', () => {
-  pinchWorldCenter = null;
-});
+    detailHeader.addEventListener('pointerup', e => {
+      ddrag = false;
+      e.stopPropagation();
+    });
 
-function animate(){
-  state.scale += (state.targetScale - state.scale) * 0.14;
-  state.x += (state.targetX - state.x) * 0.14;
-  state.y += (state.targetY - state.y) * 0.14;
-  world.style.transform = `translate(${state.x}px, ${state.y}px) scale(${state.scale})`;
-  requestAnimationFrame(animate);
-}
+    const resizeHandles = detail.querySelectorAll('.jresize');
+    let rdrag = false, resizeDir = '', rdx = 0, rdy = 0;
+    let rStartW = 0, rStartH = 0, rStartL = 0, rStartT = 0;
+    const MIN_W = 240, MIN_H = 80;
 
-window.addEventListener('resize', fitAll);
+    resizeHandles.forEach(handle => {
+      handle.addEventListener('pointerdown', e => {
+        rdrag = true;
+        resizeDir = handle.dataset.dir;
+        handle.setPointerCapture(e.pointerId);
+        const rect = detail.getBoundingClientRect();
+        const vpRect = vp.getBoundingClientRect();
+        rStartW = rect.width; rStartH = rect.height;
+        rStartL = rect.left - vpRect.left;
+        rStartT = rect.top  - vpRect.top;
+        rdx = e.clientX; rdy = e.clientY;
+        e.stopPropagation();
+      });
 
-requestAnimationFrame(() => {
-  fitAll();
-  selectPlace('Stockholm');
-  animate();
-  setTimeout(() => {
-    document.getElementById('loading').style.display = 'none';
-  }, 180);
-});
-</script>
+      handle.addEventListener('pointermove', e => {
+        if (!rdrag) return;
+        const dx = e.clientX - rdx, dy = e.clientY - rdy;
+        const vw = vp.clientWidth, vh = vp.clientHeight;
+        let nW = rStartW, nH = rStartH, nL = rStartL, nT = rStartT;
+        if (resizeDir.includes('e')) nW = Math.max(MIN_W, Math.min(vw - nL, rStartW + dx));
+        if (resizeDir.includes('s')) nH = Math.max(MIN_H, Math.min(vh - nT, rStartH + dy));
+        if (resizeDir.includes('w')) {
+          const pL = rStartL + dx, mL = rStartL + rStartW - MIN_W;
+          nL = Math.max(0, Math.min(mL, pL));
+          nW = rStartW - (nL - rStartL);
+        }
+        if (resizeDir.includes('n')) {
+          const pT = rStartT + dy, mT = rStartT + rStartH - MIN_H;
+          nT = Math.max(0, Math.min(mT, pT));
+          nH = rStartH - (nT - rStartT);
+        }
+        if (nL + nW > vw) nW = vw - nL;
+        if (nT + nH > vh) nH = vh - nT;
+        detail.style.left   = nL + 'px'; detail.style.top    = nT + 'px';
+        detail.style.width  = nW + 'px'; detail.style.height = nH + 'px';
+        saveCardState();
+        e.stopPropagation();
+      });
+
+      handle.addEventListener('pointerup', e => {
+        rdrag = false; resizeDir = '';
+        e.stopPropagation();
+      });
+    });
+
+    function clampDetailPos() {
+      const vw = vp.clientWidth, vh = vp.clientHeight;
+      const dw = detail.offsetWidth, dh = detail.offsetHeight;
+      const curL = parseFloat(detail.style.left) || 0;
+      const curT = parseFloat(detail.style.top)  || 0;
+      detail.style.left = Math.max(0, Math.min(vw - dw, curL)) + 'px';
+      detail.style.top  = Math.max(0, Math.min(vh - dh, curT)) + 'px';
+    }
+
+    vp.addEventListener('wheel', e => {
+      if (detail.contains(e.target)) return;
+      e.preventDefault(); e.stopPropagation();
+      const rect = vp.getBoundingClientRect();
+      const px = e.clientX - rect.left, py = e.clientY - rect.top;
+      const wx = (px - S.tx) / S.ts, wy = (py - S.ty) / S.ts;
+      const factor = e.deltaY > 0 ? 0.91 : 1.1;
+      const ns = Math.max(S.minS, Math.min(S.maxS, S.ts * factor));
+      S.tx = px - wx * ns; S.ty = py - wy * ns; S.ts = ns;
+    }, { passive: false });
+
+    let pinchDist = 0, pinchScale = 1, pinchWC = null;
+    vp.addEventListener('touchstart', e => {
+      if (detail.contains(e.target)) return;
+      if (e.touches.length === 2) {
+        const a = e.touches[0], b = e.touches[1];
+        pinchDist = Math.hypot(b.clientX - a.clientX, b.clientY - a.clientY);
+        pinchScale = S.ts;
+        const rect = vp.getBoundingClientRect();
+        const cx = (a.clientX + b.clientX) * 0.5 - rect.left;
+        const cy = (a.clientY + b.clientY) * 0.5 - rect.top;
+        pinchWC = { wx: (cx - S.tx) / S.ts, wy: (cy - S.ty) / S.ts, cx, cy };
+      }
+    }, { passive: false });
+
+    vp.addEventListener('touchmove', e => {
+      if (e.touches.length === 2 && pinchWC) {
+        if (detail.contains(e.target)) return;
+        e.preventDefault(); e.stopPropagation();
+        const a = e.touches[0], b = e.touches[1];
+        const d = Math.hypot(b.clientX - a.clientX, b.clientY - a.clientY);
+        const rect = vp.getBoundingClientRect();
+        const cx = (a.clientX + b.clientX) * 0.5 - rect.left;
+        const cy = (a.clientY + b.clientY) * 0.5 - rect.top;
+        let ns = Math.max(S.minS, Math.min(S.maxS, pinchScale * (d / pinchDist)));
+        S.ts = ns; S.tx = cx - pinchWC.wx * ns; S.ty = cy - pinchWC.wy * ns;
+      }
+    }, { passive: false });
+
+    vp.addEventListener('touchend', () => { pinchWC = null; });
+
+    function tick() {
+      const ease = 0.13;
+      S.s += (S.ts - S.s) * ease;
+      S.x += (S.tx - S.x) * ease;
+      S.y += (S.ty - S.y) * ease;
+      world.style.transform = `translate(${S.x}px,${S.y}px) scale(${S.s})`;
+      requestAnimationFrame(tick);
+    }
+
+    let isMapMaximized = false;
+    function updateMapToggleUI() {
+      mapToggleBtn.textContent = isMapMaximized ? '—' : '[ ]';
+      mapToggleBtn.title = isMapMaximized ? 'Minimize map' : 'Maximize map';
+      mapToggleBtn.setAttribute('aria-label', isMapMaximized ? 'Minimize map' : 'Maximize map');
+    }
+
+    function applyBodyOverflowState() {
+      const hoveringMap = shell.matches(':hover');
+      document.body.style.overflow = (isMapMaximized || hoveringMap) ? 'hidden' : '';
+    }
+
+    function toggleMapSize() {
+      const wasMaximized = isMapMaximized;
+      isMapMaximized = !isMapMaximized;
+      shell.classList.toggle('is-maximized', isMapMaximized);
+      applyBodyOverflowState();
+      updateMapToggleUI();
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        if (wasMaximized && !isMapMaximized) {
+          resetView();
+        } else if (detail.classList.contains('open') && selectedIdx !== -1) {
+          const p = islands[selectedIdx];
+          focusOn(p.x, p.y, 1.1);
+          clampDetailPos();
+        } else {
+          fitAll();
+        }
+      }));
+    }
+
+    mapToggleBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      toggleMapSize();
+    });
+
+    shell.addEventListener('wheel', e => { e.preventDefault(); }, { passive: false });
+
+    vp.addEventListener('mouseenter', () => { applyBodyOverflowState(); });
+    vp.addEventListener('mouseleave', () => { if (!isMapMaximized) applyBodyOverflowState(); });
+
+    window.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && isMapMaximized) toggleMapSize();
+    });
+
+    buildIslands();
+
+    function initMap() {
+      fitAll();
+      S.s = S.ts; S.x = S.tx; S.y = S.ty;
+      updateMapToggleUI();
+      tick();
+    }
+
+    requestAnimationFrame(() => requestAnimationFrame(initMap));
+
+    window.addEventListener('resize', () => {
+      if (!detail.classList.contains('open')) fitAll();
+      else clampDetailPos();
+    });
+  }); // DOMContentLoaded
+  </script>
 </body>
 </html>
