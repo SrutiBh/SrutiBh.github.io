@@ -176,6 +176,12 @@
         radial-gradient(circle at 90% 18%, rgba(255,255,255,.40) 0 1px, transparent 2px),
         radial-gradient(circle at 15% 70%, rgba(255,255,255,.35) 0 1px, transparent 2px),
         radial-gradient(circle at 60% 75%, rgba(255,255,255,.40) 0 1px, transparent 2px),
+        radial-gradient(circle at 8%  62%, rgba(255,255,255,.42) 0 1.5px, transparent 2.5px),
+        radial-gradient(circle at 42% 85%, rgba(255,255,255,.38) 0 1.5px, transparent 2.5px),
+        radial-gradient(circle at 70% 82%, rgba(255,255,255,.35) 0 1.5px, transparent 2.5px),
+        radial-gradient(circle at 92% 58%, rgba(255,255,255,.38) 0 1.5px, transparent 2.5px),
+        radial-gradient(circle at 28% 72%, rgba(255,255,255,.32) 0 1px, transparent 2px),
+        radial-gradient(circle at 58% 90%, rgba(255,255,255,.35) 0 1px, transparent 2px),
         linear-gradient(180deg, #06102a 0%, #0c1840 50%, #111e48 100%);
       transition: height 0.28s ease;
     }
@@ -1121,7 +1127,7 @@
       const s = Math.min(vw / contentW, vh / contentH);
       S.ts = Math.max(S.minS, Math.min(S.maxS, s));
       S.tx = (vw - contentW * S.ts) * 0.5 - minX * S.ts;
-      S.ty = (vh - contentH * S.ts) * 0.5 - minY * S.ts + 60;
+      S.ty = (vh - contentH * S.ts) * 0.5 - minY * S.ts + 100;
     }
 
     function resetView() {
