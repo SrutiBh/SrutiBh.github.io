@@ -423,7 +423,16 @@
           Email
         </a>
 
-        <a href="#cv" class="flex items-center gap-2 text-slate-300 hover:text-sky-300 transition-colors text-sm font-medium">
+        <!--
+          ╔══════════════════════════════════════════════════════╗
+          ║  CV PDF LINK — HERO                                  ║
+          ║  1. Add your PDF to your GitHub repo, e.g.:          ║
+          ║     /cv/Sruti_Bhattacharjee_CV.pdf                   ║
+          ║  2. Replace the href below with that path.           ║
+          ╚══════════════════════════════════════════════════════╝
+        -->
+        <a href="cv/Sruti_Bhattacharjee_CV.pdf" target="_blank" rel="noopener noreferrer"
+           class="flex items-center gap-2 text-slate-300 hover:text-sky-300 transition-colors text-sm font-medium">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
           CV
         </a>
@@ -451,15 +460,60 @@
     </a>
   </header>
 
+  <!-- ══════════════════════════════════════════════════
+       STICKY NAV — appears once you scroll past the hero
+  ═══════════════════════════════════════════════════════ -->
+  <nav class="sticky top-0 z-50 bg-[#0f1117]/90 backdrop-blur-md border-b border-white/10 shadow-lg">
+    <div class="container mx-auto max-w-4xl px-4">
+      <div class="flex flex-wrap justify-center items-center gap-5 md:gap-7 py-3">
+
+        <a href="mailto:srutib@kth.com" class="flex items-center gap-2 text-slate-300 hover:text-sky-300 transition-colors text-sm font-medium">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Email
+        </a>
+
+        <!--
+          ╔══════════════════════════════════════════════════════╗
+          ║  CV PDF LINK — STICKY NAV                            ║
+          ║  Keep this href in sync with the hero link above.    ║
+          ║  Both should point to the same PDF path.             ║
+          ╚══════════════════════════════════════════════════════╝
+        -->
+        <a href="cv/Sruti_Bhattacharjee_CV.pdf" target="_blank" rel="noopener noreferrer"
+           class="flex items-center gap-2 text-slate-300 hover:text-sky-300 transition-colors text-sm font-medium">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          CV
+        </a>
+
+        <a href="#portfolio" class="flex items-center gap-2 text-slate-300 hover:text-sky-300 transition-colors text-sm font-medium">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+          Portfolio
+        </a>
+
+        <a href="https://github.com/SrutiBh" target="_blank" class="flex items-center gap-2 text-slate-300 hover:text-sky-300 transition-colors text-sm font-medium">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          GitHub
+        </a>
+
+        <a href="https://www.linkedin.com/in/srutibhattacharjee/" target="_blank" class="flex items-center gap-2 text-slate-300 hover:text-sky-300 transition-colors text-sm font-medium">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+
+      </div>
+    </div>
+  </nav>
+  <!-- ══════════════════ END STICKY NAV ══════════════════ -->
+
   <!-- ══════════════════ MAIN ══════════════════ -->
   <main id="main-content" class="container mx-auto max-w-4xl px-4 py-16 space-y-20">
 
     <section id="about">
       <h2 class="section-title text-3xl text-slate-800 mb-6 border-b-2 border-slate-200 pb-2">About Me</h2>
       <div class="entry-card text-base leading-relaxed space-y-4 text-slate-600">
-        <p>I am a Human-Centric Computer Engineer specializing in Interactive Technology Design and Development at KTH University in Sweden. 
+        <p>I am a Human-Centric Computer Engineer specializing in Interactive Technology Design and Development at KTH University in Sweden.
         </p>
-        <p> I’m open to new roles and collaborations. Feel free to reach out if my background aligns with your team’s goals. 
+        <p> I'm open to new roles and collaborations. Feel free to reach out if my background aligns with your team's goals.
         </p>
       </div>
     </section>
@@ -1108,10 +1162,9 @@
       const vw = vp.clientWidth || 680;
       const vh = vp.clientHeight || 620;
 
-      // Compute actual bounding box of all islands including labels/years
-      const pad = 300; // px in world-space padding around outermost islands
-      const labelAbove = 80; // city label floats above island
-      const yearsBelow = 420; // years text bottom relative to island center
+      const pad = 300;
+      const labelAbove = 80;
+      const yearsBelow = 420;
 
       let minX = Infinity, maxX = -Infinity;
       let minY = Infinity, maxY = -Infinity;
