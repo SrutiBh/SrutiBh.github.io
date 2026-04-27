@@ -100,6 +100,25 @@
     }
     .entry-card:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.1); }
 
+    /* Education cards — exactly matches portfolio proj-card */
+    .edu-card {
+      background: white;
+      padding: 1.5rem;
+      border: 1.5px solid #dce2f0;
+      border-left: 10px solid #15203d;
+      border-right: 10px solid #15203d;
+      border-radius: 1.5rem;
+      box-shadow: 0 1px 4px rgba(0,23,90,0.05);
+      transition: box-shadow 0.22s, border-color 0.22s, transform 0.22s;
+    }
+    .edu-card:hover {
+      box-shadow: 0 8px 30px rgba(0,23,90,0.12);
+      border-color: #8899cc;
+      border-left-color: #15203d;
+      border-right-color: #15203d;
+      transform: translateY(-2px);
+    }
+
     /* ─── PORTFOLIO PILL TABS ─── */
     .ptabs {
       display: flex;
@@ -154,6 +173,8 @@
       flex-direction: row;
       background: white;
       border: 1.5px solid #dce2f0;
+      border-left: 10px solid #15203d;
+      border-right: 10px solid #15203d;
       border-radius: 1.5rem;
       overflow: hidden;
       box-shadow: 0 1px 4px rgba(0,23,90,0.05);
@@ -162,12 +183,13 @@
     .proj-card:hover {
       box-shadow: 0 8px 30px rgba(0,23,90,0.12);
       border-color: #8899cc;
+      border-left-color: #15203d;
+      border-right-color: #15203d;
       transform: translateY(-2px);
     }
     .proj-card-body {
       padding: 1.75rem 1.8rem;
       flex: 1;
-      border-left: 10px solid #15203d;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -479,7 +501,7 @@
       <h2 class="section-title text-3xl text-slate-800 mb-6 border-b-2 border-slate-200 pb-2">Education</h2>
       <div class="space-y-5">
 
-        <div class="entry-card flex items-center gap-5">
+        <div class="edu-card flex items-center gap-5">
           <div class="w-16 h-16 flex-shrink-0 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center font-bold text-xs text-slate-500 text-center leading-tight p-2 shadow-inner">
             <img src="images/logos/kth.png" alt="KTH"/>
           </div>
@@ -491,7 +513,7 @@
           </div>
         </div>
 
-        <div class="entry-card flex items-center gap-5">
+        <div class="edu-card flex items-center gap-5">
           <div class="w-16 h-16 flex-shrink-0 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center font-bold text-xs text-slate-500 text-center leading-tight p-2 shadow-inner">
             <img src="images/logos/epfl.png" alt="EPFL"/>
           </div>
@@ -503,7 +525,7 @@
           </div>
         </div>
 
-        <div class="entry-card flex items-center gap-5">
+        <div class="edu-card flex items-center gap-5">
           <div class="w-16 h-16 flex-shrink-0 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center font-bold text-xs text-slate-500 text-center leading-tight p-2 shadow-inner">
             <img src="images/logos/wbutnew_edited.jpg" alt="WBUT"/>
           </div>
@@ -515,7 +537,7 @@
           </div>
         </div>
 
-        <div class="entry-card flex items-center gap-5">
+        <div class="edu-card flex items-center gap-5">
           <div class="w-16 h-16 flex-shrink-0 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center font-bold text-xs text-slate-500 text-center leading-tight p-2 shadow-inner">
             <img src="images/logos/iitkgp.jpg" alt="IIT KGP"/>
           </div>
@@ -582,26 +604,65 @@
             <div class="proj-card-title">Re-Designing VRLE for Effective Pedagogy</div>
             <div class="proj-card-meta">MSc Thesis · KTH &amp; EPFL</div>
             <div class="proj-card-desc">Formulating how virtual reality-based learning environments can provide pedagogical support in effective learning.</div>
-            <div class="proj-card-links"><a href="#">Project Page</a><a href="#">Paper</a></div>
+            <div class="proj-card-links">
+              <!-- LINK EXAMPLES:
+                   Project page:  <a href="https://yoursite.com/vrle">Project Page</a>
+                   PDF paper:     <a href="papers/vrle_thesis.pdf" target="_blank">Paper</a>
+                   External DOI:  <a href="https://doi.org/10.xxxx/xxxxx" target="_blank">Paper</a>
+              -->
+              <a href="#">Project Page</a><a href="#">Paper</a>
+            </div>
           </div>
+          <!-- IMAGE / GIF AREA — replace the div below with one of these options:
+
+               STATIC IMAGE:
+               <img src="images/projects/vrle_preview.jpg" alt="VRLE project preview"
+                    style="width:200px;min-width:200px;height:100%;object-fit:cover;flex-shrink:0;" />
+
+               ANIMATED GIF (shows interaction demo):
+               <img src="images/projects/vrle_demo.gif" alt="VRLE demo"
+                    style="width:200px;min-width:200px;height:100%;object-fit:cover;flex-shrink:0;" />
+
+               PDF THUMBNAIL (links to paper on click):
+               <a href="papers/vrle_thesis.pdf" target="_blank"
+                  style="width:200px;min-width:200px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:#eef1f8;text-decoration:none;color:#15203d;font-size:0.75rem;font-style:italic;">
+                 View PDF ↗
+               </a>
+          -->
           <div class="proj-card-img">VR Learning<br/>Environment</div>
         </div>
+
         <div class="proj-card">
           <div class="proj-card-body">
             <div class="proj-card-title">EdTech for Novice Programming Learners in Hybrid Collaborative Classes</div>
             <div class="proj-card-meta">Research · University of Lausanne (UNIL)</div>
             <div class="proj-card-desc">Investigated design needs of EdTech to facilitate effective learning for novice programming students in hybrid collaborative learning environments.</div>
-            <div class="proj-card-links"><a href="#">Project Page</a><a href="#">Paper</a></div>
+            <div class="proj-card-links">
+              <!-- LINK EXAMPLES:
+                   <a href="https://yoursite.com/edtech">Project Page</a>
+                   <a href="papers/edtech_unil.pdf" target="_blank">Paper</a>
+              -->
+              <a href="#">Project Page</a><a href="#">Paper</a>
+            </div>
           </div>
+          <!-- IMAGE / GIF AREA — see first card above for full usage guide -->
           <div class="proj-card-img">Hybrid Class<br/>Research</div>
         </div>
+
         <div class="proj-card">
           <div class="proj-card-body">
             <div class="proj-card-title">Video Call, VR and Telepresence Robot for Group Interactions and Creative Thinking</div>
             <div class="proj-card-meta">Research · EPFL</div>
             <div class="proj-card-desc">Compared three existing multimodal media for remote communication and how they affect independent thinking.</div>
-            <div class="proj-card-links"><a href="#">Project Page</a><a href="#">Paper</a></div>
+            <div class="proj-card-links">
+              <!-- LINK EXAMPLES:
+                   <a href="https://yoursite.com/telepresence">Project Page</a>
+                   <a href="papers/telepresence_epfl.pdf" target="_blank">Paper</a>
+              -->
+              <a href="#">Project Page</a><a href="#">Paper</a>
+            </div>
           </div>
+          <!-- IMAGE / GIF AREA — see first card above for full usage guide -->
           <div class="proj-card-img">Remote<br/>Communication</div>
         </div>
       </div>
@@ -613,8 +674,12 @@
             <div class="proj-card-title">Augmented City — Act to Protest</div>
             <div class="proj-card-meta">Design Project · KTH</div>
             <div class="proj-card-desc">Designed an app to deliver improvement in city urbanism and collaboration during collaborative public events like protests and to promote street arts.</div>
-            <div class="proj-card-links"><a href="#">Project Page</a></div>
+            <div class="proj-card-links">
+              <!-- <a href="https://yoursite.com/augmented-city">Project Page</a> -->
+              <a href="#">Project Page</a>
+            </div>
           </div>
+          <!-- IMAGE / GIF AREA — see UX Research tab first card for full usage guide -->
           <div class="proj-card-img">Urban<br/>Interaction</div>
         </div>
         <div class="proj-card">
@@ -622,8 +687,13 @@
             <div class="proj-card-title">Effect of Latency on Haptic Perception</div>
             <div class="proj-card-meta">Research Internship · Ericsson, Sweden</div>
             <div class="proj-card-desc">Implemented and analysed impact of latency and jitter on haptic stiffness perception in haptic teleoperation systems.</div>
-            <div class="proj-card-links"><a href="#">Paper</a><a href="#">Code</a></div>
+            <div class="proj-card-links">
+              <!-- <a href="papers/haptics_ericsson.pdf" target="_blank">Paper</a>
+                   <a href="https://github.com/SrutiBh/haptics" target="_blank">Code</a> -->
+              <a href="#">Paper</a><a href="#">Code</a>
+            </div>
           </div>
+          <!-- IMAGE / GIF AREA — see UX Research tab first card for full usage guide -->
           <div class="proj-card-img">Haptic<br/>Systems</div>
         </div>
         <div class="proj-card">
@@ -631,8 +701,12 @@
             <div class="proj-card-title">Re-Designing Video Call for Remote Learning</div>
             <div class="proj-card-meta">Design Project · KTH</div>
             <div class="proj-card-desc">Examined impact of Zoom and other video-based applications on teacher's experience and redesigned a new interface for improved usability.</div>
-            <div class="proj-card-links"><a href="#">Project Page</a></div>
+            <div class="proj-card-links">
+              <!-- <a href="https://yoursite.com/videocall-redesign">Project Page</a> -->
+              <a href="#">Project Page</a>
+            </div>
           </div>
+          <!-- IMAGE / GIF AREA — see UX Research tab first card for full usage guide -->
           <div class="proj-card-img">Remote<br/>Learning UX</div>
         </div>
       </div>
@@ -644,8 +718,13 @@
             <div class="proj-card-title">Facial Expression Recognition in Virtual Reality using Machine Learning</div>
             <div class="proj-card-meta">Research · EPFL</div>
             <div class="proj-card-desc">Developed a new database using FAC and a facial expression recognition model using LightGBM and Random Forest based on HTC Vive Facial Tracker and HTC Vive Pro HMD.</div>
-            <div class="proj-card-links"><a href="#">Paper</a><a href="#">Code</a></div>
+            <div class="proj-card-links">
+              <!-- <a href="papers/facial_vr_epfl.pdf" target="_blank">Paper</a>
+                   <a href="https://github.com/SrutiBh/facial-vr" target="_blank">Code</a> -->
+              <a href="#">Paper</a><a href="#">Code</a>
+            </div>
           </div>
+          <!-- IMAGE / GIF AREA — see UX Research tab first card for full usage guide -->
           <div class="proj-card-img">VR + ML<br/>Research</div>
         </div>
         <div class="proj-card">
@@ -653,8 +732,13 @@
             <div class="proj-card-title">Venice Time Machine: 2020 Building Heights Detection</div>
             <div class="proj-card-meta">Project · EPFL</div>
             <div class="proj-card-desc">Developed a 3D model of Venice to preserve current building height and geographical location based on Google Earth data.</div>
-            <div class="proj-card-links"><a href="#">Project Page</a><a href="#">Code</a></div>
+            <div class="proj-card-links">
+              <!-- <a href="https://yoursite.com/venice">Project Page</a>
+                   <a href="https://github.com/SrutiBh/venice-3d" target="_blank">Code</a> -->
+              <a href="#">Project Page</a><a href="#">Code</a>
+            </div>
           </div>
+          <!-- IMAGE / GIF AREA — see UX Research tab first card for full usage guide -->
           <div class="proj-card-img">3D City<br/>Modelling</div>
         </div>
         <div class="proj-card">
@@ -662,8 +746,12 @@
             <div class="proj-card-title">Rogue-Mike Game</div>
             <div class="proj-card-meta">Personal Project</div>
             <div class="proj-card-desc">Developed a Windows OS-based video game using C# and Unreal Engine.</div>
-            <div class="proj-card-links"><a href="#">Code</a></div>
+            <div class="proj-card-links">
+              <!-- <a href="https://github.com/SrutiBh/rogue-mike" target="_blank">Code</a> -->
+              <a href="#">Code</a>
+            </div>
           </div>
+          <!-- IMAGE / GIF AREA — see UX Research tab first card for full usage guide -->
           <div class="proj-card-img">Game<br/>Development</div>
         </div>
       </div>
