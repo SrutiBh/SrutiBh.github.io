@@ -309,7 +309,6 @@
 
       <!-- UX RESEARCH PROJECTS -->
       <div class="tab-panel active" id="tab-ux">
-        
         <div class="proj-card">
           <div class="proj-card-body">
             <div class="proj-card-title">Re-Designing VRLE for Effective Pedagogy</div>
@@ -326,33 +325,21 @@
             </div>
           </div>
 
-          <!-- ADD / REPLACE PROJECT MEDIA HERE -->
-          <!-- Static image example:
-          <img src="images/projects/vrle_preview.jpg"
+          <!-- ADD / REPLACE PROJECT IMAGE HERE -->
+          <!-- Example:
+          <!-- PROJECT IMAGE (keeps exact same layout as original design) -->
+          <!-- Only change src + alt when updating image -->
+          <img src="images/projects/vrle_classroom.jpeg"
                alt="Preview image of VR learning environment project"
-               style="width:200px;min-width:200px;height:auto;object-fit:cover;flex-shrink:0;"/>
-          -->
-          <!-- Animated GIF example:
-          <img src="images/projects/vrle_demo.gif"
-               alt="Animated demo of VR learning environment project"
-               style="width:200px;min-width:200px;height:auto;object-fit:cover;flex-shrink:0;"/>
-          -->
-          <!-- Video example:
-          <video controls aria-label="VR learning environment project video" style="width:200px;min-width:200px;height:auto;object-fit:cover;flex-shrink:0;">
-            <source src="videos/vrle_demo.mp4" type="video/mp4">
-          </video>
-          -->
-          <!-- PDF link example:
-          <a href="papers/vrle_thesis.pdf" target="_blank" rel="noopener noreferrer" style="width:200px;min-width:200px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:#eef1f8;text-decoration:none;color:#15203d;font-size:.75rem;font-style:italic;">
-            View PDF ↗
-          </a>
+               class="proj-card-img"
+               style="width:200px;min-width:200px;height:100%;object-fit:cover;flex-shrink:0;"
+               onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=&quot;proj-card-img&quot;>VR Learning<br/>Environment</div>')"/>Environment</div>')"/>
           -->
           <img src="images/projects/vrle_classroom.jpeg"
-     alt="Preview image of VR learning environment project"
-     class="proj-card-img"
-     style="width:200px;min-width:200px;height:100%;object-fit:cover;flex-shrink:0;"
-     onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=&quot;proj-card-img&quot;>VR Learning<br/>Environment</div>')"/>
-          
+               alt="Preview image of VR learning environment project"
+               style="width:200px;min-width:200px;height:auto;object-fit:cover;flex-shrink:0;"
+               onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=&quot;proj-card-img&quot;>VR Learning<br/>Environment</div>')"/>
+        </div>
 
         <div class="proj-card">
           <div class="proj-card-body">
@@ -550,24 +537,15 @@
        IMPORTANT: Keep alt text meaningful because it becomes the image alt attribute in the generated popup logo.
     */
     const PLACES=[
-      {city:"Kanpur",mark:"spire",top:"#BFEA7A",rim:"#9ED65A",years:["2015","2017","2019"],groups:[{org:"IIT Kanpur, India",logo:"images/logos/iitk.jpg",alt:"IIT Kanpur",experiences:[{title:"Winter Intern",year:"2015",note:"Tessellation, Symmetry",tags:["Geometry","Symmetry"]},{title:"Offcycle Intern",year:"2017",note:"Signal Processing, Image Processing, Video Processing, Impainting",tags:["Matlab"]},{title:"Research Assistant",year:"2019",note:"Video Processing, HandTracking",tags:["Pytorch","Python","OpenCV","Matplotlib","Matlab"]}]}]},
-      
-      {city:"Chennai",mark:"arch",top:"#C7F66C",rim:"#9BE548",years:["2016"],groups:[{org:"IIT Madras, India",logo:"images/logos/iitm.png",alt:"IIT Madras",experiences:[{title:"Summer Intern",year:"2016",note:"Cloth-Rigid Body Collision, Cloth Simulation",tags:["OpenGL","Simulation","C++","Bullet Physics", "Visual C++"]}]}]},
-      
+      {city:"Kanpur",mark:"spire",top:"#BFEA7A",rim:"#9ED65A",years:["2015","2017","2019"],groups:[{org:"IIT Kanpur, India",logo:"images/logos/iitk.png",alt:"IIT Kanpur",experiences:[{title:"Research Exploration",year:"2015",note:"Tessellation, Symmetry 1D → 2D → 3D → 4D → nD",tags:["Geometry","Symmetry","Theory"]},{title:"Core Processing Systems",year:"2017",note:"Signal Processing, Image Processing, Video Processing",tags:["Signal","Image","Video"]},{title:"Advanced Video Analysis",year:"2019",note:"Extended work in video processing and computational visual analysis",tags:["Video","Analysis"]}]}]},
+      {city:"Chennai",mark:"arch",top:"#C7F66C",rim:"#9BE548",years:["2016"],groups:[{org:"IIT Madras, India",logo:"images/logos/iitm.png",alt:"IIT Madras",experiences:[{title:"Graphics & Simulation Internship",year:"2016",note:"3D Computer Graphics, OpenGL, Cloth Simulation, Bullet Physics, Visual C++",tags:["OpenGL","Simulation","C++","Physics"]}]}]},
       {city:"Kharagpur",mark:"spire",top:"#AEEF57",rim:"#84D933",years:["2017","2018","2019","2020"],groups:[{org:"IIT Kharagpur, India",logo:"images/logos/iitkgp.jpg",alt:"IIT Kharagpur",experiences:[{title:"Vision Foundations",year:"2017",note:"Image Processing Matlab, TensorFlow Masked RCNN, OpenCV",tags:["Matlab","TensorFlow","OpenCV"]},{title:"Hardware Intelligence",year:"2018",note:"Counterfeit IC, IC Textures, LaTeX, PyBPDL, PyTorch Introduction",tags:["Counterfeit IC","LaTeX","PyTorch"]},{title:"Remote Analytical Research",year:"2019",note:"Music Perception, Signal Processing, Data Analytics, Matlab",tags:["Music Perception","Signal","Analytics"]},{title:"Research Engineer",year:"2020",note:"DeepFake video detection using computer vision and inter-frame temporal analysis",tags:["DeepFake","Video","PyTorch"]}]}]},
-      
       {city:"Chicago",mark:"pavilion",top:"#b8bfb8",rim:"#969d96",years:["2018","2019"],groups:[{org:"UIUC, USA",logo:"images/logos/uiuc.png",alt:"UIUC",experiences:[{title:"Remote Research",year:"2018–2019",note:"Python, PyTorch, LSTM, infant voice and needs expression modelling",tags:["Python","PyTorch","LSTM","Signal"]}]}]},
-      
       {city:"Lyon",mark:"arch",top:"#c2c9c0",rim:"#a0a89e",years:["2019"],groups:[{org:"Claude Bernard Lyon 1 / CNRS, France",logo:"images/logos/cnrs.png",alt:"CNRS",experiences:[{title:"Remote Research",year:"2019",note:"Symmetry, asymmetry, literature review, convex-concave structures, graphical patterns",tags:["Symmetry","Literature Review","Patterns"]}]}]},
-      
       {city:"Kolkata",mark:"pavilion",top:"#85B7EB",rim:"#378ADD",years:["1996","2014","2019"],groups:[{org:"Born & Grew Up, Kolkata, India",logo:"images/logos/kolkata.png",alt:"Kolkata",experiences:[{title:"Born & Grew Up",year:"1996 – Present",note:"(personal roots, values, early exposure, formative environment)",tags:["Roots","Identity","Foundation"]}]},{org:"WBUT, India",logo:"images/logos/wbutnew_edited.jpg",alt:"WBUT",experiences:[{title:"Undergraduate Studies",year:"2014 – 2019",note:"(undergraduate studies, activities, technical foundation, learning outcomes)",tags:["BTech","Foundation","Activities"]}]},{org:"NSHM College, India",logo:"images/logos/nshm.png",alt:"NSHM",experiences:[{title:"Teaching Experience",year:"2019",note:"(teaching experience, computer graphics, OpenGL, mentoring)",tags:["Teaching","Graphics","OpenGL"]}]}]},
-      
       {city:"Stockholm",mark:"spire",top:"#FF9A2E",rim:"#E07010",years:["2020","2021","2022","2024","2025","2026"],groups:[{org:"KTH Royal Institute of Technology, Sweden",logo:"images/logos/kth.png",alt:"KTH",experiences:[{title:"Master's Studies",year:"2020 – Present",note:"(master's studies, immersive media, HCI, coursework, activities)",tags:["Master's","HCI","IMT"]},{title:"Teaching Assistant",year:"2020 – 2025",note:"(TA work, course support, mentoring, academic contribution)",tags:["TA","Teaching","Mentoring"]},{title:"Research Assistant",year:"2021",note:"(RA work, research support, Python, PyQT, interdisciplinary collaboration)",tags:["RA","Python","Research"]},{title:"Activities",year:"2020 – Present",note:"(student life, projects, events, broader academic activities)",tags:["Activities","Projects","Community"]}]},{org:"Ericsson, Sweden",logo:"images/logos/Ericsson2.jpg",alt:"Ericsson",experiences:[{title:"Summer R&D Intern",year:"2021",note:"(haptics, teleoperation, networked interaction, applied research)",tags:["Ericsson","Haptics","R&D"]}]}]},
-      
       {city:"Lausanne",mark:"pavilion",top:"#F9E04B",rim:"#E6C418",years:["2021","2022","2023"],groups:[{org:"EPFL, Switzerland",logo:"images/logos/epfl.png",alt:"EPFL",experiences:[{title:"Graduate Exchange",year:"2021 – 2022",note:"(exchange semester, advanced coursework, interdisciplinary exploration)",tags:["Exchange","Coursework","EPFL"]},{title:"Thesis Collaboration",year:"2023 – Present",note:"(thesis collaboration, VRLE, pedagogy, design research)",tags:["Thesis","VRLE","Research"]},{title:"Activities",year:"2021 – 2023",note:"(student activities, projects, labs, collaborations)",tags:["Activities","Projects","Labs"]}]},{org:"University of Lausanne (UNIL), Switzerland",logo:"images/logos/UNIL.jpg",alt:"UNIL",experiences:[{title:"Research Assistant",year:"2023",note:"(RA work, EdTech, programming learning, hybrid classrooms)",tags:["UNIL","RA","EdTech"]}]}]},
-      
       {city:"Jyväskylä",mark:"arch",top:"#F9E04B",rim:"#E6C418",years:["2025"],groups:[{org:"University of Jyväskylä, Finland",logo:"images/logos/jyu_transparent.png",alt:"JYU",experiences:[{title:"Summer Trainee",year:"2025",note:"Accessible Interactive Technology, Multimodal Accessibility Design",tags:["Accessibility","Multimodal","Interactive Tech"]}]}]},
-      
       {city:"Paris",mark:"arch",top:"#E8B6C6",rim:"#D48CA5",years:["2025","2026"],groups:[{org:"CAEL - Centre d'Animation Expression Loisirs de Bourg-La-Reine",logo:"images/logos/cael.png",alt:"CAEL",experiences:[{title:"French Language Training",year:"2025",note:"(French language learning, communication, integration, cultural fluency)",tags:["French","Language","Training"]}]},{org:"Paris, France",logo:"images/logos/france.png",alt:"Paris",experiences:[{title:"Family Settlement",year:"2026",note:"(family settlement, new life chapter, long-term grounding, transition)",tags:["Family","Settlement","Future"]}]}]}
     ];
 
