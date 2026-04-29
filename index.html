@@ -4,10 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sruti Bhattacharjee | Personal Webpage</title>
+
+  <!-- EXTERNAL STYLE FRAMEWORK -->
+  <!-- Tailwind CSS CDN. Keep this line if you want to continue using Tailwind utility classes. -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- FONT IMPORTS -->
+  <!-- If changing fonts, replace the Google Fonts URL below and update font-family values in CSS. -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+
   <style>
     body{font-family:'DM Sans',sans-serif;background-color:#f8fafc;}
     .hero-bg{background-color:#15203d;background-image:none;position:relative;}
@@ -19,25 +26,35 @@
     .nav-pill a:hover+a::before,.nav-pill a:hover::before{display:none;}
     .hero-name{font-family:'Cormorant Garamond',serif;font-weight:700;letter-spacing:-.02em;}
     .section-title{font-family:'Cormorant Garamond',serif;font-weight:600;letter-spacing:-.01em;}
-    /* About card — blue-tinted shadow */
+
+    /* ABOUT CARD — blue-tinted shadow */
     .entry-card{background:white;padding:1.5rem;border-radius:.75rem;box-shadow:0 4px 16px rgba(21,32,61,.13),0 1px 3px rgba(21,32,61,.07);transition:box-shadow .25s,transform .25s;}
     .entry-card:hover{box-shadow:0 8px 28px rgba(21,32,61,.22),0 2px 6px rgba(21,32,61,.10);transform:translateY(-2px);}
-    /* Education */
+
+    /* EDUCATION LOGO IMAGE STYLE */
+    /* Used by education institution logos.
+       Example image line:
+       <img src="images/logos/kth.png" alt="KTH Logo" class="edu-logo"/>
+    */
     .edu-logo{width:64px;height:64px;flex-shrink:0;object-fit:contain;object-position:center;}
+
     .edu-card{background:white;padding:1.5rem;border:1.5px solid #dce2f0;border-left:10px solid #15203d;border-right:10px solid #15203d;border-radius:1.5rem;box-shadow:0 1px 4px rgba(21,32,61,.05);transition:box-shadow .22s,border-color .22s,transform .22s;}
     .edu-card:hover{box-shadow:0 8px 30px rgba(21,32,61,.12);border-color:#8899cc;border-left-color:#15203d;border-right-color:#15203d;transform:translateY(-2px);}
-    /* Portfolio tabs */
+
+    /* PORTFOLIO TABS */
     .ptabs{display:inline-flex;flex-wrap:wrap;background:#15203d;padding:.38rem .5rem;border-radius:999px;gap:0;width:fit-content;margin-bottom:2rem;}
     .ptab-btn{display:flex;align-items:center;gap:.42rem;padding:.4rem .95rem;border-radius:999px;font-size:.81rem;font-weight:500;border:none;background:transparent;color:rgba(215,222,235,.85);cursor:pointer;transition:background .17s,color .17s;font-family:'DM Sans',sans-serif;letter-spacing:.015em;white-space:nowrap;position:relative;}
     .ptab-btn.active{background:#ffffff;color:#15203d;font-weight:600;}
     .ptab-btn:not(.active):hover{background:rgba(255,255,255,.09);color:#fff;}
     .ptab-btn+.ptab-btn::before{content:'';position:absolute;left:0;top:22%;height:56%;width:1px;background:rgba(255,255,255,.18);}
     .ptab-btn.active+.ptab-btn::before,.ptab-btn+.ptab-btn.active::before{display:none;}
-    /* Tab panels */
+
+    /* TAB PANELS */
     .tab-panel{display:none;}
     .tab-panel.active{display:flex;flex-direction:column;gap:1.4rem;animation:pfadeUp .28s ease both;}
     @keyframes pfadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-    /* Project cards — borders on outer card so right border is after image */
+
+    /* PROJECT CARDS — borders on outer card so right border is after image */
     .proj-card{display:flex;flex-direction:row;background:white;border:1.5px solid #dce2f0;border-left:10px solid #15203d;border-right:10px solid #15203d;border-radius:1.5rem;overflow:hidden;box-shadow:0 1px 4px rgba(21,32,61,.05);transition:box-shadow .22s,border-color .22s,transform .22s;}
     .proj-card:hover{box-shadow:0 8px 30px rgba(21,32,61,.12);border-color:#8899cc;border-left-color:#15203d;border-right-color:#15203d;transform:translateY(-2px);}
     .proj-card-body{padding:1.75rem 1.8rem;flex:1;display:flex;flex-direction:column;justify-content:center;gap:.55rem;}
@@ -47,14 +64,23 @@
     .proj-card-links{display:flex;gap:.75rem;margin-top:.35rem;}
     .proj-card-links a{font-size:.8rem;font-weight:600;color:#15203d;text-decoration:none;padding:4px 12px;border:1.5px solid #c2cde8;border-radius:999px;transition:background .15s,border-color .15s;}
     .proj-card-links a:hover{background:#eef1f8;border-color:#8899cc;}
+
+    /* PROJECT MEDIA PLACEHOLDER STYLE */
+    /* This class styles the right-side project placeholder.
+       To replace a placeholder with an image, GIF, video thumbnail, or PDF button,
+       use the commented examples placed directly beside each project card below.
+    */
     .proj-card-img{width:200px;min-width:200px;background:linear-gradient(135deg,#e8ecf5 0%,#c0cbea 100%);display:flex;align-items:center;justify-content:center;font-size:.75rem;color:#93aecb;font-style:italic;letter-spacing:.02em;flex-shrink:0;text-align:center;padding:1rem;}
+
     @media(max-width:640px){.proj-card{flex-direction:column}.proj-card-img{width:100%;min-width:unset;height:90px}.ptabs{flex-wrap:wrap;width:100%}.ptab-btn{flex:1;text-align:center;padding:8px 12px}.nav-pill a .label{display:none}}
-    /* Animations */
+
+    /* ANIMATIONS */
     @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
     .fade-1{animation:fadeUp .7s ease .05s both}.fade-2{animation:fadeUp .7s ease .2s both}.fade-3{animation:fadeUp .7s ease .35s both}.fade-4{animation:fadeUp .7s ease .5s both}
     @keyframes bounceY{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
     .bounce-icon{animation:bounceY 2.2s ease-in-out infinite}
-    /* Journey Map */
+
+    /* JOURNEY MAP */
     .jshell{position:relative;background:linear-gradient(180deg,#0d1328 0%,#111936 46%,#15203d 100%);border-radius:1rem;overflow:hidden;box-shadow:0 16px 40px rgba(15,23,42,.14);transition:all .28s ease;overscroll-behavior:contain;margin-left:-1vw;margin-right:-1vw;}
     .jshell.is-maximized{position:fixed;inset:1rem;z-index:80;border-radius:1rem;box-shadow:0 24px 80px rgba(15,23,42,.28);}
     .jtoolbar{position:absolute;top:.9rem;right:1rem;z-index:12;display:flex;justify-content:flex-end;align-items:center;}
@@ -97,6 +123,12 @@
     .jcards-wrap{margin-top:0;display:grid;gap:.75rem}
     .jcard{background:white;border:1px solid #e9edf1;border-radius:10px;padding:0;box-shadow:0 1px 6px rgba(20,40,70,.04);overflow:hidden}
     .jcard-head{display:flex;align-items:center;gap:.9rem;padding:.95rem 1rem .85rem;border-bottom:1px solid #eef2f6;background:linear-gradient(180deg,rgba(248,250,252,.9),rgba(255,255,255,.98))}
+
+    /* JOURNEY MAP LOGO STYLE */
+    /* Logos in the journey map popup are generated from the PLACES JavaScript array.
+       Add or replace logos inside PLACES using:
+       logo:"images/logos/kth.png", alt:"KTH Logo"
+    */
     .jlogo{width:4rem;height:4rem;min-width:4rem;flex-shrink:0;border-radius:999px;background:#f8fafc;border:1px solid #f1f5f9;display:flex;align-items:center;justify-content:center;padding:.45rem;box-shadow:inset 0 1px 3px rgba(0,0,0,.06);overflow:hidden;color:#64748b}
     .jlogo img{max-width:100%;max-height:100%;object-fit:contain;display:block}
     .jorg-wrap{min-width:0;flex:1}.jorg{font-weight:600;font-size:.95rem;color:#0f203a;line-height:1.35}
@@ -108,16 +140,36 @@
     @media(max-width:640px){.jvp{height:440px}.jshell.is-maximized .jvp{height:calc(100vh - 1.2rem)}.jdetail{width:calc(100% - 20px)!important;left:10px!important}.jlogo{width:3.3rem;height:3.3rem;min-width:3.3rem}.jshell.is-maximized{inset:.6rem;border-radius:.9rem}}
   </style>
 </head>
+
 <body class="text-slate-700">
 
+  <!-- HERO SECTION -->
   <header class="hero-bg text-white min-h-[100dvh] flex flex-col items-center justify-center px-6 pt-6 pb-3 relative overflow-hidden">
+
+    <!-- PROFILE IMAGE AREA -->
+    <!-- ADD / REPLACE PROFILE IMAGE HERE -->
+    <!-- Example:
+    <img src="images/profile/profile_photo.jpg"
+         alt="Portrait of Sruti Bhattacharjee"
+         class="w-full h-full object-cover"
+         onerror="this.style.display='none';this.parentElement.innerHTML='<span style=&quot;font-size:3.5rem&quot;>👩‍💻</span>'"/>
+    -->
     <div class="fade-1 mb-6">
       <div class="w-36 h-36 md:w-40 md:h-40 rounded-full border-4 border-white/20 shadow-2xl bg-slate-700 flex items-center justify-center overflow-hidden mx-auto">
         <img src="images/profile/glass_profile.jpeg" alt="Sruti Bhattacharjee" class="w-full h-full object-cover" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=&quot;font-size:3.5rem&quot;>👩‍💻</span>'"/>
       </div>
     </div>
+
     <h1 class="hero-name text-5xl md:text-7xl fade-2 text-center">Sruti Bhattacharjee</h1>
     <p class="mt-3 text-base md:text-xl text-slate-400 fade-3 font-light tracking-wide text-center">Graduate Student &nbsp;·&nbsp; KTH Royal Institute of Technology</p>
+
+    <!-- HERO NAVIGATION LINKS -->
+    <!-- CV PDF LINK EXAMPLE:
+    <a href="papers/cv_1page.pdf" target="_blank" rel="noopener noreferrer">CV</a>
+    -->
+    <!-- EMAIL LINK EXAMPLE:
+    <a href="mailto:srutib@kth.com">Email</a>
+    -->
     <div class="mt-3 fade-4" id="navInHero">
       <div class="nav-pill">
         <a href="mailto:srutib@kth.com"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4.7-8 5.334L4 8.7V6.297l8 5.333 8-5.333V8.7z"/></svg><span class="label">Email</span></a>
@@ -127,11 +179,13 @@
         <a href="https://www.linkedin.com/in/srutibhattacharjee/" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6.5 21.5h-5v-13h5v13zM4 6.5C2.5 6.5 1.5 5.3 1.5 4s1-2.4 2.5-2.4c1.6 0 2.5 1 2.6 2.5 0 1.4-1 2.4-2.6 2.4zm11.5 6c-1 0-2 .5-2 1.9v7.1h-5v-13h5v1.9c1-1.6 2.7-1.9 4-1.9 3 0 5 2 5 6.3v6.7h-5v-7c0-1.4-.5-1.9-2-1.9-.9 0-1.9.5-1.9 1.9v7.1h-5"/></svg><span class="label">LinkedIn</span></a>
       </div>
     </div>
+
     <a href="#main-content" class="absolute bottom-10 text-white/40 hover:text-white/80 transition-colors bounce-icon z-10">
       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 12 16 16 12"/><line x1="12" y1="8" x2="12" y2="16"/></svg>
     </a>
   </header>
 
+  <!-- STICKY NAVIGATION — appears after the hero navigation scrolls away -->
   <div class="nav-sticky-wrap" id="navWrap" style="display:none;">
     <nav class="nav-pill">
       <a href="mailto:srutib@kth.com"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4.7-8 5.334L4 8.7V6.297l8 5.333 8-5.333V8.7z"/></svg><span class="label">Email</span></a>
@@ -144,6 +198,7 @@
 
   <main id="main-content" class="container mx-auto max-w-4xl px-4 py-16 space-y-20">
 
+    <!-- ABOUT SECTION -->
     <section id="about">
       <h2 class="section-title text-3xl text-slate-800 mb-6 border-b-2 border-slate-200 pb-2">About Me</h2>
       <div class="entry-card text-base leading-relaxed space-y-4 text-slate-600">
@@ -152,10 +207,16 @@
       </div>
     </section>
 
+    <!-- EDUCATION SECTION -->
     <section id="cv">
       <h2 class="section-title text-3xl text-slate-800 mb-6 border-b-2 border-slate-200 pb-2">Education</h2>
       <div class="space-y-5">
+
         <div class="edu-card flex items-center gap-5">
+          <!-- ADD / REPLACE EDUCATION LOGO HERE -->
+          <!-- Example:
+          <img src="images/logos/kth.png" alt="KTH Logo" class="edu-logo"/>
+          -->
           <img src="images/logos/kth.png" alt="KTH" class="edu-logo"/>
           <div>
             <h3 class="font-semibold text-slate-900">Master of Science, Interactive Media Technology</h3>
@@ -164,7 +225,12 @@
             <p class="text-slate-500 text-sm mt-1">Thesis: Re-Designing VRLE for Effective Pedagogy (with EPFL)</p>
           </div>
         </div>
+
         <div class="edu-card flex items-center gap-5">
+          <!-- ADD / REPLACE EDUCATION LOGO HERE -->
+          <!-- Example:
+          <img src="images/logos/epfl.png" alt="EPFL Logo" class="edu-logo"/>
+          -->
           <img src="images/logos/epfl.png" alt="EPFL" class="edu-logo"/>
           <div>
             <h3 class="font-semibold text-slate-900">Graduate Exchange Student, Computer and Communication Sciences</h3>
@@ -173,7 +239,12 @@
             <p class="text-slate-500 text-sm mt-1">Education Technology, Digital Humanities, Virtual Reality, Computer Vision</p>
           </div>
         </div>
+
         <div class="edu-card flex items-center gap-5">
+          <!-- ADD / REPLACE EDUCATION LOGO HERE -->
+          <!-- Example:
+          <img src="images/logos/wbutnew_edited.jpg" alt="WBUT Logo" class="edu-logo"/>
+          -->
           <img src="images/logos/wbutnew_edited.jpg" alt="WBUT" class="edu-logo"/>
           <div>
             <h3 class="font-semibold text-slate-900">Bachelor of Technology, Information Technology</h3>
@@ -182,7 +253,12 @@
             <p class="text-slate-500 text-sm mt-1">Thesis: Re-Designing VRLE for Effective Pedagogy (at IITKGP), Natural Language Processing, Robotics</p>
           </div>
         </div>
+
         <div class="edu-card flex items-center gap-5">
+          <!-- ADD / REPLACE EDUCATION LOGO HERE -->
+          <!-- Example:
+          <img src="images/logos/iitkgp.jpg" alt="IIT Kharagpur Logo" class="edu-logo"/>
+          -->
           <img src="images/logos/iitkgp.jpg" alt="IIT KGP" class="edu-logo"/>
           <div>
             <h3 class="font-semibold text-slate-900">Undergrad Visiting Student, Computer Science and Engineering</h3>
@@ -194,8 +270,12 @@
       </div>
     </section>
 
+    <!-- EXPERIENCE / JOURNEY MAP SECTION -->
     <section id="experience">
       <h2 class="section-title text-3xl text-slate-800 mb-6 border-b-2 border-slate-200 pb-2">Selected Experiences</h2>
+
+      <!-- INTERACTIVE JOURNEY MAP -->
+      <!-- Logos, city entries, years, notes, and tags are edited in the PLACES array inside the <script> section. -->
       <div class="jshell" id="jshell">
         <div class="jtoolbar"><button class="jicon-btn" id="toggleMapSize" type="button" title="Maximize map" aria-label="Maximize map">[ ]</button></div>
         <div class="jvp" id="jvp">
@@ -216,14 +296,18 @@
       </div>
     </section>
 
+    <!-- PORTFOLIO SECTION -->
     <section id="portfolio">
       <h2 class="section-title text-3xl text-slate-800 mb-6 border-b-2 border-slate-200 pb-2">Portfolio</h2>
+
+      <!-- PORTFOLIO CATEGORY TABS -->
       <div class="ptabs">
         <button class="ptab-btn active" onclick="switchTab('ux',this)">UX Research</button>
         <button class="ptab-btn" onclick="switchTab('interaction',this)">Interaction Design</button>
         <button class="ptab-btn" onclick="switchTab('visual',this)">Visual Computing</button>
       </div>
 
+      <!-- UX RESEARCH PROJECTS -->
       <div class="tab-panel active" id="tab-ux">
         <div class="proj-card">
           <div class="proj-card-body">
@@ -231,103 +315,206 @@
             <div class="proj-card-meta">MSc Thesis · KTH &amp; EPFL</div>
             <div class="proj-card-desc">Formulating how virtual reality-based learning environments can provide pedagogical support in effective learning.</div>
             <div class="proj-card-links">
-              <!-- LINK EXAMPLES:
-                   Project page:  <a href="https://yoursite.com/vrle">Project Page</a>
-                   PDF paper:     <a href="papers/vrle_thesis.pdf" target="_blank">Paper</a>
-                   External DOI:  <a href="https://doi.org/10.xxxx/xxxxx" target="_blank">Paper</a> -->
+              <!-- ADD / REPLACE PROJECT LINKS HERE -->
+              <!-- Examples:
+              <a href="https://yoursite.com/vrle" target="_blank" rel="noopener noreferrer">Project Page</a>
+              <a href="papers/vrle_thesis.pdf" target="_blank" rel="noopener noreferrer">Paper</a>
+              <a href="https://doi.org/10.xxxx/xxxxx" target="_blank" rel="noopener noreferrer">DOI</a>
+              -->
               <a href="#">Project Page</a><a href="#">Paper</a>
             </div>
           </div>
-          <!-- IMAGE / GIF AREA — replace div below with one of:
-               STATIC IMAGE: <img src="images/projects/vrle_preview.jpg" style="width:200px;min-width:200px;height:100%;object-fit:cover;flex-shrink:0;" />
-               ANIMATED GIF: <img src="images/projects/vrle_demo.gif" style="width:200px;min-width:200px;height:100%;object-fit:cover;flex-shrink:0;" />
-               PDF LINK:     <a href="papers/vrle_thesis.pdf" target="_blank" style="width:200px;min-width:200px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:#eef1f8;text-decoration:none;color:#15203d;font-size:.75rem;font-style:italic;">View PDF ↗</a> -->
+
+          <!-- ADD / REPLACE PROJECT MEDIA HERE -->
+          <!-- Static image example:
+          <img src="images/projects/vrle_preview.jpg"
+               alt="Preview image of VR learning environment project"
+               style="width:200px;min-width:200px;height:auto;object-fit:cover;flex-shrink:0;"/>
+          -->
+          <!-- Animated GIF example:
+          <img src="images/projects/vrle_demo.gif"
+               alt="Animated demo of VR learning environment project"
+               style="width:200px;min-width:200px;height:auto;object-fit:cover;flex-shrink:0;"/>
+          -->
+          <!-- Video example:
+          <video controls aria-label="VR learning environment project video" style="width:200px;min-width:200px;height:auto;object-fit:cover;flex-shrink:0;">
+            <source src="videos/vrle_demo.mp4" type="video/mp4">
+          </video>
+          -->
+          <!-- PDF link example:
+          <a href="papers/vrle_thesis.pdf" target="_blank" rel="noopener noreferrer" style="width:200px;min-width:200px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:#eef1f8;text-decoration:none;color:#15203d;font-size:.75rem;font-style:italic;">
+            View PDF ↗
+          </a>
+          -->
           <div class="proj-card-img">VR Learning<br/>Environment</div>
         </div>
+
         <div class="proj-card">
           <div class="proj-card-body">
             <div class="proj-card-title">EdTech for Novice Programming Learners in Hybrid Collaborative Classes</div>
             <div class="proj-card-meta">Research · University of Lausanne (UNIL)</div>
             <div class="proj-card-desc">Investigated design needs of EdTech to facilitate effective learning for novice programming students in hybrid collaborative learning environments.</div>
-            <div class="proj-card-links"><a href="#">Project Page</a><a href="#">Paper</a></div>
+            <div class="proj-card-links">
+              <!-- ADD / REPLACE PROJECT LINKS HERE -->
+              <!-- Example:
+              <a href="papers/hybrid_class_research.pdf" target="_blank" rel="noopener noreferrer">Paper</a>
+              -->
+              <a href="#">Project Page</a><a href="#">Paper</a>
+            </div>
           </div>
-          <!-- IMAGE / GIF AREA — see first card above for usage guide -->
+          <!-- ADD / REPLACE PROJECT IMAGE OR GIF HERE -->
+          <!-- Example:
+          <img src="images/projects/hybrid_class_research.jpg" alt="Hybrid programming class research project preview" style="width:200px;min-width:200px;height:auto;object-fit:cover;flex-shrink:0;"/>
+          -->
           <div class="proj-card-img">Hybrid Class<br/>Research</div>
         </div>
+
         <div class="proj-card">
           <div class="proj-card-body">
             <div class="proj-card-title">Video Call, VR and Telepresence Robot for Group Interactions and Creative Thinking</div>
             <div class="proj-card-meta">Research · EPFL</div>
             <div class="proj-card-desc">Compared three existing multimodal media for remote communication and how they affect independent thinking.</div>
-            <div class="proj-card-links"><a href="#">Project Page</a><a href="#">Paper</a></div>
+            <div class="proj-card-links">
+              <!-- ADD / REPLACE PROJECT LINKS HERE -->
+              <!-- Example:
+              <a href="papers/remote_communication.pdf" target="_blank" rel="noopener noreferrer">Paper</a>
+              -->
+              <a href="#">Project Page</a><a href="#">Paper</a>
+            </div>
           </div>
-          <!-- IMAGE / GIF AREA — see first card above for usage guide -->
+          <!-- ADD / REPLACE PROJECT IMAGE OR GIF HERE -->
+          <!-- Example:
+          <img src="images/projects/remote_communication.gif" alt="Remote communication project GIF showing video call, VR, and telepresence robot" style="width:200px;min-width:200px;height:auto;object-fit:cover;flex-shrink:0;"/>
+          -->
           <div class="proj-card-img">Remote<br/>Communication</div>
         </div>
       </div>
 
+      <!-- INTERACTION DESIGN PROJECTS -->
       <div class="tab-panel" id="tab-interaction">
         <div class="proj-card">
           <div class="proj-card-body">
             <div class="proj-card-title">Augmented City — Act to Protest</div>
             <div class="proj-card-meta">Design Project · KTH</div>
             <div class="proj-card-desc">Designed an app to deliver improvement in city urbanism and collaboration during collaborative public events like protests and to promote street arts.</div>
-            <div class="proj-card-links"><a href="#">Project Page</a></div>
+            <div class="proj-card-links">
+              <!-- ADD / REPLACE PROJECT LINK HERE -->
+              <!-- Example:
+              <a href="https://yoursite.com/augmented-city" target="_blank" rel="noopener noreferrer">Project Page</a>
+              -->
+              <a href="#">Project Page</a>
+            </div>
           </div>
-          <!-- IMAGE / GIF AREA — see UX Research first card for usage guide -->
+          <!-- ADD / REPLACE PROJECT IMAGE OR GIF HERE -->
+          <!-- Example:
+          <img src="images/projects/augmented_city.jpg" alt="Augmented City interaction design project preview" style="width:200px;min-width:200px;height:auto;object-fit:cover;flex-shrink:0;"/>
+          -->
           <div class="proj-card-img">Urban<br/>Interaction</div>
         </div>
+
         <div class="proj-card">
           <div class="proj-card-body">
             <div class="proj-card-title">Effect of Latency on Haptic Perception</div>
             <div class="proj-card-meta">Research Internship · Ericsson, Sweden</div>
             <div class="proj-card-desc">Implemented and analysed impact of latency and jitter on haptic stiffness perception in haptic teleoperation systems.</div>
-            <div class="proj-card-links"><a href="#">Paper</a><a href="#">Code</a></div>
+            <div class="proj-card-links">
+              <!-- ADD / REPLACE PAPER OR CODE LINKS HERE -->
+              <!-- Examples:
+              <a href="papers/haptic_latency.pdf" target="_blank" rel="noopener noreferrer">Paper</a>
+              <a href="https://github.com/username/haptic-latency" target="_blank" rel="noopener noreferrer">Code</a>
+              -->
+              <a href="#">Paper</a><a href="#">Code</a>
+            </div>
           </div>
-          <!-- IMAGE / GIF AREA — see UX Research first card for usage guide -->
+          <!-- ADD / REPLACE PROJECT IMAGE, GIF, OR VIDEO HERE -->
+          <!-- Example:
+          <img src="images/projects/haptic_systems.gif" alt="Haptic teleoperation system latency demo" style="width:200px;min-width:200px;height:auto;object-fit:cover;flex-shrink:0;"/>
+          -->
           <div class="proj-card-img">Haptic<br/>Systems</div>
         </div>
+
         <div class="proj-card">
           <div class="proj-card-body">
             <div class="proj-card-title">Re-Designing Video Call for Remote Learning</div>
             <div class="proj-card-meta">Design Project · KTH</div>
             <div class="proj-card-desc">Examined impact of Zoom and other video-based applications on teacher's experience and redesigned a new interface for improved usability.</div>
-            <div class="proj-card-links"><a href="#">Project Page</a></div>
+            <div class="proj-card-links">
+              <!-- ADD / REPLACE PROJECT LINK HERE -->
+              <!-- Example:
+              <a href="https://yoursite.com/remote-learning-ux" target="_blank" rel="noopener noreferrer">Project Page</a>
+              -->
+              <a href="#">Project Page</a>
+            </div>
           </div>
-          <!-- IMAGE / GIF AREA — see UX Research first card for usage guide -->
+          <!-- ADD / REPLACE PROJECT IMAGE OR GIF HERE -->
+          <!-- Example:
+          <img src="images/projects/remote_learning_ux.jpg" alt="Remote learning video call redesign interface preview" style="width:200px;min-width:200px;height:auto;object-fit:cover;flex-shrink:0;"/>
+          -->
           <div class="proj-card-img">Remote<br/>Learning UX</div>
         </div>
       </div>
 
+      <!-- VISUAL COMPUTING PROJECTS -->
       <div class="tab-panel" id="tab-visual">
         <div class="proj-card">
           <div class="proj-card-body">
             <div class="proj-card-title">Facial Expression Recognition in Virtual Reality using Machine Learning</div>
             <div class="proj-card-meta">Research · EPFL</div>
             <div class="proj-card-desc">Developed a new database using FAC and a facial expression recognition model using LightGBM and Random Forest based on HTC Vive Facial Tracker and HTC Vive Pro HMD.</div>
-            <div class="proj-card-links"><a href="#">Paper</a><a href="#">Code</a></div>
+            <div class="proj-card-links">
+              <!-- ADD / REPLACE PAPER OR CODE LINKS HERE -->
+              <!-- Examples:
+              <a href="papers/vr_facial_expression.pdf" target="_blank" rel="noopener noreferrer">Paper</a>
+              <a href="https://github.com/username/vr-facial-expression" target="_blank" rel="noopener noreferrer">Code</a>
+              -->
+              <a href="#">Paper</a><a href="#">Code</a>
+            </div>
           </div>
-          <!-- IMAGE / GIF AREA — see UX Research first card for usage guide -->
+          <!-- ADD / REPLACE PROJECT IMAGE OR GIF HERE -->
+          <!-- Example:
+          <img src="images/projects/vr_facial_expression.jpg" alt="Facial expression recognition in VR machine learning project preview" style="width:200px;min-width:200px;height:auto;object-fit:cover;flex-shrink:0;"/>
+          -->
           <div class="proj-card-img">VR + ML<br/>Research</div>
         </div>
+
         <div class="proj-card">
           <div class="proj-card-body">
             <div class="proj-card-title">Venice Time Machine: 2020 Building Heights Detection</div>
             <div class="proj-card-meta">Project · EPFL</div>
             <div class="proj-card-desc">Developed a 3D model of Venice to preserve current building height and geographical location based on Google Earth data.</div>
-            <div class="proj-card-links"><a href="#">Project Page</a><a href="#">Code</a></div>
+            <div class="proj-card-links">
+              <!-- ADD / REPLACE PROJECT OR CODE LINKS HERE -->
+              <!-- Examples:
+              <a href="https://yoursite.com/venice-time-machine" target="_blank" rel="noopener noreferrer">Project Page</a>
+              <a href="https://github.com/username/venice-time-machine" target="_blank" rel="noopener noreferrer">Code</a>
+              -->
+              <a href="#">Project Page</a><a href="#">Code</a>
+            </div>
           </div>
-          <!-- IMAGE / GIF AREA — see UX Research first card for usage guide -->
+          <!-- ADD / REPLACE PROJECT IMAGE OR GIF HERE -->
+          <!-- Example:
+          <img src="images/projects/venice_3d_model.jpg" alt="3D Venice building height detection model preview" style="width:200px;min-width:200px;height:auto;object-fit:cover;flex-shrink:0;"/>
+          -->
           <div class="proj-card-img">3D City<br/>Modelling</div>
         </div>
+
         <div class="proj-card">
           <div class="proj-card-body">
             <div class="proj-card-title">Rogue-Mike Game</div>
             <div class="proj-card-meta">Personal Project</div>
             <div class="proj-card-desc">Developed a Windows OS-based video game using C# and Unreal Engine.</div>
-            <div class="proj-card-links"><a href="#">Code</a></div>
+            <div class="proj-card-links">
+              <!-- ADD / REPLACE CODE LINK HERE -->
+              <!-- Example:
+              <a href="https://github.com/username/rogue-mike-game" target="_blank" rel="noopener noreferrer">Code</a>
+              -->
+              <a href="#">Code</a>
+            </div>
           </div>
-          <!-- IMAGE / GIF AREA — see UX Research first card for usage guide -->
+          <!-- ADD / REPLACE PROJECT IMAGE, GIF, OR VIDEO HERE -->
+          <!-- Example:
+          <img src="images/projects/rogue_mike_game.gif" alt="Rogue-Mike game gameplay GIF" style="width:200px;min-width:200px;height:auto;object-fit:cover;flex-shrink:0;"/>
+          -->
           <div class="proj-card-img">Game<br/>Development</div>
         </div>
       </div>
@@ -346,6 +533,17 @@
     new IntersectionObserver(([e])=>{navWrap.style.display=e.isIntersecting?'none':'flex';},{threshold:0,rootMargin:'0px'}).observe(navInHero);
 
     document.addEventListener('DOMContentLoaded',function(){
+
+    /* JOURNEY MAP DATA */
+    /* ADD / REPLACE JOURNEY MAP LOGOS HERE inside each group object.
+       Use this format:
+       logo:"images/logos/kth.png", alt:"KTH Logo"
+
+       Example full group:
+       {org:"KTH Royal Institute of Technology, Sweden", logo:"images/logos/kth.png", alt:"KTH Logo", experiences:[...]}
+
+       IMPORTANT: Keep alt text meaningful because it becomes the image alt attribute in the generated popup logo.
+    */
     const PLACES=[
       {city:"Kanpur",mark:"spire",top:"#BFEA7A",rim:"#9ED65A",years:["2015","2017","2019"],groups:[{org:"IIT Kanpur, India",logo:"images/logos/iitk.png",alt:"IIT Kanpur",experiences:[{title:"Research Exploration",year:"2015",note:"Tessellation, Symmetry 1D → 2D → 3D → 4D → nD",tags:["Geometry","Symmetry","Theory"]},{title:"Core Processing Systems",year:"2017",note:"Signal Processing, Image Processing, Video Processing",tags:["Signal","Image","Video"]},{title:"Advanced Video Analysis",year:"2019",note:"Extended work in video processing and computational visual analysis",tags:["Video","Analysis"]}]}]},
       {city:"Chennai",mark:"arch",top:"#C7F66C",rim:"#9BE548",years:["2016"],groups:[{org:"IIT Madras, India",logo:"images/logos/iitm.png",alt:"IIT Madras",experiences:[{title:"Graphics & Simulation Internship",year:"2016",note:"3D Computer Graphics, OpenGL, Cloth Simulation, Bullet Physics, Visual C++",tags:["OpenGL","Simulation","C++","Physics"]}]}]},
@@ -358,6 +556,7 @@
       {city:"Jyväskylä",mark:"arch",top:"#F9E04B",rim:"#E6C418",years:["2025"],groups:[{org:"University of Jyväskylä, Finland",logo:"images/logos/jyu_transparent.png",alt:"JYU",experiences:[{title:"Summer Trainee",year:"2025",note:"Accessible Interactive Technology, Multimodal Accessibility Design",tags:["Accessibility","Multimodal","Interactive Tech"]}]}]},
       {city:"Paris",mark:"arch",top:"#E8B6C6",rim:"#D48CA5",years:["2025","2026"],groups:[{org:"CAEL - Centre d'Animation Expression Loisirs de Bourg-La-Reine",logo:"images/logos/cael.png",alt:"CAEL",experiences:[{title:"French Language Training",year:"2025",note:"(French language learning, communication, integration, cultural fluency)",tags:["French","Language","Training"]}]},{org:"Paris, France",logo:"images/logos/france.png",alt:"Paris",experiences:[{title:"Family Settlement",year:"2026",note:"(family settlement, new life chapter, long-term grounding, transition)",tags:["Family","Settlement","Future"]}]}]}
     ];
+
     const POSITIONS=[{x:-100,y:500},{x:-100,y:1300},{x:400,y:900},{x:820,y:350},{x:820,y:1450},{x:1400,y:900},{x:2500,y:900},{x:1950,y:500},{x:1950,y:1300},{x:3100,y:900}];
     const shell=document.getElementById('jshell'),world=document.getElementById('jworld'),vp=document.getElementById('jvp'),detail=document.getElementById('jdetail'),detailBody=document.getElementById('jdetailBody'),dtitle=document.getElementById('jdtitle'),dsub=document.getElementById('jdsubtitle'),dcards=document.getElementById('jcards'),mapToggleBtn=document.getElementById('toggleMapSize');
     const S={s:1,x:0,y:0,ts:1,tx:0,ty:0,minS:.12,maxS:2.2};
