@@ -309,6 +309,7 @@
 
       <!-- UX RESEARCH PROJECTS -->
       <div class="tab-panel active" id="tab-ux">
+        
         <div class="proj-card">
           <div class="proj-card-body">
             <div class="proj-card-title">Re-Designing VRLE for Effective Pedagogy</div>
@@ -346,11 +347,19 @@
             View PDF ↗
           </a>
           -->
-          <div class="proj-card-img">VR Learning<br/>Environment</div>
-              <img src="images/projects/vrle_classroom.jpeg"
+          <img src="images/projects/vrle_classroom.jpeg"
                alt="Preview image of VR learning environment project"
-               style="width:200px;min-width:200px;height:auto;object-fit:cover;flex-shrink:0;"/>
+               class="proj-card-img"
+               style="width:200px;min-width:200px;height:100%;object-fit:cover;flex-shrink:0;"
+               onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=&quot;proj-card-img&quot;>VR Learning<br/>Environment</div>')"/>Environment</div>')"/>
+          -->
+          <img src="images/projects/vrle_classroom.jpeg"
+               alt="Preview image of VR learning environment project"
+               style="width:200px;min-width:200px;height:auto;object-fit:cover;flex-shrink:0;"
+               onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=&quot;proj-card-img&quot;>VR Learning<br/>Environment</div>')"/>
         </div>
+
+        
 
         <div class="proj-card">
           <div class="proj-card-body">
