@@ -542,18 +542,194 @@
 
        IMPORTANT: Keep alt text meaningful because it becomes the image alt attribute in the generated popup logo.
     */
-    const PLACES=[
-      {city:"Kanpur",mark:"spire",top:"#BFEA7A",rim:"#9ED65A",years:["2015","2017","2019"],groups:[{org:"IIT Kanpur, India",logo:"images/logos/iitk.jpg",alt:"IIT Kanpur",experiences:[{title:"Winter Internship",year:"2015",note:"Tessellation and Topological Pattern Generation and Recognition",tags:["Persistent Homology","Simplicial Complexes","Periodic-Aperiodic","Convex-Concave"]},{title:"OffCycle Internship",year:"2017",note:"Old Document Restoration using Image Processing, Video Subtitle Removal using Inpainting",tags:["Matlab","Fourier Transform","Singular value decomposition","Harmonic analysis","Morphological Operations","PDE"]},{title:"Research Assistantship",year:"2019",note:"Musical Script Generation from Harmonium Playing Video using Computer Vision",tags:["Python","Pytorch","OpenCV","Matlab"]}]}]},
-      {city:"Chennai",mark:"arch",top:"#C7F66C",rim:"#9BE548",years:["2016"],groups:[{org:"IIT Madras, India",logo:"images/logos/iitm.png",alt:"IIT Madras",experiences:[{title:"Summer Internship",year:"2016",note:"Cloth Simulation and Modelling",tags:["OpenGL","Visual C++","Bullet Physics","Rigid_Body-Cloth-Collision"]}]}]},
-      {city:"Kharagpur",mark:"spire",top:"#AEEF57",rim:"#84D933",years:["2017","2018","2019","2020"],groups:[{org:"IIT Kharagpur, India",logo:"images/logos/iitkgp.jpg",alt:"IIT Kharagpur",experiences:[{title:"Visiting Undergraduate Thesis Student",year:"2017",note:"Effectiveness of Image Processing Methods on Counterfeit Integrated Circuit (IC) Detection",tags:["Matlab","OpenCV"]},{title:"Visiting Undergraduate Thesis Student",year:"2018",note:"Effectiveness of Computer Vision Methods on Counterfeit Integrated Circuit (IC) Detection",tags:["Dataset Generation","Masked RCNN","YOLOv2","Tensorflow","Anaconda Spyder","Python","OpenCV","Matplotlib"]},{title:"Remote Research Assistant",year:"2019",note:"Changes in Emotional Perception for Indian Classical Music Listeners",tags:["Matlab"]},{title:"Research Associate",year:"2020",note:"DeepFakeFace Video Detection",tags:["Python","Pytorch","Interframe Differences"]}]}]},
-      {city:"Chicago",mark:"pavilion",top:"#b8bfb8",rim:"#969d96",years:["2018","2019"],groups:[{org:"UIUC, USA",logo:"images/logos/uiuc.png",alt:"UIUC",experiences:[{title:"Remote Intern",year:"2018–2019",note:"Infant's Emotion-based Need Detection using PyraMiD-LSTM",tags:["Python","PyTorch","DyNet","XNMT","Signal Processing"]}]}]},
-      {city:"Lyon",mark:"arch",top:"#c2c9c0",rim:"#a0a89e",years:["2019"],groups:[{org:"CNRS at Claude Bernard Lyon 1, France",logo:"images/logos/cnrs.png",alt:"CNRS",experiences:[{title:"Remote Research",year:"2019",note:"Symmetry Pattern Detection and Analysis",tags:["Tessellation","Computational Crystallography","Frieze group","Wallpaper Group","Point Group","Space group"]}]}]},
-      {city:"Kolkata",mark:"pavilion",top:"#85B7EB",rim:"#378ADD",years:["1996","2014","2019"],groups:[{org:"NSHM College, India",logo:"images/logos/nshm.png",alt:"NSHM",experiences:[{title:"Visiting Lecturer",year:"2019",note:"Guest Lecturer for the course '3D Computer Graphics using OpenGL and C++'",tags:["Visual Studio","C++","OpenGL","Co-ordinate Geometry","Vectors"]}]}]},
-      {city:"Stockholm",mark:"spire",top:"#FF9A2E",rim:"#E07010",years:["2020-2022","2024-2025"],groups:[{org:"KTH Royal Institute of Technology, Sweden",logo:"images/logos/kth.png",alt:"KTH",experiences:[{title:"Teaching Assistant",year:"2020, 2022, 2024, 2025",note:"Computer Visualisation, Machine Learning, Python Programming Fundamentals, Multivariable Calculus, Computer Networking",tags:["Python","Pytorch","OpenGL","C++","Inviwo","Tomcat 9","Docker","DBMS/SQL","Spring","Netbeans 12 JDK 8","Java","Jakarta Mail"]},{title:"Research Assistant",year:"2021-2022",note:"Machine Learning for Digital Pathology",tags:["PyQT","Pytorch","HTML","JavaScript","PyQT"]}]},{org:"Ericsson, Sweden",logo:"images/logos/Ericsson2.jpg",alt:"Ericsson",experiences:[{title:"Summer R&D Intern",year:"2021",note:"Effect of Latency on Haptic Perception in Haptic Teleoperation System",tags:["Python","ROS","Omni Haptic","Miro","Kanban","A/B Testing"]}]}]},
-      {city:"Lausanne",mark:"pavilion",top:"#F9E04B",rim:"#E6C418",years:["2021","2022","2023"],groups:[{org:"EPFL, Switzerland",logo:"images/logos/epfl.png",alt:"EPFL",experiences:[{title:"Graduate Exchange",year:"2021 – 2022",note:"exchange semester, advanced coursework, interdisciplinary exploration",tags:["Exchange","Coursework","EPFL"]},{title:"Thesis Collaboration",year:"2023 – Present",note:"thesis collaboration, VRLE, pedagogy, design research",tags:["Thesis","VRLE","Research"]},{title:"Activities",year:"2021 – 2023",note:"student activities, projects, labs, collaborations",tags:["Activities","Projects","Labs"]}]},{org:"University of Lausanne (UNIL), Switzerland",logo:"images/logos/UNIL.jpg",alt:"UNIL",experiences:[{title:"Research Assistant",year:"2023",note:"RA work, EdTech, programming learning, hybrid classrooms",tags:["UNIL","RA","EdTech"]}]}]},
-      {city:"Jyväskylä",mark:"arch",top:"#F9E04B",rim:"#E6C418",years:["2025"],groups:[{org:"University of Jyväskylä, Finland",logo:"images/logos/jyu_transparent.png",alt:"JYU",experiences:[{title:"Summer Trainee",year:"2025",note:"Accessible Interactive Technology, Multimodal Accessibility Design",tags:["Accessibility","Multimodal","Interactive Tech"]}]}]},
-      {city:"Paris",mark:"arch",top:"#E8B6C6",rim:"#D48CA5",years:["2025","2026"],groups:[{org:"CAEL - Centre d'Animation Expression Loisirs de Bourg-La-Reine",logo:"images/logos/cael.png",alt:"CAEL",experiences:[{title:"French Language Training",year:"2025",note:"French language learning, communication, integration, cultural fluency",tags:["French","Language","Training"]}]},{org:"Paris, France",logo:"images/logos/france.png",alt:"Paris",experiences:[{title:"Family Settlement",year:"2026",note:"family settlement, new life chapter, long-term grounding, transition",tags:["Family","Settlement","Future"]}]}]}
-    ];
+    const PLACES = [
+  {
+    city: "Kanpur",
+    mark: "spire",
+    top: "#BFEA7A",
+    rim: "#9ED65A",
+    years: ["2015", "2017", "2019"],
+    groups: [
+      {
+        org: "IIT Kanpur, India",
+        logo: "images/logos/iitk.jpg",
+        alt: "IIT Kanpur",
+        experiences: [
+          {
+            title: "Winter Internship",
+            year: "2015",
+            note: "Tessellation and Topological Pattern Generation and Recognition",
+            tags: ["Persistent Homology", "Simplicial Complexes", "Periodic-Aperiodic", "Convex-Concave"]
+          },
+          {
+            title: "Off-cycle Internship",
+            year: "2017",
+            note: "Old Document Restoration using Image Processing, Video Subtitle Removal using Inpainting",
+            tags: ["Matlab", "Fourier Transform", "Singular Value Decomposition", "Harmonic Analysis", "Morphological Operations", "PDE"]
+          },
+          {
+            title: "Research Assistantship",
+            year: "2019",
+            note: "Musical Script Generation from Harmonium Playing Video using Computer Vision",
+            tags: ["Python", "PyTorch", "OpenCV", "Matlab"]
+          }
+        ]
+      }
+    ]
+  },
+
+  {
+    city: "Chennai",
+    mark: "arch",
+    top: "#C7F66C",
+    rim: "#9BE548",
+    years: ["2016"],
+    groups: [
+      {
+        org: "IIT Madras, India",
+        logo: "images/logos/iitm.png",
+        alt: "IIT Madras",
+        experiences: [
+          {
+            title: "Summer Internship",
+            year: "2016",
+            note: "Cloth Simulation and Modelling",
+            tags: ["OpenGL", "Visual C++", "Bullet Physics", "Rigid Body-Cloth Collision"]
+          }
+        ]
+      }
+    ]
+  },
+
+  {
+    city: "Kharagpur",
+    mark: "spire",
+    top: "#AEEF57",
+    rim: "#84D933",
+    years: ["2017", "2018", "2019", "2020"],
+    groups: [
+      {
+        org: "IIT Kharagpur, India",
+        logo: "images/logos/iitkgp.jpg",
+        alt: "IIT Kharagpur",
+        experiences: [
+          {
+            title: "Visiting Undergraduate Thesis Student",
+            year: "2017",
+            note: "Image Processing for Counterfeit IC Detection",
+            tags: ["Matlab", "OpenCV"]
+          },
+          {
+            title: "Visiting Undergraduate Thesis Student",
+            year: "2018",
+            note: "Computer Vision Methods for Counterfeit IC Detection",
+            tags: ["Dataset Generation", "Mask R-CNN", "YOLOv2", "TensorFlow", "Python", "OpenCV", "Matplotlib"]
+          },
+          {
+            title: "Remote Research Assistant",
+            year: "2019",
+            note: "Emotional Perception in Indian Classical Music",
+            tags: ["Matlab"]
+          },
+          {
+            title: "Research Associate",
+            year: "2020",
+            note: "DeepFake Video Detection",
+            tags: ["Python", "PyTorch"]
+          }
+        ]
+      }
+    ]
+  },
+
+  {
+    city: "Chicago",
+    mark: "pavilion",
+    top: "#b8bfb8",
+    rim: "#969d96",
+    years: ["2018", "2019"],
+    groups: [
+      {
+        org: "UIUC, USA",
+        logo: "images/logos/uiuc.png",
+        alt: "UIUC",
+        experiences: [
+          {
+            title: "Remote Intern",
+            year: "2018–2019",
+            note: "Infant Emotion-based Need Detection using PyraMiD-LSTM",
+            tags: ["Python", "PyTorch", "DyNet", "XNMT", "Signal Processing"]
+          }
+        ]
+      }
+    ]
+  },
+
+  {
+    city: "Stockholm",
+    mark: "spire",
+    top: "#FF9A2E",
+    rim: "#E07010",
+    years: ["2020–2022", "2024–2025"],
+    groups: [
+      {
+        org: "KTH Royal Institute of Technology, Sweden",
+        logo: "images/logos/kth.png",
+        alt: "KTH",
+        experiences: [
+          {
+            title: "Teaching Assistant",
+            year: "Multiple Years",
+            note: "Computer Visualisation, ML, Python, Calculus, Networking",
+            tags: ["Python", "PyTorch", "OpenGL", "C++", "Docker", "SQL", "Java"]
+          },
+          {
+            title: "Research Assistant",
+            year: "2021–2022",
+            note: "Machine Learning for Digital Pathology",
+            tags: ["PyQt", "PyTorch", "JavaScript"]
+          }
+        ]
+      }
+    ]
+  },
+
+  {
+    city: "Paris",
+    mark: "arch",
+    top: "#E8B6C6",
+    rim: "#D48CA5",
+    years: ["2025", "2026"],
+    groups: [
+      {
+        org: "CAEL, France",
+        logo: "images/logos/cael.png",
+        alt: "CAEL",
+        experiences: [
+          {
+            title: "French Language Training",
+            year: "2025",
+            note: "Language learning and cultural integration",
+            tags: ["French", "Communication"]
+          }
+        ]
+      },
+      {
+        org: "Paris, France",
+        logo: "images/logos/france.png",
+        alt: "Paris",
+        experiences: [
+          {
+            title: "Family Settlement",
+            year: "2026",
+            note: "New life phase and relocation",
+            tags: ["Settlement", "Future"]
+          }
+        ]
+      }
+    ]
+  }
+];
 
     const POSITIONS=[{x:-100,y:500},{x:-100,y:1300},{x:400,y:900},{x:820,y:350},{x:820,y:1450},{x:1400,y:900},{x:2500,y:900},{x:1950,y:500},{x:1950,y:1300},{x:3100,y:900}];
     const shell=document.getElementById('jshell'),world=document.getElementById('jworld'),vp=document.getElementById('jvp'),detail=document.getElementById('jdetail'),detailBody=document.getElementById('jdetailBody'),dtitle=document.getElementById('jdtitle'),dsub=document.getElementById('jdsubtitle'),dcards=document.getElementById('jcards'),mapToggleBtn=document.getElementById('toggleMapSize');
