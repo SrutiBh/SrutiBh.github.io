@@ -21,8 +21,17 @@
     background: rgba(4,8,20,0.28);
   }
 
-  /* ── Cloud canvas ── */
-  #cloud-canvas { position:fixed; inset:0; pointer-events:none; z-index:2; }
+  /* ── Stars ── */
+  .star {
+    position:fixed; border-radius:50%; background:#fff;
+    opacity:0;
+    animation: twinkle var(--d,3s) var(--delay,0s) ease-in-out infinite alternate;
+    z-index:3;
+  }
+  @keyframes twinkle {
+    0%  { opacity:0; transform:scale(0.6); }
+    100%{ opacity:var(--op,0.8); transform:scale(1.2); }
+  }
 
   /* ── Moon ── */
   #moon {
@@ -125,7 +134,7 @@
 <div id="veil"></div>
 <div id="bg"></div>
 <div id="bg-overlay"></div>
-<canvas id="cloud-canvas"></canvas>
+<div id="stars"></div>
 <div id="moon"></div>
 
 <!-- Kiki -->
@@ -185,67 +194,14 @@
 </div>
 
 <script>
-/* Animated night clouds */
-(function(){
-  const c = document.getElementById('cloud-canvas');
-  const ctx = c.getContext('2d');
-  function resize(){ c.width=window.innerWidth; c.height=window.innerHeight; }
-  resize();
-  window.addEventListener('resize', resize);
-
-  const clouds = [];
-  function makeCloud(randomX){
-    const dark = Math.random() > 0.5;
-    return {
-      x: randomX ? Math.random()*window.innerWidth*1.4 - window.innerWidth*0.2 : -600,
-      y: window.innerHeight*(0.04 + Math.random()*0.32),
-      w: 180 + Math.random()*280,
-      h: 35 + Math.random()*65,
-      speed: 0.05 + Math.random()*0.12,
-      op: 0.18 + Math.random()*0.32,
-      r: dark ? 28 : 55,
-      g: dark ? 32 : 62,
-      b: dark ? 52 : 90,
-      puffs: Array.from({length:3+Math.floor(Math.random()*4)},(_,i)=>({
-        ox: i*(0.18+Math.random()*0.12),
-        oy: -(0.25+Math.random()*0.45),
-        rs: 0.3+Math.random()*0.35,
-      }))
-    };
-  }
-  for(let i=0;i<8;i++) clouds.push(makeCloud(true));
-
-  let last=0;
-  function loop(ts){
-    ctx.clearRect(0,0,c.width,c.height);
-    const dt=ts-last||16; last=ts;
-    clouds.forEach(cl=>{
-      cl.x += cl.speed*(dt/16);
-      if(cl.x > c.width+400){ Object.assign(cl, makeCloud(false)); }
-
-      const {r,g,b,op,x,y,w,h}=cl;
-      ctx.save(); ctx.globalAlpha=op;
-      // Base
-      const bg=ctx.createRadialGradient(x+w*0.5,y,h*0.05,x+w*0.5,y,h*0.85);
-      bg.addColorStop(0,`rgba(${r},${g},${b},0.95)`);
-      bg.addColorStop(1,`rgba(${r},${g},${b},0)`);
-      ctx.fillStyle=bg;
-      ctx.beginPath(); ctx.ellipse(x+w*0.5,y,w*0.5,h*0.5,0,0,Math.PI*2); ctx.fill();
-      // Puffs
-      cl.puffs.forEach(p=>{
-        const px=x+w*p.ox, py=y+h*p.oy, pr=h*p.rs;
-        const pg=ctx.createRadialGradient(px,py,pr*0.05,px,py,pr);
-        pg.addColorStop(0,`rgba(${r+12},${g+12},${b+18},0.9)`);
-        pg.addColorStop(1,`rgba(${r},${g},${b},0)`);
-        ctx.fillStyle=pg;
-        ctx.beginPath(); ctx.arc(px,py,pr,0,Math.PI*2); ctx.fill();
-      });
-      ctx.restore();
-    });
-    requestAnimationFrame(loop);
-  }
-  requestAnimationFrame(loop);
-})();
+/* Stars */
+const starsEl = document.getElementById('stars');
+for(let i=0;i<70;i++){
+  const s=document.createElement('div'); s.className='star';
+  const sz=Math.random()>0.85?3:Math.random()>0.6?2:1;
+  s.style.cssText=`left:${Math.random()*100}vw;top:${Math.random()*52}vh;--op:${(0.3+Math.random()*0.65).toFixed(2)};--d:${(2+Math.random()*5).toFixed(1)}s;--delay:${(Math.random()*6).toFixed(1)}s;width:${sz}px;height:${sz}px;`;
+  starsEl.appendChild(s);
+}
 
 /* Ripple */
 document.getElementById('enterBtn').addEventListener('click',function(e){
