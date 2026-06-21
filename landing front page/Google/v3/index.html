@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sruti</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  :root { --google-blue:#4285f4; --google-blue-dark:#1a56c4; }
+  html, body { width:100%; height:100%; overflow:hidden; font-family:'Roboto',sans-serif; }
+
+  /* ── Photo background ── */
+  #bg {
+    position:fixed; inset:0;
+    background: url('stt.jpg') center center / cover no-repeat;
+  }
+  /* slight dark overlay to let card and text breathe */
+  #bg-overlay {
+    position:fixed; inset:0;
+    background: rgba(2,10,16,0.22);
+  }
+
+  /* ── Stars ── */
+  .star {
+    position:fixed; border-radius:50%;
+    opacity:0;
+    animation: twinkle var(--d,3s) var(--delay,0s) ease-in-out infinite alternate;
+    z-index:3;
+  }
+  @keyframes twinkle {
+    0%  { opacity:0; transform:scale(0.6); }
+    100%{ opacity:var(--op,0.9); transform:scale(1.3); }
+  }
+
+  /* ── Moon ── */
+  #moon {
+    position:fixed;
+    top:6vh; right:12vw;
+    width:80px; height:80px;
+    border-radius:50%;
+    background: radial-gradient(circle at 38% 36%, #fffef0, #fdf8c0 45%, #f0e080 75%, #d4c040);
+    box-shadow:
+      0 0 0 2px rgba(255,248,160,0.3),
+      0 0 30px 8px rgba(255,240,120,0.4),
+      0 0 80px 24px rgba(255,230,100,0.2),
+      0 0 140px 50px rgba(255,210,80,0.1);
+    animation: moonFloat 9s ease-in-out infinite alternate;
+    z-index:3;
+  }
+  @keyframes moonFloat {
+    0%  { transform:translateY(0px); }
+    100%{ transform:translateY(-10px); }
+  }
+
+  /* ── Kiki ── */
+  #kiki-wrap {
+    position:fixed; width:140px; pointer-events:none;
+    animation: kikiFly 14s linear infinite;
+    z-index:5;
+  }
+  @keyframes kikiFly {
+    0%   { left:-160px;             top:calc(42vh - 110px); transform:scaleX(1); }
+    10%  { left:calc(10vw - 70px);  top:calc(28vh - 110px); transform:scaleX(1); }
+    20%  { left:calc(22vw - 70px);  top:calc(10vh - 110px); transform:scaleX(1); }
+    30%  { left:calc(35vw - 70px);  top:-38px;              transform:scaleX(1); }
+    40%  { left:calc(48vw - 70px);  top:-38px;              transform:scaleX(1); }
+    50%  { left:calc(60vw - 70px);  top:calc(22vh - 110px); transform:scaleX(1); }
+    60%  { left:calc(72vw - 70px);  top:calc(50vh - 110px); transform:scaleX(1); }
+    70%  { left:calc(84vw - 70px);  top:calc(72vh - 110px); transform:scaleX(1); }
+    80%  { left:calc(93vw - 70px);  top:calc(82vh - 110px); transform:scaleX(1); }
+    90%  { left:calc(100vw - 70px); top:calc(75vh - 110px); transform:scaleX(1); }
+    100% { left:110vw;              top:calc(42vh - 110px); transform:scaleX(1); }
+  }
+
+  /* ── Hero card ── */
+  #hero {
+    position:fixed; inset:0;
+    display:flex; flex-direction:column;
+    align-items:flex-start; justify-content:center;
+    padding-left:7vw; z-index:20; pointer-events:none;
+  }
+  .hero-card {
+    pointer-events:all;
+    background: rgba(4,12,20,0.62);
+    backdrop-filter: blur(10px) saturate(1.2);
+    -webkit-backdrop-filter: blur(10px) saturate(1.2);
+    border: 1px solid rgba(60,180,140,0.2);
+    border-radius:20px;
+    padding:36px 44px 32px;
+    text-align:left; max-width:420px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.06);
+    animation: cardAppear 1.4s cubic-bezier(0.22,1,0.36,1) both;
+  }
+  @keyframes cardAppear { from{opacity:0;transform:translateY(24px) scale(0.97)} to{opacity:1;transform:translateY(0) scale(1)} }
+
+  .hero-title {
+    font-size:clamp(2rem,5vw,3rem); font-weight:300;
+    line-height:1.22; color:#e8eeff;
+    margin-bottom:10px; letter-spacing:-0.5px;
+  }
+  .hero-title .g-blue   { color:#4285F4; }
+  .hero-title .g-red    { color:#EA4335; }
+  .hero-title .g-yellow { color:#FBBC05; }
+  .hero-title .g-green  { color:#34A853; }
+
+  .hero-sub {
+    font-size:0.95rem; font-weight:300; font-style:italic;
+    color:rgba(160,180,240,0.55); margin-bottom:36px; line-height:1.5;
+  }
+  .enter-btn {
+    position:relative; overflow:hidden;
+    display:inline-flex; align-items:center; gap:10px;
+    padding:16px 44px; background:var(--google-blue);
+    color:#fff; font-family:'Roboto',sans-serif;
+    font-size:15px; font-weight:500; letter-spacing:0.5px;
+    border:none; border-radius:100px; cursor:pointer; text-decoration:none;
+    transition:background 0.2s, box-shadow 0.25s, transform 0.15s;
+    box-shadow:0 4px 20px rgba(66,133,244,0.45); user-select:none;
+  }
+  .enter-btn:hover { background:var(--google-blue-dark); box-shadow:0 6px 28px rgba(66,133,244,0.6); transform:translateY(-1px); }
+  .enter-btn:active { transform:scale(0.97); }
+  .ripple { position:absolute; border-radius:50%; background:rgba(255,255,255,0.3); transform:scale(0); animation:rippleAnim 0.55s linear; pointer-events:none; }
+  @keyframes rippleAnim { to{transform:scale(4);opacity:0} }
+  .btn-arrow { display:inline-block; width:18px; height:18px; transition:transform 0.2s; }
+  .enter-btn:hover .btn-arrow { transform:translateX(3px); }
+
+  #veil { position:fixed; inset:0; z-index:100; background:#060a18; animation:veilFade 1.2s ease-out 0.3s both; }
+  @keyframes veilFade { to{opacity:0;pointer-events:none} }
+</style>
+</head>
+<body>
+
+<div id="veil"></div>
+<div id="bg"></div>
+<div id="bg-overlay"></div>
+<div id="stars"></div>
+<div id="moon"></div>
+
+<!-- Kiki -->
+<div id="kiki-wrap">
+  <svg viewBox="0 0 160 220" xmlns="http://www.w3.org/2000/svg" width="160">
+    <line x1="30" y1="170" x2="145" y2="140" stroke="#8B6914" stroke-width="4" stroke-linecap="round"/>
+    <ellipse cx="32" cy="172" rx="14" ry="7" fill="#c4922a" transform="rotate(-20,32,172)"/>
+    <ellipse cx="26" cy="176" rx="10" ry="5" fill="#a67820" transform="rotate(-20,26,176)"/>
+    <ellipse cx="90" cy="145" rx="22" ry="32" fill="#c8302b"/>
+    <ellipse cx="90" cy="170" rx="26" ry="10" fill="#b02824"/>
+    <ellipse cx="90" cy="118" rx="13" ry="7" fill="#fff8f0"/>
+    <circle cx="90" cy="100" r="22" fill="#f4c89e"/>
+    <ellipse cx="90" cy="88" rx="22" ry="16" fill="#1a1a2e"/>
+    <ellipse cx="70" cy="100" rx="8" ry="14" fill="#1a1a2e"/>
+    <ellipse cx="110" cy="100" rx="8" ry="14" fill="#1a1a2e"/>
+    <path d="M78,110 Q68,125 72,140" stroke="#1a1a2e" stroke-width="8" fill="none" stroke-linecap="round"/>
+    <ellipse cx="76" cy="82" rx="10" ry="6" fill="#c8302b" transform="rotate(-15,76,82)"/>
+    <ellipse cx="88" cy="78" rx="10" ry="6" fill="#c8302b" transform="rotate(15,88,78)"/>
+    <circle cx="82" cy="80" r="4" fill="#a02020"/>
+    <path d="M83,105 Q87,102 91,105" stroke="#2a1a0a" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M95,104 Q99,101 103,104" stroke="#2a1a0a" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <ellipse cx="80" cy="110" rx="6" ry="4" fill="#f09090" opacity="0.5"/>
+    <ellipse cx="102" cy="110" rx="6" ry="4" fill="#f09090" opacity="0.5"/>
+    <path d="M85,115 Q90,120 97,115" stroke="#c0603a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <path d="M72,130 Q60,148 52,152" stroke="#c8302b" stroke-width="9" fill="none" stroke-linecap="round"/>
+    <path d="M108,132 Q118,148 132,148" stroke="#c8302b" stroke-width="9" fill="none" stroke-linecap="round"/>
+    <circle cx="52" cy="154" r="6" fill="#f4c89e"/>
+    <circle cx="134" cy="149" r="6" fill="#f4c89e"/>
+    <path d="M80,178 Q76,192 74,205" stroke="#1a1a2e" stroke-width="7" fill="none" stroke-linecap="round"/>
+    <path d="M100,178 Q104,192 106,205" stroke="#1a1a2e" stroke-width="7" fill="none" stroke-linecap="round"/>
+    <ellipse cx="73" cy="208" rx="9" ry="5" fill="#c8302b"/>
+    <ellipse cx="107" cy="208" rx="9" ry="5" fill="#c8302b"/>
+    <circle cx="58" cy="148" r="9" fill="#1a1a2e"/>
+    <circle cx="56" cy="141" r="6" fill="#1a1a2e"/>
+    <path d="M52,138 L50,132 L56,136 Z" fill="#1a1a2e"/>
+    <path d="M60,137 L63,131 L65,136 Z" fill="#1a1a2e"/>
+    <circle cx="54" cy="142" r="2" fill="#f5d000"/>
+    <circle cx="60" cy="142" r="2" fill="#f5d000"/>
+    <path d="M67,152 Q74,145 70,140" stroke="#1a1a2e" stroke-width="3" fill="none" stroke-linecap="round"/>
+  </svg>
+</div>
+
+<!-- Hero card -->
+<div id="hero">
+  <div class="hero-card">
+    <h1 class="hero-title">
+      Hello <span class="g-blue">G</span><span class="g-red">o</span><span class="g-yellow">o</span><span class="g-blue">g</span><span class="g-green">l</span><span class="g-red">e</span>,<br>I am Sruti
+    </h1>
+    <p class="hero-sub">Human Centric AI Practitioner</p>
+    <a class="enter-btn" href="https://google.com" target="_blank" rel="noopener" id="enterBtn">
+      Enter
+      <svg class="btn-arrow" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M3.75 9H14.25M9.75 4.5L14.25 9L9.75 13.5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </div>
+</div>
+
+<script>
+/* Stars — icy white, blue, faint teal to match aurora sky */
+const starsEl = document.getElementById('stars');
+const starColors = ['#ffffff','#dff0ff','#c8e8ff','#b0f0e0','#e8f8ff'];
+for(let i=0;i<110;i++){
+  const s=document.createElement('div'); s.className='star';
+  const sz=Math.random()>0.88?3:Math.random()>0.65?2:1;
+  const col=starColors[Math.floor(Math.random()*starColors.length)];
+  s.style.cssText=`left:${Math.random()*100}vw;top:${Math.random()*58}vh;--op:${(0.35+Math.random()*0.65).toFixed(2)};--d:${(1.5+Math.random()*5).toFixed(1)}s;--delay:${(Math.random()*7).toFixed(1)}s;width:${sz}px;height:${sz}px;background:${col};`;
+  starsEl.appendChild(s);
+}
+
+/* Ripple */
+document.getElementById('enterBtn').addEventListener('click',function(e){
+  const r=this.getBoundingClientRect(), sp=document.createElement('span');
+  sp.className='ripple';
+  const s=Math.max(r.width,r.height)*2;
+  sp.style.cssText=`width:${s}px;height:${s}px;left:${e.clientX-r.left-s/2}px;top:${e.clientY-r.top-s/2}px;`;
+  this.appendChild(sp); setTimeout(()=>sp.remove(),600);
+});
+</script>
+</body>
+</html>
