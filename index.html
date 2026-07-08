@@ -662,14 +662,14 @@
        ============================================================ */
     const VALID_VIEWS=['home','work','journey','education'];
     function parseHash(){
-      const h=(location.hash||'#work').replace('#','');
+      const h=(location.hash||'#home').replace('#','');
       const m=h.match(/^project-(\d+)$/);
       if(m)return{view:'work',projectId:parseInt(m[1],10)};
-      return{view:VALID_VIEWS.indexOf(h)!==-1?h:'work',projectId:null};
+      return{view:VALID_VIEWS.indexOf(h)!==-1?h:'home',projectId:null};
     }
     function showView(view,opts){
       opts=opts||{};
-      if(VALID_VIEWS.indexOf(view)===-1)view='work';
+      if(VALID_VIEWS.indexOf(view)===-1)view='home';
       document.querySelectorAll('.view').forEach(function(sec){sec.classList.toggle('active',sec.dataset.view===view);});
       document.querySelectorAll('#topbar [data-view]').forEach(function(btn){btn.classList.toggle('active',btn.dataset.view===view);});
       if(view==='work')showWorkSub(opts.projectId||null);
@@ -851,5 +851,3 @@ const PLACES=[
 </body>
 </html>
  
-
-
