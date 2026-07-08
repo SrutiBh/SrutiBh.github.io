@@ -71,17 +71,19 @@
     /* TAB PANELS — legacy, kept only for the .active toggle keyframe used elsewhere */
     @keyframes pfadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
  
-    /* WORK GRID — frog-style: image, title, meta. Click opens the project's own view. */
-    .work-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.75rem 1.5rem;}
-    .work-card{cursor:pointer;border:none;background:none;padding:0;text-align:left;font-family:inherit;display:block;transition:transform .22s ease;}
+    /* WORK GRID — frog-style collage. Layout is computed in JS (layoutMasonry)
+       so each card lands in whichever column is currently shortest, keeping
+       columns balanced regardless of image size — nothing to arrange by hand. */
+    .work-grid{position:relative;}
+    .work-card{cursor:pointer;border:none;background:none;padding:0;text-align:left;font-family:inherit;position:absolute;top:0;left:0;transition:transform .22s ease,left .25s ease,top .25s ease;opacity:0;}
+    .work-card.placed{opacity:1;}
     .work-card:hover{transform:translateY(-3px);}
-    .work-card-img{width:100%;aspect-ratio:4/3;border-radius:1rem;overflow:hidden;background:linear-gradient(135deg,#e8ecf5 0%,#c0cbea 100%);margin-bottom:.9rem;}
-    .work-card-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s ease;}
-    .work-card:hover .work-card-img img{transform:scale(1.04);}
+    .work-card-img{width:100%;border-radius:1rem;overflow:hidden;background:linear-gradient(135deg,#e8ecf5 0%,#c0cbea 100%);margin-bottom:.9rem;line-height:0;}
+    .work-card-img img{width:100%;height:auto;display:block;transition:transform .35s ease;}
+    .work-card:hover .work-card-img img{transform:scale(1.03);}
     .work-card-title{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:700;color:#0f203a;line-height:1.22;margin-bottom:.3rem;}
     .work-card-meta{font-size:.78rem;font-weight:600;color:#7b8ca3;letter-spacing:.04em;text-transform:uppercase;font-style:italic;}
     .work-card.hidden-by-filter{display:none;}
-    @media(max-width:640px){.work-grid{grid-template-columns:1fr;}}
  
     /* PROJECT DETAIL PAGE */
     .work-sub{display:none;}
@@ -354,6 +356,7 @@
       document.querySelectorAll('.work-card').forEach(function(card){
         card.classList.toggle('hidden-by-filter', card.dataset.cat!==tab);
       });
+      if(window.layoutMasonry)window.layoutMasonry();
     }
  
     document.addEventListener('DOMContentLoaded',function(){
@@ -591,11 +594,48 @@
       return (dict&&dict[key]!==undefined)?dict[key]:(TRANSLATIONS.en[key]!==undefined?TRANSLATIONS.en[key]:key);
     }
  
+    function waitForGridImages(){
+      const wrap=document.getElementById('workGridCards');
+      const imgs=wrap?Array.prototype.slice.call(wrap.querySelectorAll('img')):[];
+      const promises=imgs.map(function(img){
+        if(img.complete)return Promise.resolve();
+        return new Promise(function(res){img.addEventListener('load',res);img.addEventListener('error',res);});
+      });
+      return Promise.all(promises);
+    }
+    function layoutMasonry(){
+      const wrap=document.getElementById('workGridCards');
+      if(!wrap)return;
+      const cards=Array.prototype.slice.call(wrap.querySelectorAll('.work-card')).filter(function(c){return !c.classList.contains('hidden-by-filter');});
+      const containerWidth=wrap.clientWidth;
+      if(!containerWidth||!cards.length)return;
+      const cols=containerWidth<640?1:2;
+      const gap=26;
+      const colWidth=(containerWidth-gap*(cols-1))/cols;
+      const colHeights=new Array(cols).fill(0);
+      cards.forEach(function(card){
+        card.style.width=colWidth+'px';
+        let minCol=0;
+        for(let i=1;i<cols;i++){if(colHeights[i]<colHeights[minCol])minCol=i;}
+        card.style.left=(minCol*(colWidth+gap))+'px';
+        card.style.top=colHeights[minCol]+'px';
+        card.classList.add('placed');
+        colHeights[minCol]+=card.offsetHeight+gap;
+      });
+      wrap.style.height=Math.max.apply(null,colHeights)+'px';
+    }
+    window.layoutMasonry=layoutMasonry;
+    let masonryResizeTimer=null;
+    window.addEventListener('resize',function(){
+      clearTimeout(masonryResizeTimer);
+      masonryResizeTimer=setTimeout(layoutMasonry,150);
+    });
+ 
     function renderWorkGrid(){
       const wrap=document.getElementById('workGridCards');
       wrap.innerHTML=PROJECTS.map(function(p){
         return '<button type="button" class="work-card reveal" data-id="'+p.id+'" data-cat="'+p.cat+'">'
-          +'<div class="work-card-img"><img src="'+p.img+'" alt="'+p.imgAlt+'" loading="lazy"></div>'
+          +'<div class="work-card-img"><img src="'+p.img+'" alt="'+p.imgAlt+'"></div>'
           +'<div class="work-card-title" data-i18n="proj.'+p.id+'.title">'+tr('proj.'+p.id+'.title')+'</div>'
           +'<div class="work-card-meta">'+p.meta+'</div>'
           +'</button>';
@@ -605,9 +645,17 @@
           goToProject(parseInt(card.dataset.id,10));
         });
       });
+      // Apply the initially-active tab's filter immediately, matching whichever
+      // .ptab-btn has the "active" class in the markup (defaults to "ux").
+      const activeTabBtn=document.querySelector('.ptab-btn.active');
+      const activeCat=activeTabBtn?activeTabBtn.querySelector('.ptab-count').dataset.cat:'ux';
+      wrap.querySelectorAll('.work-card').forEach(function(card){
+        card.classList.toggle('hidden-by-filter',card.dataset.cat!==activeCat);
+      });
       document.querySelectorAll('.ptab-count').forEach(function(span){
         span.textContent=PROJECTS.filter(function(p){return p.cat===span.dataset.cat;}).length;
       });
+      waitForGridImages().then(layoutMasonry);
     }
  
     let currentProjectId=null;
@@ -642,6 +690,7 @@
         currentProjectId=null;
         detail.classList.remove('active');
         grid.classList.add('active');
+        requestAnimationFrame(function(){requestAnimationFrame(layoutMasonry);});
       }
     }
  
@@ -736,6 +785,8 @@
       if(typeof selectedIdx!=='undefined'&&selectedIdx>-1)selectPlace(selectedIdx);
       // Refresh project detail text if one is currently open
       if(currentProjectId)renderProjectDetail(currentProjectId);
+      // Grid card titles just changed length/height in the new language — re-balance columns
+      layoutMasonry();
       document.querySelectorAll('.lang-dd.open').forEach(function(dd){dd.classList.remove('open');});
     }
  
