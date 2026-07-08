@@ -4,82 +4,106 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sruti Bhattacharjee | Personal Webpage</title>
-
+ 
   <!-- EXTERNAL STYLE FRAMEWORK -->
   <!-- Tailwind CSS CDN. Keep this line if you want to continue using Tailwind utility classes. -->
   <script src="https://cdn.tailwindcss.com"></script>
-
+ 
   <!-- FONT IMPORTS -->
   <!-- If changing fonts, replace the Google Fonts URL below and update font-family values in CSS. -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
-
+ 
   <style>
     body{font-family:'DM Sans',sans-serif;background-color:#f8fafc;}
     .hero-bg{background-color:#15203d;background-image:none;position:relative;}
-    .nav-sticky-wrap{position:sticky;top:0;z-index:50;display:flex;justify-content:center;align-items:center;padding:.75rem 1rem;background:#15203d;box-shadow:none;}
-    .nav-pill{display:inline-flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:0;background:#fff;border:none;border-radius:999px;padding:.38rem .5rem;box-shadow:none;}
-    .nav-pill a{display:flex;align-items:center;gap:.42rem;padding:.4rem .95rem;border-radius:999px;font-size:.81rem;font-weight:500;color:#15203d;text-decoration:none;transition:background .17s,color .17s;white-space:nowrap;letter-spacing:.01em;position:relative;}
-    .nav-pill a:hover{background:#15203d;color:#fff;}
-    .nav-pill a+a::before{content:'';position:absolute;left:0;top:20%;height:60%;width:1px;background:rgba(21,32,61,.12);}
-    .nav-pill a:hover+a::before,.nav-pill a:hover::before{display:none;}
+    .topbar{position:sticky;top:0;z-index:90;display:flex;align-items:center;justify-content:space-between;background:#fff;padding:1rem 2rem;box-shadow:0 1px 0 rgba(15,23,42,.08);gap:1.5rem;flex-wrap:wrap;}
+    .topbar-word{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.4rem;color:#0f172a;text-decoration:none;letter-spacing:-.01em;white-space:nowrap;background:none;border:none;padding:0;cursor:pointer;}
+    .topbar-word:hover{color:#334155;}
+    .topbar-word.active{text-decoration:underline;text-underline-offset:4px;}
+    .topbar-right{display:flex;align-items:center;gap:1.75rem;flex-wrap:wrap;}
+    .topbar-links{display:flex;align-items:center;gap:1.75rem;flex-wrap:wrap;}
+    .topbar-links .nav-item{display:inline-block;background:none;border:none;padding:.2rem 0;font-size:.86rem;font-weight:500;color:#1f2937;cursor:pointer;font-family:'DM Sans',sans-serif;position:relative;text-decoration:none;white-space:nowrap;}
+    .topbar-links .nav-item:hover{color:#0f172a;}
+    .topbar-links .nav-item.active{color:#0f172a;font-weight:600;}
+    .topbar-links .nav-item.active::after{content:'';position:absolute;left:0;right:0;bottom:-8px;height:2px;background:#0f172a;}
+    .topbar .lang-btn{border:1.5px solid #cbd5e1;border-radius:999px;color:#0f172a;padding:.42rem 1rem;}
+    .topbar .lang-btn:hover{background:#f8fafc;border-color:#94a3b8;color:#0f172a;}
+    .topbar .lang-menu{border:1px solid #e2e8f0;}
+    .topbar .lang-opt{color:#0f172a;}
+    .topbar .lang-opt:hover{background:#f1f5f9;}
+    @media(max-width:760px){.topbar{padding:.85rem 1.1rem;gap:.9rem;}.topbar-right{gap:1rem;}.topbar-links{gap:1rem;}.topbar-links .nav-item .label{display:none;}}
     .hero-name{font-family:'Cormorant Garamond',serif;font-weight:700;letter-spacing:-.02em;}
     .section-title{font-family:'Cormorant Garamond',serif;font-weight:600;letter-spacing:-.01em;}
-
+ 
     /* ABOUT CARD — blue-tinted shadow */
     .entry-card{background:white;padding:1.5rem;border-radius:.75rem;box-shadow:0 4px 16px rgba(21,32,61,.13),0 1px 3px rgba(21,32,61,.07);transition:box-shadow .25s,transform .25s;}
     .entry-card:hover{box-shadow:0 8px 28px rgba(21,32,61,.22),0 2px 6px rgba(21,32,61,.10);transform:translateY(-2px);}
-
+ 
     /* EDUCATION LOGO IMAGE STYLE */
     /* Used by education institution logos.
        Example image line:
        <img src="images/logos/kth.png" alt="KTH Logo" class="edu-logo"/>
     */
     .edu-logo{width:64px;height:64px;flex-shrink:0;object-fit:contain;object-position:center;}
-
+ 
     .edu-card{background:white;padding:1.5rem;border:1.5px solid #dce2f0;border-left:10px solid #15203d;border-right:10px solid #15203d;border-radius:1.5rem;box-shadow:0 1px 4px rgba(21,32,61,.05);transition:box-shadow .22s,border-color .22s,transform .22s;}
     .edu-card:hover{box-shadow:0 8px 30px rgba(21,32,61,.12);border-color:#8899cc;border-left-color:#15203d;border-right-color:#15203d;transform:translateY(-2px);}
-
+ 
     /* PORTFOLIO TABS */
-    .ptabs{display:inline-flex;flex-wrap:wrap;background:#15203d;padding:.38rem .5rem;border-radius:999px;gap:0;width:fit-content;margin-bottom:2rem;}
-    .ptab-btn{display:flex;align-items:center;gap:.42rem;padding:.4rem .95rem;border-radius:999px;font-size:.81rem;font-weight:500;border:none;background:transparent;color:rgba(215,222,235,.85);cursor:pointer;transition:background .17s,color .17s;font-family:'DM Sans',sans-serif;letter-spacing:.015em;white-space:nowrap;position:relative;}
-    .ptab-btn.active{background:#ffffff;color:#15203d;font-weight:600;}
-    .ptab-btn:not(.active):hover{background:rgba(255,255,255,.09);color:#fff;}
-    .ptab-btn+.ptab-btn::before{content:'';position:absolute;left:0;top:22%;height:56%;width:1px;background:rgba(255,255,255,.18);}
-    .ptab-btn.active+.ptab-btn::before,.ptab-btn+.ptab-btn.active::before{display:none;}
-
-    /* TAB PANELS */
-    .tab-panel{display:none;}
-    .tab-panel.active{display:flex;flex-direction:column;gap:1.4rem;animation:pfadeUp .28s ease both;}
+    .ptabs{display:flex;flex-wrap:wrap;align-items:center;gap:1.85rem;background:none;padding:0;border-radius:0;width:auto;border-bottom:1.5px solid #e2e8f0;margin-bottom:2.25rem;}
+    .ptab-btn{display:flex;align-items:center;gap:.45rem;padding:.1rem 0 .85rem;border-radius:0;font-size:.92rem;font-weight:500;border:none;background:transparent;color:#94a3b8;cursor:pointer;transition:color .17s;font-family:'DM Sans',sans-serif;letter-spacing:.005em;white-space:nowrap;position:relative;}
+    .ptab-btn.active{color:#0f172a;font-weight:600;}
+    .ptab-btn.active::after{content:'';position:absolute;left:0;right:0;bottom:-1.5px;height:2px;background:#15203d;}
+    .ptab-btn:not(.active):hover{color:#475569;}
+    .ptab-count{display:none;align-items:center;justify-content:center;min-width:1.35rem;height:1.35rem;padding:0 .3rem;border:1px solid #cbd5e1;border-radius:999px;font-size:.66rem;color:#64748b;font-weight:500;}
+    .ptab-btn.active .ptab-count{display:inline-flex;border-color:#15203d;color:#15203d;}
+ 
+    /* VIEW SWITCHING — Work / Journey / Education act as swappable pages, not scroll anchors */
+    .view{display:none;}
+    .view.active{display:block;animation:pfadeUp .35s ease both;}
+    header.hero-bg.view.active{display:flex;}
+    .view-kicker{font-size:.85rem;font-weight:700;letter-spacing:.03em;color:#15203d;margin:0 0 .85rem;}
+    .view-headline{font-family:'Cormorant Garamond',serif;font-weight:700;letter-spacing:-.01em;font-size:clamp(2.3rem,5vw,4rem);line-height:1.04;color:#0f172a;margin:0 0 1.4rem;}
+    .view-sub{font-size:1.02rem;line-height:1.65;color:#475569;max-width:640px;margin:0 0 2.5rem;font-weight:300;}
+ 
+    /* TAB PANELS — legacy, kept only for the .active toggle keyframe used elsewhere */
     @keyframes pfadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-
-    /* PROJECT CARDS — borders on outer card so right border is after image */
-    .proj-card{display:flex;flex-direction:row;background:white;border:1.5px solid #dce2f0;border-left:10px solid #15203d;border-right:10px solid #15203d;border-radius:1.5rem;overflow:hidden;box-shadow:0 1px 4px rgba(21,32,61,.05);transition:box-shadow .22s,border-color .22s,transform .22s;}
-    .proj-card:hover{box-shadow:0 8px 30px rgba(21,32,61,.12);border-color:#8899cc;border-left-color:#15203d;border-right-color:#15203d;transform:translateY(-2px);}
-    .proj-card-body{padding:1.75rem 1.8rem;flex:1;display:flex;flex-direction:column;justify-content:center;gap:.55rem;}
-    .proj-card-title{font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:700;color:#0f203a;line-height:1.2;}
-    .proj-card-meta{font-size:.8rem;font-weight:600;color:#7b8ca3;letter-spacing:.04em;text-transform:uppercase;font-style:italic;}
-    .proj-card-desc{font-size:.92rem;color:#4b6080;line-height:1.6;}
-    .proj-card-links{display:flex;gap:.75rem;margin-top:.35rem;}
+ 
+    /* WORK GRID — frog-style: image, title, meta. Click opens the project's own view. */
+    .work-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.75rem 1.5rem;}
+    .work-card{cursor:pointer;border:none;background:none;padding:0;text-align:left;font-family:inherit;display:block;transition:transform .22s ease;}
+    .work-card:hover{transform:translateY(-3px);}
+    .work-card-img{width:100%;aspect-ratio:4/3;border-radius:1rem;overflow:hidden;background:linear-gradient(135deg,#e8ecf5 0%,#c0cbea 100%);margin-bottom:.9rem;}
+    .work-card-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s ease;}
+    .work-card:hover .work-card-img img{transform:scale(1.04);}
+    .work-card-title{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:700;color:#0f203a;line-height:1.22;margin-bottom:.3rem;}
+    .work-card-meta{font-size:.78rem;font-weight:600;color:#7b8ca3;letter-spacing:.04em;text-transform:uppercase;font-style:italic;}
+    .work-card.hidden-by-filter{display:none;}
+    @media(max-width:640px){.work-grid{grid-template-columns:1fr;}}
+ 
+    /* PROJECT DETAIL PAGE */
+    .work-sub{display:none;}
+    .work-sub.active{display:block;animation:pfadeUp .32s ease both;}
+    .back-link{display:inline-flex;align-items:center;gap:.4rem;font-size:.85rem;font-weight:600;color:#15203d;background:none;border:none;cursor:pointer;padding:0;margin-bottom:1.75rem;font-family:'DM Sans',sans-serif;}
+    .back-link:hover{text-decoration:underline;}
+    .project-detail-img{width:100%;max-height:440px;border-radius:1.25rem;overflow:hidden;margin-bottom:2rem;background:linear-gradient(135deg,#e8ecf5 0%,#c0cbea 100%);}
+    .project-detail-img img{width:100%;height:100%;object-fit:cover;display:block;}
+ 
+    /* PROJECT CARD LINKS — reused on the project detail page */
+    .proj-card-links{display:flex;gap:.75rem;margin-top:.5rem;flex-wrap:wrap;}
     .proj-card-links a{font-size:.8rem;font-weight:600;color:#15203d;text-decoration:none;padding:4px 12px;border:1.5px solid #c2cde8;border-radius:999px;transition:background .15s,border-color .15s;}
     .proj-card-links a:hover{background:#eef1f8;border-color:#8899cc;}
-
-    /* PROJECT MEDIA PLACEHOLDER STYLE */
-    /* This class styles the right-side project placeholder.
-       To replace a placeholder with an image, GIF, video thumbnail, or PDF button,
-       use the commented examples placed directly beside each project card below.
-    */
-    .proj-card-img{width:200px;min-width:200px;background:linear-gradient(135deg,#e8ecf5 0%,#c0cbea 100%);display:flex;align-items:center;justify-content:center;font-size:.75rem;color:#93aecb;font-style:italic;letter-spacing:.02em;flex-shrink:0;text-align:center;padding:1rem;}
-
-    @media(max-width:640px){.proj-card{flex-direction:column}.proj-card-img{width:100%;min-width:unset;height:90px}.ptabs{flex-wrap:wrap;width:100%}.ptab-btn{flex:1;text-align:center;padding:8px 12px}.nav-pill a .label{display:none}}
-
+ 
+    @media(max-width:640px){.ptabs{gap:1.1rem}}
+ 
     /* ANIMATIONS */
     @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
     .fade-1{animation:fadeUp .7s ease .05s both}.fade-2{animation:fadeUp .7s ease .2s both}.fade-3{animation:fadeUp .7s ease .35s both}.fade-4{animation:fadeUp .7s ease .5s both}
     @keyframes bounceY{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
     .bounce-icon{animation:bounceY 2.2s ease-in-out infinite}
-
+ 
     /* JOURNEY MAP */
     .jshell{position:relative;background:linear-gradient(180deg,#0d1328 0%,#111936 46%,#15203d 100%);border-radius:1rem;overflow:hidden;box-shadow:0 16px 40px rgba(15,23,42,.14);transition:all .28s ease;overscroll-behavior:contain;margin-left:-1vw;margin-right:-1vw;}
     .jshell.is-maximized{position:fixed;inset:1rem;z-index:80;border-radius:1rem;box-shadow:0 24px 80px rgba(15,23,42,.28);}
@@ -123,7 +147,7 @@
     .jcards-wrap{margin-top:0;display:grid;gap:.75rem}
     .jcard{background:white;border:1px solid #e9edf1;border-radius:10px;padding:0;box-shadow:0 1px 6px rgba(20,40,70,.04);overflow:hidden}
     .jcard-head{display:flex;align-items:center;gap:.9rem;padding:.95rem 1rem .85rem;border-bottom:1px solid #eef2f6;background:linear-gradient(180deg,rgba(248,250,252,.9),rgba(255,255,255,.98))}
-
+ 
     /* JOURNEY MAP LOGO STYLE */
     /* Logos in the journey map popup are generated from the PLACES JavaScript array.
        Add or replace logos inside PLACES using:
@@ -138,14 +162,55 @@
     .jtags{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.6rem}
     .jtag{border:1px solid #dbe3ea;background:#f7f9fb;color:#7387a0;border-radius:999px;padding:.18rem .45rem;font-size:.6rem;letter-spacing:.04em;text-transform:uppercase}
     @media(max-width:640px){.jvp{height:440px}.jshell.is-maximized .jvp{height:calc(100vh - 1.2rem)}.jdetail{width:calc(100% - 20px)!important;left:10px!important}.jlogo{width:3.3rem;height:3.3rem;min-width:3.3rem}.jshell.is-maximized{inset:.6rem;border-radius:.9rem}}
+ 
+    /* SOCIAL RAIL — fixed side icons, always visible, echoes frog's edge icons */
+    .social-rail{position:fixed;right:1.1rem;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:.6rem;z-index:60;}
+    .social-rail a{width:34px;height:34px;border-radius:999px;border:1.5px solid rgba(21,32,61,.18);background:rgba(255,255,255,.92);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;color:#15203d;text-decoration:none;box-shadow:0 4px 14px rgba(21,32,61,.10);transition:background .18s,border-color .18s,transform .18s,color .18s;}
+    .social-rail a:hover{background:#15203d;border-color:#15203d;color:#fff;transform:translateY(-2px);}
+    @media(max-width:640px){.social-rail{right:.55rem;gap:.4rem}.social-rail a{width:28px;height:28px}.social-rail a svg{width:12px;height:12px}}
+ 
+    /* LANGUAGE / GLOBAL DROPDOWN */
+    .lang-dd{position:relative;}
+    .lang-btn{display:flex;align-items:center;gap:.32rem;padding:.4rem .85rem;border-radius:999px;font-size:.81rem;font-weight:600;color:#15203d;background:transparent;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;letter-spacing:.01em;white-space:nowrap;}
+    .lang-btn:hover{background:#15203d;color:#fff;}
+    .lang-btn svg.chev{transition:transform .18s ease;}
+    .lang-dd.open .lang-btn svg.chev{transform:rotate(180deg);}
+    .lang-menu{position:absolute;top:calc(100% + 10px);right:0;background:#fff;border-radius:.75rem;box-shadow:0 14px 34px rgba(21,32,61,.20);padding:.4rem;display:none;min-width:140px;z-index:70;}
+    .lang-dd.open .lang-menu{display:block;}
+    .lang-opt{display:flex;align-items:center;justify-content:space-between;width:100%;padding:.5rem .7rem;border-radius:.5rem;border:none;background:transparent;font-size:.82rem;font-weight:500;color:#15203d;cursor:pointer;text-align:left;font-family:'DM Sans',sans-serif;}
+    .lang-opt:hover{background:#eef1f8;}
+    .lang-opt.active{background:#15203d;color:#fff;}
+ 
+    /* SCROLL REVEAL — elements fade/rise in on entering view, fade out on leaving, like frog's page */
+    .reveal{opacity:0;transform:translateY(26px);transition:opacity .65s ease,transform .65s ease;}
+    .reveal.in-view{opacity:1;transform:translateY(0);}
+    @media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important;transition:none!important;}}
   </style>
 </head>
-
+ 
 <body class="text-slate-700">
-
+ 
+  <!-- TOP NAV BAR — persistent, white, frog-style -->
+  <nav class="topbar" id="topbar">
+    <button type="button" class="topbar-word" data-view="home">Sruti Bhattacharjee</button>
+    <div class="topbar-right">
+      <div class="topbar-links" id="topbarLinks"></div>
+      <div class="lang-dd">
+        <button type="button" class="lang-btn" aria-haspopup="true" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 3.8 5.6 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.6-3.8-9S9.5 5.5 12 3z"/></svg><span class="lang-current">EN</span><svg class="chev" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="lang-menu">
+          <button type="button" class="lang-opt" data-lang="en">English</button>
+          <button type="button" class="lang-opt" data-lang="fr">Français</button>
+          <button type="button" class="lang-opt" data-lang="zh">中文</button>
+          <button type="button" class="lang-opt" data-lang="de">Deutsch</button>
+          <button type="button" class="lang-opt" data-lang="ja">日本語</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+ 
   <!-- HERO SECTION -->
-  <header class="hero-bg text-white min-h-[100dvh] flex flex-col items-center justify-center px-6 pt-6 pb-3 relative overflow-hidden">
-
+  <header class="hero-bg text-white min-h-[100dvh] flex-col items-center justify-center px-6 pt-6 pb-3 relative view" data-view="home">
+ 
     <!-- PROFILE IMAGE AREA -->
     <!-- ADD / REPLACE PROFILE IMAGE HERE -->
     <!-- Example:
@@ -159,106 +224,75 @@
         <img src="images/profile/glass_profile.jpeg" alt="Sruti Bhattacharjee" class="w-full h-full object-cover" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=&quot;font-size:3.5rem&quot;>👩‍💻</span>'"/>
       </div>
     </div>
-
+ 
     <h1 class="hero-name text-5xl md:text-7xl fade-2 text-center">Sruti Bhattacharjee</h1>
-    <p class="mt-3 text-base md:text-xl text-slate-400 fade-3 font-light tracking-wide text-center">Graduate Student &nbsp;·&nbsp; KTH Royal Institute of Technology</p>
-
-    <!-- HERO NAVIGATION LINKS -->
-    <!-- CV PDF LINK EXAMPLE:
-    <a href="papers/cv_1page.pdf" target="_blank" rel="noopener noreferrer">CV</a>
-    -->
-    <!-- EMAIL LINK EXAMPLE:
-    <a href="mailto:srutib@kth.com">Email</a>
-    -->
-    <div class="mt-3 fade-4" id="navInHero">
-      <div class="nav-pill">
-        <a href="mailto:srutib@kth.com"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4.7-8 5.334L4 8.7V6.297l8 5.333 8-5.333V8.7z"/></svg><span class="label">Email</span></a>
-        <a href="papers/cv_1page.pdf" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 2 5 5h-5V4zM8 13h8v2H8v-2zm0 4h8v2H8v-2z"/></svg><span class="label">CV</span></a>
-        <a href="#portfolio"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 7h-4V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2H4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zm-10-2h4v2h-4V5z"/></svg><span class="label">Portfolio</span></a>
-        <a href="https://github.com/SrutiBh" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg><span class="label">GitHub</span></a>
-        <a href="https://www.linkedin.com/in/srutibhattacharjee/" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6.5 21.5h-5v-13h5v13zM4 6.5C2.5 6.5 1.5 5.3 1.5 4s1-2.4 2.5-2.4c1.6 0 2.5 1 2.6 2.5 0 1.4-1 2.4-2.6 2.4zm11.5 6c-1 0-2 .5-2 1.9v7.1h-5v-13h5v1.9c1-1.6 2.7-1.9 4-1.9 3 0 5 2 5 6.3v6.7h-5v-7c0-1.4-.5-1.9-2-1.9-.9 0-1.9.5-1.9 1.9v7.1h-5"/></svg><span class="label">LinkedIn</span></a>
-      </div>
-    </div>
-
-    <a href="#main-content" class="absolute bottom-10 text-white/40 hover:text-white/80 transition-colors bounce-icon z-10">
+    <p class="mt-3 text-base md:text-xl text-slate-400 fade-3 font-light tracking-wide text-center" data-i18n="hero.subtitle">Graduate Student &nbsp;·&nbsp; KTH Royal Institute of Technology</p>
+ 
+    <button type="button" id="heroToWorkBtn" class="absolute bottom-10 text-white/40 hover:text-white/80 transition-colors bounce-icon z-10" style="background:none;border:none;padding:0;cursor:pointer;" aria-label="View work" title="View work">
       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 12 16 16 12"/><line x1="12" y1="8" x2="12" y2="16"/></svg>
-    </a>
+    </button>
   </header>
-
-  <!-- STICKY NAVIGATION — appears after the hero navigation scrolls away -->
-  <div class="nav-sticky-wrap" id="navWrap" style="display:none;">
-    <nav class="nav-pill">
-      <a href="mailto:srutib@kth.com"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4.7-8 5.334L4 8.7V6.297l8 5.333 8-5.333V8.7z"/></svg><span class="label">Email</span></a>    
-      <a href="papers/cv_1page.pdf" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 2 5 5h-5V4zM8 13h8v2H8v-2zm0 4h8v2H8v-2z"/></svg><span class="label">CV</span></a>
-      <a href="#portfolio"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 7h-4V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2H4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zm-10-2h4v2h-4V5z"/></svg><span class="label">Portfolio</span></a>
-      <a href="https://github.com/SrutiBh" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg><span class="label">GitHub</span></a>
-      <a href="https://www.linkedin.com/in/srutibhattacharjee/" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6.5 21.5h-5v-13h5v13zM4 6.5C2.5 6.5 1.5 5.3 1.5 4s1-2.4 2.5-2.4c1.6 0 2.5 1 2.6 2.5 0 1.4-1 2.4-2.6 2.4zm11.5 6c-1 0-2 .5-2 1.9v7.1h-5v-13h5v1.9c1-1.6 2.7-1.9 4-1.9 3 0 5 2 5 6.3v6.7h-5v-7c0-1.4-.5-1.9-2-1.9-.9 0-1.9.5-1.9 1.9v7.1h-5"/></svg><span class="label">LinkedIn</span></a>
-    </nav>
+ 
+  <!-- FIXED SOCIAL RAIL — always-visible side icons, echoes frog's edge social icons -->
+  <div class="social-rail">
+    <a href="https://github.com/SrutiBh" target="_blank" rel="noopener noreferrer" title="GitHub" aria-label="GitHub"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg></a>
+    <a href="https://www.linkedin.com/in/srutibhattacharjee/" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6.5 21.5h-5v-13h5v13zM4 6.5C2.5 6.5 1.5 5.3 1.5 4s1-2.4 2.5-2.4c1.6 0 2.5 1 2.6 2.5 0 1.4-1 2.4-2.6 2.4zm11.5 6c-1 0-2 .5-2 1.9v7.1h-5v-13h5v1.9c1-1.6 2.7-1.9 4-1.9 3 0 5 2 5 6.3v6.7h-5v-7c0-1.4-.5-1.9-2-1.9-.9 0-1.9.5-1.9 1.9v7.1h-5"/></svg></a>
   </div>
-
-  <main id="main-content" class="container mx-auto max-w-4xl px-4 py-16 space-y-20">
-
-    <!-- ABOUT SECTION -->
-    <section id="about">
-      <h2 class="section-title text-3xl text-slate-800 mb-6 border-b-2 border-slate-200 pb-2">About Me</h2>
-      <div class="entry-card text-base leading-relaxed space-y-4 text-slate-600">
-        <p>I am a Human-Centric Computer Engineer specializing in Interactive Technology Design and Development based on User Experience and User Perception Analysis.</p>
-        <p>I'm open to new roles and collaborations. Feel free to reach out if my background aligns with your team's goals.</p>
-      </div>
-    </section>
-
+ 
+  <main id="main-content" class="container mx-auto max-w-4xl px-4 py-16">
+ 
     <!-- EDUCATION SECTION -->
-    <section id="cv">
-      <h2 class="section-title text-3xl text-slate-800 mb-6 border-b-2 border-slate-200 pb-2">Education</h2>
+    <section id="education" class="view" data-view="education">
+      <h2 class="section-title text-3xl text-slate-800 mb-6 border-b-2 border-slate-200 pb-2 reveal" data-i18n="section.education">Education</h2>
       <div class="space-y-5">
-
-        <div class="edu-card flex items-center gap-5">
+ 
+        <div class="edu-card flex items-center gap-5 reveal">
           <!-- ADD / REPLACE EDUCATION LOGO HERE -->
           <!-- Example:
           <img src="images/logos/kth.png" alt="KTH Logo" class="edu-logo"/>
           -->
           <img src="images/logos/kth.png" alt="KTH" class="edu-logo"/>
           <div>
-            <h3 class="font-semibold text-slate-900">Master of Science, Interactive Media Technology</h3>
+            <h3 class="font-semibold text-slate-900" data-i18n="edu.1.degree">Master of Science, Interactive Media Technology</h3>
             <p class="text-[#15203d] font-medium text-sm mt-0.5">Kungliga Tekniska Högskolan (KTH), Sweden</p>
-            <p class="text-slate-400 text-sm">2020 – Present &nbsp;·&nbsp; GPA: 4.4/5</p>
+            <p class="text-slate-400 text-sm">2020 – <span data-i18n="word.present">Present</span> &nbsp;·&nbsp; GPA: 4.4/5</p>
           </div>
         </div>
-
-        <div class="edu-card flex items-center gap-5">
+ 
+        <div class="edu-card flex items-center gap-5 reveal">
           <!-- ADD / REPLACE EDUCATION LOGO HERE -->
           <!-- Example:
           <img src="images/logos/epfl.png" alt="EPFL Logo" class="edu-logo"/>
           -->
           <img src="images/logos/epfl.png" alt="EPFL" class="edu-logo"/>
           <div>
-            <h3 class="font-semibold text-slate-900">Graduate Exchange Student, Computer and Communication Sciences</h3>
+            <h3 class="font-semibold text-slate-900" data-i18n="edu.2.degree">Graduate Exchange Student, Computer and Communication Sciences</h3>
             <p class="text-[#15203d] font-medium text-sm mt-0.5">École Polytechnique Fédérale de Lausanne (EPFL), Switzerland</p>
             <p class="text-slate-400 text-sm">2021 – 2023 &nbsp;·&nbsp; GPA: 4.2/6</p>
           </div>
         </div>
-
-        <div class="edu-card flex items-center gap-5">
+ 
+        <div class="edu-card flex items-center gap-5 reveal">
           <!-- ADD / REPLACE EDUCATION LOGO HERE -->
           <!-- Example:
           <img src="images/logos/wbutnew_edited.jpg" alt="WBUT Logo" class="edu-logo"/>
           -->
           <img src="images/logos/wbutnew_edited.jpg" alt="WBUT" class="edu-logo"/>
           <div>
-            <h3 class="font-semibold text-slate-900">Bachelor of Technology, Information Technology</h3>
+            <h3 class="font-semibold text-slate-900" data-i18n="edu.3.degree">Bachelor of Technology, Information Technology</h3>
             <p class="text-[#15203d] font-medium text-sm mt-0.5">West Bengal University of Technology (WBUT), India</p>
             <p class="text-slate-400 text-sm">2014 – 2019 &nbsp;·&nbsp; GPA: 6.8/10</p>
           </div>
         </div>
-
-        <div class="edu-card flex items-center gap-5">
+ 
+        <div class="edu-card flex items-center gap-5 reveal">
           <!-- ADD / REPLACE EDUCATION LOGO HERE -->
           <!-- Example:
           <img src="images/logos/iitkgp.jpg" alt="IIT Kharagpur Logo" class="edu-logo"/>
           -->
           <img src="images/logos/iitkgp.jpg" alt="IIT KGP" class="edu-logo"/>
           <div>
-            <h3 class="font-semibold text-slate-900">Undergrad Visiting Student, Computer Science and Engineering</h3>
+            <h3 class="font-semibold text-slate-900" data-i18n="edu.4.degree">Undergrad Visiting Student, Computer Science and Engineering</h3>
             <p class="text-[#15203d] font-medium text-sm mt-0.5">Indian Institute of Technology Kharagpur (IITKGP), India</p>
             <p class="text-slate-400 text-sm">2017 – 2018</p>
             <p class="text-slate-400 text-sm">2014 – 2019 &nbsp;·&nbsp; GPA: 9/10</p>
@@ -266,14 +300,14 @@
         </div>
       </div>
     </section>
-
+ 
     <!-- EXPERIENCE / JOURNEY MAP SECTION -->
-    <section id="experience">
-      <h2 class="section-title text-3xl text-slate-800 mb-6 border-b-2 border-slate-200 pb-2">Selected Experiences</h2>
-
+    <section id="experience" class="view" data-view="journey">
+      <h2 class="section-title text-3xl text-slate-800 mb-6 border-b-2 border-slate-200 pb-2 reveal" data-i18n="section.experience">Selected Experiences</h2>
+ 
       <!-- INTERACTIVE JOURNEY MAP -->
       <!-- Logos, city entries, years, notes, and tags are edited in the PLACES array inside the <script> section. -->
-      <div class="jshell" id="jshell">
+      <div class="jshell reveal" id="jshell">
         <div class="jtoolbar"><button class="jicon-btn" id="toggleMapSize" type="button" title="Maximize map" aria-label="Maximize map">[ ]</button></div>
         <div class="jvp" id="jvp">
           <div class="jworld" id="jworld"></div>
@@ -292,271 +326,468 @@
         </div>
       </div>
     </section>
-
+ 
     <!-- PORTFOLIO SECTION -->
-    <section id="portfolio">
-      <h2 class="section-title text-3xl text-slate-800 mb-6 border-b-2 border-slate-200 pb-2">Portfolio</h2>
-
-      <!-- PORTFOLIO CATEGORY TABS -->
-      <div class="ptabs">
-        <button class="ptab-btn active" onclick="switchTab('ux',this)">UX Research</button>
-        <button class="ptab-btn" onclick="switchTab('interaction',this)">Interaction Design</button>
-        <button class="ptab-btn" onclick="switchTab('visual',this)">Visual Computing</button>
+    <section id="portfolio" class="view" data-view="work">
+      <div class="work-sub active" id="workGrid">
+        <!-- PORTFOLIO CATEGORY TABS -->
+        <div class="ptabs reveal">
+          <button class="ptab-btn active" onclick="switchTab('ux',this)"><span data-i18n="tab.ux">UX Research</span><span class="ptab-count" data-cat="ux"></span></button>
+          <button class="ptab-btn" onclick="switchTab('interaction',this)"><span data-i18n="tab.interaction">Interaction Design</span><span class="ptab-count" data-cat="interaction"></span></button>
+          <button class="ptab-btn" onclick="switchTab('visual',this)"><span data-i18n="tab.visual">Visual Computing</span><span class="ptab-count" data-cat="visual"></span></button>
+        </div>
+        <!-- Grid is built from the PROJECTS array in the script below. -->
+        <div class="work-grid reveal" id="workGridCards"></div>
       </div>
-
-      <!-- UX RESEARCH PROJECTS -->
-      <div class="tab-panel active" id="tab-ux">
-        <div class="proj-card">
-          <div class="proj-card-body">
-            <div class="proj-card-title">Re-Designing VRLE for Effective Pedagogy</div>
-            <div class="proj-card-meta"> KTH · EPFL </div>
-            <div class="proj-card-desc">Formulating how virtual reality-based learning environments can provide pedagogical support in effective learning.</div>
-            <div class="proj-card-links">
-              <!-- ADD / REPLACE PROJECT LINKS HERE -->
-              <!-- Examples:
-              <a href="https://yoursite.com/vrle" target="_blank" rel="noopener noreferrer">Project Page</a>
-              <a href="papers/vrle_thesis.pdf" target="_blank" rel="noopener noreferrer">Paper</a>
-              <a href="https://doi.org/10.xxxx/xxxxx" target="_blank" rel="noopener noreferrer">DOI</a>
-              -->
-              <a href="#">Project Page</a><a href="#">Paper</a>
-            </div>
-          </div>
-
-          <!-- ADD / REPLACE PROJECT IMAGE HERE -->
-          <!-- Example:
-          <img src="images/projects/vrle_classroom.jpeg"
-               alt="Preview image of VR learning environment project"
-               class="proj-card-img object-cover p-0"/>
-          -->
-          <img src="images/projects/vrle_classroom.jpeg"
-               alt="Preview image of VR learning environment project"
-               class="proj-card-img object-cover p-0"/>
-        </div>
-
-        <div class="proj-card">
-          <div class="proj-card-body">
-            <div class="proj-card-title">EdTech for Novice Programming Learners in Hybrid Collaborative Classes</div>
-            <div class="proj-card-meta"> University of Lausanne </div>
-            <div class="proj-card-desc">Investigated design needs of EdTech to facilitate effective learning for novice programming students in hybrid collaborative learning environments.</div>
-            <div class="proj-card-links">
-              <!-- ADD / REPLACE PROJECT LINKS HERE -->
-              <!-- Example:
-              <a href="papers/hybrid_class_research.pdf" target="_blank" rel="noopener noreferrer">Paper</a>
-              -->
-              <a href="#">Project Page</a><a href="#">Paper</a>
-            </div>
-          </div>
-          <!-- ADD / REPLACE PROJECT IMAGE OR GIF HERE -->
-          <!-- Example:
-          <img src="images/projects/hybrid_class_research.jpg" alt="Hybrid programming class research project preview" class="proj-card-img object-cover p-0"/>
-          -->
-          <img src="images/projects/unil.jpg" alt="Preview image of hybrid class research project" class="proj-card-img object-cover p-0"/>
-        </div>
-
-        <div class="proj-card">
-          <div class="proj-card-body">
-            <div class="proj-card-title">Video Call, VR and Telepresence Robot for Group Interactions and Creative Thinking</div>
-            <div class="proj-card-meta"> KTH </div>
-            <div class="proj-card-desc">Compared three existing multimodal media for remote communication and their impacts on independent thinking.</div>
-            <div class="proj-card-links">
-              <!-- ADD / REPLACE PROJECT LINKS HERE -->
-              <!-- Example:
-              <a href="papers/remote_communication.pdf" target="_blank" rel="noopener noreferrer">Paper</a>
-              -->
-              <a href="#">Project Page</a><a href="#">Paper</a>
-            </div>
-          </div>
-          <!-- ADD / REPLACE PROJECT IMAGE OR GIF HERE -->
-          <!-- Example:
-          <img src="images/projects/remote_communication.gif" alt="Remote communication project GIF showing video call, VR, and telepresence robot" class="proj-card-img object-cover p-0"/>
-          -->
-          <img src="images/projects/VRvsRobovsZoomfinal.png"
-               alt="Preview image of remote communication project"
-               class="proj-card-img object-cover p-0"/>
-        </div>
-      </div>
-
-      <!-- INTERACTION DESIGN PROJECTS -->
-      <div class="tab-panel" id="tab-interaction">
-        <div class="proj-card">
-          <div class="proj-card-body">
-            <div class="proj-card-title">Augmented City — Act to Protest</div>
-            <div class="proj-card-meta"> EPFL </div>
-            <div class="proj-card-desc">Designed an app to deliver improvements in city urbanism and collaboration during collaborative public events like protests and to promote street arts.</div>
-            <div class="proj-card-links">
-              <!-- ADD / REPLACE PROJECT LINK HERE -->
-              <!-- Example:
-              <a href="https://yoursite.com/augmented-city" target="_blank" rel="noopener noreferrer">Project Page</a>
-              -->
-              <a href="#">Project Page</a>
-            </div>
-          </div>
-          <!-- ADD / REPLACE PROJECT IMAGE OR GIF HERE -->
-          <!-- Example:
-          <img src="images/projects/augmented_city.jpg" alt="Augmented City interaction design project preview" class="proj-card-img object-cover p-0"/>
-          -->
-          <img src="images/projects/protest_project.png"
-               alt="Augmented City interaction design"
-               class="proj-card-img object-cover p-0"/>
-        </div>
-
-        <div class="proj-card">
-          <div class="proj-card-body">
-            <div class="proj-card-title">Effect of Latency on Haptic Perception</div>
-            <div class="proj-card-meta"> Ericsson </div>
-            <div class="proj-card-desc">Implemented and analysed the impact of latency and jitter on haptic stiffness perception in haptic teleoperation systems.</div>
-            <div class="proj-card-links">
-              <!-- ADD / REPLACE PAPER OR CODE LINKS HERE -->
-              <!-- Examples:
-              <a href="papers/haptic_latency.pdf" target="_blank" rel="noopener noreferrer">Paper</a>
-              <a href="https://github.com/username/haptic-latency" target="_blank" rel="noopener noreferrer">Code</a>
-              -->
-              <a href="#">Paper</a><a href="#">Code</a>
-            </div>
-          </div>
-          <!-- ADD / REPLACE PROJECT IMAGE, GIF, OR VIDEO HERE -->
-          <!-- Example:
-          <img src="images/projects/haptic_systems.gif" alt="Haptic teleoperation system latency demo" class="proj-card-img object-cover p-0"/>
-          -->
-          <img src="images/projects/haptic_ericsson.png"
-               alt="Preview image of haptic systems project"
-               class="proj-card-img object-cover p-0"/>     
-        </div>
-
-        <div class="proj-card">
-          <div class="proj-card-body">
-            <div class="proj-card-title">Re-Designing Video Call for Remote Learning</div>
-            <div class="proj-card-meta"> KTH </div>
-            <div class="proj-card-desc">Examined the impact of Zoom and other video-based applications on teachers' experience and redesigned a new interface for improved usability.</div>
-            <div class="proj-card-links">
-              <!-- ADD / REPLACE PROJECT LINK HERE -->
-              <!-- Example:
-              <a href="https://yoursite.com/remote-learning-ux" target="_blank" rel="noopener noreferrer">Project Page</a>
-              -->
-              <a href="#">Project Page</a>
-            </div>
-          </div>
-          <!-- ADD / REPLACE PROJECT IMAGE OR GIF HERE -->
-          <!-- Example:
-          <img src="images/projects/remote_learning_ux.jpg" alt="Remote learning video call redesign interface preview" class="proj-card-img object-cover p-0"/>
-          -->
-          <img src="images/projects/teach_figma.png"
-               alt="Preview image of remote learning UX project"
-               class="proj-card-img object-cover p-0"/> 
-        </div>
-      </div>
-
-      <!-- VISUAL COMPUTING PROJECTS -->
-      <div class="tab-panel" id="tab-visual">
-        <div class="proj-card">
-          <div class="proj-card-body">
-            <div class="proj-card-title">Facial Expression Recognition in Virtual Reality using Machine Learning</div>
-            <div class="proj-card-meta"> EPFL </div>
-            <div class="proj-card-desc">Built a VR avatar emotion recognition pipeline</div>
-            <div class="proj-card-links">
-              <!-- ADD / REPLACE PAPER OR CODE LINKS HERE -->
-              <!-- Examples:
-              <a href="papers/vr_facial_expression.pdf" target="_blank" rel="noopener noreferrer">Paper</a>
-              <a href="https://github.com/username/vr-facial-expression" target="_blank" rel="noopener noreferrer">Code</a>
-              -->
-              <a href="#">Paper</a><a href="#">Code</a>
-            </div>
-          </div>
-          <!-- ADD / REPLACE PROJECT IMAGE OR GIF HERE -->
-          <!-- Example:
-          <img src="images/projects/vr_facial_expression.jpg" alt="Facial expression recognition in VR machine learning project preview" class="proj-card-img object-cover p-0"/>
-          -->
-          <img src="images/projects/iig_project.png"
-               alt="Preview image of IIG EPFL project"
-               class="proj-card-img object-cover p-0"/> 
-        </div>
-
-        <div class="proj-card">
-          <div class="proj-card-body">
-            <div class="proj-card-title">Venice Time Machine: 2020 Building Heights Detection</div>
-            <div class="proj-card-meta"> EPFL </div>
-            <div class="proj-card-desc">Developed a 3D model of Venice to preserve current building height and geographical location based on Google Earth data.</div>
-            <div class="proj-card-links">
-              <!-- ADD / REPLACE PROJECT OR CODE LINKS HERE -->
-              <!-- Examples:
-              <a href="https://yoursite.com/venice-time-machine" target="_blank" rel="noopener noreferrer">Project Page</a>
-              <a href="https://github.com/username/venice-time-machine" target="_blank" rel="noopener noreferrer">Code</a>
-              -->
-              <a href="#">Project Page</a><a href="#">Code</a>
-            </div>
-          </div>
-          <!-- ADD / REPLACE PROJECT IMAGE OR GIF HERE -->
-          <!-- Example:
-          <img src="images/projects/venice_3d_model.jpg" alt="3D Venice building height detection model preview" class="proj-card-img object-cover p-0"/>
-          -->
-          <img src="images/projects/venice1.png"
-               alt="Preview image of 3D city modelling project"
-               class="proj-card-img object-cover p-0"/> 
-        </div>
-
-        <div class="proj-card">
-          <div class="proj-card-body">
-            <div class="proj-card-title">Rogue-Mike Game</div>
-            <div class="proj-card-meta"> KTH </div>
-            <div class="proj-card-desc">Developed a Windows OS-based video game using C# and Unreal Engine.</div>
-            <div class="proj-card-links">
-              <!-- ADD / REPLACE CODE LINK HERE -->
-              <!-- Example:
-              <a href="https://github.com/username/rogue-mike-game" target="_blank" rel="noopener noreferrer">Code</a>
-              -->
-              <a href="#">Code</a>
-            </div>
-          </div>
-          <!-- ADD / REPLACE PROJECT IMAGE, GIF, OR VIDEO HERE -->
-          <!-- Example:
-          <img src="images/projects/rogue_mike_game.gif" alt="Rogue-Mike game gameplay GIF" class="proj-card-img object-cover p-0"/>
-          -->
-          <img src="images/projects/r_mike.gif"
-               alt="Preview image of game development project"
-               class="proj-card-img object-cover p-0"/> 
-        </div>
-      </div>
-
+      <div class="work-sub" id="workDetail"></div>
     </section>
   </main>
-
+ 
   <footer class="bg-slate-800 text-slate-400 text-center p-6 mt-8">
-    <p>© <span id="yr"></span> Sruti Bhattacharjee. All rights reserved.</p>
+    <p>© <span id="yr"></span> Sruti Bhattacharjee. <span data-i18n="footer.rights">All rights reserved.</span></p>
   </footer>
-
+ 
   <script>
-    function switchTab(tab,btn){document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.ptab-btn').forEach(b=>b.classList.remove('active'));document.getElementById('tab-'+tab).classList.add('active');btn.classList.add('active');}
-    document.getElementById('yr').textContent=new Date().getFullYear();
-    const navInHero=document.getElementById('navInHero'),navWrap=document.getElementById('navWrap');
-    new IntersectionObserver(([e])=>{navWrap.style.display=e.isIntersecting?'none':'flex';},{threshold:0,rootMargin:'0px'}).observe(navInHero);
-
+    function switchTab(tab,btn){
+      document.querySelectorAll('.ptab-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.work-card').forEach(function(card){
+        card.classList.toggle('hidden-by-filter', card.dataset.cat!==tab);
+      });
+    }
+ 
     document.addEventListener('DOMContentLoaded',function(){
-
+ 
+      const yrEl=document.getElementById('yr');
+      if(yrEl)yrEl.textContent=new Date().getFullYear();
+ 
+    /* ============================================================
+       LANGUAGE / i18n SYSTEM
+       Add or edit translated strings here. Every element carrying a
+       data-i18n="key" attribute gets its text swapped on language change.
+       ============================================================ */
+    const TRANSLATIONS={
+      en:{
+        'nav.work':'Work','nav.journey':'Journey','nav.education':'Education','nav.cv':'CV','nav.contact':'Contact Me',
+        'hero.subtitle':'Graduate Student &nbsp;\u00b7&nbsp; KTH Royal Institute of Technology',
+        'section.about':'About Me','section.education':'Education','section.experience':'Selected Experiences','section.portfolio':'Portfolio',
+        'about.p1':'I am a Human-Centric Computer Engineer specializing in Interactive Technology Design and Development based on User Experience and User Perception Analysis.',
+        'about.p2':"I'm open to new roles and collaborations. Feel free to reach out if my background aligns with your team's goals.",
+        'word.present':'Present',
+        'edu.1.degree':'Master of Science, Interactive Media Technology',
+        'edu.2.degree':'Graduate Exchange Student, Computer and Communication Sciences',
+        'edu.3.degree':'Bachelor of Technology, Information Technology',
+        'edu.4.degree':'Undergrad Visiting Student, Computer Science and Engineering',
+        'tab.ux':'UX Research','tab.interaction':'Interaction Design','tab.visual':'Visual Computing',
+        'lbl.projectPage':'Project Page','lbl.paper':'Paper','lbl.code':'Code',
+        'proj.1.title':'Re-Designing VRLE for Effective Pedagogy',
+        'proj.1.desc':'Formulating how virtual reality-based learning environments can provide pedagogical support in effective learning.',
+        'proj.2.title':'EdTech for Novice Programming Learners in Hybrid Collaborative Classes',
+        'proj.2.desc':'Investigated design needs of EdTech to facilitate effective learning for novice programming students in hybrid collaborative learning environments.',
+        'proj.3.title':'Video Call, VR and Telepresence Robot for Group Interactions and Creative Thinking',
+        'proj.3.desc':'Compared three existing multimodal media for remote communication and their impacts on independent thinking.',
+        'proj.4.title':'Augmented City \u2014 Act to Protest',
+        'proj.4.desc':'Designed an app to deliver improvements in city urbanism and collaboration during collaborative public events like protests and to promote street arts.',
+        'proj.5.title':'Effect of Latency on Haptic Perception',
+        'proj.5.desc':'Implemented and analysed the impact of latency and jitter on haptic stiffness perception in haptic teleoperation systems.',
+        'proj.6.title':'Re-Designing Video Call for Remote Learning',
+        'proj.6.desc':"Examined the impact of Zoom and other video-based applications on teachers' experience and redesigned a new interface for improved usability.",
+        'proj.7.title':'Facial Expression Recognition in Virtual Reality using Machine Learning',
+        'proj.7.desc':'Built a VR avatar emotion recognition pipeline',
+        'proj.8.title':'Venice Time Machine: 2020 Building Heights Detection',
+        'proj.8.desc':'Developed a 3D model of Venice to preserve current building height and geographical location based on Google Earth data.',
+        'proj.9.title':'Rogue-Mike Game',
+        'proj.9.desc':'Developed a Windows OS-based video game using C# and Unreal Engine.',
+        'view.work.headline':'Where research becomes interface.',
+        'view.journey.headline':'Ten cities, one throughline.',
+        'view.journey.sub':'From Kanpur to Paris \u2014 a decade of labs, research groups and classrooms across four countries.',
+        'view.education.headline':'Learning across borders.',
+        'view.education.sub':'Degrees and exchanges spanning Sweden, Switzerland and India, each shaping how I think about technology and people.',
+        'footer.rights':'All rights reserved.',
+        'lbl.backToWork':'Back to Work'
+      },
+      fr:{
+        'nav.work':'Travaux','nav.journey':'Parcours','nav.education':'Formation','nav.cv':'CV','nav.contact':'Me Contacter',
+        'hero.subtitle':'\u00c9tudiante Dipl\u00f4m\u00e9e &nbsp;\u00b7&nbsp; KTH Royal Institute of Technology',
+        'section.about':'\u00c0 Propos de Moi','section.education':'Formation','section.experience':'Exp\u00e9riences S\u00e9lectionn\u00e9es','section.portfolio':'Portfolio',
+        'about.p1':"Je suis ing\u00e9nieure en informatique centr\u00e9e sur l'humain, sp\u00e9cialis\u00e9e dans la conception et le d\u00e9veloppement de technologies interactives, fond\u00e9es sur la recherche en exp\u00e9rience utilisateur et l'analyse de la perception utilisateur.",
+        'about.p2':"Je suis ouverte \u00e0 de nouveaux postes et collaborations. N'h\u00e9sitez pas \u00e0 me contacter si mon profil correspond aux objectifs de votre \u00e9quipe.",
+        'word.present':'Pr\u00e9sent',
+        'edu.1.degree':"Master en Technologie des M\u00e9dias Interactifs",
+        'edu.2.degree':'\u00c9tudiante en \u00e9change, Sciences Informatiques et Communication',
+        'edu.3.degree':"Licence en Technologie de l'Information",
+        'edu.4.degree':'\u00c9tudiante invit\u00e9e de premier cycle, Informatique et Ing\u00e9nierie',
+        'tab.ux':'Recherche UX','tab.interaction':"Design d'Interaction",'tab.visual':'Informatique Visuelle',
+        'lbl.projectPage':'Page du Projet','lbl.paper':'Article','lbl.code':'Code',
+        'proj.1.title':'Repenser les EVRA pour une P\u00e9dagogie Efficace',
+        'proj.1.desc':"Formulation de la mani\u00e8re dont les environnements d'apprentissage en r\u00e9alit\u00e9 virtuelle peuvent offrir un soutien p\u00e9dagogique pour un apprentissage efficace.",
+        'proj.2.title':'EdTech pour les Apprenants Novices en Programmation dans des Classes Collaboratives Hybrides',
+        'proj.2.desc':"\u00c9tude des besoins de conception en EdTech pour faciliter un apprentissage efficace chez les \u00e9tudiants novices en programmation dans des environnements d'apprentissage collaboratif hybride.",
+        'proj.3.title':'Appel Vid\u00e9o, RV et Robot de T\u00e9l\u00e9pr\u00e9sence pour les Interactions de Groupe et la Pens\u00e9e Cr\u00e9ative',
+        'proj.3.desc':'Comparaison de trois m\u00e9dias multimodaux existants pour la communication \u00e0 distance et leurs impacts sur la pens\u00e9e ind\u00e9pendante.',
+        'proj.4.title':'Ville Augment\u00e9e \u2014 Agir pour Manifester',
+        'proj.4.desc':"Conception d'une application visant \u00e0 am\u00e9liorer l'urbanisme et la collaboration lors d'\u00e9v\u00e9nements publics collaboratifs comme les manifestations, tout en promouvant l'art urbain.",
+        'proj.5.title':'Effet de la Latence sur la Perception Haptique',
+        'proj.5.desc':'Mise en \u0153uvre et analyse de l\u2019impact de la latence et de la gigue sur la perception de la rigidit\u00e9 haptique dans les syst\u00e8mes de t\u00e9l\u00e9op\u00e9ration haptique.',
+        'proj.6.title':"Repenser l'Appel Vid\u00e9o pour l'Apprentissage \u00e0 Distance",
+        'proj.6.desc':"\u00c9tude de l'impact de Zoom et d'autres applications vid\u00e9o sur l'exp\u00e9rience des enseignants, et refonte d'une nouvelle interface pour une meilleure utilisabilit\u00e9.",
+        'proj.7.title':'Reconnaissance des Expressions Faciales en R\u00e9alit\u00e9 Virtuelle par Apprentissage Automatique',
+        'proj.7.desc':"D\u00e9veloppement d'un pipeline de reconnaissance des \u00e9motions pour avatars en RV.",
+        'proj.8.title':'Venice Time Machine\u202f: D\u00e9tection des Hauteurs des B\u00e2timents en 2020',
+        'proj.8.desc':"D\u00e9veloppement d'un mod\u00e8le 3D de Venise pour pr\u00e9server la hauteur actuelle des b\u00e2timents et leur emplacement g\u00e9ographique \u00e0 partir des donn\u00e9es de Google Earth.",
+        'proj.9.title':'Jeu Rogue-Mike',
+        'proj.9.desc':'D\u00e9veloppement d\u2019un jeu vid\u00e9o sur Windows utilisant C# et Unreal Engine.',
+        'view.work.headline':'L\u00e0 o\u00f9 la recherche devient interface.',
+        'view.journey.headline':'Dix villes, un seul fil conducteur.',
+        'view.journey.sub':'De Kanpur \u00e0 Paris \u2014 une d\u00e9cennie de laboratoires, de groupes de recherche et de salles de classe \u00e0 travers quatre pays.',
+        'view.education.headline':'Apprendre au-del\u00e0 des fronti\u00e8res.',
+        'view.education.sub':'Des dipl\u00f4mes et \u00e9changes entre la Su\u00e8de, la Suisse et l\u2019Inde, qui ont chacun fa\u00e7onn\u00e9 ma vision de la technologie et des personnes.',
+        'footer.rights':'Tous droits r\u00e9serv\u00e9s.',
+        'lbl.backToWork':'Retour aux Travaux'
+      },
+      zh:{
+        'nav.work':'\u4f5c\u54c1','nav.journey':'\u5386\u7a0b','nav.education':'\u6559\u80b2\u80cc\u666f','nav.cv':'\u7b80\u5386','nav.contact':'\u8054\u7cfb\u6211',
+        'hero.subtitle':'\u7814\u7a76\u751f &nbsp;\u00b7&nbsp; \u745e\u5178\u7687\u5bb6\u7406\u5de5\u5b66\u9662 (KTH)',
+        'section.about':'\u5173\u4e8e\u6211','section.education':'\u6559\u80b2\u80cc\u666f','section.experience':'\u7cbe\u9009\u7ecf\u5386','section.portfolio':'\u4f5c\u54c1\u96c6',
+        'about.p1':'\u6211\u662f\u4e00\u540d\u4ee5\u4eba\u4e3a\u4e2d\u5fc3\u7684\u8ba1\u7b97\u673a\u5de5\u7a0b\u5e08\uff0c\u4e13\u6ce8\u4e8e\u57fa\u4e8e\u7528\u6237\u4f53\u9a8c\u4e0e\u7528\u6237\u611f\u77e5\u5206\u6790\u7684\u4ea4\u4e92\u6280\u672f\u8bbe\u8ba1\u4e0e\u5f00\u53d1\u3002',
+        'about.p2':'\u6211\u4e50\u4e8e\u63a5\u53d7\u65b0\u7684\u5de5\u4f5c\u673a\u4f1a\u4e0e\u5408\u4f5c\u3002\u5982\u679c\u6211\u7684\u80cc\u666f\u4e0e\u8d35\u56e2\u961f\u7684\u76ee\u6807\u76f8\u7b26\uff0c\u6b22\u8fce\u968f\u65f6\u4e0e\u6211\u8054\u7cfb\u3002',
+        'word.present':'\u81f3\u4eca',
+        'edu.1.degree':'\u7406\u5b66\u7855\u58eb\uff0c\u4ea4\u4e92\u5a92\u4f53\u6280\u672f',
+        'edu.2.degree':'\u4ea4\u6362\u7814\u7a76\u751f\uff0c\u8ba1\u7b97\u673a\u4e0e\u901a\u4fe1\u79d1\u5b66',
+        'edu.3.degree':'\u6280\u672f\u5b66\u58eb\uff0c\u4fe1\u606f\u6280\u672f',
+        'edu.4.degree':'\u672c\u79d1\u8bbf\u95ee\u5b66\u751f\uff0c\u8ba1\u7b97\u673a\u79d1\u5b66\u4e0e\u5de5\u7a0b',
+        'tab.ux':'\u7528\u6237\u4f53\u9a8c\u7814\u7a76','tab.interaction':'\u4ea4\u4e92\u8bbe\u8ba1','tab.visual':'\u89c6\u89c9\u8ba1\u7b97',
+        'lbl.projectPage':'\u9879\u76ee\u9875\u9762','lbl.paper':'\u8bba\u6587','lbl.code':'\u4ee3\u7801',
+        'proj.1.title':'\u91cd\u65b0\u8bbe\u8ba1VRLE\u4ee5\u5b9e\u73b0\u6709\u6548\u6559\u5b66\u6cd5',
+        'proj.1.desc':'\u7814\u7a76\u4e86\u57fa\u4e8e\u865a\u62df\u73b0\u5b9e\u7684\u5b66\u4e60\u73af\u5883\u5982\u4f55\u4e3a\u6709\u6548\u5b66\u4e60\u63d0\u4f9b\u6559\u5b66\u652f\u6301\u3002',
+        'proj.2.title':'\u9762\u5411\u6df7\u5408\u534f\u4f5c\u8bfe\u5802\u4e2d\u7f16\u7a0b\u521d\u5b66\u8005\u7684\u6559\u80b2\u79d1\u6280',
+        'proj.2.desc':'\u8c03\u67e5\u4e86\u5728\u6df7\u5408\u534f\u4f5c\u5b66\u4e60\u73af\u5883\u4e2d\uff0c\u9762\u5411\u7f16\u7a0b\u521d\u5b66\u8005\u7684\u6559\u80b2\u79d1\u6280\u8bbe\u8ba1\u9700\u6c42\uff0c\u4ee5\u4fc3\u8fdb\u6709\u6548\u5b66\u4e60\u3002',
+        'proj.3.title':'\u7528\u4e8e\u7fa4\u4f53\u4e92\u52a8\u4e0e\u521b\u9020\u6027\u601d\u7ef4\u7684\u89c6\u9891\u901a\u8bdd\u3001VR\u4e0e\u8fdc\u7a0b\u5448\u73b0\u673a\u5668\u4eba',
+        'proj.3.desc':'\u6bd4\u8f83\u4e86\u4e09\u79cd\u73b0\u6709\u7684\u591a\u6a21\u6001\u8fdc\u7a0b\u901a\u4fe1\u5a92\u4ecb\u53ca\u5176\u5bf9\u72ec\u7acb\u601d\u8003\u7684\u5f71\u54cd\u3002',
+        'proj.4.title':'\u589e\u5f3a\u57ce\u5e02\u2014\u2014\u884c\u52a8\u8d77\u6765\u6297\u8bae',
+        'proj.4.desc':'\u8bbe\u8ba1\u4e86\u4e00\u6b3e\u5e94\u7528\u7a0b\u5e8f\uff0c\u65e8\u5728\u6539\u5584\u6297\u8bae\u7b49\u534f\u4f5c\u6027\u516c\u5171\u6d3b\u52a8\u4e2d\u7684\u57ce\u5e02\u89c4\u5212\u4e0e\u534f\u4f5c\uff0c\u5e76\u63a8\u5e7f\u8857\u5934\u827a\u672f\u3002',
+        'proj.5.title':'\u5ef6\u8fdf\u5bf9\u89e6\u89c9\u611f\u77e5\u7684\u5f71\u54cd',
+        'proj.5.desc':'\u5b9e\u73b0\u5e76\u5206\u6790\u4e86\u5ef6\u8fdf\u4e0e\u6296\u52a8\u5bf9\u89e6\u89c9\u9065\u64cd\u4f5c\u7cfb\u7edf\u4e2d\u521a\u5ea6\u611f\u77e5\u7684\u5f71\u54cd\u3002',
+        'proj.6.title':'\u91cd\u65b0\u8bbe\u8ba1\u8fdc\u7a0b\u5b66\u4e60\u7684\u89c6\u9891\u901a\u8bdd',
+        'proj.6.desc':'\u7814\u7a76\u4e86Zoom\u7b49\u89c6\u9891\u5e94\u7528\u5bf9\u6559\u5e08\u4f53\u9a8c\u7684\u5f71\u54cd\uff0c\u5e76\u91cd\u65b0\u8bbe\u8ba1\u4e86\u65b0\u754c\u9762\u4ee5\u63d0\u5347\u53ef\u7528\u6027\u3002',
+        'proj.7.title':'\u57fa\u4e8e\u673a\u5668\u5b66\u4e60\u7684\u865a\u62df\u73b0\u5b9e\u9762\u90e8\u8868\u60c5\u8bc6\u522b',
+        'proj.7.desc':'\u6784\u5efa\u4e86\u4e00\u4e2a\u7528\u4e8eVR\u5316\u8eab\u60c5\u7eea\u8bc6\u522b\u7684\u5904\u7406\u6d41\u7a0b\u3002',
+        'proj.8.title':'\u5a01\u5c3c\u65af\u65f6\u5149\u673a\uff1a2020\u5e74\u5efa\u7b51\u9ad8\u5ea6\u68c0\u6d4b',
+        'proj.8.desc':'\u57fa\u4e8e\u8c37\u6b4c\u5730\u7403\u6570\u636e\u5f00\u53d1\u4e86\u5a01\u5c3c\u65af\u76843D\u6a21\u578b\uff0c\u4ee5\u4fdd\u5b58\u5f53\u524d\u5efa\u7b51\u9ad8\u5ea6\u4e0e\u5730\u7406\u4f4d\u7f6e\u4fe1\u606f\u3002',
+        'proj.9.title':'Rogue-Mike \u6e38\u620f',
+        'proj.9.desc':'\u4f7f\u7528C#\u548c\u865a\u5e7b\u5f15\u64ce\u5f00\u53d1\u4e86\u4e00\u6b3e\u57fa\u4e8eWindows\u7cfb\u7edf\u7684\u89c6\u9891\u6e38\u620f\u3002',
+        'view.work.headline':'\u7814\u7a76\u6210\u4e3a\u754c\u9762\u4e4b\u5904\u3002',
+        'view.journey.headline':'\u5341\u5ea7\u57ce\u5e02\uff0c\u4e00\u6761\u4e3b\u7ebf\u3002',
+        'view.journey.sub':'\u4ece\u574e\u666e\u5c14\u5230\u5df4\u9ece\uff0c\u5341\u5e74\u95f4\u8f97\u8f6c\u56db\u4e2a\u56fd\u5bb6\u7684\u5b9e\u9a8c\u5ba4\u3001\u7814\u7a76\u56e2\u961f\u4e0e\u8bfe\u5802\u3002',
+        'view.education.headline':'\u8de8\u8d8a\u56fd\u754c\u7684\u5b66\u4e60\u3002',
+        'view.education.sub':'\u5728\u745e\u5178\u3001\u745e\u58eb\u4e0e\u5370\u5ea6\u5b8c\u6210\u7684\u5b66\u4f4d\u4e0e\u4ea4\u6362\u9879\u76ee\uff0c\u5206\u522b\u5851\u9020\u4e86\u6211\u5bf9\u6280\u672f\u4e0e\u4eba\u7684\u7406\u89e3\u3002',
+        'footer.rights':'\u7248\u6743\u6240\u6709\u3002',
+        'lbl.backToWork':'\u8fd4\u56de\u4f5c\u54c1'
+      },
+      de:{
+        'nav.work':'Arbeiten','nav.journey':'Werdegang','nav.education':'Ausbildung','nav.cv':'Lebenslauf','nav.contact':'Kontakt',
+        'hero.subtitle':'Master-Studentin &nbsp;\u00b7&nbsp; KTH Royal Institute of Technology',
+        'section.about':'\u00dcber Mich','section.education':'Ausbildung','section.experience':'Ausgew\u00e4hlte Erfahrungen','section.portfolio':'Portfolio',
+        'about.p1':'Ich bin eine Human-Centric Computer Engineer, spezialisiert auf interaktives Technologiedesign und -entwicklung auf Basis von Nutzererfahrungs- und Nutzerwahrnehmungsanalyse.',
+        'about.p2':'Ich bin offen f\u00fcr neue Positionen und Kooperationen. Kontaktieren Sie mich gerne, wenn mein Hintergrund zu den Zielen Ihres Teams passt.',
+        'word.present':'Heute',
+        'edu.1.degree':'Master of Science, Interaktive Medientechnologie',
+        'edu.2.degree':'Austauschstudentin, Informatik und Kommunikationswissenschaften',
+        'edu.3.degree':'Bachelor of Technology, Informationstechnologie',
+        'edu.4.degree':'Gaststudentin (Bachelor), Informatik und Ingenieurwesen',
+        'tab.ux':'UX-Forschung','tab.interaction':'Interaktionsdesign','tab.visual':'Visuelles Computing',
+        'lbl.projectPage':'Projektseite','lbl.paper':'Paper','lbl.code':'Code',
+        'proj.1.title':'Neugestaltung von VRLE f\u00fcr effektive P\u00e4dagogik',
+        'proj.1.desc':'Untersuchung, wie VR-basierte Lernumgebungen p\u00e4dagogische Unterst\u00fctzung f\u00fcr effektives Lernen bieten k\u00f6nnen.',
+        'proj.2.title':'EdTech f\u00fcr Programmier-Einsteiger in hybriden kollaborativen Klassen',
+        'proj.2.desc':'Untersuchung der Designanforderungen von EdTech zur F\u00f6rderung effektiven Lernens bei Programmier-Einsteigern in hybriden kollaborativen Lernumgebungen.',
+        'proj.3.title':'Videoanruf, VR und Telepr\u00e4senzroboter f\u00fcr Gruppeninteraktionen und kreatives Denken',
+        'proj.3.desc':'Vergleich dreier bestehender multimodaler Medien f\u00fcr Fernkommunikation und deren Einfluss auf unabh\u00e4ngiges Denken.',
+        'proj.4.title':'Augmented City \u2014 Handeln f\u00fcr den Protest',
+        'proj.4.desc':'Entwicklung einer App zur Verbesserung von Stadtplanung und Zusammenarbeit bei kollaborativen \u00f6ffentlichen Veranstaltungen wie Protesten und zur F\u00f6rderung von Stra\u00dfenkunst.',
+        'proj.5.title':'Einfluss von Latenz auf die haptische Wahrnehmung',
+        'proj.5.desc':'Umsetzung und Analyse der Auswirkungen von Latenz und Jitter auf die haptische Steifigkeitswahrnehmung in haptischen Teleoperationssystemen.',
+        'proj.6.title':'Neugestaltung von Videoanrufen f\u00fcr Fernunterricht',
+        'proj.6.desc':'Untersuchung der Auswirkungen von Zoom und anderen videobasierten Anwendungen auf die Erfahrung von Lehrkr\u00e4ften und Neugestaltung einer Oberfl\u00e4che f\u00fcr bessere Nutzbarkeit.',
+        'proj.7.title':'Gesichtsausdruckserkennung in Virtual Reality mittels maschinellem Lernen',
+        'proj.7.desc':'Entwicklung einer Pipeline zur Emotionserkennung f\u00fcr VR-Avatare.',
+        'proj.8.title':'Venice Time Machine: Erkennung der Geb\u00e4udeh\u00f6hen 2020',
+        'proj.8.desc':'Entwicklung eines 3D-Modells von Venedig zur Erhaltung der aktuellen Geb\u00e4udeh\u00f6hen und geografischen Lage basierend auf Google-Earth-Daten.',
+        'proj.9.title':'Rogue-Mike-Spiel',
+        'proj.9.desc':'Entwicklung eines Windows-Videospiels mit C# und Unreal Engine.',
+        'view.work.headline':'Wo Forschung zur Schnittstelle wird.',
+        'view.journey.headline':'Zehn St\u00e4dte, ein roter Faden.',
+        'view.journey.sub':'Von Kanpur bis Paris \u2014 ein Jahrzehnt aus Laboren, Forschungsgruppen und H\u00f6rs\u00e4len in vier L\u00e4ndern.',
+        'view.education.headline':'Lernen \u00fcber Grenzen hinweg.',
+        'view.education.sub':'Abschl\u00fcsse und Austauschprogramme in Schweden, der Schweiz und Indien, die jeweils meine Sicht auf Technologie und Menschen gepr\u00e4gt haben.',
+        'footer.rights':'Alle Rechte vorbehalten.',
+        'lbl.backToWork':'Zur\u00fcck zu Arbeiten'
+      },
+      ja:{
+        'nav.work':'\u4f5c\u54c1','nav.journey':'\u7d4c\u6b74','nav.education':'\u5b66\u6b74','nav.cv':'\u5c65\u6b74\u66f8','nav.contact':'\u304a\u554f\u3044\u5408\u308f\u305b',
+        'hero.subtitle':'\u5927\u5b66\u9662\u751f &nbsp;\u00b7&nbsp; \u738b\u7acb\u5de5\u79d1\u5927\u5b66\uff08KTH\uff09',
+        'section.about':'\u81ea\u5df1\u7d39\u4ecb','section.education':'\u5b66\u6b74','section.experience':'\u4e3b\u306a\u7d4c\u9a13','section.portfolio':'\u30dd\u30fc\u30c8\u30d5\u30a9\u30ea\u30aa',
+        'about.p1':'\u79c1\u306f\u30e6\u30fc\u30b6\u30fc\u30a8\u30af\u30b9\u30da\u30ea\u30a8\u30f3\u30b9\u3068\u30e6\u30fc\u30b6\u30fc\u77e5\u899a\u5206\u6790\u306b\u57fa\u3065\u304d\u3001\u30a4\u30f3\u30bf\u30e9\u30af\u30c6\u30a3\u30d6\u6280\u8853\u306e\u30c7\u30b6\u30a4\u30f3\u3068\u958b\u767a\u3092\u5c02\u9580\u3068\u3059\u308b\u3001\u4eba\u9593\u4e2d\u5fc3\u306e\u30b3\u30f3\u30d4\u30e5\u30fc\u30bf\u30a8\u30f3\u30b8\u30cb\u30a2\u3067\u3059\u3002',
+        'about.p2':'\u65b0\u3057\u3044\u5f79\u8077\u3084\u30b3\u30e9\u30dc\u30ec\u30fc\u30b7\u30e7\u30f3\u3092\u6b53\u8fce\u3057\u307e\u3059\u3002\u79c1\u306e\u7d4c\u6b74\u304c\u8cb4\u30c1\u30fc\u30e0\u306e\u76ee\u6a19\u306b\u5408\u81f4\u3059\u308b\u3088\u3046\u3067\u3042\u308c\u3070\u3001\u304a\u6c17\u8efd\u306b\u3054\u9023\u7d61\u304f\u3060\u3055\u3044\u3002',
+        'word.present':'\u73fe\u5728',
+        'edu.1.degree':'\u7406\u5b66\u4fee\u58eb\u3001\u30a4\u30f3\u30bf\u30e9\u30af\u30c6\u30a3\u30d6\u30e1\u30c7\u30a3\u30a2\u6280\u8853',
+        'edu.2.degree':'\u4ea4\u63db\u7559\u5b66\u751f\u3001\u30b3\u30f3\u30d4\u30e5\u30fc\u30bf\u30fb\u30b3\u30df\u30e5\u30cb\u30b1\u30fc\u30b7\u30e7\u30f3\u79d1\u5b66',
+        'edu.3.degree':'\u6280\u8853\u5b66\u58eb\u3001\u60c5\u5831\u6280\u8853',
+        'edu.4.degree':'\u5b66\u90e8\u8a2a\u554f\u5b66\u751f\u3001\u30b3\u30f3\u30d4\u30e5\u30fc\u30bf\u30b5\u30a4\u30a8\u30f3\u30b9\u30fb\u5de5\u5b66',
+        'tab.ux':'UX\u30ea\u30b5\u30fc\u30c1','tab.interaction':'\u30a4\u30f3\u30bf\u30e9\u30af\u30b7\u30e7\u30f3\u30c7\u30b6\u30a4\u30f3','tab.visual':'\u30d3\u30b8\u30e5\u30a2\u30eb\u30b3\u30f3\u30d4\u30e5\u30fc\u30c6\u30a3\u30f3\u30b0',
+        'lbl.projectPage':'\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u30da\u30fc\u30b8','lbl.paper':'\u8ad6\u6587','lbl.code':'\u30b3\u30fc\u30c9',
+        'proj.1.title':'\u52b9\u679c\u7684\u306a\u6559\u80b2\u6cd5\u306e\u305f\u3081\u306eVRLE\u306e\u518d\u8a2d\u8a08',
+        'proj.1.desc':'VR\u30d9\u30fc\u30b9\u306e\u5b66\u7fd2\u74b0\u5883\u304c\u52b9\u679c\u7684\u306a\u5b66\u7fd2\u306b\u3069\u306e\u3088\u3046\u306b\u6559\u80b2\u7684\u652f\u63f4\u3092\u63d0\u4f9b\u3067\u304d\u308b\u304b\u3092\u7814\u7a76\u3057\u307e\u3057\u305f\u3002',
+        'proj.2.title':'\u30cf\u30a4\u30d6\u30ea\u30c3\u30c9\u5354\u50cd\u30af\u30e9\u30b9\u306b\u304a\u3051\u308b\u30d7\u30ed\u30b0\u30e9\u30df\u30f3\u30b0\u521d\u5fc3\u8005\u5411\u3051\u6559\u80b2\u30c6\u30af\u30ce\u30ed\u30b8\u30fc',
+        'proj.2.desc':'\u30cf\u30a4\u30d6\u30ea\u30c3\u30c9\u5354\u50cd\u5b66\u7fd2\u74b0\u5883\u306b\u304a\u3044\u3066\u3001\u30d7\u30ed\u30b0\u30e9\u30df\u30f3\u30b0\u521d\u5fc3\u8005\u306e\u52b9\u679c\u7684\u306a\u5b66\u7fd2\u3092\u4fc3\u9032\u3059\u308b\u305f\u3081\u306e\u6559\u80b2\u30c6\u30af\u30ce\u30ed\u30b8\u30fc\u306e\u8a2d\u8a08\u30cb\u30fc\u30ba\u3092\u8abf\u67fb\u3057\u307e\u3057\u305f\u3002',
+        'proj.3.title':'\u30b0\u30eb\u30fc\u30d7\u30a4\u30f3\u30bf\u30e9\u30af\u30b7\u30e7\u30f3\u3068\u5275\u9020\u7684\u601d\u8003\u306e\u305f\u3081\u306e\u30d3\u30c7\u30aa\u901a\u8a71\u3001VR\u3001\u30c6\u30ec\u30d7\u30ec\u30bc\u30f3\u30b9\u30ed\u30dc\u30c3\u30c8',
+        'proj.3.desc':'\u9060\u9694\u30b3\u30df\u30e5\u30cb\u30b1\u30fc\u30b7\u30e7\u30f3\u306e\u305f\u3081\u306e\u65e2\u5b58\u306e3\u3064\u306e\u30de\u30eb\u30c1\u30e2\u30fc\u30c0\u30eb\u30e1\u30c7\u30a3\u30a2\u3092\u6bd4\u8f03\u3057\u3001\u72ec\u7acb\u601d\u8003\u3078\u306e\u5f71\u97ff\u3092\u8abf\u3079\u307e\u3057\u305f\u3002',
+        'proj.4.title':'\u30aa\u30fc\u30b0\u30e1\u30f3\u30c6\u30c3\u30c9\u30fb\u30b7\u30c6\u30a3\u2014\u2014\u6297\u8b70\u306e\u305f\u3081\u306e\u884c\u52d5',
+        'proj.4.desc':'\u6297\u8b70\u306a\u3069\u306e\u5354\u50cd\u7684\u306a\u516c\u5171\u30a4\u30d9\u30f3\u30c8\u306b\u304a\u3051\u308b\u90fd\u5e02\u8a08\u753b\u3068\u5354\u50cd\u3092\u6539\u5584\u3057\u3001\u30b9\u30c8\u30ea\u30fc\u30c8\u30a2\u30fc\u30c8\u3092\u4fc3\u9032\u3059\u308b\u30a2\u30d7\u30ea\u3092\u8a2d\u8a08\u3057\u307e\u3057\u305f\u3002',
+        'proj.5.title':'\u89e6\u899a\u77e5\u899a\u306b\u5bfe\u3059\u308b\u9045\u5ef6\u306e\u5f71\u97ff',
+        'proj.5.desc':'\u89e6\u899a\u30c6\u30ec\u30aa\u30da\u30ec\u30fc\u30b7\u30e7\u30f3\u30b7\u30b9\u30c6\u30e0\u306b\u304a\u3051\u308b\u9045\u5ef6\u3068\u30b8\u30c3\u30bf\u30fc\u304c\u525b\u6027\u77e5\u899a\u306b\u4e0e\u3048\u308b\u5f71\u97ff\u3092\u5b9f\u88c5\u30fb\u5206\u6790\u3057\u307e\u3057\u305f\u3002',
+        'proj.6.title':'\u9060\u9694\u5b66\u7fd2\u306e\u305f\u3081\u306e\u30d3\u30c7\u30aa\u901a\u8a71\u306e\u518d\u8a2d\u8a08',
+        'proj.6.desc':'Zoom\u306a\u3069\u306e\u30d3\u30c7\u30aa\u30d9\u30fc\u30b9\u30a2\u30d7\u30ea\u30b1\u30fc\u30b7\u30e7\u30f3\u304c\u6559\u54e1\u306e\u4f53\u9a13\u306b\u4e0e\u3048\u308b\u5f71\u97ff\u3092\u8abf\u67fb\u3057\u3001\u4f7f\u3044\u3084\u3059\u3055\u5411\u4e0a\u306e\u305f\u3081\u306e\u65b0\u3057\u3044\u30a4\u30f3\u30bf\u30fc\u30d5\u30a7\u30fc\u30b9\u3092\u518d\u8a2d\u8a08\u3057\u307e\u3057\u305f\u3002',
+        'proj.7.title':'\u6a5f\u68b0\u5b66\u7fd2\u3092\u7528\u3044\u305fVR\u306b\u304a\u3051\u308b\u8868\u60c5\u8a8d\u8b58',
+        'proj.7.desc':'VR\u30a2\u30d0\u30bf\u30fc\u306e\u611f\u60c5\u8a8d\u8b58\u30d1\u30a4\u30d7\u30e9\u30a4\u30f3\u3092\u69cb\u7bc9\u3057\u307e\u3057\u305f\u3002',
+        'proj.8.title':'\u30d9\u30cb\u30b9\u30fb\u30bf\u30a4\u30e0\u30de\u30b7\u30f3\uff1a2020\u5e74\u5efa\u7269\u9ad8\u3055\u691c\u51fa',
+        'proj.8.desc':'Google Earth\u306e\u30c7\u30fc\u30bf\u306b\u57fa\u3065\u304d\u3001\u73fe\u5728\u306e\u5efa\u7269\u9ad8\u3055\u3068\u5730\u7406\u7684\u4f4d\u7f6e\u3092\u4fdd\u5b58\u3059\u308b\u305f\u3081\u306e\u30d9\u30cb\u30b9\u306e3D\u30e2\u30c7\u30eb\u3092\u958b\u767a\u3057\u307e\u3057\u305f\u3002',
+        'proj.9.title':'Rogue-Mike\u30b2\u30fc\u30e0',
+        'proj.9.desc':'C#\u3068Unreal Engine\u3092\u4f7f\u7528\u3057\u3066Windows\u5411\u3051\u30d3\u30c7\u30aa\u30b2\u30fc\u30e0\u3092\u958b\u767a\u3057\u307e\u3057\u305f\u3002',
+        'view.work.headline':'\u7814\u7a76\u304c\u30a4\u30f3\u30bf\u30fc\u30d5\u30a7\u30fc\u30b9\u306b\u306a\u308b\u5834\u6240\u3002',
+        'view.journey.headline':'\u5341\u306e\u90fd\u5e02\u3001\u4e00\u3064\u306e\u8ef8\u3002',
+        'view.journey.sub':'\u30ab\u30f3\u30d7\u30fc\u30eb\u304b\u3089\u30d1\u30ea\u307e\u3067 \u2014 4\u304b\u56fd\u306b\u308f\u305f\u308b\u3001\u7814\u7a76\u5ba4\u3001\u7814\u7a76\u30c1\u30fc\u30e0\u3001\u6559\u5ba4\u3067\u306e10\u5e74\u9593\u3002',
+        'view.education.headline':'\u56fd\u5883\u3092\u8d8a\u3048\u305f\u5b66\u3073\u3002',
+        'view.education.sub':'\u30b9\u30a6\u30a7\u30fc\u30c7\u30f3\u3001\u30b9\u30a4\u30b9\u3001\u30a4\u30f3\u30c9\u3067\u53d6\u5f97\u3057\u305f\u5b66\u4f4d\u3068\u4ea4\u63db\u7559\u5b66\u304c\u3001\u305d\u308c\u305e\u308c\u79c1\u306e\u6280\u8853\u3068\u4eba\u306b\u5bfe\u3059\u308b\u8003\u3048\u65b9\u3092\u5f62\u4f5c\u3063\u3066\u304d\u307e\u3057\u305f\u3002',
+        'footer.rights':'\u5168\u8457\u4f5c\u6a29\u6240\u6709\u3002',
+        'lbl.backToWork':'\u4f5c\u54c1\u306b\u623b\u308b'
+      }
+    };
+ 
+    let currentLang='en';
+    try{ currentLang=localStorage.getItem('siteLang')||'en'; }catch(e){ currentLang='en'; }
+ 
+    /* ============================================================
+       PROJECTS DATA — image, category, institution and links per
+       project. Titles/descriptions live in TRANSLATIONS above under
+       the matching proj.N.title / proj.N.desc keys.
+       To add a project: add an entry here AND a proj.N.title/proj.N.desc
+       pair in each language block of TRANSLATIONS.
+       ============================================================ */
+    const PROJECTS=[
+      {id:1,cat:'ux',meta:'KTH · EPFL',img:'images/projects/vrle_classroom.jpeg',imgAlt:'Preview image of VR learning environment project',links:[{key:'lbl.projectPage',href:'#'},{key:'lbl.paper',href:'#'}]},
+      {id:2,cat:'ux',meta:'University of Lausanne',img:'images/projects/unil.jpg',imgAlt:'Preview image of hybrid class research project',links:[{key:'lbl.projectPage',href:'#'},{key:'lbl.paper',href:'#'}]},
+      {id:3,cat:'ux',meta:'KTH',img:'images/projects/VRvsRobovsZoomfinal.png',imgAlt:'Preview image of remote communication project',links:[{key:'lbl.projectPage',href:'#'},{key:'lbl.paper',href:'#'}]},
+      {id:4,cat:'interaction',meta:'EPFL',img:'images/projects/protest_project.png',imgAlt:'Augmented City interaction design',links:[{key:'lbl.projectPage',href:'#'}]},
+      {id:5,cat:'interaction',meta:'Ericsson',img:'images/projects/haptic_ericsson.png',imgAlt:'Preview image of haptic systems project',links:[{key:'lbl.paper',href:'#'},{key:'lbl.code',href:'#'}]},
+      {id:6,cat:'interaction',meta:'KTH',img:'images/projects/teach_figma.png',imgAlt:'Preview image of remote learning UX project',links:[{key:'lbl.projectPage',href:'#'}]},
+      {id:7,cat:'visual',meta:'EPFL',img:'images/projects/iig_project.png',imgAlt:'Preview image of IIG EPFL project',links:[{key:'lbl.paper',href:'#'},{key:'lbl.code',href:'#'}]},
+      {id:8,cat:'visual',meta:'EPFL',img:'images/projects/venice1.png',imgAlt:'Preview image of 3D city modelling project',links:[{key:'lbl.projectPage',href:'#'},{key:'lbl.code',href:'#'}]},
+      {id:9,cat:'visual',meta:'KTH',img:'images/projects/r_mike.gif',imgAlt:'Preview image of game development project',links:[{key:'lbl.code',href:'#'}]}
+    ];
+ 
+    function tr(key){
+      const dict=TRANSLATIONS[currentLang]||TRANSLATIONS.en;
+      return (dict&&dict[key]!==undefined)?dict[key]:(TRANSLATIONS.en[key]!==undefined?TRANSLATIONS.en[key]:key);
+    }
+ 
+    function renderWorkGrid(){
+      const wrap=document.getElementById('workGridCards');
+      wrap.innerHTML=PROJECTS.map(function(p){
+        return '<button type="button" class="work-card reveal" data-id="'+p.id+'" data-cat="'+p.cat+'">'
+          +'<div class="work-card-img"><img src="'+p.img+'" alt="'+p.imgAlt+'" loading="lazy"></div>'
+          +'<div class="work-card-title" data-i18n="proj.'+p.id+'.title">'+tr('proj.'+p.id+'.title')+'</div>'
+          +'<div class="work-card-meta">'+p.meta+'</div>'
+          +'</button>';
+      }).join('');
+      wrap.querySelectorAll('.work-card').forEach(function(card){
+        card.addEventListener('click',function(){
+          goToProject(parseInt(card.dataset.id,10));
+        });
+      });
+      document.querySelectorAll('.ptab-count').forEach(function(span){
+        span.textContent=PROJECTS.filter(function(p){return p.cat===span.dataset.cat;}).length;
+      });
+    }
+ 
+    let currentProjectId=null;
+    function renderProjectDetail(id){
+      const p=PROJECTS.find(function(x){return x.id===id;});
+      if(!p)return;
+      currentProjectId=id;
+      const linksHtml=p.links.map(function(l){
+        return '<a href="'+l.href+'" target="_blank" rel="noopener noreferrer">'+tr(l.key)+'</a>';
+      }).join('');
+      document.getElementById('workDetail').innerHTML=
+        '<button type="button" class="back-link" id="backToWorkBtn">'
+        +'<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>'
+        +'<span>'+tr('lbl.backToWork')+'</span></button>'
+        +'<div class="project-detail-img"><img src="'+p.img+'" alt="'+p.imgAlt+'"></div>'
+        +'<p class="view-kicker">'+p.meta+'</p>'
+        +'<h1 class="view-headline">'+tr('proj.'+id+'.title')+'</h1>'
+        +'<p class="view-sub">'+tr('proj.'+id+'.desc')+'</p>'
+        +'<div class="proj-card-links">'+linksHtml+'</div>';
+      document.getElementById('backToWorkBtn').addEventListener('click',function(){
+        goToWork();
+      });
+    }
+ 
+    function showWorkSub(projectId){
+      const grid=document.getElementById('workGrid'),detail=document.getElementById('workDetail');
+      if(projectId){
+        renderProjectDetail(projectId);
+        grid.classList.remove('active');
+        detail.classList.add('active');
+      }else{
+        currentProjectId=null;
+        detail.classList.remove('active');
+        grid.classList.add('active');
+      }
+    }
+ 
+    function topbarLinksHTML(){
+      return '<button type="button" class="nav-item" data-view="education"><span data-i18n="nav.education">Education</span></button>'
+        +'<button type="button" class="nav-item" data-view="journey"><span data-i18n="nav.journey">Journey</span></button>'
+        +'<button type="button" class="nav-item" data-view="work"><span data-i18n="nav.work">Work</span></button>'
+        +'<a class="nav-item" href="papers/cv_1page.pdf" target="_blank" rel="noopener noreferrer"><span data-i18n="nav.cv">CV</span></a>'
+        +'<a class="nav-item" href="mailto:srutib@kth.com"><span data-i18n="nav.contact">Contact Me</span></a>';
+    }
+    document.getElementById('topbarLinks').innerHTML=topbarLinksHTML();
+    renderWorkGrid();
+ 
+    /* ============================================================
+       VIEW ROUTER — Work / Journey / Education swap in place like
+       tabs (frog-style), instead of scrolling to an anchor. Work has
+       a sub-route for project detail pages: #project-<id>.
+       ============================================================ */
+    const VALID_VIEWS=['home','work','journey','education'];
+    function parseHash(){
+      const h=(location.hash||'#work').replace('#','');
+      const m=h.match(/^project-(\d+)$/);
+      if(m)return{view:'work',projectId:parseInt(m[1],10)};
+      return{view:VALID_VIEWS.indexOf(h)!==-1?h:'work',projectId:null};
+    }
+    function showView(view,opts){
+      opts=opts||{};
+      if(VALID_VIEWS.indexOf(view)===-1)view='work';
+      document.querySelectorAll('.view').forEach(function(sec){sec.classList.toggle('active',sec.dataset.view===view);});
+      document.querySelectorAll('#topbar [data-view]').forEach(function(btn){btn.classList.toggle('active',btn.dataset.view===view);});
+      if(view==='work')showWorkSub(opts.projectId||null);
+      if(view==='journey'&&typeof fitAll==='function'){
+        requestAnimationFrame(function(){requestAnimationFrame(function(){
+          if(!detail.classList.contains('open'))fitAll();
+          S.s=S.ts;S.x=S.tx;S.y=S.ty;
+        });});
+      }
+      if(!opts.silent){
+        if(view==='home'){
+          window.scrollTo({top:0,behavior:'smooth'});
+        }else{
+          document.getElementById('main-content').scrollIntoView({behavior:'smooth',block:'start'});
+        }
+      }
+    }
+    function setHash(h){
+      try{ if(location.hash!=='#'+h)location.hash=h; }catch(err){ /* blocked in sandboxed preview — view still updates */ }
+    }
+    function goToProject(id){
+      setHash('project-'+id);
+      showView('work',{projectId:id});
+    }
+    function goToWork(){
+      setHash('work');
+      showView('work',{projectId:null});
+    }
+    document.querySelectorAll('#topbar [data-view]').forEach(function(btn){
+      btn.addEventListener('click',function(e){
+        e.preventDefault();
+        const view=btn.dataset.view;
+        setHash(view);
+        showView(view,{projectId:null});
+      });
+    });
+    const heroToWorkBtn=document.getElementById('heroToWorkBtn');
+    if(heroToWorkBtn)heroToWorkBtn.addEventListener('click',function(){goToWork();});
+    window.addEventListener('hashchange',function(){
+      const route=parseHash();
+      showView(route.view,{silent:true,projectId:route.projectId});
+    });
+ 
+ 
+    const LANG_LABEL={en:'EN',fr:'FR',zh:'\u4e2d\u6587',de:'DE',ja:'\u65e5'};
+ 
+    function applyStaticTranslations(lang){
+      const dict=TRANSLATIONS[lang]||TRANSLATIONS.en;
+      document.querySelectorAll('[data-i18n]').forEach(function(el){
+        const key=el.getAttribute('data-i18n');
+        if(dict[key]!==undefined) el.innerHTML=dict[key];
+      });
+      document.documentElement.setAttribute('lang',lang);
+      document.querySelectorAll('.lang-current').forEach(function(el){el.textContent=LANG_LABEL[lang]||'EN';});
+      document.querySelectorAll('.lang-opt').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});
+    }
+ 
+    function setLanguage(lang){
+      if(!TRANSLATIONS[lang])lang='en';
+      currentLang=lang;
+      try{ localStorage.setItem('siteLang',lang); }catch(e){ /* storage unavailable in this context — language still applies for the session */ }
+      applyStaticTranslations(lang);
+      // Refresh journey map text if a place is currently open
+      if(typeof selectedIdx!=='undefined'&&selectedIdx>-1)selectPlace(selectedIdx);
+      // Refresh project detail text if one is currently open
+      if(currentProjectId)renderProjectDetail(currentProjectId);
+      document.querySelectorAll('.lang-dd.open').forEach(function(dd){dd.classList.remove('open');});
+    }
+ 
+    document.querySelectorAll('.lang-dd').forEach(function(dd){
+      const btn=dd.querySelector('.lang-btn');
+      btn.addEventListener('click',function(e){
+        e.stopPropagation();
+        const willOpen=!dd.classList.contains('open');
+        document.querySelectorAll('.lang-dd').forEach(function(o){o.classList.remove('open');});
+        if(willOpen)dd.classList.add('open');
+      });
+      dd.querySelectorAll('.lang-opt').forEach(function(opt){
+        opt.addEventListener('click',function(e){e.stopPropagation();setLanguage(opt.dataset.lang);});
+      });
+    });
+    document.addEventListener('click',function(){document.querySelectorAll('.lang-dd.open').forEach(function(dd){dd.classList.remove('open');});});
+ 
+    /* SCROLL REVEAL — fade/rise elements in as they enter the viewport, fade back out as they leave */
+    (function(){
+      const prefersReduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if(prefersReduced)return;
+      const io=new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){entry.target.classList.toggle('in-view',entry.isIntersecting);});
+      },{threshold:0.12,rootMargin:'0px 0px -6% 0px'});
+      document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+    })();
+ 
     /* JOURNEY MAP DATA */
     /* ADD / REPLACE JOURNEY MAP LOGOS HERE inside each group object.
        Use this format:
        logo:"images/logos/kth.png", alt:"KTH Logo"
-
+ 
        Example full group:
        {org:"KTH Royal Institute of Technology, Sweden", logo:"images/logos/kth.png", alt:"KTH Logo", experiences:[...]}
-
+ 
        IMPORTANT: Keep alt text meaningful because it becomes the image alt attribute in the generated popup logo.
     */
-
-
+ 
+ 
 const PLACES=[
-      {city:"Kanpur",mark:"spire",top:"#BFEA7A",rim:"#9ED65A",years:["2015","2017","2019"],groups:[{org:"IIT Kanpur, India",logo:"images/logos/iitk.jpg",alt:"IIT Kanpur",experiences:[{title:"Winter Internship",year:"2015",note:"Tessellation and Topological Pattern Generation and Recognition",tags:["Persistent Homology","Simplicial Complexes","Periodic-Aperiodic","Convex-Concave"]},{title:"OffCycle Internship",year:"2017",note:"Old Document Restoration using Image Processing, Video Subtitle Removal using Inpainting",tags:["Matlab","Fourier Transform","Singular value decomposition","Harmonic analysis","Morphological Operations","PDE"]},{title:"Research Assistantship",year:"2019",note:"Musical Script Generation from Harmonium Playing Video using Computer Vision",tags:["Python","Pytorch","OpenCV","Matlab"]}]}]},
-      {city:"Chennai",mark:"arch",top:"#C7F66C",rim:"#9BE548",years:["2016"],groups:[{org:"IIT Madras, India",logo:"images/logos/iitm.png",alt:"IIT Madras",experiences:[{title:"Summer Internship",year:"2016",note:"Cloth Simulation and Modelling",tags:["OpenGL","Visual C++","Bullet Physics","Rigid_Body-Cloth-Collision"]}]}]},
-      {city:"Kharagpur",mark:"spire",top:"#AEEF57",rim:"#84D933",years:["2017","2018","2019","2020"],groups:[{org:"IIT Kharagpur, India",logo:"images/logos/iitkgp.jpg",alt:"IIT Kharagpur",experiences:[{title:"Visiting Undergraduate Thesis Student",year:"2017",note:"Effectiveness of Image Processing Methods on Counterfeit Integrated Circuit (IC) Detection",tags:["Matlab","OpenCV"]},{title:"Visiting Undergraduate Thesis Student",year:"2018",note:"Effectiveness of Computer Vision Methods on Counterfeit Integrated Circuit (IC) Detection",tags:["Dataset Generation","Masked RCNN","YOLOv2","Tensorflow","Anaconda Spyder","Python","OpenCV","Matplotlib"]},{title:"Remote Research Assistant",year:"2019",note:"Changes in Emotional Perception for Indian Classical Music Listeners",tags:["Matlab"]},{title:"Research Associate",year:"2020",note:"DeepFakeFace Video Detection",tags:["Python","Pytorch","Interframe Differences"]}]}]},
-      {city:"Chicago",mark:"pavilion",top:"#b8bfb8",rim:"#969d96",years:["2018","2019"],groups:[{org:"UIUC, USA",logo:"images/logos/uiuc.png",alt:"UIUC",experiences:[{title:"Remote Intern",year:"2018–2019",note:"Infant's Emotion-based Need Detection using PyraMiD-LSTM",tags:["Python","PyTorch","DyNet","XNMT","Signal Processing"]}]}]},
-      {city:"Lyon",mark:"arch",top:"#c2c9c0",rim:"#a0a89e",years:["2019"],groups:[{org:"CNRS at Claude Bernard Lyon 1, France",logo:"images/logos/cnrs.png",alt:"CNRS",experiences:[{title:"Remote Research",year:"2019",note:"Symmetry Pattern Detection and Analysis",tags:["Tessellation","Computational Crystallography","Frieze group","Wallpaper Group","Point Group","Space group"]}]}]},
-      {city:"Kolkata",mark:"pavilion",top:"#85B7EB",rim:"#378ADD",years:["2019"],groups:[{org:"NSHM College, India",logo:"images/logos/nshm.png",alt:"NSHM",experiences:[{title:"Visiting Lecturer",year:"2019",note:"Guest Lecturer for the course '3D Computer Graphics using OpenGL and C++'",tags:["Visual Studio","C++","OpenGL","Co-ordinate Geometry","Vectors"]}]}]},
-      {city:"Stockholm",mark:"spire",top:"#FF9A2E",rim:"#E07010",years:["2020-2022","2024-2025"],groups:[{org:"KTH Royal Institute of Technology, Sweden",logo:"images/logos/kth.png",alt:"KTH",experiences:[{title:"Teaching Assistant",year:"2020, 2022, 2024, 2025",note:"Computer Visualisation, Machine Learning, Python Programming Fundamentals, Multivariable Calculus, Computer Networking",tags:["Python","Pytorch","OpenGL","C++","Inviwo","Tomcat 9","Docker","DBMS/SQL","Spring","Netbeans 12 JDK 8","Java","Jakarta Mail"]},{title:"Research Assistant",year:"2021-2022",note:"Machine Learning for Digital Pathology",tags:["PyQT","Pytorch","HTML","JavaScript","PyQT"]}]},{org:"Ericsson, Sweden",logo:"images/logos/Ericsson2.jpg",alt:"Ericsson",experiences:[{title:"Summer R&D Intern",year:"2021",note:" Examined Impact of Network Changes on Perception in Haptic Teleoperation System",tags:["Python","ROS","Omni Haptic","Miro","Kanban","A/B Testing"]}]}]},
-      {city:"Lausanne",mark:"pavilion",top:"#F9E04B",rim:"#E6C418",years:["2021","2022","2023"],groups:[{org:"EPFL, Switzerland",logo:"images/logos/epfl.png",alt:"EPFL",experiences:[{title:"Graduate Exchange in Computer and Communication Sciences",year:"2021 – 2022",note:"MSc Courses",tags:["Digital Humanities","Computer Vision","Virtual Reality","City Design"]},{title:"Visiting Graduate Thesis Student in Computer Science",year:"2022 – 2023",note:"Teacher's Perspective and Tacit Knowledge in Virtual Reality based Education Technology Development",tags:["Startup","VRLE","UX Research"]}]},{org:"University of Lausanne, Switzerland",logo:"images/logos/UNIL.jpg",alt:"UNIL",experiences:[{title:"Research Assistant",year:"2023",note:"Collaborative Programming Learning Media for Novices in Hybrid Classes",tags:["UX Research","EdTech"]}]}]},
-      {city:"Jyväskylä",mark:"arch",top:"#F9E04B",rim:"#E6C418",years:["2025"],groups:[{org:"University of Jyväskylä, Finland",logo:"images/logos/jyu_transparent.png",alt:"JYU",experiences:[{title:"Summer Trainee",year:"2025",note:"Accessible Multimodal Interactive Graph Navigation System",tags:["Accessibility","Multimodal Design","Figma","Claude AI","Python"]}]}]},
-      {city:"Paris",mark:"arch",top:"#E8B6C6",rim:"#D48CA5",years:["2025-Present"],groups:[{org:"CAEL - Centre d'Animation Expression Loisirs de Bourg-La-Reine",logo:"images/logos/cael.png",alt:"CAEL",experiences:[{title:"French Language Training",year:"2025-Present",note:"Ateliers Sociolinguistisques A1−A2",tags:["French","DELF A2"]}]}]}
+      {city:"Kanpur",mark:"spire",top:"#BFEA7A",rim:"#9ED65A",years:["2015","2017","2019"],groups:[{org:"IIT Kanpur, India",logo:"images/logos/iitk.jpg",alt:"IIT Kanpur",experiences:[{title:"Winter Internship",year:"2015",note:"Tessellation and Topological Pattern Generation and Recognition",title_fr:"Stage d'hiver",title_zh:"寒假实习",note_fr:"Génération et reconnaissance de motifs topologiques par pavage",note_zh:"镶嵌与拓扑图案的生成与识别",title_de:"Winterpraktikum",note_de:"Erzeugung und Erkennung von Tessellierungs- und topologischen Mustern",title_ja:"冬季インターンシップ",note_ja:"テッセレーションおよびトポロジカルパターンの生成と認識",tags:["Persistent Homology","Simplicial Complexes","Periodic-Aperiodic","Convex-Concave"]},{title:"OffCycle Internship",year:"2017",note:"Old Document Restoration using Image Processing, Video Subtitle Removal using Inpainting",title_fr:"Stage hors cycle",title_zh:"非周期实习",note_fr:"Restauration de documents anciens par traitement d'image, suppression de sous-titres vidéo par inpainting",note_zh:"利用图像处理技术修复旧文档,利用图像修复技术去除视频字幕",title_de:"Praktikum außerhalb des Zyklus",note_de:"Restaurierung alter Dokumente mittels Bildverarbeitung, Entfernung von Videountertiteln mittels Inpainting",title_ja:"オフサイクルインターンシップ",note_ja:"画像処理を用いた古文書の修復、インペインティングを用いた動画字幕の除去",tags:["Matlab","Fourier Transform","Singular value decomposition","Harmonic analysis","Morphological Operations","PDE"]},{title:"Research Assistantship",year:"2019",note:"Musical Script Generation from Harmonium Playing Video using Computer Vision",title_fr:"Assistanat de recherche",title_zh:"研究助理",note_fr:"Génération de partitions musicales à partir de vidéos de jeu à l'harmonium par vision par ordinateur",note_zh:"利用计算机视觉从演奏簧风琴的视频中生成乐谱",title_de:"Forschungsassistenz",note_de:"Erzeugung von Notenschrift aus Harmonium-Spielvideos mittels Computer Vision",title_ja:"研究助手",note_ja:"コンピュータビジョンを用いたハルモニウム演奏動画からの楽譜生成",tags:["Python","Pytorch","OpenCV","Matlab"]}]}]},
+      {city:"Chennai",mark:"arch",top:"#C7F66C",rim:"#9BE548",years:["2016"],groups:[{org:"IIT Madras, India",logo:"images/logos/iitm.png",alt:"IIT Madras",experiences:[{title:"Summer Internship",year:"2016",note:"Cloth Simulation and Modelling",title_fr:"Stage d'été",title_zh:"暑期实习",note_fr:"Simulation et modélisation de tissus",note_zh:"布料模拟与建模",title_de:"Sommerpraktikum",note_de:"Stoffsimulation und -modellierung",title_ja:"夏季インターンシップ",note_ja:"布のシミュレーションとモデリング",tags:["OpenGL","Visual C++","Bullet Physics","Rigid_Body-Cloth-Collision"]}]}]},
+      {city:"Kharagpur",mark:"spire",top:"#AEEF57",rim:"#84D933",years:["2017","2018","2019","2020"],groups:[{org:"IIT Kharagpur, India",logo:"images/logos/iitkgp.jpg",alt:"IIT Kharagpur",experiences:[{title:"Visiting Undergraduate Thesis Student",year:"2017",note:"Effectiveness of Image Processing Methods on Counterfeit Integrated Circuit (IC) Detection",title_fr:"Étudiante invitée en mémoire de licence",title_zh:"本科毕业论文访问学生",note_fr:"Efficacité des méthodes de traitement d'image pour la détection de circuits intégrés contrefaits",note_zh:"图像处理方法在假冒集成电路(IC)检测中的有效性",title_de:"Gast-Bachelorarbeitsstudentin",note_de:"Wirksamkeit von Bildverarbeitungsmethoden bei der Erkennung gefälschter integrierter Schaltkreise (IC)",title_ja:"学部卒業論文訪問学生",note_ja:"画像処理手法による偽造集積回路(IC)検出の有効性",tags:["Matlab","OpenCV"]},{title:"Visiting Undergraduate Thesis Student",year:"2018",note:"Effectiveness of Computer Vision Methods on Counterfeit Integrated Circuit (IC) Detection",title_fr:"Étudiante invitée en mémoire de licence",title_zh:"本科毕业论文访问学生",note_fr:"Efficacité des méthodes de vision par ordinateur pour la détection de circuits intégrés contrefaits",note_zh:"计算机视觉方法在假冒集成电路(IC)检测中的有效性",title_de:"Gast-Bachelorarbeitsstudentin",note_de:"Wirksamkeit von Computer-Vision-Methoden bei der Erkennung gefälschter integrierter Schaltkreise (IC)",title_ja:"学部卒業論文訪問学生",note_ja:"コンピュータビジョン手法による偽造集積回路(IC)検出の有効性",tags:["Dataset Generation","Masked RCNN","YOLOv2","Tensorflow","Anaconda Spyder","Python","OpenCV","Matplotlib"]},{title:"Remote Research Assistant",year:"2019",note:"Changes in Emotional Perception for Indian Classical Music Listeners",title_fr:"Assistante de recherche à distance",title_zh:"远程研究助理",note_fr:"Évolution de la perception émotionnelle chez les auditeurs de musique classique indienne",note_zh:"印度古典音乐听众情绪感知的变化",title_de:"Externe Forschungsassistentin",note_de:"Veränderungen der emotionalen Wahrnehmung bei Hörern indischer klassischer Musik",title_ja:"リモート研究助手",note_ja:"インド古典音楽聴取者の感情知覚の変化",tags:["Matlab"]},{title:"Research Associate",year:"2020",note:"DeepFakeFace Video Detection",title_fr:"Associée de recherche",title_zh:"研究助理(副研究员)",note_fr:"Détection vidéo de deepfakes faciaux",note_zh:"DeepFake换脸视频检测",title_de:"Wissenschaftliche Mitarbeiterin",note_de:"Erkennung von DeepFake-Gesichtsvideos",title_ja:"リサーチアソシエイト",note_ja:"ディープフェイク顔動画の検出",tags:["Python","Pytorch","Interframe Differences"]}]}]},
+      {city:"Chicago",mark:"pavilion",top:"#b8bfb8",rim:"#969d96",years:["2018","2019"],groups:[{org:"UIUC, USA",logo:"images/logos/uiuc.png",alt:"UIUC",experiences:[{title:"Remote Intern",year:"2018–2019",note:"Infant's Emotion-based Need Detection using PyraMiD-LSTM",title_fr:"Stagiaire à distance",title_zh:"远程实习生",note_fr:"Détection des besoins des nourrissons basée sur les émotions à l'aide de PyraMiD-LSTM",note_zh:"利用PyraMiD-LSTM进行基于情绪的婴儿需求检测",title_de:"Externe Praktikantin",note_de:"Emotionsbasierte Bedürfniserkennung bei Säuglingen mittels PyraMiD-LSTM",title_ja:"リモートインターン",note_ja:"PyraMiD-LSTMを用いた乳児の感情に基づくニーズ検出",tags:["Python","PyTorch","DyNet","XNMT","Signal Processing"]}]}]},
+      {city:"Lyon",mark:"arch",top:"#c2c9c0",rim:"#a0a89e",years:["2019"],groups:[{org:"CNRS at Claude Bernard Lyon 1, France",logo:"images/logos/cnrs.png",alt:"CNRS",experiences:[{title:"Remote Research",year:"2019",note:"Symmetry Pattern Detection and Analysis",title_fr:"Recherche à distance",title_zh:"远程研究",note_fr:"Détection et analyse de motifs de symétrie",note_zh:"对称图案检测与分析",title_de:"Externe Forschung",note_de:"Erkennung und Analyse von Symmetriemustern",title_ja:"リモート研究",note_ja:"対称パターンの検出と分析",tags:["Tessellation","Computational Crystallography","Frieze group","Wallpaper Group","Point Group","Space group"]}]}]},
+      {city:"Kolkata",mark:"pavilion",top:"#85B7EB",rim:"#378ADD",years:["2019"],groups:[{org:"NSHM College, India",logo:"images/logos/nshm.png",alt:"NSHM",experiences:[{title:"Visiting Lecturer",year:"2019",note:"Guest Lecturer for the course '3D Computer Graphics using OpenGL and C++'",title_fr:"Chargée de cours invitée",title_zh:"客座讲师",note_fr:"Enseignante invitée pour le cours « Infographie 3D avec OpenGL et C++ »",note_zh:"担任课程《使用OpenGL与C++的三维计算机图形学》客座讲师",title_de:"Gastdozentin",note_de:"Gastdozentin für den Kurs „3D-Computergrafik mit OpenGL und C++“",title_ja:"客員講師",note_ja:"「OpenGLとC++による3Dコンピュータグラフィックス」講座のゲスト講師",tags:["Visual Studio","C++","OpenGL","Co-ordinate Geometry","Vectors"]}]}]},
+      {city:"Stockholm",mark:"spire",top:"#FF9A2E",rim:"#E07010",years:["2020-2022","2024-2025"],groups:[{org:"KTH Royal Institute of Technology, Sweden",logo:"images/logos/kth.png",alt:"KTH",experiences:[{title:"Teaching Assistant",year:"2020, 2022, 2024, 2025",note:"Computer Visualisation, Machine Learning, Python Programming Fundamentals, Multivariable Calculus, Computer Networking",title_fr:"Assistante d'enseignement",title_zh:"助教",note_fr:"Visualisation informatique, apprentissage automatique, fondamentaux de la programmation Python, calcul à plusieurs variables, réseaux informatiques",note_zh:"计算机可视化、机器学习、Python编程基础、多元微积分、计算机网络",title_de:"Wissenschaftliche Hilfskraft (Lehre)",note_de:"Computervisualisierung, Maschinelles Lernen, Grundlagen der Python-Programmierung, Mehrdimensionale Analysis, Computernetzwerke",title_ja:"ティーチングアシスタント",note_ja:"コンピュータビジュアライゼーション、機械学習、Pythonプログラミング基礎、多変数微積分、コンピュータネットワーク",tags:["Python","Pytorch","OpenGL","C++","Inviwo","Tomcat 9","Docker","DBMS/SQL","Spring","Netbeans 12 JDK 8","Java","Jakarta Mail"]},{title:"Research Assistant",year:"2021-2022",note:"Machine Learning for Digital Pathology",title_fr:"Assistante de recherche",title_zh:"研究助理",note_fr:"Apprentissage automatique pour la pathologie numérique",note_zh:"用于数字病理学的机器学习",title_de:"Forschungsassistentin",note_de:"Maschinelles Lernen für digitale Pathologie",title_ja:"研究助手",note_ja:"デジタル病理学のための機械学習",tags:["PyQT","Pytorch","HTML","JavaScript","PyQT"]}]},{org:"Ericsson, Sweden",logo:"images/logos/Ericsson2.jpg",alt:"Ericsson",experiences:[{title:"Summer R&D Intern",year:"2021",note:" Examined Impact of Network Changes on Perception in Haptic Teleoperation System",title_fr:"Stagiaire R&D d'été",title_zh:"暑期研发实习生",note_fr:"Étude de l'impact des changements de réseau sur la perception dans un système de téléopération haptique",note_zh:"研究了网络变化对触觉遥操作系统中感知的影响",title_de:"Sommerpraktikantin F&E",note_de:"Untersuchung des Einflusses von Netzwerkänderungen auf die Wahrnehmung in haptischen Teleoperationssystemen",title_ja:"夏季研究開発インターン",note_ja:"触覚遠隔操作システムにおける知覚へのネットワーク変化の影響を調査",tags:["Python","ROS","Omni Haptic","Miro","Kanban","A/B Testing"]}]}]},
+      {city:"Lausanne",mark:"pavilion",top:"#F9E04B",rim:"#E6C418",years:["2021","2022","2023"],groups:[{org:"EPFL, Switzerland",logo:"images/logos/epfl.png",alt:"EPFL",experiences:[{title:"Graduate Exchange in Computer and Communication Sciences",year:"2021 – 2022",note:"MSc Courses",title_fr:"Échange de troisième cycle en sciences informatiques et de la communication",title_zh:"计算机与通信科学研究生交换项目",note_fr:"Cours de master",note_zh:"硕士课程",title_de:"Graduiertenaustausch in Informatik und Kommunikationswissenschaften",note_de:"Master-Kurse",title_ja:"コンピュータ・コミュニケーション科学における大学院交換留学",note_ja:"修士課程コース",tags:["Digital Humanities","Computer Vision","Virtual Reality","City Design"]},{title:"Visiting Graduate Thesis Student in Computer Science",year:"2022 – 2023",note:"Teacher's Perspective and Tacit Knowledge in Virtual Reality based Education Technology Development",title_fr:"Étudiante invitée en mémoire de master en informatique",title_zh:"计算机科学硕士论文访问学生",note_fr:"Perspective des enseignants et connaissances tacites dans le développement de technologies éducatives basées sur la réalité virtuelle",note_zh:"基于虚拟现实的教育技术开发中的教师视角与隐性知识",title_de:"Gast-Masterarbeitsstudentin in Informatik",note_de:"Perspektive der Lehrenden und implizites Wissen bei der Entwicklung VR-basierter Bildungstechnologie",title_ja:"コンピュータサイエンス修士論文訪問学生",note_ja:"VRベース教育テクノロジー開発における教師の視点と暗黙知",tags:["Startup","VRLE","UX Research"]}]},{org:"University of Lausanne, Switzerland",logo:"images/logos/UNIL.jpg",alt:"UNIL",experiences:[{title:"Research Assistant",year:"2023",note:"Collaborative Programming Learning Media for Novices in Hybrid Classes",title_fr:"Assistante de recherche",title_zh:"研究助理",note_fr:"Supports d'apprentissage collaboratif de la programmation pour débutants en classes hybrides",note_zh:"面向混合课堂编程初学者的协作式学习媒介",title_de:"Forschungsassistentin",note_de:"Kollaborative Lernmedien für Programmier-Einsteiger in hybriden Klassen",title_ja:"研究助手",note_ja:"ハイブリッドクラスにおける初心者向け協働プログラミング学習メディア",tags:["UX Research","EdTech"]}]}]},
+      {city:"Jyväskylä",mark:"arch",top:"#F9E04B",rim:"#E6C418",years:["2025"],groups:[{org:"University of Jyväskylä, Finland",logo:"images/logos/jyu_transparent.png",alt:"JYU",experiences:[{title:"Summer Trainee",year:"2025",note:"Accessible Multimodal Interactive Graph Navigation System",title_fr:"Stagiaire d'été",title_zh:"暑期实习生",note_fr:"Système accessible de navigation graphique interactive multimodale",note_zh:"无障碍多模态交互式图形导航系统",title_de:"Sommerpraktikantin",note_de:"Barrierefreies multimodales interaktives Graphennavigationssystem",title_ja:"夏季トレーニー",note_ja:"アクセシブルなマルチモーダル・インタラクティブグラフナビゲーションシステム",tags:["Accessibility","Multimodal Design","Figma","Claude AI","Python"]}]}]},
+      {city:"Paris",mark:"arch",top:"#E8B6C6",rim:"#D48CA5",years:["2025-Present"],groups:[{org:"CAEL - Centre d'Animation Expression Loisirs de Bourg-La-Reine",logo:"images/logos/cael.png",alt:"CAEL",experiences:[{title:"French Language Training",year:"2025-Present",note:"Ateliers Sociolinguistisques A1−A2",title_fr:"Formation en langue française",title_zh:"法语培训",note_fr:"Ateliers Sociolinguistisques A1−A2",note_zh:"社会语言学工作坊 A1−A2",title_de:"Französischsprachtraining",note_de:"Soziolinguistische Workshops A1−A2",title_ja:"フランス語トレーニング",note_ja:"社会言語学ワークショップ A1−A2",tags:["French","DELF A2"]}]}]}
     ];
-
+ 
     const POSITIONS=[{x:-100,y:500},{x:-100,y:1300},{x:400,y:900},{x:820,y:350},{x:820,y:1450},{x:1400,y:900},{x:2500,y:900},{x:1950,y:500},{x:1950,y:1300},{x:3100,y:900}];
     const shell=document.getElementById('jshell'),world=document.getElementById('jworld'),vp=document.getElementById('jvp'),detail=document.getElementById('jdetail'),detailBody=document.getElementById('jdetailBody'),dtitle=document.getElementById('jdtitle'),dsub=document.getElementById('jdsubtitle'),dcards=document.getElementById('jcards'),mapToggleBtn=document.getElementById('toggleMapSize');
     const S={s:1,x:0,y:0,ts:1,tx:0,ty:0,minS:.12,maxS:2.2};
@@ -568,7 +799,7 @@ const PLACES=[
     const cardState={left:null,top:null,width:null,height:null};
     function saveCardState(){if(!detail.classList.contains('open'))return;cardState.left=detail.style.left;cardState.top=detail.style.top;cardState.width=detail.style.width;cardState.height=detail.style.height;}
     function applyCardState(){if(cardState.left!==null)detail.style.left=cardState.left;if(cardState.top!==null)detail.style.top=cardState.top;if(cardState.width!==null)detail.style.width=cardState.width;if(cardState.height!==null)detail.style.height=cardState.height;}
-    function selectPlace(i){suppressClose=true;selectedIdx=i;const p=islands[i];islands.forEach((is,j)=>is.el.classList.toggle('sel',j===i));dtitle.textContent=p.city;dsub.textContent='';dcards.innerHTML=(p.groups||[]).map(g=>`<div class="jcard"><div class="jcard-head"><div class="jlogo"><img src="${g.logo||''}" alt="${g.alt||g.org||p.city}" onerror="this.style.display='none';this.parentElement.innerHTML='🏛️';this.parentElement.style.fontSize='1.25rem';"></div><div class="jorg-wrap"><div class="jorg">${g.org||p.city}</div></div></div><div class="jroles">${(g.experiences||[]).map(e=>`<div class="jrole"><div class="jct">${e.title}</div><div class="jcy">${e.year}</div><div class="jcn">${e.note}</div><div class="jtags">${(e.tags||[]).map(t=>`<span class="jtag">${t}</span>`).join('')}</div></div>`).join('')}</div></div>`).join('');const wasOpen=detail.classList.contains('open');if(wasOpen){saveCardState();detail.style.transition='none';applyCardState();requestAnimationFrame(()=>{detail.style.transition='';});}else{detail.classList.add('open');if(cardState.left!==null)applyCardState();else positionDetail();}focusOn(p.x,p.y,1.1);setTimeout(()=>{suppressClose=false;},50);}
+    function selectPlace(i){suppressClose=true;selectedIdx=i;const p=islands[i];islands.forEach((is,j)=>is.el.classList.toggle('sel',j===i));dtitle.textContent=p.city;dsub.textContent='';dcards.innerHTML=(p.groups||[]).map(g=>`<div class="jcard"><div class="jcard-head"><div class="jlogo"><img src="${g.logo||''}" alt="${g.alt||g.org||p.city}" onerror="this.style.display='none';this.parentElement.innerHTML='🏛️';this.parentElement.style.fontSize='1.25rem';"></div><div class="jorg-wrap"><div class="jorg">${g.org||p.city}</div></div></div><div class="jroles">${(g.experiences||[]).map(e=>{const tt=e['title_'+currentLang]||e.title;const nn=e['note_'+currentLang]||e.note;return `<div class="jrole"><div class="jct">${tt}</div><div class="jcy">${e.year}</div><div class="jcn">${nn}</div><div class="jtags">${(e.tags||[]).map(t=>`<span class="jtag">${t}</span>`).join('')}</div></div>`;}).join('')}</div></div>`).join('');const wasOpen=detail.classList.contains('open');if(wasOpen){saveCardState();detail.style.transition='none';applyCardState();requestAnimationFrame(()=>{detail.style.transition='';});}else{detail.classList.add('open');if(cardState.left!==null)applyCardState();else positionDetail();}focusOn(p.x,p.y,1.1);setTimeout(()=>{suppressClose=false;},50);}
     function closeDetail(){if(detail.classList.contains('open'))saveCardState();detail.classList.remove('open');islands.forEach(is=>is.el.classList.remove('sel'));selectedIdx=-1;}
     function focusOn(wx,wy,zoom){const vw=vp.clientWidth,vh=vp.clientHeight;S.ts=Math.max(S.minS,Math.min(S.maxS,zoom));S.tx=vw*.5-wx*S.ts;S.ty=vh*.5-wy*S.ts;}
     function fitAll(){const vw=vp.clientWidth||680,vh=vp.clientHeight||620;let minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity;islands.forEach(p=>{minX=Math.min(minX,p.x-300);maxX=Math.max(maxX,p.x+300);minY=Math.min(minY,p.y-380);maxY=Math.max(maxY,p.y+720);});const cW=maxX-minX,cH=maxY-minY,s=Math.min(vw/cW,vh/cH);S.ts=Math.max(S.minS,Math.min(S.maxS,s));S.tx=(vw-cW*S.ts)*.5-minX*S.ts;S.ty=(vh-cH*S.ts)*.5-minY*S.ts+100;}
@@ -612,8 +843,13 @@ const PLACES=[
     buildIslands();
     function initMap(){fitAll();S.s=S.ts;S.x=S.tx;S.y=S.ty;updateMapToggleUI();tick();}
     requestAnimationFrame(()=>requestAnimationFrame(initMap));
+    applyStaticTranslations(currentLang);
+    (function(){ const route=parseHash(); showView(route.view,{silent:true,projectId:route.projectId}); })();
     window.addEventListener('resize',()=>{if(!detail.classList.contains('open'))fitAll();else clampDetailPos();});
     });
   </script>
 </body>
 </html>
+ 
+
+
