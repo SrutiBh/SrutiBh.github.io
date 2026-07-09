@@ -4,14 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sruti Bhattacharjee | Personal Webpage</title>
- 
+
   <!-- EXTERNAL STYLE FRAMEWORK -->
   <!-- Tailwind CSS CDN. Keep this line if you want to continue using Tailwind utility classes. -->
   <script src="https://cdn.tailwindcss.com"></script>
- 
+
   <!-- FONT IMPORTS -->
   <!-- If changing fonts, replace the Google Fonts URL below and update font-family values in CSS. -->
- 
+
   <style>
     body{font-family:'Times New Roman',Times,serif;background-color:#f8fafc;}
     .hero-bg{background-color:#15203d;background-image:none;position:relative;}
@@ -33,21 +33,21 @@
     @media(max-width:760px){.topbar{padding:.85rem 1.1rem;gap:.9rem;}.topbar-right{gap:1rem;}.topbar-links{gap:1rem;}.topbar-links .nav-item .label{display:none;}}
     .hero-name{font-family:'Times New Roman',Times,serif;font-weight:700;letter-spacing:-.02em;}
     .section-title{font-family:'Times New Roman',Times,serif;font-weight:600;letter-spacing:-.01em;}
- 
+
     /* ABOUT CARD — blue-tinted shadow */
     .entry-card{background:white;padding:1.5rem;border-radius:.75rem;box-shadow:0 4px 16px rgba(21,32,61,.13),0 1px 3px rgba(21,32,61,.07);transition:box-shadow .25s,transform .25s;}
     .entry-card:hover{box-shadow:0 8px 28px rgba(21,32,61,.22),0 2px 6px rgba(21,32,61,.10);transform:translateY(-2px);}
- 
+
     /* EDUCATION LOGO IMAGE STYLE */
     /* Used by education institution logos.
        Example image line:
        <img src="images/logos/kth.png" alt="KTH Logo" class="edu-logo"/>
     */
     .edu-logo{width:64px;height:64px;flex-shrink:0;object-fit:contain;object-position:center;}
- 
+
     .edu-card{background:white;padding:1.5rem;border:1.5px solid #dce2f0;border-left:10px solid #15203d;border-right:10px solid #15203d;border-radius:1.5rem;box-shadow:0 1px 4px rgba(21,32,61,.05);transition:box-shadow .22s,border-color .22s,transform .22s;}
     .edu-card:hover{box-shadow:0 8px 30px rgba(21,32,61,.12);border-color:#8899cc;border-left-color:#15203d;border-right-color:#15203d;transform:translateY(-2px);}
- 
+
     /* PORTFOLIO TABS */
     .ptabs{display:flex;flex-wrap:wrap;align-items:center;gap:1.85rem;background:none;padding:0;border-radius:0;width:auto;border-bottom:1.5px solid #e2e8f0;margin-bottom:2.25rem;}
     .ptab-btn{display:flex;align-items:center;gap:.45rem;padding:.1rem 0 .85rem;border-radius:0;font-size:.92rem;font-weight:500;border:none;background:transparent;color:#94a3b8;cursor:pointer;transition:color .17s;font-family:'Times New Roman',Times,serif;letter-spacing:.005em;white-space:nowrap;position:relative;}
@@ -56,7 +56,7 @@
     .ptab-btn:not(.active):hover{color:#475569;}
     .ptab-count{display:none;align-items:center;justify-content:center;min-width:1.35rem;height:1.35rem;padding:0 .3rem;border:1px solid #cbd5e1;border-radius:999px;font-size:.66rem;color:#64748b;font-weight:500;}
     .ptab-btn.active .ptab-count{display:inline-flex;border-color:#15203d;color:#15203d;}
- 
+
     /* VIEW SWITCHING — Work / Journey / Education act as swappable pages, not scroll anchors */
     .view{display:none;}
     .view.active{display:block;animation:pfadeUp .35s ease both;}
@@ -64,10 +64,10 @@
     .view-kicker{font-size:.85rem;font-weight:700;letter-spacing:.03em;color:#15203d;margin:0 0 .85rem;}
     .view-headline{font-family:'Times New Roman',Times,serif;font-weight:700;letter-spacing:-.01em;font-size:clamp(2.3rem,5vw,4rem);line-height:1.04;color:#0f172a;margin:0 0 1.4rem;}
     .view-sub{font-family:'Times New Roman',Times,serif;font-size:1.02rem;line-height:1.65;color:#475569;max-width:640px;margin:0 0 2.5rem;font-weight:400;}
- 
+
     /* TAB PANELS — legacy, kept only for the .active toggle keyframe used elsewhere */
     @keyframes pfadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
- 
+
     /* WORK GRID — frog-style collage. Layout is computed in JS (layoutMasonry)
        so each card lands in whichever column is currently shortest, keeping
        columns balanced regardless of image size — nothing to arrange by hand. */
@@ -81,7 +81,7 @@
     .work-card-title{font-family:'Times New Roman',Times,serif;font-size:1.35rem;font-weight:700;color:#0f203a;line-height:1.22;margin-bottom:.3rem;}
     .work-card-meta{font-size:.78rem;font-weight:600;color:#7b8ca3;letter-spacing:.04em;text-transform:uppercase;font-style:italic;}
     .work-card.hidden-by-filter{display:none;}
- 
+
     /* PROJECT DETAIL PAGE */
     .work-sub{display:none;}
     .work-sub.active{display:block;animation:pfadeUp .32s ease both;}
@@ -89,7 +89,7 @@
     .back-link:hover{text-decoration:underline;}
     .project-detail-img{width:100%;max-height:440px;border-radius:1.25rem;overflow:hidden;margin-bottom:2rem;background:linear-gradient(135deg,#e8ecf5 0%,#c0cbea 100%);}
     .project-detail-img img{width:100%;height:100%;object-fit:cover;display:block;}
- 
+
     /* CASE STUDY — frog-style structured project page: stat row + labeled sections */
     .cs-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;border-top:1.5px solid #e2e8f0;border-bottom:1.5px solid #e2e8f0;padding:1.75rem 0;margin:2.5rem 0 3rem;}
     .cs-stat-label{font-size:.78rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#94a3b8;margin-bottom:.5rem;}
@@ -117,12 +117,12 @@
     .cs-table th{background:#f8fafc;color:#0f172a;font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:.03em;}
     .cs-table-wrap{overflow-x:auto;margin-top:.5rem;}
     @media(max-width:700px){.cs-stats{grid-template-columns:1fr;gap:1.5rem;}.cs-section{grid-template-columns:1fr;gap:.75rem;}.cs-method{gap:.5rem;}.cs-method-arrow{display:none;}.cs-method-step{width:auto;flex-direction:row;text-align:left;gap:.6rem;}.cs-method-num{margin-bottom:0;flex-shrink:0;}}
- 
+
     /* PROJECT CARD LINKS — reused on the project detail page */
     .proj-card-links{display:flex;gap:.75rem;margin-top:.5rem;flex-wrap:wrap;}
     .proj-card-links a{font-size:.8rem;font-weight:600;color:#15203d;text-decoration:none;padding:4px 12px;border:1.5px solid #c2cde8;border-radius:999px;transition:background .15s,border-color .15s;}
     .proj-card-links a:hover{background:#eef1f8;border-color:#8899cc;}
- 
+
     /* CASE STUDY BODY — frog-style: small-caps label left, content right, generous dividers */
     .cs-body{margin-top:3rem;}
     .cs-meta-row{display:flex;flex-wrap:wrap;gap:2.5rem;padding:2rem 0;border-top:1.5px solid #e2e8f0;border-bottom:1.5px solid #e2e8f0;margin-bottom:3rem;}
@@ -160,20 +160,39 @@
     .cs-img-strip{display:flex;gap:.6rem;border-radius:1rem;overflow:hidden;margin:.5rem 0 1.5rem;}
     .cs-img-strip img{flex:1;width:100%;height:100%;object-fit:cover;display:block;max-height:260px;}
     @media(max-width:760px){.cs-section{grid-template-columns:1fr;gap:.85rem;}.cs-columns{grid-template-columns:1fr;gap:1.75rem;}.cs-results-cols{grid-template-columns:1fr;gap:1.75rem;}.cs-steps{gap:.5rem 0;}.cs-step{width:5.6rem;}.cs-step-arrow{display:none;}.cs-img-strip{flex-direction:column;}}
- 
+
     @media(max-width:640px){.ptabs{gap:1.1rem}}
- 
+
     /* ABOUT — sits on the Home view, below the hero */
     .about-section{background:#f8fafc;padding:5rem 1.5rem;}
     .about-inner{max-width:44rem;margin:0 auto;}
     .about-bio{font-family:'Times New Roman',Times,serif;font-size:1.1rem;line-height:1.65;color:#475569;font-weight:400;}
- 
+
+    /* Personality highlight row — text + image side by side */
+    .about-highlight-row{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:center;margin:3rem 0;}
+    .about-highlight-text{font-size:1.35rem;line-height:1.5;color:#0f172a;font-weight:600;}
+    .about-highlight-img{width:100%;aspect-ratio:4/3;border-radius:1rem;overflow:hidden;background:linear-gradient(135deg,#e8ecf5 0%,#c0cbea 100%);}
+    .about-highlight-img img{width:100%;height:100%;object-fit:cover;display:block;}
+    @media(max-width:700px){.about-highlight-row{grid-template-columns:1fr;}}
+
+    /* CTA banner — full-width colored break */
+    .about-cta{background:#15203d;padding:5rem 1.5rem;text-align:center;}
+    .about-cta-text{color:#fff;font-size:1.8rem;font-weight:700;margin-bottom:1.75rem;}
+    .about-cta-btn{display:inline-block;border:1.5px solid rgba(255,255,255,.55);color:#fff;background:none;border-radius:999px;padding:.9rem 2.2rem;font-size:.95rem;font-weight:600;cursor:pointer;font-family:inherit;transition:background .18s,border-color .18s;}
+    .about-cta-btn:hover{background:rgba(255,255,255,.1);border-color:#fff;}
+
+    /* Strengths grid */
+    .strength-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:1rem;}
+    .strength-card-title{font-family:'Times New Roman',Times,serif;font-size:1.2rem;font-weight:700;color:#0f172a;margin-bottom:.4rem;}
+    .strength-card-desc{font-size:.9rem;color:#475569;line-height:1.6;margin-bottom:.7rem;}
+    @media(max-width:700px){.strength-grid{grid-template-columns:1fr;}}
+
     /* ANIMATIONS */
     @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
     .fade-1{animation:fadeUp .7s ease .05s both}.fade-2{animation:fadeUp .7s ease .2s both}.fade-3{animation:fadeUp .7s ease .35s both}.fade-4{animation:fadeUp .7s ease .5s both}
     @keyframes bounceY{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
     .bounce-icon{animation:bounceY 2.2s ease-in-out infinite}
- 
+
     /* JOURNEY MAP */
     .jshell{position:relative;background:linear-gradient(180deg,#0d1328 0%,#111936 46%,#15203d 100%);border-radius:1rem;overflow:hidden;box-shadow:0 16px 40px rgba(15,23,42,.14);transition:all .28s ease;overscroll-behavior:contain;margin-left:-1vw;margin-right:-1vw;}
     .jicon-btn{width:34px;height:34px;border-radius:999px;border:1px solid rgba(255,255,255,.10);background:rgba(10,16,32,.26);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s,transform .15s,border-color .15s;font-family:'Times New Roman',Times,serif;font-size:.9rem;line-height:1;}
@@ -185,7 +204,7 @@
     .jinner{position:absolute;inset:0;transition:transform .22s ease,filter .22s ease}
     .jisland:hover .jinner{transform:translateY(-12px) scale(1.28);filter:drop-shadow(0 14px 18px rgba(0,0,0,.35))}
     .jisland.sel .jinner{transform:scale(1.07)}
- 
+
     .jlabel{position:absolute;left:50%;top:-72px;transform:translateX(-50%);text-align:center;pointer-events:none;white-space:nowrap;}
     .jcity{font-family:'Comic Sans MS','Comic Sans',cursive;font-size:3.6rem;font-weight:400;letter-spacing:.14em;color:#fff;text-shadow:0 2px 0 rgba(0,0,0,1),0 4px 20px rgba(0,0,0,.85);-webkit-font-smoothing:antialiased;}
     .jtop{position:absolute;left:50%;top:28px;width:248px;height:148px;transform:translateX(-50%);clip-path:polygon(10% 24%,25% 10%,67% 6%,88% 20%,94% 48%,81% 76%,40% 91%,13% 77%,5% 48%);}
@@ -217,7 +236,7 @@
     .jcards-wrap{margin-top:0;display:grid;gap:.75rem}
     .jcard{background:white;border:1px solid #e9edf1;border-radius:10px;padding:0;box-shadow:0 1px 6px rgba(20,40,70,.04);overflow:hidden}
     .jcard-head{display:flex;align-items:center;gap:.9rem;padding:.95rem 1rem .85rem;border-bottom:1px solid #eef2f6;background:linear-gradient(180deg,rgba(248,250,252,.9),rgba(255,255,255,.98))}
- 
+
     /* JOURNEY MAP LOGO STYLE */
     /* Logos in the journey map popup are generated from the PLACES JavaScript array.
        Add or replace logos inside PLACES using:
@@ -232,13 +251,13 @@
     .jtags{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.6rem}
     .jtag{border:1px solid #dbe3ea;background:#f7f9fb;color:#7387a0;border-radius:999px;padding:.18rem .45rem;font-size:.6rem;letter-spacing:.04em;text-transform:uppercase}
     @media(max-width:640px){.jvp{height:440px}.jdetail{width:calc(100% - 20px)!important;left:10px!important}.jlogo{width:3.3rem;height:3.3rem;min-width:3.3rem}}
- 
+
     /* SOCIAL RAIL — fixed side icons, always visible, echoes frog's edge icons */
     .social-rail{position:fixed;right:1.1rem;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:.6rem;z-index:60;}
     .social-rail a{width:34px;height:34px;border-radius:999px;border:1.5px solid rgba(21,32,61,.18);background:rgba(255,255,255,.92);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;color:#15203d;text-decoration:none;box-shadow:0 4px 14px rgba(21,32,61,.10);transition:background .18s,border-color .18s,transform .18s,color .18s;}
     .social-rail a:hover{background:#15203d;border-color:#15203d;color:#fff;transform:translateY(-2px);}
     @media(max-width:640px){.social-rail{right:.55rem;gap:.4rem}.social-rail a{width:28px;height:28px}.social-rail a svg{width:12px;height:12px}}
- 
+
     /* LANGUAGE / GLOBAL DROPDOWN */
     .lang-dd{position:relative;}
     .lang-btn{display:flex;align-items:center;gap:.32rem;padding:.4rem .85rem;border-radius:999px;font-size:.81rem;font-weight:600;color:#15203d;background:transparent;border:none;cursor:pointer;font-family:'Times New Roman',Times,serif;letter-spacing:.01em;white-space:nowrap;}
@@ -250,16 +269,16 @@
     .lang-opt{display:flex;align-items:center;justify-content:space-between;width:100%;padding:.5rem .7rem;border-radius:.5rem;border:none;background:transparent;font-size:.82rem;font-weight:500;color:#15203d;cursor:pointer;text-align:left;font-family:'Times New Roman',Times,serif;}
     .lang-opt:hover{background:#eef1f8;}
     .lang-opt.active{background:#15203d;color:#fff;}
- 
+
     /* SCROLL REVEAL — elements fade/rise in on entering view, fade out on leaving, like frog's page */
     .reveal{opacity:0;transform:translateY(26px);transition:opacity .65s ease,transform .65s ease;}
     .reveal.in-view{opacity:1;transform:translateY(0);}
     @media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important;transition:none!important;}}
   </style>
 </head>
- 
+
 <body class="text-slate-700">
- 
+
   <!-- TOP NAV BAR — persistent, white, frog-style -->
   <nav class="topbar" id="topbar">
     <button type="button" class="topbar-word" data-view="home">Sruti Bhattacharjee</button>
@@ -277,10 +296,10 @@
       </div>
     </div>
   </nav>
- 
+
   <!-- HERO SECTION -->
   <header class="hero-bg text-white min-h-[100dvh] flex-col items-center justify-center px-6 pt-6 pb-3 relative view" data-view="home">
- 
+
     <!-- PROFILE IMAGE AREA -->
     <!-- ADD / REPLACE PROFILE IMAGE HERE -->
     <!-- Example:
@@ -294,37 +313,120 @@
         <img src="images/profile/glass_profile.jpeg" alt="Sruti Bhattacharjee" class="w-full h-full object-cover" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=&quot;font-size:3.5rem&quot;>👩‍💻</span>'"/>
       </div>
     </div>
- 
+
     <h1 class="hero-name text-5xl md:text-7xl fade-2 text-center">Sruti Bhattacharjee</h1>
     <p class="mt-3 text-base md:text-xl text-slate-400 fade-3 font-light tracking-wide text-center" data-i18n="hero.subtitle">Graduate Student &nbsp;·&nbsp; KTH Royal Institute of Technology</p>
- 
+
     <button type="button" id="heroScrollBtn" class="absolute bottom-10 text-white/40 hover:text-white/80 transition-colors bounce-icon z-10" style="background:none;border:none;padding:0;cursor:pointer;" aria-label="Scroll to learn more about me" title="About me">
       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 12 16 16 12"/><line x1="12" y1="8" x2="12" y2="16"/></svg>
     </button>
   </header>
- 
+
   <!-- ABOUT — same "home" view as the hero above, so it shows/hides together with it -->
   <section class="view about-section" data-view="home" id="homeAbout">
     <div class="about-inner">
-      <p class="view-kicker reveal" data-i18n="section.about">About Me</p>
-      <p class="about-bio reveal" data-i18n="home.bio">I'm a UX Researcher who values human-centered and ethical innovation. With a background in Computer Engineering and Human–Computer Interaction, I am passionate about understanding human needs and challenges to inform product decisions for interactive, accessible, and multimodal technologies.</p>
+
+      <!-- MY ROLE -->
+      <div class="cs-section reveal">
+        <div class="cs-section-title">My Role</div>
+        <div class="cs-section-body">
+          <p class="cs-p">I'm a UX Researcher who values human-centered and ethical innovation. With a background in Computer Engineering and Human–Computer Interaction, I am passionate about understanding human needs and challenges to inform product decisions for interactive, accessible, and multimodal technologies.</p>
+        </div>
+      </div>
+
+      <!-- ABOUT ME: CAREER INTERESTS + BACKGROUND -->
+      <div class="cs-section reveal">
+        <div class="cs-section-title">About Me</div>
+        <div class="cs-section-body">
+          <div class="cs-sub">Career Interests</div>
+          <p class="cs-p">Replace this with what genuinely pulls you toward certain problems or research areas — for example, accessibility, immersive technology, or ethical AI.</p>
+          <div class="cs-sub">Background</div>
+          <p class="cs-p">Replace this with a short line on your degrees and any notable prior work or research experience — this can echo your Education section but doesn't need to repeat it word for word.</p>
+        </div>
+      </div>
+
+      <!-- PERSONALITY HIGHLIGHT -->
+      <div class="about-highlight-row reveal">
+        <p class="about-highlight-text">Replace this with a short, personal line about how you work or think — something that sounds like you, not a job description.</p>
+        <!-- ADD / REPLACE IMAGE HERE -->
+        <div class="about-highlight-img">
+          <img src="images/profile/about_illustration.png" alt="Illustration or photo representing your working style" onerror="this.style.display='none'">
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA BANNER -->
+    <div class="about-cta reveal">
+      <p class="about-cta-text">Replace this with your own tagline.</p>
+      <button type="button" class="about-cta-btn" id="aboutCtaBtn">Check out my work</button>
+    </div>
+
+    <div class="about-inner">
+      <!-- STRENGTHS -->
+      <div class="cs-section reveal">
+        <div class="cs-section-title">Strengths</div>
+        <div class="cs-section-body">
+          <p class="cs-p">Replace this intro line — e.g. naming an assessment you've taken (Gallup StrengthsFinder, MBTI, etc.) or just framing these as strengths you rely on in your work.</p>
+          <div class="strength-grid">
+            <div>
+              <div class="strength-card-title">Strength One</div>
+              <div class="strength-card-desc">One line on what this strength is and how it shows up in your work.</div>
+              <ul class="cs-list"><li>Supporting detail or example</li><li>Supporting detail or example</li></ul>
+            </div>
+            <div>
+              <div class="strength-card-title">Strength Two</div>
+              <div class="strength-card-desc">One line on what this strength is and how it shows up in your work.</div>
+              <ul class="cs-list"><li>Supporting detail or example</li><li>Supporting detail or example</li></ul>
+            </div>
+            <div>
+              <div class="strength-card-title">Strength Three</div>
+              <div class="strength-card-desc">One line on what this strength is and how it shows up in your work.</div>
+              <ul class="cs-list"><li>Supporting detail or example</li><li>Supporting detail or example</li></ul>
+            </div>
+            <div>
+              <div class="strength-card-title">Strength Four</div>
+              <div class="strength-card-desc">One line on what this strength is and how it shows up in your work.</div>
+              <ul class="cs-list"><li>Supporting detail or example</li><li>Supporting detail or example</li></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- INTERESTS -->
+      <div class="cs-section reveal">
+        <div class="cs-section-title">Interests</div>
+        <div class="cs-section-body">
+          <div class="cs-sub">Professional Interests</div>
+          <ul class="cs-list">
+            <li>Replace with a professional interest, e.g. accessible design</li>
+            <li>Replace with a professional interest, e.g. immersive technology</li>
+            <li>Replace with a professional interest, e.g. ethical AI</li>
+          </ul>
+          <div class="cs-sub">Personal Interests</div>
+          <ul class="cs-list">
+            <li>Replace with a personal interest</li>
+            <li>Replace with a personal interest</li>
+            <li>Replace with a personal interest</li>
+          </ul>
+        </div>
+      </div>
     </div>
   </section>
- 
- 
+
+
   <!-- FIXED SOCIAL RAIL — always-visible side icons, echoes frog's edge social icons -->
   <div class="social-rail">
     <a href="https://github.com/SrutiBh" target="_blank" rel="noopener noreferrer" title="GitHub" aria-label="GitHub"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg></a>
     <a href="https://www.linkedin.com/in/srutibhattacharjee/" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6.5 21.5h-5v-13h5v13zM4 6.5C2.5 6.5 1.5 5.3 1.5 4s1-2.4 2.5-2.4c1.6 0 2.5 1 2.6 2.5 0 1.4-1 2.4-2.6 2.4zm11.5 6c-1 0-2 .5-2 1.9v7.1h-5v-13h5v1.9c1-1.6 2.7-1.9 4-1.9 3 0 5 2 5 6.3v6.7h-5v-7c0-1.4-.5-1.9-2-1.9-.9 0-1.9.5-1.9 1.9v7.1h-5"/></svg></a>
   </div>
- 
+
   <main id="main-content" class="container mx-auto max-w-4xl px-4 py-16">
- 
+
     <!-- EDUCATION SECTION -->
     <section id="education" class="view" data-view="education">
       <h2 class="section-title text-3xl text-slate-800 mb-6 border-b-2 border-slate-200 pb-2 reveal" data-i18n="section.education">Education</h2>
       <div class="space-y-5">
- 
+
         <div class="edu-card flex items-center gap-5 reveal">
           <!-- ADD / REPLACE EDUCATION LOGO HERE -->
           <!-- Example:
@@ -337,7 +439,7 @@
             <p class="text-slate-400 text-sm">2020 – <span data-i18n="word.present">Present</span> &nbsp;·&nbsp; GPA: 4.4/5</p>
           </div>
         </div>
- 
+
         <div class="edu-card flex items-center gap-5 reveal">
           <!-- ADD / REPLACE EDUCATION LOGO HERE -->
           <!-- Example:
@@ -350,7 +452,7 @@
             <p class="text-slate-400 text-sm">2021 – 2023 &nbsp;·&nbsp; GPA: 4.2/6</p>
           </div>
         </div>
- 
+
         <div class="edu-card flex items-center gap-5 reveal">
           <!-- ADD / REPLACE EDUCATION LOGO HERE -->
           <!-- Example:
@@ -363,7 +465,7 @@
             <p class="text-slate-400 text-sm">2014 – 2019 &nbsp;·&nbsp; GPA: 6.8/10</p>
           </div>
         </div>
- 
+
         <div class="edu-card flex items-center gap-5 reveal">
           <!-- ADD / REPLACE EDUCATION LOGO HERE -->
           <!-- Example:
@@ -379,11 +481,11 @@
         </div>
       </div>
     </section>
- 
+
     <!-- EXPERIENCE / JOURNEY MAP SECTION -->
     <section id="experience" class="view" data-view="journey">
       <h2 class="section-title text-3xl text-slate-800 mb-6 border-b-2 border-slate-200 pb-2 reveal" data-i18n="section.experience">Selected Experiences</h2>
- 
+
       <!-- INTERACTIVE JOURNEY MAP -->
       <!-- Logos, city entries, years, notes, and tags are edited in the PLACES array inside the <script> section. -->
       <div class="jshell reveal" id="jshell">
@@ -404,7 +506,7 @@
         </div>
       </div>
     </section>
- 
+
     <!-- PORTFOLIO SECTION -->
     <section id="portfolio" class="view" data-view="work">
       <div class="work-sub active" id="workGrid">
@@ -421,11 +523,11 @@
       <div class="work-sub" id="workDetail"></div>
     </section>
   </main>
- 
+
   <footer class="bg-slate-800 text-slate-400 text-center p-6 mt-8">
     <p>© <span id="yr"></span> Sruti Bhattacharjee. <span data-i18n="footer.rights">All rights reserved.</span></p>
   </footer>
- 
+
   <script>
     function switchTab(tab,btn){
       document.querySelectorAll('.ptab-btn').forEach(b=>b.classList.remove('active'));
@@ -435,12 +537,12 @@
       });
       if(window.layoutMasonry)window.layoutMasonry();
     }
- 
+
     document.addEventListener('DOMContentLoaded',function(){
- 
+
       const yrEl=document.getElementById('yr');
       if(yrEl)yrEl.textContent=new Date().getFullYear();
- 
+
     /* ============================================================
        LANGUAGE / i18n SYSTEM
        Add or edit translated strings here. Every element carrying a
@@ -648,10 +750,10 @@
         'home.bio':'\u79c1\u306f\u30d2\u30e5\u30fc\u30de\u30f3\u30bb\u30f3\u30bf\u30fc\u30c9\u3067\u502b\u7406\u7684\u306a\u30a4\u30ce\u30d9\u30fc\u30b7\u30e7\u30f3\u3092\u5927\u5207\u306b\u3059\u308bUX\u30ea\u30b5\u30fc\u30c1\u30e3\u30fc\u3067\u3059\u3002\u30b3\u30f3\u30d4\u30e5\u30fc\u30bf\u5de5\u5b66\u3068\u30d2\u30e5\u30fc\u30de\u30f3\u30fb\u30b3\u30f3\u30d4\u30e5\u30fc\u30bf\u30fb\u30a4\u30f3\u30bf\u30e9\u30af\u30b7\u30e7\u30f3\u306e\u80cc\u666f\u3092\u6301\u3061\u3001\u30a4\u30f3\u30bf\u30e9\u30af\u30c6\u30a3\u30d6\u3067\u30a2\u30af\u30bb\u30b7\u30d6\u30eb\u3001\u30de\u30eb\u30c1\u30e2\u30fc\u30c0\u30eb\u306a\u6280\u8853\u306e\u30d7\u30ed\u30c0\u30af\u30c8\u610f\u601d\u6c7a\u5b9a\u306b\u5f79\u7acb\u3066\u308b\u305f\u3081\u3001\u4eba\u3005\u306e\u30cb\u30fc\u30ba\u3084\u8ab2\u984c\u3092\u7406\u89e3\u3059\u308b\u3053\u3068\u306b\u60c5\u71b1\u3092\u6ce8\u3044\u3067\u3044\u307e\u3059\u3002'
       }
     };
- 
+
     let currentLang='en';
     try{ currentLang=localStorage.getItem('siteLang')||'en'; }catch(e){ currentLang='en'; }
- 
+
     /* ============================================================
        PROJECTS DATA — image, category, institution and links per
        project. Titles/descriptions live in TRANSLATIONS above under
@@ -670,12 +772,12 @@
       {id:8,cat:'visual',meta:'EPFL',img:'images/projects/venice1.png',imgAlt:'Preview image of 3D city modelling project',links:[{key:'lbl.code',href:'#'}]},
       {id:9,cat:'visual',meta:'KTH',img:'images/projects/r_mike.gif',imgAlt:'Preview image of game development project',links:[{key:'lbl.code',href:'#'}]}
     ];
- 
+
     function tr(key){
       const dict=TRANSLATIONS[currentLang]||TRANSLATIONS.en;
       return (dict&&dict[key]!==undefined)?dict[key]:(TRANSLATIONS.en[key]!==undefined?TRANSLATIONS.en[key]:key);
     }
- 
+
     function waitForGridImages(){
       const wrap=document.getElementById('workGridCards');
       const imgs=wrap?Array.prototype.slice.call(wrap.querySelectorAll('img')):[];
@@ -712,7 +814,7 @@
       clearTimeout(masonryResizeTimer);
       masonryResizeTimer=setTimeout(layoutMasonry,150);
     });
- 
+
     function renderWorkGrid(){
       const wrap=document.getElementById('workGridCards');
       wrap.innerHTML=PROJECTS.map(function(p){
@@ -739,7 +841,7 @@
       });
       waitForGridImages().then(layoutMasonry);
     }
- 
+
     let currentProjectId=null;
     /* CASE STUDY CONTENT — richer, structured write-ups for specific projects.
        Sourced from Sruti's own project documentation. To add another project's
@@ -831,7 +933,7 @@
         ]
       }
     };
- 
+
     function csListHTML(items){
       return '<ul class="cs-list">'+items.map(function(i){return '<li>'+i+'</li>';}).join('')+'</ul>';
     }
@@ -870,7 +972,7 @@
         +(cs.byTheNumbers?'<div class="cs-section cs-highlight"><div class="cs-section-title">By the Numbers</div><div class="cs-section-body">'+csListHTML(cs.byTheNumbers)+'</div></div>':'')
         +'<div class="cs-section cs-highlight"><div class="cs-section-title">Key Findings</div><div class="cs-section-body">'+csListHTML(cs.keyFindings)+'</div></div>';
     }
- 
+
     function renderProjectDetail(id){
       const p=PROJECTS.find(function(x){return x.id===id;});
       if(!p)return;
@@ -893,7 +995,7 @@
         goToWork();
       });
     }
- 
+
     function showWorkSub(projectId){
       const grid=document.getElementById('workGrid'),detail=document.getElementById('workDetail');
       if(projectId){
@@ -907,7 +1009,7 @@
         requestAnimationFrame(function(){requestAnimationFrame(layoutMasonry);});
       }
     }
- 
+
     function topbarLinksHTML(){
       return '<button type="button" class="nav-item" data-view="education"><span data-i18n="nav.education">Education</span></button>'
         +'<button type="button" class="nav-item" data-view="journey"><span data-i18n="nav.journey">Journey</span></button>'
@@ -917,7 +1019,7 @@
     }
     document.getElementById('topbarLinks').innerHTML=topbarLinksHTML();
     renderWorkGrid();
- 
+
     /* ============================================================
        VIEW ROUTER — Work / Journey / Education swap in place like
        tabs (frog-style), instead of scrolling to an anchor. Work has
@@ -974,14 +1076,16 @@
       const el=document.getElementById('homeAbout');
       if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
     });
+    const aboutCtaBtn=document.getElementById('aboutCtaBtn');
+    if(aboutCtaBtn)aboutCtaBtn.addEventListener('click',function(){goToWork();});
     window.addEventListener('hashchange',function(){
       const route=parseHash();
       showView(route.view,{silent:true,projectId:route.projectId});
     });
- 
- 
+
+
     const LANG_LABEL={en:'EN',fr:'FR',zh:'\u4e2d\u6587',de:'DE',ja:'\u65e5'};
- 
+
     function applyStaticTranslations(lang){
       const dict=TRANSLATIONS[lang]||TRANSLATIONS.en;
       document.querySelectorAll('[data-i18n]').forEach(function(el){
@@ -992,7 +1096,7 @@
       document.querySelectorAll('.lang-current').forEach(function(el){el.textContent=LANG_LABEL[lang]||'EN';});
       document.querySelectorAll('.lang-opt').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});
     }
- 
+
     function setLanguage(lang){
       if(!TRANSLATIONS[lang])lang='en';
       currentLang=lang;
@@ -1006,7 +1110,7 @@
       layoutMasonry();
       document.querySelectorAll('.lang-dd.open').forEach(function(dd){dd.classList.remove('open');});
     }
- 
+
     document.querySelectorAll('.lang-dd').forEach(function(dd){
       const btn=dd.querySelector('.lang-btn');
       btn.addEventListener('click',function(e){
@@ -1020,7 +1124,7 @@
       });
     });
     document.addEventListener('click',function(){document.querySelectorAll('.lang-dd.open').forEach(function(dd){dd.classList.remove('open');});});
- 
+
     /* SCROLL REVEAL — fade/rise elements in as they enter the viewport, fade back out as they leave */
     (function(){
       const prefersReduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1030,19 +1134,19 @@
       },{threshold:0.12,rootMargin:'0px 0px -6% 0px'});
       document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
     })();
- 
+
     /* JOURNEY MAP DATA */
     /* ADD / REPLACE JOURNEY MAP LOGOS HERE inside each group object.
        Use this format:
        logo:"images/logos/kth.png", alt:"KTH Logo"
- 
+
        Example full group:
        {org:"KTH Royal Institute of Technology, Sweden", logo:"images/logos/kth.png", alt:"KTH Logo", experiences:[...]}
- 
+
        IMPORTANT: Keep alt text meaningful because it becomes the image alt attribute in the generated popup logo.
     */
- 
- 
+
+
 const PLACES=[
       {city:"Kanpur",mark:"spire",top:"#BFEA7A",rim:"#9ED65A",years:["2015","2017","2019"],groups:[{org:"IIT Kanpur, India",logo:"images/logos/iitk.jpg",alt:"IIT Kanpur",experiences:[{title:"Winter Internship",year:"2015",note:"Tessellation and Topological Pattern Generation and Recognition",title_fr:"Stage d'hiver",title_zh:"寒假实习",note_fr:"Génération et reconnaissance de motifs topologiques par pavage",note_zh:"镶嵌与拓扑图案的生成与识别",title_de:"Winterpraktikum",note_de:"Erzeugung und Erkennung von Tessellierungs- und topologischen Mustern",title_ja:"冬季インターンシップ",note_ja:"テッセレーションおよびトポロジカルパターンの生成と認識",tags:["Persistent Homology","Simplicial Complexes","Periodic-Aperiodic","Convex-Concave"]},{title:"OffCycle Internship",year:"2017",note:"Old Document Restoration using Image Processing, Video Subtitle Removal using Inpainting",title_fr:"Stage hors cycle",title_zh:"非周期实习",note_fr:"Restauration de documents anciens par traitement d'image, suppression de sous-titres vidéo par inpainting",note_zh:"利用图像处理技术修复旧文档,利用图像修复技术去除视频字幕",title_de:"Praktikum außerhalb des Zyklus",note_de:"Restaurierung alter Dokumente mittels Bildverarbeitung, Entfernung von Videountertiteln mittels Inpainting",title_ja:"オフサイクルインターンシップ",note_ja:"画像処理を用いた古文書の修復、インペインティングを用いた動画字幕の除去",tags:["Matlab","Fourier Transform","Singular value decomposition","Harmonic analysis","Morphological Operations","PDE"]},{title:"Research Assistantship",year:"2019",note:"Musical Script Generation from Harmonium Playing Video using Computer Vision",title_fr:"Assistanat de recherche",title_zh:"研究助理",note_fr:"Génération de partitions musicales à partir de vidéos de jeu à l'harmonium par vision par ordinateur",note_zh:"利用计算机视觉从演奏簧风琴的视频中生成乐谱",title_de:"Forschungsassistenz",note_de:"Erzeugung von Notenschrift aus Harmonium-Spielvideos mittels Computer Vision",title_ja:"研究助手",note_ja:"コンピュータビジョンを用いたハルモニウム演奏動画からの楽譜生成",tags:["Python","Pytorch","OpenCV","Matlab"]}]}]},
       {city:"Chennai",mark:"arch",top:"#C7F66C",rim:"#9BE548",years:["2016"],groups:[{org:"IIT Madras, India",logo:"images/logos/iitm.png",alt:"IIT Madras",experiences:[{title:"Summer Internship",year:"2016",note:"Cloth Simulation and Modelling",title_fr:"Stage d'été",title_zh:"暑期实习",note_fr:"Simulation et modélisation de tissus",note_zh:"布料模拟与建模",title_de:"Sommerpraktikum",note_de:"Stoffsimulation und -modellierung",title_ja:"夏季インターンシップ",note_ja:"布のシミュレーションとモデリング",tags:["OpenGL","Visual C++","Bullet Physics","Rigid_Body-Cloth-Collision"]}]}]},
@@ -1055,7 +1159,7 @@ const PLACES=[
       {city:"Jyväskylä",mark:"arch",top:"#F9E04B",rim:"#E6C418",years:["2025"],groups:[{org:"University of Jyväskylä, Finland",logo:"images/logos/jyu_transparent.png",alt:"JYU",experiences:[{title:"Summer Trainee",year:"2025",note:"Accessible Multimodal Interactive Graph Navigation System",title_fr:"Stagiaire d'été",title_zh:"暑期实习生",note_fr:"Système accessible de navigation graphique interactive multimodale",note_zh:"无障碍多模态交互式图形导航系统",title_de:"Sommerpraktikantin",note_de:"Barrierefreies multimodales interaktives Graphennavigationssystem",title_ja:"夏季トレーニー",note_ja:"アクセシブルなマルチモーダル・インタラクティブグラフナビゲーションシステム",tags:["Accessibility","Multimodal Design","Figma","Claude AI","Python"]}]}]},
       {city:"Paris",mark:"arch",top:"#E8B6C6",rim:"#D48CA5",years:["2025-Present"],groups:[{org:"CAEL - Centre d'Animation Expression Loisirs de Bourg-La-Reine",logo:"images/logos/cael.png",alt:"CAEL",experiences:[{title:"French Language Training",year:"2025-Present",note:"Ateliers Sociolinguistisques A1−A2",title_fr:"Formation en langue française",title_zh:"法语培训",note_fr:"Ateliers Sociolinguistisques A1−A2",note_zh:"社会语言学工作坊 A1−A2",title_de:"Französischsprachtraining",note_de:"Soziolinguistische Workshops A1−A2",title_ja:"フランス語トレーニング",note_ja:"社会言語学ワークショップ A1−A2",tags:["French","DELF A2"]}]}]}
     ];
- 
+
     const POSITIONS=[{x:-100,y:500},{x:-100,y:1300},{x:400,y:900},{x:820,y:350},{x:820,y:1450},{x:1400,y:900},{x:2500,y:900},{x:1950,y:500},{x:1950,y:1300},{x:3100,y:900}];
     const shell=document.getElementById('jshell'),world=document.getElementById('jworld'),vp=document.getElementById('jvp'),detail=document.getElementById('jdetail'),detailBody=document.getElementById('jdetailBody'),dtitle=document.getElementById('jdtitle'),dsub=document.getElementById('jdsubtitle'),dcards=document.getElementById('jcards');
     const S={s:1,x:0,y:0,ts:1,tx:0,ty:0,minS:.12,maxS:2.2};
@@ -1107,4 +1211,3 @@ const PLACES=[
   </script>
 </body>
 </html>
- 
