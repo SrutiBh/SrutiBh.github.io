@@ -11,20 +11,17 @@
  
   <!-- FONT IMPORTS -->
   <!-- If changing fonts, replace the Google Fonts URL below and update font-family values in CSS. -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
  
   <style>
-    body{font-family:'DM Sans',sans-serif;background-color:#f8fafc;}
+    body{font-family:'Times New Roman',Times,serif;background-color:#f8fafc;}
     .hero-bg{background-color:#15203d;background-image:none;position:relative;}
     .topbar{position:sticky;top:0;z-index:90;display:flex;align-items:center;justify-content:space-between;background:#fff;padding:1rem 2rem;box-shadow:0 1px 0 rgba(15,23,42,.08);gap:1.5rem;flex-wrap:wrap;}
-    .topbar-word{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.4rem;color:#0f172a;text-decoration:none;letter-spacing:-.01em;white-space:nowrap;background:none;border:none;padding:0;cursor:pointer;}
+    .topbar-word{font-family:'Times New Roman',Times,serif;font-weight:700;font-size:1.4rem;color:#0f172a;text-decoration:none;letter-spacing:-.01em;white-space:nowrap;background:none;border:none;padding:0;cursor:pointer;}
     .topbar-word:hover{color:#334155;}
     .topbar-word.active{text-decoration:underline;text-underline-offset:4px;}
     .topbar-right{display:flex;align-items:center;gap:1.75rem;flex-wrap:wrap;}
     .topbar-links{display:flex;align-items:center;gap:1.75rem;flex-wrap:wrap;}
-    .topbar-links .nav-item{display:inline-block;background:none;border:none;padding:.2rem 0;font-size:.86rem;font-weight:500;color:#1f2937;cursor:pointer;font-family:'DM Sans',sans-serif;position:relative;text-decoration:none;white-space:nowrap;}
+    .topbar-links .nav-item{display:inline-block;background:none;border:none;padding:.2rem 0;font-size:.86rem;font-weight:500;color:#1f2937;cursor:pointer;font-family:'Times New Roman',Times,serif;position:relative;text-decoration:none;white-space:nowrap;}
     .topbar-links .nav-item:hover{color:#0f172a;}
     .topbar-links .nav-item.active{color:#0f172a;font-weight:600;}
     .topbar-links .nav-item.active::after{content:'';position:absolute;left:0;right:0;bottom:-8px;height:2px;background:#0f172a;}
@@ -34,8 +31,8 @@
     .topbar .lang-opt{color:#0f172a;}
     .topbar .lang-opt:hover{background:#f1f5f9;}
     @media(max-width:760px){.topbar{padding:.85rem 1.1rem;gap:.9rem;}.topbar-right{gap:1rem;}.topbar-links{gap:1rem;}.topbar-links .nav-item .label{display:none;}}
-    .hero-name{font-family:'Cormorant Garamond',serif;font-weight:700;letter-spacing:-.02em;}
-    .section-title{font-family:'Cormorant Garamond',serif;font-weight:600;letter-spacing:-.01em;}
+    .hero-name{font-family:'Times New Roman',Times,serif;font-weight:700;letter-spacing:-.02em;}
+    .section-title{font-family:'Times New Roman',Times,serif;font-weight:600;letter-spacing:-.01em;}
  
     /* ABOUT CARD — blue-tinted shadow */
     .entry-card{background:white;padding:1.5rem;border-radius:.75rem;box-shadow:0 4px 16px rgba(21,32,61,.13),0 1px 3px rgba(21,32,61,.07);transition:box-shadow .25s,transform .25s;}
@@ -53,7 +50,7 @@
  
     /* PORTFOLIO TABS */
     .ptabs{display:flex;flex-wrap:wrap;align-items:center;gap:1.85rem;background:none;padding:0;border-radius:0;width:auto;border-bottom:1.5px solid #e2e8f0;margin-bottom:2.25rem;}
-    .ptab-btn{display:flex;align-items:center;gap:.45rem;padding:.1rem 0 .85rem;border-radius:0;font-size:.92rem;font-weight:500;border:none;background:transparent;color:#94a3b8;cursor:pointer;transition:color .17s;font-family:'DM Sans',sans-serif;letter-spacing:.005em;white-space:nowrap;position:relative;}
+    .ptab-btn{display:flex;align-items:center;gap:.45rem;padding:.1rem 0 .85rem;border-radius:0;font-size:.92rem;font-weight:500;border:none;background:transparent;color:#94a3b8;cursor:pointer;transition:color .17s;font-family:'Times New Roman',Times,serif;letter-spacing:.005em;white-space:nowrap;position:relative;}
     .ptab-btn.active{color:#0f172a;font-weight:600;}
     .ptab-btn.active::after{content:'';position:absolute;left:0;right:0;bottom:-1.5px;height:2px;background:#15203d;}
     .ptab-btn:not(.active):hover{color:#475569;}
@@ -65,8 +62,8 @@
     .view.active{display:block;animation:pfadeUp .35s ease both;}
     header.hero-bg.view.active{display:flex;}
     .view-kicker{font-size:.85rem;font-weight:700;letter-spacing:.03em;color:#15203d;margin:0 0 .85rem;}
-    .view-headline{font-family:'Cormorant Garamond',serif;font-weight:700;letter-spacing:-.01em;font-size:clamp(2.3rem,5vw,4rem);line-height:1.04;color:#0f172a;margin:0 0 1.4rem;}
-    .view-sub{font-size:1.02rem;line-height:1.65;color:#475569;max-width:640px;margin:0 0 2.5rem;font-weight:300;}
+    .view-headline{font-family:'Times New Roman',Times,serif;font-weight:700;letter-spacing:-.01em;font-size:clamp(2.3rem,5vw,4rem);line-height:1.04;color:#0f172a;margin:0 0 1.4rem;}
+    .view-sub{font-family:'Times New Roman',Times,serif;font-size:1.02rem;line-height:1.65;color:#475569;max-width:640px;margin:0 0 2.5rem;font-weight:400;}
  
     /* TAB PANELS — legacy, kept only for the .active toggle keyframe used elsewhere */
     @keyframes pfadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
@@ -81,24 +78,95 @@
     .work-card-img{width:100%;border-radius:1rem;overflow:hidden;background:linear-gradient(135deg,#e8ecf5 0%,#c0cbea 100%);margin-bottom:.9rem;line-height:0;}
     .work-card-img img{width:100%;height:auto;display:block;transition:transform .35s ease;}
     .work-card:hover .work-card-img img{transform:scale(1.03);}
-    .work-card-title{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:700;color:#0f203a;line-height:1.22;margin-bottom:.3rem;}
+    .work-card-title{font-family:'Times New Roman',Times,serif;font-size:1.35rem;font-weight:700;color:#0f203a;line-height:1.22;margin-bottom:.3rem;}
     .work-card-meta{font-size:.78rem;font-weight:600;color:#7b8ca3;letter-spacing:.04em;text-transform:uppercase;font-style:italic;}
     .work-card.hidden-by-filter{display:none;}
  
     /* PROJECT DETAIL PAGE */
     .work-sub{display:none;}
     .work-sub.active{display:block;animation:pfadeUp .32s ease both;}
-    .back-link{display:inline-flex;align-items:center;gap:.4rem;font-size:.85rem;font-weight:600;color:#15203d;background:none;border:none;cursor:pointer;padding:0;margin-bottom:1.75rem;font-family:'DM Sans',sans-serif;}
+    .back-link{display:inline-flex;align-items:center;gap:.4rem;font-size:.85rem;font-weight:600;color:#15203d;background:none;border:none;cursor:pointer;padding:0;margin-bottom:1.75rem;font-family:'Times New Roman',Times,serif;}
     .back-link:hover{text-decoration:underline;}
     .project-detail-img{width:100%;max-height:440px;border-radius:1.25rem;overflow:hidden;margin-bottom:2rem;background:linear-gradient(135deg,#e8ecf5 0%,#c0cbea 100%);}
     .project-detail-img img{width:100%;height:100%;object-fit:cover;display:block;}
+ 
+    /* CASE STUDY — frog-style structured project page: stat row + labeled sections */
+    .cs-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;border-top:1.5px solid #e2e8f0;border-bottom:1.5px solid #e2e8f0;padding:1.75rem 0;margin:2.5rem 0 3rem;}
+    .cs-stat-label{font-size:.78rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#94a3b8;margin-bottom:.5rem;}
+    .cs-stat-value{font-size:.92rem;color:#1e293b;line-height:1.5;}
+    .cs-section{display:grid;grid-template-columns:11rem 1fr;gap:2.5rem;padding:2.5rem 0;border-top:1px solid #eef2f6;}
+    .cs-section:first-of-type{border-top:none;padding-top:0;}
+    .cs-section-title{font-family:'Times New Roman',Times,serif;font-size:1.55rem;font-weight:700;color:#0f172a;}
+    .cs-section-body{max-width:38rem;}
+    .cs-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.85rem;}
+    .cs-list li{position:relative;padding-left:1.2rem;font-size:.95rem;line-height:1.65;color:#475569;}
+    .cs-list li::before{content:'';position:absolute;left:0;top:.55rem;width:5px;height:5px;border-radius:999px;background:#15203d;}
+    .cs-p{font-size:.95rem;line-height:1.7;color:#475569;margin:0 0 1rem;}
+    .cs-p:last-child{margin-bottom:0;}
+    .cs-sub{font-weight:700;color:#0f172a;font-size:.88rem;margin:1.3rem 0 .5rem;}
+    .cs-sub:first-child{margin-top:0;}
+    .cs-method{display:flex;flex-wrap:wrap;align-items:flex-start;gap:0;}
+    .cs-method-step{display:flex;flex-direction:column;align-items:center;text-align:center;width:7.5rem;}
+    .cs-method-num{width:2.1rem;height:2.1rem;border-radius:999px;background:#15203d;color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Times New Roman',Times,serif;font-weight:700;font-size:1rem;margin-bottom:.6rem;}
+    .cs-method-label{font-size:.8rem;font-weight:600;color:#1e293b;line-height:1.4;}
+    .cs-method-arrow{flex:0 0 auto;width:2rem;color:#cbd5e1;display:flex;align-items:center;justify-content:center;padding-top:1rem;}
+    .cs-section.cs-highlight{background:#f8fafc;border-radius:1rem;padding:2rem 1.75rem;margin:1rem 0;border-top:none;}
+    .cs-list b{color:#15203d;font-weight:700;}
+    .cs-table{width:100%;border-collapse:collapse;font-size:.84rem;margin-top:.5rem;}
+    .cs-table th,.cs-table td{border:1px solid #e2e8f0;padding:.6rem .75rem;text-align:left;vertical-align:top;color:#475569;}
+    .cs-table th{background:#f8fafc;color:#0f172a;font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:.03em;}
+    .cs-table-wrap{overflow-x:auto;margin-top:.5rem;}
+    @media(max-width:700px){.cs-stats{grid-template-columns:1fr;gap:1.5rem;}.cs-section{grid-template-columns:1fr;gap:.75rem;}.cs-method{gap:.5rem;}.cs-method-arrow{display:none;}.cs-method-step{width:auto;flex-direction:row;text-align:left;gap:.6rem;}.cs-method-num{margin-bottom:0;flex-shrink:0;}}
  
     /* PROJECT CARD LINKS — reused on the project detail page */
     .proj-card-links{display:flex;gap:.75rem;margin-top:.5rem;flex-wrap:wrap;}
     .proj-card-links a{font-size:.8rem;font-weight:600;color:#15203d;text-decoration:none;padding:4px 12px;border:1.5px solid #c2cde8;border-radius:999px;transition:background .15s,border-color .15s;}
     .proj-card-links a:hover{background:#eef1f8;border-color:#8899cc;}
  
+    /* CASE STUDY BODY — frog-style: small-caps label left, content right, generous dividers */
+    .cs-body{margin-top:3rem;}
+    .cs-meta-row{display:flex;flex-wrap:wrap;gap:2.5rem;padding:2rem 0;border-top:1.5px solid #e2e8f0;border-bottom:1.5px solid #e2e8f0;margin-bottom:3rem;}
+    .cs-meta-item{min-width:9rem;}
+    .cs-meta-label{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#94a3b8;margin-bottom:.5rem;}
+    .cs-meta-value{font-size:.92rem;color:#1e293b;line-height:1.5;}
+    .cs-section{display:grid;grid-template-columns:11rem 1fr;gap:2.5rem;padding:2.75rem 0;border-bottom:1.5px solid #eef2f6;}
+    .cs-section:last-child{border-bottom:none;}
+    .cs-section-label{font-size:.78rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#15203d;padding-top:.15rem;}
+    .cs-section-body{min-width:0;}
+    .cs-columns{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;}
+    .cs-col-title{font-family:'Times New Roman',Times,serif;font-size:1.35rem;font-weight:700;color:#0f172a;margin-bottom:.9rem;}
+    .cs-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.85rem;}
+    .cs-list li{position:relative;padding-left:1.1rem;font-size:.94rem;line-height:1.65;color:#475569;}
+    .cs-list li::before{content:'';position:absolute;left:0;top:.6em;width:5px;height:5px;border-radius:999px;background:#adbde0;}
+    .cs-list-num{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.85rem;counter-reset:cs-num;}
+    .cs-list-num li{position:relative;padding-left:1.6rem;font-size:.94rem;line-height:1.65;color:#475569;counter-increment:cs-num;}
+    .cs-list-num li::before{content:counter(cs-num);position:absolute;left:0;top:0;font-family:'Times New Roman',Times,serif;font-weight:700;color:#15203d;font-size:.95rem;}
+    .cs-p{font-size:.94rem;line-height:1.7;color:#475569;margin:0 0 1rem;}
+    .cs-p:last-child{margin-bottom:0;}
+    .cs-p b{color:#1e293b;}
+    .cs-steps{display:flex;flex-wrap:wrap;align-items:flex-start;gap:0;}
+    .cs-step{display:flex;flex-direction:column;align-items:center;text-align:center;width:7.2rem;}
+    .cs-step-num{width:2.1rem;height:2.1rem;border-radius:999px;background:#15203d;color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Times New Roman',Times,serif;font-weight:700;font-size:.95rem;margin-bottom:.6rem;}
+    .cs-step-label{font-size:.78rem;color:#475569;line-height:1.4;}
+    .cs-step-arrow{align-self:center;color:#cbd5e1;margin:0 .35rem;padding-top:.6rem;font-size:.9rem;}
+    .cs-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+    .cs-table{width:100%;border-collapse:collapse;font-size:.82rem;min-width:560px;}
+    .cs-table th,.cs-table td{border:1px solid #e2e8f0;padding:.6rem .75rem;text-align:left;vertical-align:top;}
+    .cs-table thead th{background:#f8fafc;font-weight:700;color:#15203d;font-size:.76rem;text-transform:uppercase;letter-spacing:.03em;}
+    .cs-table td{color:#475569;}
+    .cs-table tr td:first-child,.cs-table tr th:first-child{color:#1e293b;font-weight:600;}
+    .cs-results-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;}
+    .cs-results-col h4{font-weight:700;color:#0f172a;font-size:.92rem;margin-bottom:.7rem;}
+    .cs-img-strip{display:flex;gap:.6rem;border-radius:1rem;overflow:hidden;margin:.5rem 0 1.5rem;}
+    .cs-img-strip img{flex:1;width:100%;height:100%;object-fit:cover;display:block;max-height:260px;}
+    @media(max-width:760px){.cs-section{grid-template-columns:1fr;gap:.85rem;}.cs-columns{grid-template-columns:1fr;gap:1.75rem;}.cs-results-cols{grid-template-columns:1fr;gap:1.75rem;}.cs-steps{gap:.5rem 0;}.cs-step{width:5.6rem;}.cs-step-arrow{display:none;}.cs-img-strip{flex-direction:column;}}
+ 
     @media(max-width:640px){.ptabs{gap:1.1rem}}
+ 
+    /* ABOUT — sits on the Home view, below the hero */
+    .about-section{background:#f8fafc;padding:5rem 1.5rem;}
+    .about-inner{max-width:44rem;margin:0 auto;}
+    .about-bio{font-family:'Times New Roman',Times,serif;font-size:1.1rem;line-height:1.65;color:#475569;font-weight:400;}
  
     /* ANIMATIONS */
     @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
@@ -108,7 +176,7 @@
  
     /* JOURNEY MAP */
     .jshell{position:relative;background:linear-gradient(180deg,#0d1328 0%,#111936 46%,#15203d 100%);border-radius:1rem;overflow:hidden;box-shadow:0 16px 40px rgba(15,23,42,.14);transition:all .28s ease;overscroll-behavior:contain;margin-left:-1vw;margin-right:-1vw;}
-    .jicon-btn{width:34px;height:34px;border-radius:999px;border:1px solid rgba(255,255,255,.10);background:rgba(10,16,32,.26);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s,transform .15s,border-color .15s;font-family:'DM Sans',system-ui,sans-serif;font-size:.9rem;line-height:1;}
+    .jicon-btn{width:34px;height:34px;border-radius:999px;border:1px solid rgba(255,255,255,.10);background:rgba(10,16,32,.26);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s,transform .15s,border-color .15s;font-family:'Times New Roman',Times,serif;font-size:.9rem;line-height:1;}
     .jicon-btn:hover{background:rgba(10,16,32,.38);border-color:rgba(255,255,255,.16);transform:translateY(-1px);}
     .jvp{position:relative;height:620px;overflow:hidden;touch-action:none;overscroll-behavior:contain;cursor:grab;background:radial-gradient(circle at 88% 19%,#fffde8 0 58px,rgba(255,250,200,.18) 59px,transparent 130px),radial-gradient(circle at 10% 18%,rgba(255,255,255,.55) 0 1.5px,transparent 2.5px),radial-gradient(circle at 22% 32%,rgba(255,255,255,.45) 0 1.5px,transparent 2.5px),radial-gradient(circle at 38% 10%,rgba(255,255,255,.60) 0 1.5px,transparent 2.5px),radial-gradient(circle at 52% 22%,rgba(255,255,255,.45) 0 1.5px,transparent 2.5px),radial-gradient(circle at 67% 8%,rgba(255,255,255,.50) 0 1.5px,transparent 2.5px),radial-gradient(circle at 30% 55%,rgba(255,255,255,.40) 0 1px,transparent 2px),radial-gradient(circle at 78% 28%,rgba(255,255,255,.45) 0 1.5px,transparent 2.5px),radial-gradient(circle at 90% 18%,rgba(255,255,255,.40) 0 1px,transparent 2px),radial-gradient(circle at 15% 70%,rgba(255,255,255,.35) 0 1px,transparent 2px),radial-gradient(circle at 60% 75%,rgba(255,255,255,.40) 0 1px,transparent 2px),radial-gradient(circle at 8% 62%,rgba(255,255,255,.42) 0 1.5px,transparent 2.5px),radial-gradient(circle at 42% 85%,rgba(255,255,255,.38) 0 1.5px,transparent 2.5px),radial-gradient(circle at 70% 82%,rgba(255,255,255,.35) 0 1.5px,transparent 2.5px),radial-gradient(circle at 92% 58%,rgba(255,255,255,.38) 0 1.5px,transparent 2.5px),radial-gradient(circle at 28% 72%,rgba(255,255,255,.32) 0 1px,transparent 2px),radial-gradient(circle at 58% 90%,rgba(255,255,255,.35) 0 1px,transparent 2px),linear-gradient(180deg,#06102a 0%,#0c1840 50%,#111e48 100%);transition:height .28s ease;}
     .jvp.dragging{cursor:grabbing}
@@ -145,7 +213,7 @@
     .jresize-ne{top:-5px;right:-5px;cursor:ne-resize}.jresize-nw{top:-5px;left:-5px;cursor:nw-resize}.jresize-se{bottom:-5px;right:-5px;cursor:se-resize;padding:4px}.jresize-sw{bottom:-5px;left:-5px;cursor:sw-resize}
     .jresize svg{opacity:.35;pointer-events:none}.jresize:hover svg{opacity:.7}
     .jdetail-actions{display:none}
-    .jdtitle{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.9rem;color:#102744;line-height:1}.jdsubtitle{display:none}
+    .jdtitle{font-family:'Times New Roman',Times,serif;font-size:1.9rem;color:#102744;line-height:1}.jdsubtitle{display:none}
     .jcards-wrap{margin-top:0;display:grid;gap:.75rem}
     .jcard{background:white;border:1px solid #e9edf1;border-radius:10px;padding:0;box-shadow:0 1px 6px rgba(20,40,70,.04);overflow:hidden}
     .jcard-head{display:flex;align-items:center;gap:.9rem;padding:.95rem 1rem .85rem;border-bottom:1px solid #eef2f6;background:linear-gradient(180deg,rgba(248,250,252,.9),rgba(255,255,255,.98))}
@@ -173,13 +241,13 @@
  
     /* LANGUAGE / GLOBAL DROPDOWN */
     .lang-dd{position:relative;}
-    .lang-btn{display:flex;align-items:center;gap:.32rem;padding:.4rem .85rem;border-radius:999px;font-size:.81rem;font-weight:600;color:#15203d;background:transparent;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;letter-spacing:.01em;white-space:nowrap;}
+    .lang-btn{display:flex;align-items:center;gap:.32rem;padding:.4rem .85rem;border-radius:999px;font-size:.81rem;font-weight:600;color:#15203d;background:transparent;border:none;cursor:pointer;font-family:'Times New Roman',Times,serif;letter-spacing:.01em;white-space:nowrap;}
     .lang-btn:hover{background:#15203d;color:#fff;}
     .lang-btn svg.chev{transition:transform .18s ease;}
     .lang-dd.open .lang-btn svg.chev{transform:rotate(180deg);}
     .lang-menu{position:absolute;top:calc(100% + 10px);right:0;background:#fff;border-radius:.75rem;box-shadow:0 14px 34px rgba(21,32,61,.20);padding:.4rem;display:none;min-width:140px;z-index:70;}
     .lang-dd.open .lang-menu{display:block;}
-    .lang-opt{display:flex;align-items:center;justify-content:space-between;width:100%;padding:.5rem .7rem;border-radius:.5rem;border:none;background:transparent;font-size:.82rem;font-weight:500;color:#15203d;cursor:pointer;text-align:left;font-family:'DM Sans',sans-serif;}
+    .lang-opt{display:flex;align-items:center;justify-content:space-between;width:100%;padding:.5rem .7rem;border-radius:.5rem;border:none;background:transparent;font-size:.82rem;font-weight:500;color:#15203d;cursor:pointer;text-align:left;font-family:'Times New Roman',Times,serif;}
     .lang-opt:hover{background:#eef1f8;}
     .lang-opt.active{background:#15203d;color:#fff;}
  
@@ -187,10 +255,6 @@
     .reveal{opacity:0;transform:translateY(26px);transition:opacity .65s ease,transform .65s ease;}
     .reveal.in-view{opacity:1;transform:translateY(0);}
     @media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important;transition:none!important;}}
- 
-    /* HOME INTRO — plain bio blurb in the white area below the hero */
-    .home-intro{max-width:680px;margin:3rem auto 4rem;padding:0 1.5rem;text-align:left;}
-    .home-intro p{font-family:'DM Sans',sans-serif;font-weight:300;font-size:1.05rem;line-height:1.75;color:#334155;}
   </style>
 </head>
  
@@ -234,14 +298,17 @@
     <h1 class="hero-name text-5xl md:text-7xl fade-2 text-center">Sruti Bhattacharjee</h1>
     <p class="mt-3 text-base md:text-xl text-slate-400 fade-3 font-light tracking-wide text-center" data-i18n="hero.subtitle">Graduate Student &nbsp;·&nbsp; KTH Royal Institute of Technology</p>
  
-    <button type="button" id="heroScrollBtn" class="absolute bottom-10 text-white/40 hover:text-white/80 transition-colors bounce-icon z-10" style="background:none;border:none;padding:0;cursor:pointer;" aria-label="View work" title="View work">
+    <button type="button" id="heroScrollBtn" class="absolute bottom-10 text-white/40 hover:text-white/80 transition-colors bounce-icon z-10" style="background:none;border:none;padding:0;cursor:pointer;" aria-label="Scroll to learn more about me" title="About me">
       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 12 16 16 12"/><line x1="12" y1="8" x2="12" y2="16"/></svg>
     </button>
   </header>
  
-  <!-- HOME INTRO — bio blurb directly below the hero (blue) area -->
-  <section class="home-intro reveal" data-i18n-section="home-intro">
-    <p data-i18n="home.intro">I'm a UX Researcher who values human-centered and ethical innovation. With a background in Computer Engineering and Human&ndash;Computer Interaction, I am passionate about understanding human needs and challenges to inform product decisions for interactive, accessible, and multimodal technologies.</p>
+  <!-- ABOUT — same "home" view as the hero above, so it shows/hides together with it -->
+  <section class="view about-section" data-view="home" id="homeAbout">
+    <div class="about-inner">
+      <p class="view-kicker reveal" data-i18n="section.about">About Me</p>
+      <p class="about-bio reveal" data-i18n="home.bio">I'm a UX Researcher who values human-centered and ethical innovation. With a background in Computer Engineering and Human–Computer Interaction, I am passionate about understanding human needs and challenges to inform product decisions for interactive, accessible, and multimodal technologies.</p>
+    </div>
   </section>
  
  
@@ -386,14 +453,13 @@
         'section.about':'About Me','section.education':'Education','section.experience':'Selected Experiences','section.portfolio':'Portfolio',
         'about.p1':'I am a Human-Centric Computer Engineer specializing in Interactive Technology Design and Development based on User Experience and User Perception Analysis.',
         'about.p2':"I'm open to new roles and collaborations. Feel free to reach out if my background aligns with your team's goals.",
-        'home.intro':"I'm a UX Researcher who values human-centered and ethical innovation. With a background in Computer Engineering and Human&ndash;Computer Interaction, I am passionate about understanding human needs and challenges to inform product decisions for interactive, accessible, and multimodal technologies.",
         'word.present':'Present',
         'edu.1.degree':'Master of Science, Interactive Media Technology',
         'edu.2.degree':'Graduate Exchange Student, Computer and Communication Sciences',
         'edu.3.degree':'Bachelor of Technology, Information Technology',
         'edu.4.degree':'Undergrad Visiting Student, Computer Science and Engineering',
         'tab.all':'All Projects','tab.ux':'UX Research','tab.interaction':'Interaction Design','tab.visual':'Visual Computing',
-        'lbl.projectPage':'Project Page','lbl.paper':'Paper','lbl.code':'Code',
+        'lbl.image':'Image','lbl.video':'Video','lbl.gif':'GIF','lbl.code':'Code',
         'proj.1.title':'Re-Designing VRLE for Effective Pedagogy',
         'proj.1.desc':'Formulating how virtual reality-based learning environments can provide pedagogical support in effective learning.',
         'proj.2.title':'EdTech for Novice Programming Learners in Hybrid Collaborative Classes',
@@ -419,6 +485,7 @@
         'view.education.sub':'Degrees and exchanges spanning Sweden, Switzerland and India, each shaping how I think about technology and people.',
         'footer.rights':'All rights reserved.',
         'lbl.backToWork':'Back to Work',
+        'home.bio':"I'm a UX Researcher who values human-centered and ethical innovation. With a background in Computer Engineering and Human\u2013Computer Interaction, I am passionate about understanding human needs and challenges to inform product decisions for interactive, accessible, and multimodal technologies."
       },
       fr:{
         'nav.work':'Travaux','nav.journey':'Parcours','nav.education':'Formation','nav.cv':'CV','nav.contact':'Me Contacter',
@@ -426,14 +493,13 @@
         'section.about':'\u00c0 Propos de Moi','section.education':'Formation','section.experience':'Exp\u00e9riences S\u00e9lectionn\u00e9es','section.portfolio':'Portfolio',
         'about.p1':"Je suis ing\u00e9nieure en informatique centr\u00e9e sur l'humain, sp\u00e9cialis\u00e9e dans la conception et le d\u00e9veloppement de technologies interactives, fond\u00e9es sur la recherche en exp\u00e9rience utilisateur et l'analyse de la perception utilisateur.",
         'about.p2':"Je suis ouverte \u00e0 de nouveaux postes et collaborations. N'h\u00e9sitez pas \u00e0 me contacter si mon profil correspond aux objectifs de votre \u00e9quipe.",
-        'home.intro':"Je suis chercheuse en UX, attach\u00e9e \u00e0 une innovation centr\u00e9e sur l'humain et \u00e9thique. Forte d'une formation en g\u00e9nie informatique et en interaction homme-machine, je m'attache \u00e0 comprendre les besoins et les difficult\u00e9s des utilisateurs afin d'\u00e9clairer les d\u00e9cisions produit pour des technologies interactives, accessibles et multimodales.",
         'word.present':'Pr\u00e9sent',
         'edu.1.degree':"Master en Technologie des M\u00e9dias Interactifs",
         'edu.2.degree':'\u00c9tudiante en \u00e9change, Sciences Informatiques et Communication',
         'edu.3.degree':"Licence en Technologie de l'Information",
         'edu.4.degree':'\u00c9tudiante invit\u00e9e de premier cycle, Informatique et Ing\u00e9nierie',
         'tab.all':'Tous les Projets','tab.ux':'Recherche UX','tab.interaction':"Design d'Interaction",'tab.visual':'Informatique Visuelle',
-        'lbl.projectPage':'Page du Projet','lbl.paper':'Article','lbl.code':'Code',
+        'lbl.image':'Image','lbl.video':'Vid\u00e9o','lbl.gif':'GIF','lbl.code':'Code',
         'proj.1.title':'Repenser les EVRA pour une P\u00e9dagogie Efficace',
         'proj.1.desc':"Formulation de la mani\u00e8re dont les environnements d'apprentissage en r\u00e9alit\u00e9 virtuelle peuvent offrir un soutien p\u00e9dagogique pour un apprentissage efficace.",
         'proj.2.title':'EdTech pour les Apprenants Novices en Programmation dans des Classes Collaboratives Hybrides',
@@ -459,6 +525,7 @@
         'view.education.sub':'Des dipl\u00f4mes et \u00e9changes entre la Su\u00e8de, la Suisse et l\u2019Inde, qui ont chacun fa\u00e7onn\u00e9 ma vision de la technologie et des personnes.',
         'footer.rights':'Tous droits r\u00e9serv\u00e9s.',
         'lbl.backToWork':'Retour aux Travaux',
+        'home.bio':"Je suis une chercheuse UX qui accorde une grande importance \u00e0 l'innovation centr\u00e9e sur l'humain et \u00e9thique. Avec une formation en g\u00e9nie informatique et en interaction homme-machine, je suis passionn\u00e9e par la compr\u00e9hension des besoins et des d\u00e9fis humains afin d'\u00e9clairer les d\u00e9cisions produit pour des technologies interactives, accessibles et multimodales."
       },
       zh:{
         'nav.work':'\u4f5c\u54c1','nav.journey':'\u5386\u7a0b','nav.education':'\u6559\u80b2\u80cc\u666f','nav.cv':'\u7b80\u5386','nav.contact':'\u8054\u7cfb\u6211',
@@ -466,14 +533,13 @@
         'section.about':'\u5173\u4e8e\u6211','section.education':'\u6559\u80b2\u80cc\u666f','section.experience':'\u7cbe\u9009\u7ecf\u5386','section.portfolio':'\u4f5c\u54c1\u96c6',
         'about.p1':'\u6211\u662f\u4e00\u540d\u4ee5\u4eba\u4e3a\u4e2d\u5fc3\u7684\u8ba1\u7b97\u673a\u5de5\u7a0b\u5e08\uff0c\u4e13\u6ce8\u4e8e\u57fa\u4e8e\u7528\u6237\u4f53\u9a8c\u4e0e\u7528\u6237\u611f\u77e5\u5206\u6790\u7684\u4ea4\u4e92\u6280\u672f\u8bbe\u8ba1\u4e0e\u5f00\u53d1\u3002',
         'about.p2':'\u6211\u4e50\u4e8e\u63a5\u53d7\u65b0\u7684\u5de5\u4f5c\u673a\u4f1a\u4e0e\u5408\u4f5c\u3002\u5982\u679c\u6211\u7684\u80cc\u666f\u4e0e\u8d35\u56e2\u961f\u7684\u76ee\u6807\u76f8\u7b26\uff0c\u6b22\u8fce\u968f\u65f6\u4e0e\u6211\u8054\u7cfb\u3002',
-        'home.intro':'\u6211\u662f\u4e00\u540d\u91cd\u89c6\u4ee5\u4eba\u4e3a\u672c\u3001\u5177\u6709\u4f26\u7406\u610f\u8bc6\u7684\u521b\u65b0\u7684UX\u7814\u7a76\u5458\u3002\u6211\u5177\u6709\u8ba1\u7b97\u673a\u5de5\u7a0b\u4e0e\u4eba\u673a\u4ea4\u4e92\u80cc\u666f\uff0c\u81f4\u529b\u4e8e\u7406\u89e3\u7528\u6237\u9700\u6c42\u4e0e\u96be\u9898\uff0c\u4ee5\u6b64\u4e3a\u4ea4\u4e92\u5f0f\u3001\u65e0\u969c\u788d\u4e0e\u591a\u6a21\u6001\u6280\u672f\u7684\u4ea7\u54c1\u51b3\u7b56\u63d0\u4f9b\u4f9d\u636e\u3002',
         'word.present':'\u81f3\u4eca',
         'edu.1.degree':'\u7406\u5b66\u7855\u58eb\uff0c\u4ea4\u4e92\u5a92\u4f53\u6280\u672f',
         'edu.2.degree':'\u4ea4\u6362\u7814\u7a76\u751f\uff0c\u8ba1\u7b97\u673a\u4e0e\u901a\u4fe1\u79d1\u5b66',
         'edu.3.degree':'\u6280\u672f\u5b66\u58eb\uff0c\u4fe1\u606f\u6280\u672f',
         'edu.4.degree':'\u672c\u79d1\u8bbf\u95ee\u5b66\u751f\uff0c\u8ba1\u7b97\u673a\u79d1\u5b66\u4e0e\u5de5\u7a0b',
         'tab.all':'\u5168\u90e8\u4f5c\u54c1','tab.ux':'\u7528\u6237\u4f53\u9a8c\u7814\u7a76','tab.interaction':'\u4ea4\u4e92\u8bbe\u8ba1','tab.visual':'\u89c6\u89c9\u8ba1\u7b97',
-        'lbl.projectPage':'\u9879\u76ee\u9875\u9762','lbl.paper':'\u8bba\u6587','lbl.code':'\u4ee3\u7801',
+        'lbl.image':'\u56fe\u7247','lbl.video':'\u89c6\u9891','lbl.gif':'GIF','lbl.code':'\u4ee3\u7801',
         'proj.1.title':'\u91cd\u65b0\u8bbe\u8ba1VRLE\u4ee5\u5b9e\u73b0\u6709\u6548\u6559\u5b66\u6cd5',
         'proj.1.desc':'\u7814\u7a76\u4e86\u57fa\u4e8e\u865a\u62df\u73b0\u5b9e\u7684\u5b66\u4e60\u73af\u5883\u5982\u4f55\u4e3a\u6709\u6548\u5b66\u4e60\u63d0\u4f9b\u6559\u5b66\u652f\u6301\u3002',
         'proj.2.title':'\u9762\u5411\u6df7\u5408\u534f\u4f5c\u8bfe\u5802\u4e2d\u7f16\u7a0b\u521d\u5b66\u8005\u7684\u6559\u80b2\u79d1\u6280',
@@ -499,6 +565,7 @@
         'view.education.sub':'\u5728\u745e\u5178\u3001\u745e\u58eb\u4e0e\u5370\u5ea6\u5b8c\u6210\u7684\u5b66\u4f4d\u4e0e\u4ea4\u6362\u9879\u76ee\uff0c\u5206\u522b\u5851\u9020\u4e86\u6211\u5bf9\u6280\u672f\u4e0e\u4eba\u7684\u7406\u89e3\u3002',
         'footer.rights':'\u7248\u6743\u6240\u6709\u3002',
         'lbl.backToWork':'\u8fd4\u56de\u4f5c\u54c1',
+        'home.bio':'\u6211\u662f\u4e00\u540d\u91cd\u89c6\u4ee5\u4eba\u4e3a\u672c\u4e0e\u4f26\u7406\u521b\u65b0\u7684\u7528\u6237\u4f53\u9a8c\u7814\u7a76\u5458\u3002\u51ed\u501f\u8ba1\u7b97\u673a\u5de5\u7a0b\u4e0e\u4eba\u673a\u4ea4\u4e92\u7684\u80cc\u666f\uff0c\u6211\u70ed\u8877\u4e8e\u7406\u89e3\u4eba\u7c7b\u7684\u9700\u6c42\u4e0e\u6311\u6218\uff0c\u4ee5\u6b64\u4e3a\u4ea4\u4e92\u5f0f\u3001\u65e0\u969c\u788d\u53ca\u591a\u6a21\u6001\u6280\u672f\u7684\u4ea7\u54c1\u51b3\u7b56\u63d0\u4f9b\u4f9d\u636e\u3002'
       },
       de:{
         'nav.work':'Arbeiten','nav.journey':'Werdegang','nav.education':'Ausbildung','nav.cv':'Lebenslauf','nav.contact':'Kontakt',
@@ -506,14 +573,13 @@
         'section.about':'\u00dcber Mich','section.education':'Ausbildung','section.experience':'Ausgew\u00e4hlte Erfahrungen','section.portfolio':'Portfolio',
         'about.p1':'Ich bin eine Human-Centric Computer Engineer, spezialisiert auf interaktives Technologiedesign und -entwicklung auf Basis von Nutzererfahrungs- und Nutzerwahrnehmungsanalyse.',
         'about.p2':'Ich bin offen f\u00fcr neue Positionen und Kooperationen. Kontaktieren Sie mich gerne, wenn mein Hintergrund zu den Zielen Ihres Teams passt.',
-        'home.intro':'Ich bin UX-Forscherin und setze mich f\u00fcr menschzentrierte und ethische Innovation ein. Mit einem Hintergrund in Computertechnik und Mensch-Computer-Interaktion besch\u00e4ftige ich mich leidenschaftlich damit, menschliche Bed\u00fcrfnisse und Herausforderungen zu verstehen, um Produktentscheidungen f\u00fcr interaktive, barrierefreie und multimodale Technologien zu unterst\u00fctzen.',
         'word.present':'Heute',
         'edu.1.degree':'Master of Science, Interaktive Medientechnologie',
         'edu.2.degree':'Austauschstudentin, Informatik und Kommunikationswissenschaften',
         'edu.3.degree':'Bachelor of Technology, Informationstechnologie',
         'edu.4.degree':'Gaststudentin (Bachelor), Informatik und Ingenieurwesen',
         'tab.all':'Alle Projekte','tab.ux':'UX-Forschung','tab.interaction':'Interaktionsdesign','tab.visual':'Visuelles Computing',
-        'lbl.projectPage':'Projektseite','lbl.paper':'Paper','lbl.code':'Code',
+        'lbl.image':'Bild','lbl.video':'Video','lbl.gif':'GIF','lbl.code':'Code',
         'proj.1.title':'Neugestaltung von VRLE f\u00fcr effektive P\u00e4dagogik',
         'proj.1.desc':'Untersuchung, wie VR-basierte Lernumgebungen p\u00e4dagogische Unterst\u00fctzung f\u00fcr effektives Lernen bieten k\u00f6nnen.',
         'proj.2.title':'EdTech f\u00fcr Programmier-Einsteiger in hybriden kollaborativen Klassen',
@@ -539,6 +605,7 @@
         'view.education.sub':'Abschl\u00fcsse und Austauschprogramme in Schweden, der Schweiz und Indien, die jeweils meine Sicht auf Technologie und Menschen gepr\u00e4gt haben.',
         'footer.rights':'Alle Rechte vorbehalten.',
         'lbl.backToWork':'Zur\u00fcck zu Arbeiten',
+        'home.bio':'Ich bin eine UX-Researcherin, der menschzentrierte und ethische Innovation wichtig ist. Mit einem Hintergrund in Computertechnik und Mensch-Computer-Interaktion besch\u00e4ftige ich mich leidenschaftlich damit, menschliche Bed\u00fcrfnisse und Herausforderungen zu verstehen, um Produktentscheidungen f\u00fcr interaktive, barrierefreie und multimodale Technologien zu treffen.'
       },
       ja:{
         'nav.work':'\u4f5c\u54c1','nav.journey':'\u7d4c\u6b74','nav.education':'\u5b66\u6b74','nav.cv':'\u5c65\u6b74\u66f8','nav.contact':'\u304a\u554f\u3044\u5408\u308f\u305b',
@@ -546,14 +613,13 @@
         'section.about':'\u81ea\u5df1\u7d39\u4ecb','section.education':'\u5b66\u6b74','section.experience':'\u4e3b\u306a\u7d4c\u9a13','section.portfolio':'\u30dd\u30fc\u30c8\u30d5\u30a9\u30ea\u30aa',
         'about.p1':'\u79c1\u306f\u30e6\u30fc\u30b6\u30fc\u30a8\u30af\u30b9\u30da\u30ea\u30a8\u30f3\u30b9\u3068\u30e6\u30fc\u30b6\u30fc\u77e5\u899a\u5206\u6790\u306b\u57fa\u3065\u304d\u3001\u30a4\u30f3\u30bf\u30e9\u30af\u30c6\u30a3\u30d6\u6280\u8853\u306e\u30c7\u30b6\u30a4\u30f3\u3068\u958b\u767a\u3092\u5c02\u9580\u3068\u3059\u308b\u3001\u4eba\u9593\u4e2d\u5fc3\u306e\u30b3\u30f3\u30d4\u30e5\u30fc\u30bf\u30a8\u30f3\u30b8\u30cb\u30a2\u3067\u3059\u3002',
         'about.p2':'\u65b0\u3057\u3044\u5f79\u8077\u3084\u30b3\u30e9\u30dc\u30ec\u30fc\u30b7\u30e7\u30f3\u3092\u6b53\u8fce\u3057\u307e\u3059\u3002\u79c1\u306e\u7d4c\u6b74\u304c\u8cb4\u30c1\u30fc\u30e0\u306e\u76ee\u6a19\u306b\u5408\u81f4\u3059\u308b\u3088\u3046\u3067\u3042\u308c\u3070\u3001\u304a\u6c17\u8efd\u306b\u3054\u9023\u7d61\u304f\u3060\u3055\u3044\u3002',
-        'home.intro':'\u79c1\u306f\u3001\u4eba\u9593\u4e2d\u5fc3\u3067\u502b\u7406\u7684\u306a\u30a4\u30ce\u30d9\u30fc\u30b7\u30e7\u30f3\u3092\u5927\u5207\u306b\u3059\u308bUX\u30ea\u30b5\u30fc\u30c1\u30e3\u30fc\u3067\u3059\u3002\u30b3\u30f3\u30d4\u30e5\u30fc\u30bf\u5de5\u5b66\u3068\u30d2\u30e5\u30fc\u30de\u30f3\u30b3\u30f3\u30d4\u30e5\u30fc\u30bf\u30a4\u30f3\u30bf\u30e9\u30af\u30b7\u30e7\u30f3\u306e\u80cc\u666f\u3092\u6301\u3061\u3001\u4eba\u3005\u306e\u30cb\u30fc\u30ba\u3084\u8ab2\u984c\u3092\u7406\u89e3\u3057\u3001\u30a4\u30f3\u30bf\u30e9\u30af\u30c6\u30a3\u30d6\u3067\u30a2\u30af\u30bb\u30b7\u30d6\u30eb\u3001\u30de\u30eb\u30c1\u30e2\u30fc\u30c0\u30eb\u306a\u6280\u8853\u306e\u88fd\u54c1\u610f\u601d\u6c7a\u5b9a\u306b\u6d3b\u304b\u3059\u3053\u3068\u306b\u60c5\u71b1\u3092\u6ce8\u3044\u3067\u3044\u307e\u3059\u3002',
         'word.present':'\u73fe\u5728',
         'edu.1.degree':'\u7406\u5b66\u4fee\u58eb\u3001\u30a4\u30f3\u30bf\u30e9\u30af\u30c6\u30a3\u30d6\u30e1\u30c7\u30a3\u30a2\u6280\u8853',
         'edu.2.degree':'\u4ea4\u63db\u7559\u5b66\u751f\u3001\u30b3\u30f3\u30d4\u30e5\u30fc\u30bf\u30fb\u30b3\u30df\u30e5\u30cb\u30b1\u30fc\u30b7\u30e7\u30f3\u79d1\u5b66',
         'edu.3.degree':'\u6280\u8853\u5b66\u58eb\u3001\u60c5\u5831\u6280\u8853',
         'edu.4.degree':'\u5b66\u90e8\u8a2a\u554f\u5b66\u751f\u3001\u30b3\u30f3\u30d4\u30e5\u30fc\u30bf\u30b5\u30a4\u30a8\u30f3\u30b9\u30fb\u5de5\u5b66',
         'tab.all':'\u3059\u3079\u3066\u306e\u4f5c\u54c1','tab.ux':'UX\u30ea\u30b5\u30fc\u30c1','tab.interaction':'\u30a4\u30f3\u30bf\u30e9\u30af\u30b7\u30e7\u30f3\u30c7\u30b6\u30a4\u30f3','tab.visual':'\u30d3\u30b8\u30e5\u30a2\u30eb\u30b3\u30f3\u30d4\u30e5\u30fc\u30c6\u30a3\u30f3\u30b0',
-        'lbl.projectPage':'\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u30da\u30fc\u30b8','lbl.paper':'\u8ad6\u6587','lbl.code':'\u30b3\u30fc\u30c9',
+        'lbl.image':'\u753b\u50cf','lbl.video':'\u52d5\u753b','lbl.gif':'GIF','lbl.code':'\u30b3\u30fc\u30c9',
         'proj.1.title':'\u52b9\u679c\u7684\u306a\u6559\u80b2\u6cd5\u306e\u305f\u3081\u306eVRLE\u306e\u518d\u8a2d\u8a08',
         'proj.1.desc':'VR\u30d9\u30fc\u30b9\u306e\u5b66\u7fd2\u74b0\u5883\u304c\u52b9\u679c\u7684\u306a\u5b66\u7fd2\u306b\u3069\u306e\u3088\u3046\u306b\u6559\u80b2\u7684\u652f\u63f4\u3092\u63d0\u4f9b\u3067\u304d\u308b\u304b\u3092\u7814\u7a76\u3057\u307e\u3057\u305f\u3002',
         'proj.2.title':'\u30cf\u30a4\u30d6\u30ea\u30c3\u30c9\u5354\u50cd\u30af\u30e9\u30b9\u306b\u304a\u3051\u308b\u30d7\u30ed\u30b0\u30e9\u30df\u30f3\u30b0\u521d\u5fc3\u8005\u5411\u3051\u6559\u80b2\u30c6\u30af\u30ce\u30ed\u30b8\u30fc',
@@ -579,6 +645,7 @@
         'view.education.sub':'\u30b9\u30a6\u30a7\u30fc\u30c7\u30f3\u3001\u30b9\u30a4\u30b9\u3001\u30a4\u30f3\u30c9\u3067\u53d6\u5f97\u3057\u305f\u5b66\u4f4d\u3068\u4ea4\u63db\u7559\u5b66\u304c\u3001\u305d\u308c\u305e\u308c\u79c1\u306e\u6280\u8853\u3068\u4eba\u306b\u5bfe\u3059\u308b\u8003\u3048\u65b9\u3092\u5f62\u4f5c\u3063\u3066\u304d\u307e\u3057\u305f\u3002',
         'footer.rights':'\u5168\u8457\u4f5c\u6a29\u6240\u6709\u3002',
         'lbl.backToWork':'\u4f5c\u54c1\u306b\u623b\u308b',
+        'home.bio':'\u79c1\u306f\u30d2\u30e5\u30fc\u30de\u30f3\u30bb\u30f3\u30bf\u30fc\u30c9\u3067\u502b\u7406\u7684\u306a\u30a4\u30ce\u30d9\u30fc\u30b7\u30e7\u30f3\u3092\u5927\u5207\u306b\u3059\u308bUX\u30ea\u30b5\u30fc\u30c1\u30e3\u30fc\u3067\u3059\u3002\u30b3\u30f3\u30d4\u30e5\u30fc\u30bf\u5de5\u5b66\u3068\u30d2\u30e5\u30fc\u30de\u30f3\u30fb\u30b3\u30f3\u30d4\u30e5\u30fc\u30bf\u30fb\u30a4\u30f3\u30bf\u30e9\u30af\u30b7\u30e7\u30f3\u306e\u80cc\u666f\u3092\u6301\u3061\u3001\u30a4\u30f3\u30bf\u30e9\u30af\u30c6\u30a3\u30d6\u3067\u30a2\u30af\u30bb\u30b7\u30d6\u30eb\u3001\u30de\u30eb\u30c1\u30e2\u30fc\u30c0\u30eb\u306a\u6280\u8853\u306e\u30d7\u30ed\u30c0\u30af\u30c8\u610f\u601d\u6c7a\u5b9a\u306b\u5f79\u7acb\u3066\u308b\u305f\u3081\u3001\u4eba\u3005\u306e\u30cb\u30fc\u30ba\u3084\u8ab2\u984c\u3092\u7406\u89e3\u3059\u308b\u3053\u3068\u306b\u60c5\u71b1\u3092\u6ce8\u3044\u3067\u3044\u307e\u3059\u3002'
       }
     };
  
@@ -593,14 +660,14 @@
        pair in each language block of TRANSLATIONS.
        ============================================================ */
     const PROJECTS=[
-      {id:1,cat:'ux',meta:'KTH · EPFL',img:'images/projects/vrle_classroom.jpeg',imgAlt:'Preview image of VR learning environment project',links:[{key:'lbl.projectPage',href:'#'},{key:'lbl.paper',href:'#'}]},
-      {id:2,cat:'ux',meta:'University of Lausanne',img:'images/projects/unil.jpg',imgAlt:'Preview image of hybrid class research project',links:[{key:'lbl.projectPage',href:'#'},{key:'lbl.paper',href:'#'}]},
-      {id:3,cat:'ux',meta:'KTH',img:'images/projects/VRvsRobovsZoomfinal.png',imgAlt:'Preview image of remote communication project',links:[{key:'lbl.projectPage',href:'#'},{key:'lbl.paper',href:'#'}]},
-      {id:4,cat:'interaction',meta:'EPFL',img:'images/projects/protest_project.png',imgAlt:'Augmented City interaction design',links:[{key:'lbl.projectPage',href:'#'}]},
-      {id:5,cat:'interaction',meta:'Ericsson',img:'images/projects/haptic_ericsson.png',imgAlt:'Preview image of haptic systems project',links:[{key:'lbl.paper',href:'#'},{key:'lbl.code',href:'#'}]},
-      {id:6,cat:'interaction',meta:'KTH',img:'images/projects/teach_figma.png',imgAlt:'Preview image of remote learning UX project',links:[{key:'lbl.projectPage',href:'#'}]},
-      {id:7,cat:'visual',meta:'EPFL',img:'images/projects/iig_project.png',imgAlt:'Preview image of IIG EPFL project',links:[{key:'lbl.paper',href:'#'},{key:'lbl.code',href:'#'}]},
-      {id:8,cat:'visual',meta:'EPFL',img:'images/projects/venice1.png',imgAlt:'Preview image of 3D city modelling project',links:[{key:'lbl.projectPage',href:'#'},{key:'lbl.code',href:'#'}]},
+      {id:1,cat:'ux',meta:'KTH · EPFL',img:'images/projects/vrle_classroom.jpeg',imgAlt:'Preview image of VR learning environment project',links:[]},
+      {id:2,cat:'ux',meta:'University of Lausanne',img:'images/projects/unil.jpg',imgAlt:'Preview image of hybrid class research project',links:[]},
+      {id:3,cat:'ux',meta:'KTH',img:'images/projects/VRvsRobovsZoomfinal.png',imgAlt:'Preview image of remote communication project',links:[]},
+      {id:4,cat:'interaction',meta:'EPFL',img:'images/projects/protest_project.png',imgAlt:'Augmented City interaction design',links:[]},
+      {id:5,cat:'interaction',meta:'Ericsson',img:'images/projects/haptic_ericsson.png',imgAlt:'Preview image of haptic systems project',links:[{key:'lbl.code',href:'#'}]},
+      {id:6,cat:'interaction',meta:'KTH',img:'images/projects/teach_figma.png',imgAlt:'Preview image of remote learning UX project',links:[]},
+      {id:7,cat:'visual',meta:'EPFL',img:'images/projects/iig_project.png',imgAlt:'Preview image of IIG EPFL project',links:[{key:'lbl.code',href:'#'}]},
+      {id:8,cat:'visual',meta:'EPFL',img:'images/projects/venice1.png',imgAlt:'Preview image of 3D city modelling project',links:[{key:'lbl.code',href:'#'}]},
       {id:9,cat:'visual',meta:'KTH',img:'images/projects/r_mike.gif',imgAlt:'Preview image of game development project',links:[{key:'lbl.code',href:'#'}]}
     ];
  
@@ -674,6 +741,136 @@
     }
  
     let currentProjectId=null;
+    /* CASE STUDY CONTENT — richer, structured write-ups for specific projects.
+       Sourced from Sruti's own project documentation. To add another project's
+       case study, add an entry here keyed by project id. */
+    const CASE_STUDIES={
+      3:{
+        stats:[
+          {label:'Team',value:'4 people group'},
+          {label:'Tools',value:'Zoom, VTime XR, Oculus Quest 2, Furhat Robot'},
+          {label:'Timeline',value:"6 Weeks, Nov 25, '20 \u2013 Jan 15, '21"}
+        ],
+        overview:[
+          'The Covid-19 pandemic prompted the widespread use of remote communication for interpersonal interaction and group work.',
+          'Humans use multimodality extensively to communicate with each other, either simultaneously (in face-to-face conversations) or alternatively (using speech, writing, gestures, visuals, and touch).',
+          'This study aimed to identify key modality components for interactive communication media by analyzing the effect of different media on group communication and collaborative group work.'
+        ],
+        challenge:[
+          'This study was the first to use the Furhat Robot as a telepresence robot for remote group communication.',
+          'Arranging participants during the pandemic.',
+          'Only one week for participant recruitment.',
+          'Experiment design and prototype development within two weeks.'
+        ],
+        objectives:[
+          "Investigate the impact of remote group communication and remote collaborative work through the Furhat Robot as a telepresence robot, compared to Zoom and Virtual Reality.",
+          'Formulate usability insights for three different remote communication media.',
+          'Examine the strengths and weaknesses of multimodal interactive communication media interfaces.'
+        ],
+        myRole:[
+          'Writing interview protocol (English version).',
+          'Examining different Oculus VR apps for group communication.',
+          'Testing the Unity prototype used to manipulate the Furhat head via Oculus HMD.',
+          "Assisting group mates with data analysis and report documentation."
+        ],
+        method:['Experiment Design','Setup Environment','Participant Recruitment','Conduct Experiment','Data Analysis','Report Result'],
+        learned:[
+          'Used Oculus and VR for the first time, and learned about the different group-communication platforms available in VR.',
+          "Developed a prototype to manipulate the Furhat Robot's head movement and gaze using an HMD, in C#.",
+          'Learned the importance of different modalities in telecommunication interface design and development.',
+          'Learned different approaches to enabling a perception of bodily presence using different modalities.'
+        ],
+        emergingTechIntro:'Three multimodal emerging technologies were used between the participants and interviewer, to understand which modalities affect the user experience: Zoom (video-based communication), VTime XR (virtual-reality-based communication), and the Furhat Robot manipulated via Oculus HMD (telepresence-based communication). The Furhat manipulation prototype was built in Unity and C#, letting the interviewer control the robot\u2019s head movement and gaze from a distance while participants spoke with the robot directly.',
+        modalityTable:{
+          head:['Modality','vTime XR \u2014 Operator','vTime XR \u2014 Participants','FurHat \u2014 Operator','FurHat \u2014 Participants','Zoom \u2014 Operator','Zoom \u2014 Participants'],
+          rows:[
+            ['Body movement','Upper body, incl. partial hand gestures','Upper body, incl. partial hand gestures','Head movements only','Upper body, incl. full hand gestures','Upper body, incl. full hand gestures','Upper body, incl. full hand gestures'],
+            ['Facial expressions','\u2014','\u2014','\u2014','Facial expressions','Facial expressions','Facial expressions'],
+            ['Environment','Shared virtual environment','Shared virtual environment','Shared physical environment','Shared physical environment','\u2014','Shared physical environment (partial)'],
+            ['Audio','Synchronised audio','Synchronised audio','Synchronised audio','Synchronised audio','Synchronised audio','Synchronised audio'],
+            ['Gaze','Gaze (partial)','Gaze (partial)','Gaze (partial)','Gaze','\u2014','Gaze']
+          ]
+        },
+        setup:'The experiment was held at KTH campus in Stockholm, Sweden, and conducted in Swedish across three rooms: one for the interviewer, one for the participants and observer, and a third used specifically for the VR condition, where one participant was isolated while the others stayed in the remaining two rooms. Furhat and Zoom conditions used only two rooms. A PC running the Unity prototype connected the Furhat robot to an Oculus HMD in the interviewer\u2019s room \u2014 through it, the interviewer could see and hear the participants and manipulate the robot\u2019s head movement and gaze in real time. Zoom stayed within a single shared setup.',
+        task:'The task was a storytelling exercise: participants were given a setting, three characters, three objects, and a scenario they had to explain. Six exercises were created across a wide range of settings, characters and objects, designed to stimulate creativity.',
+        taskExample:'Setting: a busy day on a street in New York. Characters: a middle-aged man, the man\u2019s boss, and a talking cat. Objects: a large bag of unidentified white powder, a birthday cake, and a pair of bloody scissors. Scenario: the middle-aged man finds himself sitting in the middle of a busy street, wearing a suit and tie covered in white powder. What has happened?',
+        questionnaireIntro:'After each condition, participants completed a questionnaire covering how creative they felt and how distracted they were by the technology, alongside an initial questionnaire on age and prior experience with each platform. Each condition had ten questions, answered on a seven-point Likert scale, covering the naturalness of conversation, engagement, perceived presence, and creativity.',
+        questionnaireTable:{
+          head:['Question','Zoom','Furhat','VR'],
+          rows:[
+            ['How easy did you find it to be creative during the task?','4.75','6.25','5.5'],
+            ['How much did it seem as if you and the group were physically together?','2.5','5','3.75'],
+            ["How well could you observe the other participants' body language?",'4','5.25','4.625'],
+            ['How well did you understand who the other participants were addressing?','5.75','5','5.375'],
+            ['How well could you determine the mood of the remote participants?','5.5','5','5.25'],
+            ['How natural did the interaction with the other participants feel?','4','5.25','4.625'],
+            ['How close did you feel to the other participants?','4','4','4'],
+            ['How distracting was the technology during the conversation?','3.5','2.5','3'],
+            ['Could you express yourself as you would face-to-face?','3.5','5.75','4.625'],
+            ['Did all participants feel able to equally contribute?','4','6','5']
+          ]
+        },
+        interview:'After the final questionnaire, participants took part in a semi-structured interview reflecting on the experience as a whole \u2014 what they liked and disliked in each setting, any setting they preferred, how interaction compared across settings, and how creative they felt they could be.',
+        results:[
+          {tech:'VTime XR (VR)',points:['Fun, but distracting.','A noticeable discrepancy between real people and their avatars.']},
+          {tech:'Zoom (Video call)',points:['Easy and familiar.','Lacked a sense of presence.']},
+          {tech:'FurHat (Teleoperation robot)',points:['Physical embodiment made the operator feel present.','Did not feel human.','Gaze sometimes felt unsettling.']}
+        ],
+        byTheNumbers:[
+          'Furhat scored highest for ease of creativity at <b>6.25/7</b>, ahead of VR (<b>5.5</b>) and Zoom (<b>4.75</b>).',
+          "Zoom scored lowest for perceived co-presence at <b>2.5/7</b> \u2014 less than half of Furhat's <b>5</b>.",
+          'Participants felt they could contribute equally most on Furhat (<b>6/7</b>), against <b>4/7</b> on Zoom.'
+        ],
+        keyFindings:[
+          "When designing the UI, it's important to keep the user experience close to a physical environment.",
+          "Visual modality affects users' independent thinking.",
+          'Haptic, motion, and sound modalities can make the media feel more realistic.',
+          "Combining too many modalities in one UI can overwhelm the user if it doesn't feel close to physical space.",
+          "Furhat would help more than VR in hybrid setups, if it could show the remote participant's facial expression as an avatar on its face.",
+          'VR would be most helpful when all participants are remote and need to pursue interactive, shared activities.'
+        ]
+      }
+    };
+ 
+    function csListHTML(items){
+      return '<ul class="cs-list">'+items.map(function(i){return '<li>'+i+'</li>';}).join('')+'</ul>';
+    }
+    function csTableHTML(t){
+      return '<div class="cs-table-wrap"><table class="cs-table"><thead><tr>'
+        +t.head.map(function(h){return '<th>'+h+'</th>';}).join('')
+        +'</tr></thead><tbody>'
+        +t.rows.map(function(r){return '<tr>'+r.map(function(c){return '<td>'+c+'</td>';}).join('')+'</tr>';}).join('')
+        +'</tbody></table></div>';
+    }
+    function caseStudyHTML(cs){
+      const arrow='<div class="cs-method-arrow"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>';
+      const methodHTML=cs.method.map(function(step,i){
+        return '<div class="cs-method-step"><div class="cs-method-num">'+(i+1)+'</div><div class="cs-method-label">'+step+'</div></div>'
+          +(i<cs.method.length-1?arrow:'');
+      }).join('');
+      return '<div class="cs-stats">'
+        +cs.stats.map(function(s){return '<div><div class="cs-stat-label">'+s.label+'</div><div class="cs-stat-value">'+s.value+'</div></div>';}).join('')
+        +'</div>'
+        +'<div class="cs-section"><div class="cs-section-title">Overview</div><div class="cs-section-body">'+csListHTML(cs.overview)+'</div></div>'
+        +'<div class="cs-section"><div class="cs-section-title">Challenge</div><div class="cs-section-body">'+csListHTML(cs.challenge)+'</div></div>'
+        +'<div class="cs-section"><div class="cs-section-title">Study Objectives</div><div class="cs-section-body">'+csListHTML(cs.objectives)+'</div></div>'
+        +'<div class="cs-section"><div class="cs-section-title">My Role</div><div class="cs-section-body">'+csListHTML(cs.myRole)+'</div></div>'
+        +'<div class="cs-section"><div class="cs-section-title">Method</div><div class="cs-section-body"><div class="cs-method">'+methodHTML+'</div></div></div>'
+        +'<div class="cs-section"><div class="cs-section-title">What I Learned</div><div class="cs-section-body">'+csListHTML(cs.learned)+'</div></div>'
+        +'<div class="cs-section"><div class="cs-section-title">Emerging Technologies</div><div class="cs-section-body"><p class="cs-p">'+cs.emergingTechIntro+'</p>'+csTableHTML(cs.modalityTable)+'</div></div>'
+        +'<div class="cs-section"><div class="cs-section-title">Experimental Design</div><div class="cs-section-body">'
+          +'<div class="cs-sub">Setup</div><p class="cs-p">'+cs.setup+'</p>'
+          +'<div class="cs-sub">Experimental Task</div><p class="cs-p">'+cs.task+'</p><p class="cs-p"><em>'+cs.taskExample+'</em></p>'
+          +'<div class="cs-sub">Questionnaire</div><p class="cs-p">'+cs.questionnaireIntro+'</p>'+csTableHTML(cs.questionnaireTable)
+          +'<div class="cs-sub">Interview</div><p class="cs-p">'+cs.interview+'</p>'
+        +'</div></div>'
+        +'<div class="cs-section"><div class="cs-section-title">Results</div><div class="cs-section-body">'
+          +cs.results.map(function(r){return '<div class="cs-sub">'+r.tech+'</div>'+csListHTML(r.points);}).join('')
+        +'</div></div>'
+        +(cs.byTheNumbers?'<div class="cs-section cs-highlight"><div class="cs-section-title">By the Numbers</div><div class="cs-section-body">'+csListHTML(cs.byTheNumbers)+'</div></div>':'')
+        +'<div class="cs-section cs-highlight"><div class="cs-section-title">Key Findings</div><div class="cs-section-body">'+csListHTML(cs.keyFindings)+'</div></div>';
+    }
+ 
     function renderProjectDetail(id){
       const p=PROJECTS.find(function(x){return x.id===id;});
       if(!p)return;
@@ -681,6 +878,7 @@
       const linksHtml=p.links.map(function(l){
         return '<a href="'+l.href+'" target="_blank" rel="noopener noreferrer">'+tr(l.key)+'</a>';
       }).join('');
+      const cs=CASE_STUDIES[id];
       document.getElementById('workDetail').innerHTML=
         '<button type="button" class="back-link" id="backToWorkBtn">'
         +'<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>'
@@ -689,6 +887,7 @@
         +'<p class="view-kicker">'+p.meta+'</p>'
         +'<h1 class="view-headline">'+tr('proj.'+id+'.title')+'</h1>'
         +'<p class="view-sub">'+tr('proj.'+id+'.desc')+'</p>'
+        +(cs?caseStudyHTML(cs):'')
         +'<div class="proj-card-links">'+linksHtml+'</div>';
       document.getElementById('backToWorkBtn').addEventListener('click',function(){
         goToWork();
@@ -771,7 +970,10 @@
       });
     });
     const heroScrollBtn=document.getElementById('heroScrollBtn');
-    if(heroScrollBtn)heroScrollBtn.addEventListener('click',function(){goToWork();});
+    if(heroScrollBtn)heroScrollBtn.addEventListener('click',function(){
+      const el=document.getElementById('homeAbout');
+      if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+    });
     window.addEventListener('hashchange',function(){
       const route=parseHash();
       showView(route.view,{silent:true,projectId:route.projectId});
@@ -850,7 +1052,7 @@ const PLACES=[
       {city:"Kolkata",mark:"pavilion",top:"#85B7EB",rim:"#378ADD",years:["2019"],groups:[{org:"NSHM College, India",logo:"images/logos/nshm.png",alt:"NSHM",experiences:[{title:"Visiting Lecturer",year:"2019",note:"Guest Lecturer for the course '3D Computer Graphics using OpenGL and C++'",title_fr:"Chargée de cours invitée",title_zh:"客座讲师",note_fr:"Enseignante invitée pour le cours « Infographie 3D avec OpenGL et C++ »",note_zh:"担任课程《使用OpenGL与C++的三维计算机图形学》客座讲师",title_de:"Gastdozentin",note_de:"Gastdozentin für den Kurs „3D-Computergrafik mit OpenGL und C++“",title_ja:"客員講師",note_ja:"「OpenGLとC++による3Dコンピュータグラフィックス」講座のゲスト講師",tags:["Visual Studio","C++","OpenGL","Co-ordinate Geometry","Vectors"]}]}]},
       {city:"Stockholm",mark:"spire",top:"#FF9A2E",rim:"#E07010",years:["2020-2022","2024-2025"],groups:[{org:"KTH Royal Institute of Technology, Sweden",logo:"images/logos/kth.png",alt:"KTH",experiences:[{title:"Teaching Assistant",year:"2020, 2022, 2024, 2025",note:"Computer Visualisation, Machine Learning, Python Programming Fundamentals, Multivariable Calculus, Computer Networking",title_fr:"Assistante d'enseignement",title_zh:"助教",note_fr:"Visualisation informatique, apprentissage automatique, fondamentaux de la programmation Python, calcul à plusieurs variables, réseaux informatiques",note_zh:"计算机可视化、机器学习、Python编程基础、多元微积分、计算机网络",title_de:"Wissenschaftliche Hilfskraft (Lehre)",note_de:"Computervisualisierung, Maschinelles Lernen, Grundlagen der Python-Programmierung, Mehrdimensionale Analysis, Computernetzwerke",title_ja:"ティーチングアシスタント",note_ja:"コンピュータビジュアライゼーション、機械学習、Pythonプログラミング基礎、多変数微積分、コンピュータネットワーク",tags:["Python","Pytorch","OpenGL","C++","Inviwo","Tomcat 9","Docker","DBMS/SQL","Spring","Netbeans 12 JDK 8","Java","Jakarta Mail"]},{title:"Research Assistant",year:"2021-2022",note:"Machine Learning for Digital Pathology",title_fr:"Assistante de recherche",title_zh:"研究助理",note_fr:"Apprentissage automatique pour la pathologie numérique",note_zh:"用于数字病理学的机器学习",title_de:"Forschungsassistentin",note_de:"Maschinelles Lernen für digitale Pathologie",title_ja:"研究助手",note_ja:"デジタル病理学のための機械学習",tags:["PyQT","Pytorch","HTML","JavaScript","PyQT"]}]},{org:"Ericsson, Sweden",logo:"images/logos/Ericsson2.jpg",alt:"Ericsson",experiences:[{title:"Summer R&D Intern",year:"2021",note:" Examined Impact of Network Changes on Perception in Haptic Teleoperation System",title_fr:"Stagiaire R&D d'été",title_zh:"暑期研发实习生",note_fr:"Étude de l'impact des changements de réseau sur la perception dans un système de téléopération haptique",note_zh:"研究了网络变化对触觉遥操作系统中感知的影响",title_de:"Sommerpraktikantin F&E",note_de:"Untersuchung des Einflusses von Netzwerkänderungen auf die Wahrnehmung in haptischen Teleoperationssystemen",title_ja:"夏季研究開発インターン",note_ja:"触覚遠隔操作システムにおける知覚へのネットワーク変化の影響を調査",tags:["Python","ROS","Omni Haptic","Miro","Kanban","A/B Testing"]}]}]},
       {city:"Lausanne",mark:"pavilion",top:"#F9E04B",rim:"#E6C418",years:["2021","2022","2023"],groups:[{org:"EPFL, Switzerland",logo:"images/logos/epfl.png",alt:"EPFL",experiences:[{title:"Graduate Exchange in Computer and Communication Sciences",year:"2021 – 2022",note:"MSc Courses",title_fr:"Échange de troisième cycle en sciences informatiques et de la communication",title_zh:"计算机与通信科学研究生交换项目",note_fr:"Cours de master",note_zh:"硕士课程",title_de:"Graduiertenaustausch in Informatik und Kommunikationswissenschaften",note_de:"Master-Kurse",title_ja:"コンピュータ・コミュニケーション科学における大学院交換留学",note_ja:"修士課程コース",tags:["Digital Humanities","Computer Vision","Virtual Reality","City Design"]},{title:"Visiting Graduate Thesis Student in Computer Science",year:"2022 – 2023",note:"Teacher's Perspective and Tacit Knowledge in Virtual Reality based Education Technology Development",title_fr:"Étudiante invitée en mémoire de master en informatique",title_zh:"计算机科学硕士论文访问学生",note_fr:"Perspective des enseignants et connaissances tacites dans le développement de technologies éducatives basées sur la réalité virtuelle",note_zh:"基于虚拟现实的教育技术开发中的教师视角与隐性知识",title_de:"Gast-Masterarbeitsstudentin in Informatik",note_de:"Perspektive der Lehrenden und implizites Wissen bei der Entwicklung VR-basierter Bildungstechnologie",title_ja:"コンピュータサイエンス修士論文訪問学生",note_ja:"VRベース教育テクノロジー開発における教師の視点と暗黙知",tags:["Startup","VRLE","UX Research"]}]},{org:"University of Lausanne, Switzerland",logo:"images/logos/UNIL.jpg",alt:"UNIL",experiences:[{title:"Research Assistant",year:"2023",note:"Collaborative Programming Learning Media for Novices in Hybrid Classes",title_fr:"Assistante de recherche",title_zh:"研究助理",note_fr:"Supports d'apprentissage collaboratif de la programmation pour débutants en classes hybrides",note_zh:"面向混合课堂编程初学者的协作式学习媒介",title_de:"Forschungsassistentin",note_de:"Kollaborative Lernmedien für Programmier-Einsteiger in hybriden Klassen",title_ja:"研究助手",note_ja:"ハイブリッドクラスにおける初心者向け協働プログラミング学習メディア",tags:["UX Research","EdTech"]}]}]},
-      {city:"Jyväskylä",mark:"arch",top:"#F9E04B",rim:"#E6C418",years:["2025"],groups:[{org:"University of Jyväskylä, Finland",logo:"images/logos/jyu_transparent.png",alt:"JYU",experiences:[{title:"Summer Trainee",year:"2025",note:"Accessible Multimodal Interactive Graph Navigation System",title_fr:"Stagiaire d'été",title_zh:"暑期实习生",note_fr:"Système accessible de navigation graphique interactive multimodale",note_zh:"无障碍多模态交互式图形导航系统",title_de:"Barrierefreies multimodales interaktives Graphennavigationssystem",note_de:"Barrierefreies multimodales interaktives Graphennavigationssystem",title_ja:"夏季トレーニー",note_ja:"アクセシブルなマルチモーダル・インタラクティブグラフナビゲーションシステム",tags:["Accessibility","Multimodal Design","Figma","Claude AI","Python"]}]}]},
+      {city:"Jyväskylä",mark:"arch",top:"#F9E04B",rim:"#E6C418",years:["2025"],groups:[{org:"University of Jyväskylä, Finland",logo:"images/logos/jyu_transparent.png",alt:"JYU",experiences:[{title:"Summer Trainee",year:"2025",note:"Accessible Multimodal Interactive Graph Navigation System",title_fr:"Stagiaire d'été",title_zh:"暑期实习生",note_fr:"Système accessible de navigation graphique interactive multimodale",note_zh:"无障碍多模态交互式图形导航系统",title_de:"Sommerpraktikantin",note_de:"Barrierefreies multimodales interaktives Graphennavigationssystem",title_ja:"夏季トレーニー",note_ja:"アクセシブルなマルチモーダル・インタラクティブグラフナビゲーションシステム",tags:["Accessibility","Multimodal Design","Figma","Claude AI","Python"]}]}]},
       {city:"Paris",mark:"arch",top:"#E8B6C6",rim:"#D48CA5",years:["2025-Present"],groups:[{org:"CAEL - Centre d'Animation Expression Loisirs de Bourg-La-Reine",logo:"images/logos/cael.png",alt:"CAEL",experiences:[{title:"French Language Training",year:"2025-Present",note:"Ateliers Sociolinguistisques A1−A2",title_fr:"Formation en langue française",title_zh:"法语培训",note_fr:"Ateliers Sociolinguistisques A1−A2",note_zh:"社会语言学工作坊 A1−A2",title_de:"Französischsprachtraining",note_de:"Soziolinguistische Workshops A1−A2",title_ja:"フランス語トレーニング",note_ja:"社会言語学ワークショップ A1−A2",tags:["French","DELF A2"]}]}]}
     ];
  
