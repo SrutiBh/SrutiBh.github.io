@@ -92,20 +92,41 @@
     .project-detail-img{width:100%;max-height:440px;border-radius:1.25rem;overflow:hidden;margin-bottom:2rem;background:linear-gradient(135deg,#e8ecf5 0%,#c0cbea 100%);}
     .project-detail-img img{width:100%;height:100%;object-fit:cover;display:block;}
  
-    /* CASE STUDY — frog-style structured project page: stat row + labeled sections */
+    /* ============================================================
+       CASE STUDY — used on project detail pages such as
+       "Video Call, VR and Telepresence Robot for Group Interactions
+       and Creative Thinking". Each section is a heading stacked
+       directly above its content — no side-by-side columns.
+       TO CHANGE SIZE OR FONT: edit the two rules below.
+       ============================================================ */
     .cs-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;border-top:1.5px solid #e2e8f0;border-bottom:1.5px solid #e2e8f0;padding:1.75rem 0;margin:2.5rem 0 3rem;}
     .cs-stat-label{font-size:.78rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#94a3b8;margin-bottom:.5rem;}
     .cs-stat-value{font-size:.92rem;color:#1e293b;line-height:1.5;}
-    .cs-section{display:grid;grid-template-columns:11rem 1fr;gap:2.5rem;padding:2.5rem 0;border-top:1px solid #eef2f6;}
+    .cs-section{padding:2.5rem 0;border-top:1px solid #eef2f6;}
     .cs-section:first-of-type{border-top:none;padding-top:0;}
-    .cs-section-title{font-family:'Times New Roman',Times,serif;font-size:1.55rem;font-weight:700;color:#0f172a;}
-    .cs-section-body{max-width:38rem;}
-    .cs-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.85rem;}
-    .cs-list li{position:relative;padding-left:1.2rem;font-size:.95rem;line-height:1.65;color:#475569;}
-    .cs-list li::before{content:'';position:absolute;left:0;top:.55rem;width:5px;height:5px;border-radius:999px;background:#15203d;}
-    .cs-p{font-size:.95rem;line-height:1.7;color:#475569;margin:0 0 1rem;}
+    .cs-section-title{
+      font-family:'Times New Roman',Times,serif; /* CASE STUDY TITLE FONT — change here */
+      font-size:1.55rem;                          /* CASE STUDY TITLE SIZE — change here */
+      font-weight:700;
+      color:#0f172a;
+      margin-bottom:1.1rem;
+    }
+    .cs-section-body{max-width:46rem;}
+    .cs-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.9rem;}
+    .cs-list li{
+      position:relative;padding-left:1.3rem;
+      font-family:'Times New Roman',Times,serif; /* CASE STUDY BODY FONT — change here */
+      font-size:1.15rem;                          /* CASE STUDY BODY SIZE — change here */
+      line-height:1.65;color:#475569;
+    }
+    .cs-list li::before{content:'';position:absolute;left:0;top:.65rem;width:5px;height:5px;border-radius:999px;background:#15203d;}
+    .cs-p{
+      font-family:'Times New Roman',Times,serif; /* CASE STUDY BODY FONT — change here */
+      font-size:1.15rem;                          /* CASE STUDY BODY SIZE — change here */
+      line-height:1.7;color:#475569;margin:0 0 1rem;
+    }
     .cs-p:last-child{margin-bottom:0;}
-    .cs-sub{font-weight:700;color:#0f172a;font-size:.88rem;margin:1.3rem 0 .5rem;}
+    .cs-sub{font-weight:700;color:#0f172a;font-size:1rem;margin:1.4rem 0 .5rem;}
     .cs-sub:first-child{margin-top:0;}
     .cs-method{display:flex;flex-wrap:wrap;align-items:flex-start;gap:0;}
     .cs-method-step{display:flex;flex-direction:column;align-items:center;text-align:center;width:7.5rem;}
@@ -131,20 +152,15 @@
     .cs-meta-item{min-width:9rem;}
     .cs-meta-label{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#94a3b8;margin-bottom:.5rem;}
     .cs-meta-value{font-size:.92rem;color:#1e293b;line-height:1.5;}
-    .cs-section{display:grid;grid-template-columns:11rem 1fr;gap:2.5rem;padding:2.75rem 0;border-bottom:1.5px solid #eef2f6;}
-    .cs-section:last-child{border-bottom:none;}
     .cs-section-label{font-size:.78rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#15203d;padding-top:.15rem;}
     .cs-section-body{min-width:0;}
     .cs-columns{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;}
     .cs-col-title{font-family:'Times New Roman',Times,serif;font-size:1.35rem;font-weight:700;color:#0f172a;margin-bottom:.9rem;}
     .cs-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.85rem;}
-    .cs-list li{position:relative;padding-left:1.1rem;font-size:.94rem;line-height:1.65;color:#475569;}
     .cs-list li::before{content:'';position:absolute;left:0;top:.6em;width:5px;height:5px;border-radius:999px;background:#adbde0;}
     .cs-list-num{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.85rem;counter-reset:cs-num;}
     .cs-list-num li{position:relative;padding-left:1.6rem;font-size:.94rem;line-height:1.65;color:#475569;counter-increment:cs-num;}
     .cs-list-num li::before{content:counter(cs-num);position:absolute;left:0;top:0;font-family:'Times New Roman',Times,serif;font-weight:700;color:#15203d;font-size:.95rem;}
-    .cs-p{font-size:.94rem;line-height:1.7;color:#475569;margin:0 0 1rem;}
-    .cs-p:last-child{margin-bottom:0;}
     .cs-p b{color:#1e293b;}
     .cs-steps{display:flex;flex-wrap:wrap;align-items:flex-start;gap:0;}
     .cs-step{display:flex;flex-direction:column;align-items:center;text-align:center;width:7.2rem;}
@@ -152,7 +168,7 @@
     .cs-step-label{font-size:.78rem;color:#475569;line-height:1.4;}
     .cs-step-arrow{align-self:center;color:#cbd5e1;margin:0 .35rem;padding-top:.6rem;font-size:.9rem;}
     .cs-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
-    .cs-table{width:100%;border-collapse:collapse;font-size:.82rem;min-width:560px;}
+    .cs-table{width:100%;border-collapse:collapse;font-size:.92rem;min-width:560px;} /* CASE STUDY TABLE TEXT SIZE — kept smaller than body text since tables have many columns */
     .cs-table th,.cs-table td{border:1px solid #e2e8f0;padding:.6rem .75rem;text-align:left;vertical-align:top;}
     .cs-table thead th{background:#f8fafc;font-weight:700;color:#15203d;font-size:.76rem;text-transform:uppercase;letter-spacing:.03em;}
     .cs-table td{color:#475569;}
