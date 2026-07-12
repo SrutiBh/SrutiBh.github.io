@@ -18,15 +18,37 @@
     body{font-family:'Times New Roman',Times,serif;background-color:#f8fafc;}
     .hero-bg{background-color:#15203d;background-image:none;position:relative;}
     .topbar{position:sticky;top:0;z-index:90;display:flex;align-items:center;justify-content:space-between;background:#fff;padding:1rem 2rem;box-shadow:0 1px 0 rgba(15,23,42,.08);gap:1.5rem;flex-wrap:wrap;}
-    .topbar-word{font-family:'Times New Roman',Times,serif;font-weight:700;font-size:1.4rem;color:#0f172a;text-decoration:none;letter-spacing:-.01em;white-space:nowrap;background:none;border:none;padding:0;cursor:pointer;}
-    .topbar-word:hover{color:#334155;}
-    .topbar-word.active{text-decoration:underline;text-underline-offset:4px;}
+    /* ============================================================
+       NAME LOCKUP — treated like a wordmark + caption (e.g. "frog /
+       Part of Capgemini Invent"): a bold first name with a smaller,
+       quieter surname beside it, not two equally-weighted words.
+       No divider line — separation comes from size, weight and
+       colour contrast alone, for a cleaner, quieter look.
+       ============================================================ */
+    .topbar-word{font-family:'Times New Roman',Times,serif;font-weight:700;color:#0f172a;text-decoration:none;white-space:nowrap;background:none;border:none;padding:0;cursor:pointer;display:inline-flex;align-items:baseline;gap:.45rem;}
+    .topbar-word:hover .topbar-word-first{color:#334155;}
+    .topbar-word-first{font-size:1.6rem;letter-spacing:-.015em;} /* "Sruti" SIZE — change here */
+    .topbar-word-last{
+      font-size:1.2rem;              /* "Bhattacharjee" SIZE — bigger, still smaller than Sruti (1.6rem) */
+      font-weight:700;               /* bold, same as Sruti */
+      letter-spacing:.02em;
+      color:#0f172a;                 /* same colour as Sruti */
+    }
     .topbar-right{display:flex;align-items:center;gap:1.75rem;flex-wrap:wrap;}
-    .topbar-links{display:flex;align-items:center;gap:1.75rem;flex-wrap:wrap;}
-    .topbar-links .nav-item{display:inline-block;background:none;border:none;padding:.2rem 0;font-size:.86rem;font-weight:500;color:#1f2937;cursor:pointer;font-family:'Times New Roman',Times,serif;position:relative;text-decoration:none;white-space:nowrap;}
-    .topbar-links .nav-item:hover{color:#0f172a;}
-    .topbar-links .nav-item.active{color:#0f172a;font-weight:600;}
-    .topbar-links .nav-item.active::after{content:'';position:absolute;left:0;right:0;bottom:-8px;height:2px;background:#0f172a;}
+    .topbar-links{display:flex;align-items:center;gap:2.25rem;flex-wrap:wrap;}
+    /* ============================================================
+       NAV LINKS (Education / Journey / Work / CV / Contact Me)
+       Regular weight by default — like the reference, only the
+       active item is bold and underlined. A thin navy underline
+       slides in on hover rather than the item jumping in size,
+       for a quieter, more considered feel.
+       ============================================================ */
+    .topbar-links .nav-item{display:inline-block;background:none;border:none;padding:.2rem 0;font-size:1rem;font-weight:500;letter-spacing:.02em;color:#3f4b5c;cursor:pointer;font-family:'Times New Roman',Times,serif;position:relative;text-decoration:none;white-space:nowrap;transition:color .18s ease;}
+    .topbar-links .nav-item::after{content:'';position:absolute;left:0;right:0;bottom:-6px;height:1.5px;background:#15203d;transform:scaleX(0);transform-origin:left;transition:transform .22s ease;}
+    .topbar-links .nav-item:hover{color:#15203d;}
+    .topbar-links .nav-item:hover::after{transform:scaleX(1);}
+    .topbar-links .nav-item.active{color:#15203d;font-weight:700;}
+    .topbar-links .nav-item.active::after{transform:scaleX(1);}
     .topbar .lang-btn{border:1.5px solid #cbd5e1;border-radius:999px;color:#0f172a;padding:.42rem 1rem;}
     .topbar .lang-btn:hover{background:#f8fafc;border-color:#94a3b8;color:#0f172a;}
     .topbar .lang-menu{border:1px solid #e2e8f0;}
@@ -318,7 +340,7 @@
  
   <!-- TOP NAV BAR — persistent, white, frog-style -->
   <nav class="topbar" id="topbar">
-    <button type="button" class="topbar-word" data-view="home">Sruti Bhattacharjee</button>
+    <button type="button" class="topbar-word" data-view="home"><span class="topbar-word-first">Sruti</span><span class="topbar-word-last">Bhattacharjee</span></button>
     <div class="topbar-right">
       <div class="topbar-links" id="topbarLinks"></div>
       <div class="lang-dd">
@@ -484,7 +506,7 @@
     </section>
   </main>
  
-  <footer class="bg-slate-800 text-slate-400 text-center p-6 mt-8">
+  <footer class="bg-slate-800 text-slate-400 text-center p-6 mt-8 reveal">
     <p>© <span id="yr"></span> Sruti Bhattacharjee. <span data-i18n="footer.rights">All rights reserved.</span></p>
   </footer>
  
@@ -502,6 +524,36 @@
  
       const yrEl=document.getElementById('yr');
       if(yrEl)yrEl.textContent=new Date().getFullYear();
+ 
+    /* ============================================================
+       SCROLL REVEAL — applies site-wide (Home, Education, Journey
+       section heading, Work grid, and individual project pages).
+       Deliberately NOT used inside the journey map's internal popup
+       (city cards, roles, tags) since that map has its own zoom/pan
+       interaction instead.
+       Elements with class="reveal" fade + rise in as they scroll
+       into view, and fade back out as they scroll out — in either
+       direction, automatically adapting to whatever the browser
+       window/viewport size is (IntersectionObserver recalculates
+       against the current viewport, no fixed pixel values needed).
+       Because content on this site is added dynamically (project
+       detail pages, work cards, language switches), call
+       window.observeReveals() again after injecting any new
+       .reveal elements — it's safe to call repeatedly.
+       ============================================================ */
+    const prefersReducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const revealObserver=prefersReducedMotion?null:new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){entry.target.classList.toggle('in-view',entry.isIntersecting);});
+    },{threshold:0.12,rootMargin:'0px 0px -6% 0px'});
+    window.observeReveals=function(){
+      if(!revealObserver){
+        // Reduced-motion users: show everything immediately, no animation.
+        document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in-view');});
+        return;
+      }
+      document.querySelectorAll('.reveal').forEach(function(el){revealObserver.observe(el);});
+    };
+    window.observeReveals();
  
     /* ============================================================
        LANGUAGE / i18n SYSTEM
@@ -800,6 +852,7 @@
         span.textContent=span.dataset.cat==='all'?PROJECTS.length:PROJECTS.filter(function(p){return p.cat===span.dataset.cat;}).length;
       });
       waitForGridImages().then(layoutMasonry);
+      if(window.observeReveals)window.observeReveals();
     }
  
     let currentProjectId=null;
@@ -910,27 +963,27 @@
         return '<div class="cs-method-step"><div class="cs-method-num">'+(i+1)+'</div><div class="cs-method-label">'+step+'</div></div>'
           +(i<cs.method.length-1?arrow:'');
       }).join('');
-      return '<div class="cs-stats">'
+      return '<div class="cs-stats reveal">'
         +cs.stats.map(function(s){return '<div><div class="cs-stat-label">'+s.label+'</div><div class="cs-stat-value">'+s.value+'</div></div>';}).join('')
         +'</div>'
-        +'<div class="cs-section"><div class="cs-section-title">Overview</div><div class="cs-section-body">'+csListHTML(cs.overview)+'</div></div>'
-        +'<div class="cs-section"><div class="cs-section-title">Challenge</div><div class="cs-section-body">'+csListHTML(cs.challenge)+'</div></div>'
-        +'<div class="cs-section"><div class="cs-section-title">Study Objectives</div><div class="cs-section-body">'+csListHTML(cs.objectives)+'</div></div>'
-        +'<div class="cs-section"><div class="cs-section-title">My Role</div><div class="cs-section-body">'+csListHTML(cs.myRole)+'</div></div>'
-        +'<div class="cs-section"><div class="cs-section-title">Method</div><div class="cs-section-body"><div class="cs-method">'+methodHTML+'</div></div></div>'
-        +'<div class="cs-section"><div class="cs-section-title">What I Learned</div><div class="cs-section-body">'+csListHTML(cs.learned)+'</div></div>'
-        +'<div class="cs-section"><div class="cs-section-title">Emerging Technologies</div><div class="cs-section-body"><p class="cs-p">'+cs.emergingTechIntro+'</p>'+csTableHTML(cs.modalityTable)+'</div></div>'
-        +'<div class="cs-section"><div class="cs-section-title">Experimental Design</div><div class="cs-section-body">'
+        +'<div class="cs-section reveal"><div class="cs-section-title">Overview</div><div class="cs-section-body">'+csListHTML(cs.overview)+'</div></div>'
+        +'<div class="cs-section reveal"><div class="cs-section-title">Challenge</div><div class="cs-section-body">'+csListHTML(cs.challenge)+'</div></div>'
+        +'<div class="cs-section reveal"><div class="cs-section-title">Study Objectives</div><div class="cs-section-body">'+csListHTML(cs.objectives)+'</div></div>'
+        +'<div class="cs-section reveal"><div class="cs-section-title">My Role</div><div class="cs-section-body">'+csListHTML(cs.myRole)+'</div></div>'
+        +'<div class="cs-section reveal"><div class="cs-section-title">Method</div><div class="cs-section-body"><div class="cs-method">'+methodHTML+'</div></div></div>'
+        +'<div class="cs-section reveal"><div class="cs-section-title">What I Learned</div><div class="cs-section-body">'+csListHTML(cs.learned)+'</div></div>'
+        +'<div class="cs-section reveal"><div class="cs-section-title">Emerging Technologies</div><div class="cs-section-body"><p class="cs-p">'+cs.emergingTechIntro+'</p>'+csTableHTML(cs.modalityTable)+'</div></div>'
+        +'<div class="cs-section reveal"><div class="cs-section-title">Experimental Design</div><div class="cs-section-body">'
           +'<div class="cs-sub">Setup</div><p class="cs-p">'+cs.setup+'</p>'
           +'<div class="cs-sub">Experimental Task</div><p class="cs-p">'+cs.task+'</p><p class="cs-p"><em>'+cs.taskExample+'</em></p>'
           +'<div class="cs-sub">Questionnaire</div><p class="cs-p">'+cs.questionnaireIntro+'</p>'+csTableHTML(cs.questionnaireTable)
           +'<div class="cs-sub">Interview</div><p class="cs-p">'+cs.interview+'</p>'
         +'</div></div>'
-        +'<div class="cs-section"><div class="cs-section-title">Results</div><div class="cs-section-body">'
+        +'<div class="cs-section reveal"><div class="cs-section-title">Results</div><div class="cs-section-body">'
           +cs.results.map(function(r){return '<div class="cs-sub">'+r.tech+'</div>'+csListHTML(r.points);}).join('')
         +'</div></div>'
-        +(cs.byTheNumbers?'<div class="cs-section cs-highlight"><div class="cs-section-title">By the Numbers</div><div class="cs-section-body">'+csListHTML(cs.byTheNumbers)+'</div></div>':'')
-        +'<div class="cs-section cs-highlight"><div class="cs-section-title">Key Findings</div><div class="cs-section-body">'+csListHTML(cs.keyFindings)+'</div></div>';
+        +(cs.byTheNumbers?'<div class="cs-section cs-highlight reveal"><div class="cs-section-title">By the Numbers</div><div class="cs-section-body">'+csListHTML(cs.byTheNumbers)+'</div></div>':'')
+        +'<div class="cs-section cs-highlight reveal"><div class="cs-section-title">Key Findings</div><div class="cs-section-body">'+csListHTML(cs.keyFindings)+'</div></div>';
     }
  
     function renderProjectDetail(id){
@@ -945,7 +998,7 @@
         '<button type="button" class="back-link" id="backToWorkBtn">'
         +'<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>'
         +'<span>'+tr('lbl.backToWork')+'</span></button>'
-        +'<div class="project-detail-img"><img src="'+p.img+'" alt="'+p.imgAlt+'"></div>'
+        +'<div class="project-detail-img reveal"><img src="'+p.img+'" alt="'+p.imgAlt+'"></div>'
         +'<p class="view-kicker">'+p.meta+'</p>'
         +'<h1 class="view-headline">'+tr('proj.'+id+'.title')+'</h1>'
         +'<p class="view-sub">'+tr('proj.'+id+'.desc')+'</p>'
@@ -954,6 +1007,7 @@
       document.getElementById('backToWorkBtn').addEventListener('click',function(){
         goToWork();
       });
+      if(window.observeReveals)window.observeReveals();
     }
  
     function showWorkSub(projectId){
@@ -1085,15 +1139,10 @@
     });
     document.addEventListener('click',function(){document.querySelectorAll('.lang-dd.open').forEach(function(dd){dd.classList.remove('open');});});
  
-    /* SCROLL REVEAL — fade/rise elements in as they enter the viewport, fade back out as they leave */
-    (function(){
-      const prefersReduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if(prefersReduced)return;
-      const io=new IntersectionObserver(function(entries){
-        entries.forEach(function(entry){entry.target.classList.toggle('in-view',entry.isIntersecting);});
-      },{threshold:0.12,rootMargin:'0px 0px -6% 0px'});
-      document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
-    })();
+    /* SCROLL REVEAL — window.observeReveals() is defined near the top of
+       this script and re-run after any dynamic content is injected
+       (project pages, work grid, language switches), so newly added
+       .reveal elements pick up the same fade behaviour automatically. */
  
     /* JOURNEY MAP DATA */
     /* ADD / REPLACE JOURNEY MAP LOGOS HERE inside each group object.
@@ -1171,4 +1220,3 @@ const PLACES=[
   </script>
 </body>
 </html>
- 
