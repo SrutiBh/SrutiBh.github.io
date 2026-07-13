@@ -5,9 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sruti Bhattacharjee | Personal Webpage</title>
  
-  <!-- EXTERNAL STYLE FRAMEWORK -->
-  <!-- Tailwind CSS CDN. Keep this line if you want to continue using Tailwind utility classes. -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Tailwind CDN removed: its runtime script is unstable inside sandboxed
+       preview iframes (hence its own "not for production" warning) and was
+       throwing null-reference errors here. The handful of utility classes
+       this page actually used have been replaced below with plain static
+       CSS equivalents, so nothing needs to change in the HTML. -->
  
  
   
@@ -15,6 +17,82 @@
   <!-- If changing fonts, replace the Google Fonts URL below and update font-family values in CSS. -->
  
   <style>
+    /* ============================================================
+       STATIC UTILITY CSS — replaces the Tailwind CDN runtime.
+       Only the exact utility classes this page uses are defined
+       below, hand-written to match Tailwind's default values, so
+       every class name in the HTML keeps working exactly as before.
+       ============================================================ */
+    .absolute{position:absolute}
+    .relative{position:relative}
+    .flex{display:flex}
+    .flex-col{flex-direction:column}
+    .items-center{align-items:center}
+    .justify-center{justify-content:center}
+    .gap-5{gap:1.25rem}
+    .overflow-hidden{overflow:hidden}
+    .mx-auto{margin-left:auto;margin-right:auto}
+    .mt-0\.5{margin-top:.125rem}
+    .mt-3{margin-top:.75rem}
+    .mt-8{margin-top:2rem}
+    .mb-6{margin-bottom:1.5rem}
+    .p-6{padding:1.5rem}
+    .px-4{padding-left:1rem;padding-right:1rem}
+    .px-6{padding-left:1.5rem;padding-right:1.5rem}
+    .pt-6{padding-top:1.5rem}
+    .pb-2{padding-bottom:.5rem}
+    .pb-3{padding-bottom:.75rem}
+    .py-16{padding-top:4rem;padding-bottom:4rem}
+    .bottom-10{bottom:2.5rem}
+    .z-10{z-index:10}
+    .w-36{width:9rem}
+    .h-36{height:9rem}
+    .w-full{width:100%}
+    .h-full{height:100%}
+    .min-h-\[100dvh\]{min-height:100dvh}
+    .rounded-full{border-radius:9999px}
+    .border-4{border-width:4px}
+    .border-b-2{border-bottom-width:2px}
+    .border-white\/20{border-color:rgba(255,255,255,.2)}
+    .border-slate-200{border-color:#e2e8f0}
+    .shadow-2xl{box-shadow:0 25px 50px -12px rgba(0,0,0,.25)}
+    .bg-slate-700{background-color:#334155}
+    .bg-slate-800{background-color:#1e293b}
+    .footer-bar{background-color:#1e293b;color:#94a3b8;text-align:center;padding:.3rem 1.5rem;margin-top:.15rem;} /* FOOTER — original navy colour and full width kept; padding and top margin reduced to make the band thinner */
+    .object-cover{object-fit:cover}
+    .text-center{text-align:center}
+    .text-base{font-size:1rem;line-height:1.5rem}
+    .text-sm{font-size:.875rem;line-height:1.25rem}
+    .text-3xl{font-size:1.875rem;line-height:2.25rem}
+    .text-5xl{font-size:3rem;line-height:1}
+    .text-white{color:#fff}
+    .text-white\/40{color:rgba(255,255,255,.4)}
+    .text-slate-400{color:#94a3b8}
+    .text-slate-700{color:#334155}
+    .text-slate-800{color:#1e293b}
+    .text-slate-900{color:#0f172a}
+    .text-\[\#15203d\]{color:#15203d}
+    .font-light{font-weight:300}
+    .font-medium{font-weight:500}
+    .font-semibold{font-weight:600}
+    .tracking-wide{letter-spacing:.025em}
+    .transition-colors{transition-property:color,background-color,border-color;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:150ms}
+    .hover\:text-white\/80:hover{color:rgba(255,255,255,.8)}
+    .space-y-5>*+*{margin-top:1.25rem}
+    .container{width:100%}
+    @media(min-width:640px){.container{max-width:640px}}
+    @media(min-width:768px){.container{max-width:768px}}
+    @media(min-width:1024px){.container{max-width:1024px}}
+    @media(min-width:1280px){.container{max-width:1280px}}
+    @media(min-width:1536px){.container{max-width:1536px}}
+    .max-w-4xl{max-width:56rem} /* wins over .container above regardless of screen size, matching the original layout */
+    @media(min-width:768px){
+      .md\:w-40{width:10rem}
+      .md\:h-40{height:10rem}
+      .md\:text-7xl{font-size:4.5rem;line-height:1}
+      .md\:text-xl{font-size:1.25rem;line-height:1.75rem}
+    }
+ 
     body{font-family:'Times New Roman',Times,serif;background-color:#f8fafc;}
     .hero-bg{background-color:#15203d;background-image:none;position:relative;}
     .topbar{position:sticky;top:0;z-index:90;display:flex;align-items:center;justify-content:space-between;background:#fff;padding:1rem 2rem;box-shadow:0 1px 0 rgba(15,23,42,.08);gap:1.5rem;flex-wrap:wrap;}
@@ -37,7 +115,7 @@
     .topbar-right{display:flex;align-items:center;gap:1.75rem;flex-wrap:wrap;}
     .topbar-links{display:flex;align-items:center;gap:2.25rem;flex-wrap:wrap;}
     /* ============================================================
-       NAV LINKS (Education / Journey / Work / CV / Contact Me)
+       NAV LINKS (Work / CV / Contact Me)
        Regular weight by default — like the reference, only the
        active item is bold and underlined. A thin navy underline
        slides in on hover rather than the item jumping in size,
@@ -57,6 +135,18 @@
     @media(max-width:760px){.topbar{padding:.85rem 1.1rem;gap:.9rem;}.topbar-right{gap:1rem;}.topbar-links{gap:1rem;}.topbar-links .nav-item .label{display:none;}}
     .hero-name{font-family:'Times New Roman',Times,serif;font-weight:700;letter-spacing:-.02em;}
     .section-title{font-family:'Times New Roman',Times,serif;font-weight:600;letter-spacing:-.01em;}
+    /* ============================================================
+       PINNED SECTION HEADINGS — applied site-wide (Home/About,
+       Journey, Work). Each heading sticks to the top of the viewport,
+       just under the topbar, while the content beneath it scrolls —
+       then releases naturally once that section ends and the next
+       section's heading takes over. Uses CSS position:sticky rather
+       than JS scroll-jacking, so it automatically adapts to any
+       window/viewport size with no extra calculation needed.
+       TO CHANGE THE PIN OFFSET: edit the top value(s) below.
+       ============================================================ */
+    .pin-heading{position:sticky;top:73px;z-index:20;background:#f8fafc;padding-top:.5rem;}
+    @media(max-width:760px){.pin-heading{top:58px;}}
  
     /* ABOUT CARD — blue-tinted shadow */
     .entry-card{background:white;padding:1.5rem;border-radius:.75rem;box-shadow:0 4px 16px rgba(21,32,61,.13),0 1px 3px rgba(21,32,61,.07);transition:box-shadow .25s,transform .25s;}
@@ -81,7 +171,7 @@
     .ptab-count{display:none;align-items:center;justify-content:center;min-width:1.35rem;height:1.35rem;padding:0 .3rem;border:1px solid #cbd5e1;border-radius:999px;font-size:.66rem;color:#64748b;font-weight:500;}
     .ptab-btn.active .ptab-count{display:inline-flex;border-color:#15203d;color:#15203d;}
  
-    /* VIEW SWITCHING — Work / Journey / Education act as swappable pages, not scroll anchors */
+    /* VIEW SWITCHING — Work acts as a swappable page, not a scroll anchor; Education and Journey now live inside the Home/About page */
     .view{display:none;}
     .view.active{display:block;animation:pfadeUp .35s ease both;}
     header.hero-bg.view.active{display:flex;}
@@ -90,7 +180,7 @@
     .view-sub{font-family:'Times New Roman',Times,serif;font-size:1.02rem;line-height:1.65;color:#475569;max-width:640px;margin:0 0 2.5rem;font-weight:400;}
  
     /* TAB PANELS — legacy, kept only for the .active toggle keyframe used elsewhere */
-    @keyframes pfadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes pfadeUp{from{opacity:0}to{opacity:1}}
  
     /* WORK GRID — frog-style collage. Layout is computed in JS (layoutMasonry)
        so each card lands in whichever column is currently shortest, keeping
@@ -209,13 +299,17 @@
     .about-bio{font-family:'Times New Roman',Times,serif;font-size:1.1rem;line-height:1.65;color:#475569;font-weight:400;}
  
     /* ============================================================
-       ABOUT SECTION DESCRIPTION TEXT
-       This is the single paragraph shown on the Home/About view.
-       No column layout is used here on purpose — just a heading
-       and a full-width paragraph.
-       TO CHANGE THE SIZE OR FONT: edit font-size / font-family below.
-       Currently matched to the same readable size as the
-       ".cs-section-title" headings (e.g. "My Role" = 1.55rem).
+       ABOUT SECTION DESCRIPTION TEXT — SITE STANDARD for this page.
+       ".about-desc-title" and ".about-desc-text" are the reference
+       heading/paragraph styles for the whole Home/About page. Any
+       new heading added to this section should reuse the
+       ".about-desc-title" class, and any new body copy should match
+       ".about-desc-text"'s font-family and font-size below, so
+       everything added here stays visually consistent with "About
+       Me" by default.
+       TO CHANGE THE SIZE OR FONT: edit font-size / font-family below
+       — this updates "About Me" AND everything matched to it
+       (e.g. the "Education" heading and card text further down).
        ============================================================ */
     .about-desc-title{
       font-family:'Times New Roman',Times,serif; /* ABOUT TITLE FONT — change here */
@@ -232,6 +326,18 @@
       color:#334155;
       margin:0;
     }
+    /* Education cards live inside the About/Home page, so their text
+       matches the About Me paragraph's font-family and font-size
+       above. Colour and font-weight are left exactly as they were
+       (untouched) — only font and size are matched. */
+    .edu-card h3,
+    .edu-card p{
+      font-family:'Times New Roman',Times,serif !important;
+      font-size:1.55rem !important;
+      line-height:1.4 !important;
+    }
+    .edu-card h3{margin-bottom:.5rem;}
+    .edu-card p{margin-top:.5rem !important;} /* overrides the tighter mt-0.5 utility so lines have room to breathe at the larger size */
  
     /* Personality highlight row — text + image side by side */
     .about-highlight-row{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:center;margin:3rem 0;}
@@ -279,7 +385,7 @@
     .jmark-spire::after{content:"";position:absolute;left:50%;top:0;width:10px;height:10px;transform:translateX(-50%);border-radius:999px;background:rgba(225,238,255,.92)}
     .jmark-arch{position:absolute;left:50%;top:58px;width:26px;height:20px;transform:translateX(-50%);border:3px solid rgba(238,244,248,.68);border-bottom:none;border-radius:16px 16px 0 0}
     .jmark-pavilion{position:absolute;left:50%;top:54px;width:26px;height:16px;transform:translateX(-50%);background:rgba(240,244,250,.70);clip-path:polygon(50% 0,100% 34%,86% 34%,86% 100%,14% 100%,14% 34%,0 34%)}
-    .jdetail{position:absolute;width:420px;min-width:240px;max-width:calc(100% - 20px);min-height:80px;max-height:calc(100% - 20px);overflow:hidden;background:rgba(244,246,248,.98);color:#132642;border:1px solid rgba(20,40,70,.10);border-radius:12px;opacity:0;transform:translateY(18px) scale(.97);pointer-events:none;transition:opacity .26s ease,transform .26s ease;box-shadow:0 20px 50px rgba(15,23,42,.22);display:flex;flex-direction:column;z-index:3;}
+    .jdetail{position:absolute;width:280px;min-width:240px;max-width:calc(100% - 20px);min-height:80px;max-height:calc(100% - 20px);overflow:hidden;background:rgba(244,246,248,.98);color:#132642;border:1px solid rgba(20,40,70,.10);border-radius:12px;opacity:0;transform:translateY(18px) scale(.97);pointer-events:none;transition:opacity .26s ease,transform .26s ease;box-shadow:0 20px 50px rgba(15,23,42,.22);display:flex;flex-direction:column;z-index:3;}
     .jdetail.open{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
     .jdetail-header{display:flex;align-items:flex-start;justify-content:space-between;padding:.9rem .9rem .6rem 1.1rem;cursor:grab;flex-shrink:0;border-bottom:1px solid rgba(20,40,70,.06);user-select:none}
     .jdetail-header:active{cursor:grabbing}
@@ -389,8 +495,90 @@
   <section class="view about-section" data-view="home" id="homeAbout">
     <div class="about-inner">
       <div class="reveal">
-        <div class="about-desc-title">About Me</div>
+        <div class="about-desc-title pin-heading">About Me</div>
         <p class="about-desc-text">I'm a UX Researcher who values human-centered and ethical innovation. With a background in Computer Engineering and Human&ndash;Computer Interaction, I am passionate about understanding human needs and challenges to inform product decisions for interactive, accessible, and multimodal technologies.</p>
+      </div>
+ 
+      <div style="margin-top:3.5rem;">
+        <h2 class="about-desc-title reveal" data-i18n="section.education">Education</h2>
+        <div class="space-y-5">
+ 
+          <div class="edu-card flex items-center gap-5 reveal">
+            <!-- ADD / REPLACE EDUCATION LOGO HERE -->
+            <!-- Example:
+            <img src="images/logos/kth.png" alt="KTH Logo" class="edu-logo"/>
+            -->
+            <img src="images/logos/kth.png" alt="KTH" class="edu-logo"/>
+            <div>
+              <h3 class="font-semibold text-slate-900" data-i18n="edu.1.degree">Master of Science, Interactive Media Technology</h3>
+              <p class="text-[#15203d] font-medium text-sm mt-0.5">Kungliga Tekniska Högskolan (KTH), Sweden</p>
+              <p class="text-slate-400 text-sm">2020 – <span data-i18n="word.present">Present</span> &nbsp;·&nbsp; 4.4/5</p>
+            </div>
+          </div>
+ 
+          <div class="edu-card flex items-center gap-5 reveal">
+            <!-- ADD / REPLACE EDUCATION LOGO HERE -->
+            <!-- Example:
+            <img src="images/logos/epfl.png" alt="EPFL Logo" class="edu-logo"/>
+            -->
+            <img src="images/logos/epfl.png" alt="EPFL" class="edu-logo"/>
+            <div>
+              <h3 class="font-semibold text-slate-900" data-i18n="edu.2.degree">Graduate Exchange Student, Computer and Communication Sciences</h3>
+              <p class="text-[#15203d] font-medium text-sm mt-0.5">École Polytechnique Fédérale de Lausanne (EPFL), Switzerland</p>
+              <p class="text-slate-400 text-sm">2021 – 2023 &nbsp;·&nbsp; 4.2/6</p>
+            </div>
+          </div>
+ 
+          <div class="edu-card flex items-center gap-5 reveal">
+            <!-- ADD / REPLACE EDUCATION LOGO HERE -->
+            <!-- Example:
+            <img src="images/logos/wbutnew_edited.jpg" alt="WBUT Logo" class="edu-logo"/>
+            -->
+            <img src="images/logos/wbutnew_edited.jpg" alt="WBUT" class="edu-logo"/>
+            <div>
+              <h3 class="font-semibold text-slate-900" data-i18n="edu.3.degree">Bachelor of Technology, Information Technology</h3>
+              <p class="text-[#15203d] font-medium text-sm mt-0.5">West Bengal University of Technology (WBUT), India</p>
+              <p class="text-slate-400 text-sm">2014 – 2019 &nbsp;·&nbsp; 6.8/10</p>
+            </div>
+          </div>
+ 
+          <div class="edu-card flex items-center gap-5 reveal">
+            <!-- ADD / REPLACE EDUCATION LOGO HERE -->
+            <!-- Example:
+            <img src="images/logos/iitkgp.jpg" alt="IIT Kharagpur Logo" class="edu-logo"/>
+            -->
+            <img src="images/logos/iitkgp.jpg" alt="IIT KGP" class="edu-logo"/>
+            <div>
+              <h3 class="font-semibold text-slate-900" data-i18n="edu.4.degree">Undergrad Visiting Student, Computer Science and Engineering</h3>
+              <p class="text-[#15203d] font-medium text-sm mt-0.5">Indian Institute of Technology Kharagpur (IITKGP), India</p>
+              <p class="text-slate-400 text-sm">2017 – 2018 &nbsp;·&nbsp; 9.0/10</p>
+            </div>
+          </div>
+        </div>
+      </div>
+ 
+      <div style="margin-top:3.5rem;">
+        <h2 class="about-desc-title reveal" data-i18n="section.experience">Selected Experiences</h2>
+ 
+        <!-- INTERACTIVE JOURNEY MAP -->
+        <!-- Logos, city entries, years, notes, and tags are edited in the PLACES array inside the <script> section. -->
+        <div class="jshell reveal" id="jshell">
+          <div class="jvp" id="jvp">
+            <div class="jworld" id="jworld"></div>
+            <div class="jdetail" id="jdetail">
+              <div class="jdetail-header" id="jdetailHeader">
+                <div><div class="jdtitle" id="jdtitle">—</div><div class="jdsubtitle" id="jdsubtitle"></div></div>
+                <div class="jdetail-actions"></div>
+              </div>
+              <div class="jdetail-body" id="jdetailBody"><div class="jcards-wrap" id="jcards"></div></div>
+              <div class="jresize jresize-n" data-dir="n"></div><div class="jresize jresize-s" data-dir="s"></div>
+              <div class="jresize jresize-e" data-dir="e"></div><div class="jresize jresize-w" data-dir="w"></div>
+              <div class="jresize jresize-ne" data-dir="ne"></div><div class="jresize jresize-nw" data-dir="nw"></div>
+              <div class="jresize jresize-se" data-dir="se"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M9 1L1 9M9 5L5 9" stroke="#60748c" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+              <div class="jresize jresize-sw" data-dir="sw"></div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -404,94 +592,10 @@
  
   <main id="main-content" class="container mx-auto max-w-4xl px-4 py-16">
  
-    <!-- EDUCATION SECTION -->
-    <section id="education" class="view" data-view="education">
-      <h2 class="section-title text-3xl text-slate-800 mb-6 border-b-2 border-slate-200 pb-2 reveal" data-i18n="section.education">Education</h2>
-      <div class="space-y-5">
- 
-        <div class="edu-card flex items-center gap-5 reveal">
-          <!-- ADD / REPLACE EDUCATION LOGO HERE -->
-          <!-- Example:
-          <img src="images/logos/kth.png" alt="KTH Logo" class="edu-logo"/>
-          -->
-          <img src="images/logos/kth.png" alt="KTH" class="edu-logo"/>
-          <div>
-            <h3 class="font-semibold text-slate-900" data-i18n="edu.1.degree">Master of Science, Interactive Media Technology</h3>
-            <p class="text-[#15203d] font-medium text-sm mt-0.5">Kungliga Tekniska Högskolan (KTH), Sweden</p>
-            <p class="text-slate-400 text-sm">2020 – <span data-i18n="word.present">Present</span> &nbsp;·&nbsp; GPA: 4.4/5</p>
-          </div>
-        </div>
- 
-        <div class="edu-card flex items-center gap-5 reveal">
-          <!-- ADD / REPLACE EDUCATION LOGO HERE -->
-          <!-- Example:
-          <img src="images/logos/epfl.png" alt="EPFL Logo" class="edu-logo"/>
-          -->
-          <img src="images/logos/epfl.png" alt="EPFL" class="edu-logo"/>
-          <div>
-            <h3 class="font-semibold text-slate-900" data-i18n="edu.2.degree">Graduate Exchange Student, Computer and Communication Sciences</h3>
-            <p class="text-[#15203d] font-medium text-sm mt-0.5">École Polytechnique Fédérale de Lausanne (EPFL), Switzerland</p>
-            <p class="text-slate-400 text-sm">2021 – 2023 &nbsp;·&nbsp; GPA: 4.2/6</p>
-          </div>
-        </div>
- 
-        <div class="edu-card flex items-center gap-5 reveal">
-          <!-- ADD / REPLACE EDUCATION LOGO HERE -->
-          <!-- Example:
-          <img src="images/logos/wbutnew_edited.jpg" alt="WBUT Logo" class="edu-logo"/>
-          -->
-          <img src="images/logos/wbutnew_edited.jpg" alt="WBUT" class="edu-logo"/>
-          <div>
-            <h3 class="font-semibold text-slate-900" data-i18n="edu.3.degree">Bachelor of Technology, Information Technology</h3>
-            <p class="text-[#15203d] font-medium text-sm mt-0.5">West Bengal University of Technology (WBUT), India</p>
-            <p class="text-slate-400 text-sm">2014 – 2019 &nbsp;·&nbsp; GPA: 6.8/10</p>
-          </div>
-        </div>
- 
-        <div class="edu-card flex items-center gap-5 reveal">
-          <!-- ADD / REPLACE EDUCATION LOGO HERE -->
-          <!-- Example:
-          <img src="images/logos/iitkgp.jpg" alt="IIT Kharagpur Logo" class="edu-logo"/>
-          -->
-          <img src="images/logos/iitkgp.jpg" alt="IIT KGP" class="edu-logo"/>
-          <div>
-            <h3 class="font-semibold text-slate-900" data-i18n="edu.4.degree">Undergrad Visiting Student, Computer Science and Engineering</h3>
-            <p class="text-[#15203d] font-medium text-sm mt-0.5">Indian Institute of Technology Kharagpur (IITKGP), India</p>
-            <p class="text-slate-400 text-sm">2017 – 2018</p>
-            <p class="text-slate-400 text-sm">2014 – 2019 &nbsp;·&nbsp; GPA: 9/10</p>
-          </div>
-        </div>
-      </div>
-    </section>
- 
-    <!-- EXPERIENCE / JOURNEY MAP SECTION -->
-    <section id="experience" class="view" data-view="journey">
-      <h2 class="section-title text-3xl text-slate-800 mb-6 border-b-2 border-slate-200 pb-2 reveal" data-i18n="section.experience">Selected Experiences</h2>
- 
-      <!-- INTERACTIVE JOURNEY MAP -->
-      <!-- Logos, city entries, years, notes, and tags are edited in the PLACES array inside the <script> section. -->
-      <div class="jshell reveal" id="jshell">
-        <div class="jvp" id="jvp">
-          <div class="jworld" id="jworld"></div>
-          <div class="jdetail" id="jdetail">
-            <div class="jdetail-header" id="jdetailHeader">
-              <div><div class="jdtitle" id="jdtitle">—</div><div class="jdsubtitle" id="jdsubtitle"></div></div>
-              <div class="jdetail-actions"></div>
-            </div>
-            <div class="jdetail-body" id="jdetailBody"><div class="jcards-wrap" id="jcards"></div></div>
-            <div class="jresize jresize-n" data-dir="n"></div><div class="jresize jresize-s" data-dir="s"></div>
-            <div class="jresize jresize-e" data-dir="e"></div><div class="jresize jresize-w" data-dir="w"></div>
-            <div class="jresize jresize-ne" data-dir="ne"></div><div class="jresize jresize-nw" data-dir="nw"></div>
-            <div class="jresize jresize-se" data-dir="se"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M9 1L1 9M9 5L5 9" stroke="#60748c" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-            <div class="jresize jresize-sw" data-dir="sw"></div>
-          </div>
-        </div>
-      </div>
-    </section>
- 
     <!-- PORTFOLIO SECTION -->
     <section id="portfolio" class="view" data-view="work">
       <div class="work-sub active" id="workGrid">
+        <h2 class="section-title text-3xl text-slate-800 mb-6 border-b-2 border-slate-200 pb-2 reveal pin-heading" data-i18n="section.portfolio">Portfolio</h2>
         <!-- PORTFOLIO CATEGORY TABS -->
         <div class="ptabs reveal">
           <button class="ptab-btn active" onclick="switchTab('all',this)"><span data-i18n="tab.all">All Projects</span><span class="ptab-count" data-cat="all"></span></button>
@@ -506,8 +610,8 @@
     </section>
   </main>
  
-  <footer class="bg-slate-800 text-slate-400 text-center p-6 mt-8 reveal">
-    <p>© <span id="yr"></span> Sruti Bhattacharjee. <span data-i18n="footer.rights">All rights reserved.</span></p>
+  <footer class="footer-bar reveal">
+    <p>© Sruti Bhattacharjee. <span data-i18n="footer.rights">All rights reserved.</span></p>
   </footer>
  
   <script>
@@ -522,11 +626,8 @@
  
     document.addEventListener('DOMContentLoaded',function(){
  
-      const yrEl=document.getElementById('yr');
-      if(yrEl)yrEl.textContent=new Date().getFullYear();
- 
     /* ============================================================
-       SCROLL REVEAL — applies site-wide (Home, Education, Journey
+       SCROLL REVEAL — applies site-wide (Home/About, Journey
        section heading, Work grid, and individual project pages).
        Deliberately NOT used inside the journey map's internal popup
        (city cards, roles, tags) since that map has its own zoom/pan
@@ -1025,9 +1126,7 @@
     }
  
     function topbarLinksHTML(){
-      return '<button type="button" class="nav-item" data-view="education"><span data-i18n="nav.education">Education</span></button>'
-        +'<button type="button" class="nav-item" data-view="journey"><span data-i18n="nav.journey">Journey</span></button>'
-        +'<button type="button" class="nav-item" data-view="work"><span data-i18n="nav.work">Work</span></button>'
+      return '<button type="button" class="nav-item" data-view="work"><span data-i18n="nav.work">Work</span></button>'
         +'<a class="nav-item" href="papers/cv_1page.pdf" target="_blank" rel="noopener noreferrer"><span data-i18n="nav.cv">CV</span></a>'
         +'<a class="nav-item" href="mailto:srutib@kth.com"><span data-i18n="nav.contact">Contact Me</span></a>';
     }
@@ -1035,11 +1134,11 @@
     renderWorkGrid();
  
     /* ============================================================
-       VIEW ROUTER — Work / Journey / Education swap in place like
+       VIEW ROUTER — Work swaps in place like
        tabs (frog-style), instead of scrolling to an anchor. Work has
        a sub-route for project detail pages: #project-<id>.
        ============================================================ */
-    const VALID_VIEWS=['home','work','journey','education'];
+    const VALID_VIEWS=['home','work'];
     function parseHash(){
       const h=(location.hash||'#home').replace('#','');
       const m=h.match(/^project-(\d+)$/);
@@ -1052,7 +1151,7 @@
       document.querySelectorAll('.view').forEach(function(sec){sec.classList.toggle('active',sec.dataset.view===view);});
       document.querySelectorAll('#topbar [data-view]').forEach(function(btn){btn.classList.toggle('active',btn.dataset.view===view);});
       if(view==='work')showWorkSub(opts.projectId||null);
-      if(view==='journey'&&typeof fitAll==='function'){
+      if(view==='home'&&typeof fitAll==='function'){
         requestAnimationFrame(function(){requestAnimationFrame(function(){
           if(!detail.classList.contains('open'))fitAll();
           S.s=S.ts;S.x=S.tx;S.y=S.ty;
@@ -1193,7 +1292,7 @@ const PLACES=[
     detail.addEventListener('pointerdown',e=>e.stopPropagation());detail.addEventListener('click',e=>e.stopPropagation());detail.addEventListener('dblclick',e=>e.stopPropagation());detail.addEventListener('wheel',e=>e.stopPropagation(),{passive:true});detail.addEventListener('touchstart',e=>e.stopPropagation(),{passive:true});detail.addEventListener('touchmove',e=>e.stopPropagation(),{passive:true});detailBody.addEventListener('pointerdown',e=>e.stopPropagation());detailBody.addEventListener('wheel',e=>e.stopPropagation(),{passive:true});
     const detailHeader=document.getElementById('jdetailHeader');
     let ddrag=false,ddx=0,ddy=0,dStartL=0,dStartT=0;
-    function positionDetail(){const vw=vp.clientWidth,vh=vp.clientHeight,dw=detail.offsetWidth,dh=detail.offsetHeight;detail.style.left=(vw-dw-14)+'px';detail.style.top=(vh-dh-14)+'px';detail.style.right='auto';detail.style.bottom='auto';saveCardState();}
+    function positionDetail(){const vw=vp.clientWidth,dw=detail.offsetWidth;detail.style.left=(vw-dw-14)+'px';detail.style.top='14px';detail.style.right='auto';detail.style.bottom='auto';saveCardState();}
     detailHeader.addEventListener('pointerdown',e=>{if(e.target.closest('button'))return;ddrag=true;detailHeader.setPointerCapture(e.pointerId);const r=detail.getBoundingClientRect(),vr=vp.getBoundingClientRect();dStartL=r.left-vr.left;dStartT=r.top-vr.top;ddx=e.clientX;ddy=e.clientY;e.stopPropagation();});
     detailHeader.addEventListener('pointermove',e=>{if(!ddrag)return;const dx=e.clientX-ddx,dy=e.clientY-ddy,vw=vp.clientWidth,vh=vp.clientHeight,dw=detail.offsetWidth,dh=detail.offsetHeight;detail.style.left=Math.max(0,Math.min(vw-dw,dStartL+dx))+'px';detail.style.top=Math.max(0,Math.min(vh-dh,dStartT+dy))+'px';saveCardState();e.stopPropagation();});
     detailHeader.addEventListener('pointerup',e=>{ddrag=false;e.stopPropagation();});
@@ -1220,3 +1319,4 @@ const PLACES=[
   </script>
 </body>
 </html>
+ 
