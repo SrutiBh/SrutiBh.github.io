@@ -58,7 +58,7 @@
     .shadow-2xl{box-shadow:0 25px 50px -12px rgba(0,0,0,.25)}
     .bg-slate-700{background-color:#334155}
     .bg-slate-800{background-color:#1e293b}
-    .footer-bar{background-color:#1e293b;color:#94a3b8;text-align:center;padding:.3rem 1.5rem;margin-top:.15rem;} /* FOOTER — original navy colour and full width kept; padding and top margin reduced to make the band thinner */
+    .footer-bar{background-color:#1e293b;color:#94a3b8;text-align:center;padding:.15rem 3rem;margin-top:.15rem;} /* FOOTER — original navy colour and full width kept; horizontal padding increased, vertical padding reduced further for a longer, thinner band */
     .object-cover{object-fit:cover}
     .text-center{text-align:center}
     .text-base{font-size:1rem;line-height:1.5rem}
@@ -159,7 +159,9 @@
     */
     .edu-logo{width:64px;height:64px;flex-shrink:0;object-fit:contain;object-position:center;}
  
-    .edu-card{background:white;padding:1.5rem;border:1.5px solid #dce2f0;border-left:10px solid #15203d;border-right:10px solid #15203d;border-radius:1.5rem;box-shadow:0 1px 4px rgba(21,32,61,.05);transition:box-shadow .22s,border-color .22s,transform .22s;}
+    .edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;} /* 2 columns to use the wider page; collapses to 1 on mobile below */
+    @media(max-width:760px){.edu-grid{grid-template-columns:1fr;}}
+    .edu-card{background:white;padding:1.1rem 1.25rem;border:1.5px solid #dce2f0;border-left:10px solid #15203d;border-right:10px solid #15203d;border-radius:1.5rem;box-shadow:0 1px 4px rgba(21,32,61,.05);transition:box-shadow .22s,border-color .22s,transform .22s;}
     .edu-card:hover{box-shadow:0 8px 30px rgba(21,32,61,.12);border-color:#8899cc;border-left-color:#15203d;border-right-color:#15203d;transform:translateY(-2px);}
  
     /* PORTFOLIO TABS */
@@ -294,8 +296,8 @@
     @media(max-width:640px){.ptabs{gap:1.1rem}}
  
     /* ABOUT — sits on the Home view, below the hero */
-    .about-section{background:#f8fafc;padding:5rem 1.5rem;}
-    .about-inner{max-width:44rem;margin:0 auto;}
+    .about-section{background:#f8fafc;padding:2.5rem 1.5rem;} /* vertical padding reduced from 5rem for a more compact page */
+    .about-inner{max-width:78rem;margin:0 auto;} /* widened from 44rem so content stretches horizontally */
     .about-bio{font-family:'Times New Roman',Times,serif;font-size:1.1rem;line-height:1.65;color:#475569;font-weight:400;}
  
     /* ============================================================
@@ -325,6 +327,7 @@
       font-weight:400;
       color:#334155;
       margin:0;
+      max-width:50rem; /* keeps the paragraph's line-length readable even though .about-inner is now wider */
     }
     /* Education cards live inside the About/Home page, so their text
        matches the About Me paragraph's font-family and font-size
@@ -362,7 +365,7 @@
     .jshell{position:relative;background:linear-gradient(180deg,#0d1328 0%,#111936 46%,#15203d 100%);border-radius:1rem;overflow:hidden;box-shadow:0 16px 40px rgba(15,23,42,.14);transition:all .28s ease;overscroll-behavior:contain;margin-left:-1vw;margin-right:-1vw;}
     .jicon-btn{width:34px;height:34px;border-radius:999px;border:1px solid rgba(255,255,255,.10);background:rgba(10,16,32,.26);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s,transform .15s,border-color .15s;font-family:'Times New Roman',Times,serif;font-size:.9rem;line-height:1;}
     .jicon-btn:hover{background:rgba(10,16,32,.38);border-color:rgba(255,255,255,.16);transform:translateY(-1px);}
-    .jvp{position:relative;height:620px;overflow:hidden;touch-action:none;overscroll-behavior:contain;cursor:grab;background:radial-gradient(circle at 88% 19%,#fffde8 0 58px,rgba(255,250,200,.18) 59px,transparent 130px),radial-gradient(circle at 10% 18%,rgba(255,255,255,.55) 0 1.5px,transparent 2.5px),radial-gradient(circle at 22% 32%,rgba(255,255,255,.45) 0 1.5px,transparent 2.5px),radial-gradient(circle at 38% 10%,rgba(255,255,255,.60) 0 1.5px,transparent 2.5px),radial-gradient(circle at 52% 22%,rgba(255,255,255,.45) 0 1.5px,transparent 2.5px),radial-gradient(circle at 67% 8%,rgba(255,255,255,.50) 0 1.5px,transparent 2.5px),radial-gradient(circle at 30% 55%,rgba(255,255,255,.40) 0 1px,transparent 2px),radial-gradient(circle at 78% 28%,rgba(255,255,255,.45) 0 1.5px,transparent 2.5px),radial-gradient(circle at 90% 18%,rgba(255,255,255,.40) 0 1px,transparent 2px),radial-gradient(circle at 15% 70%,rgba(255,255,255,.35) 0 1px,transparent 2px),radial-gradient(circle at 60% 75%,rgba(255,255,255,.40) 0 1px,transparent 2px),radial-gradient(circle at 8% 62%,rgba(255,255,255,.42) 0 1.5px,transparent 2.5px),radial-gradient(circle at 42% 85%,rgba(255,255,255,.38) 0 1.5px,transparent 2.5px),radial-gradient(circle at 70% 82%,rgba(255,255,255,.35) 0 1.5px,transparent 2.5px),radial-gradient(circle at 92% 58%,rgba(255,255,255,.38) 0 1.5px,transparent 2.5px),radial-gradient(circle at 28% 72%,rgba(255,255,255,.32) 0 1px,transparent 2px),radial-gradient(circle at 58% 90%,rgba(255,255,255,.35) 0 1px,transparent 2px),linear-gradient(180deg,#06102a 0%,#0c1840 50%,#111e48 100%);transition:height .28s ease;}
+    .jvp{position:relative;height:480px;overflow:hidden;touch-action:none;overscroll-behavior:contain;cursor:grab;background:radial-gradient(circle at 88% 19%,#fffde8 0 58px,rgba(255,250,200,.18) 59px,transparent 130px),radial-gradient(circle at 10% 18%,rgba(255,255,255,.55) 0 1.5px,transparent 2.5px),radial-gradient(circle at 22% 32%,rgba(255,255,255,.45) 0 1.5px,transparent 2.5px),radial-gradient(circle at 38% 10%,rgba(255,255,255,.60) 0 1.5px,transparent 2.5px),radial-gradient(circle at 52% 22%,rgba(255,255,255,.45) 0 1.5px,transparent 2.5px),radial-gradient(circle at 67% 8%,rgba(255,255,255,.50) 0 1.5px,transparent 2.5px),radial-gradient(circle at 30% 55%,rgba(255,255,255,.40) 0 1px,transparent 2px),radial-gradient(circle at 78% 28%,rgba(255,255,255,.45) 0 1.5px,transparent 2.5px),radial-gradient(circle at 90% 18%,rgba(255,255,255,.40) 0 1px,transparent 2px),radial-gradient(circle at 15% 70%,rgba(255,255,255,.35) 0 1px,transparent 2px),radial-gradient(circle at 60% 75%,rgba(255,255,255,.40) 0 1px,transparent 2px),radial-gradient(circle at 8% 62%,rgba(255,255,255,.42) 0 1.5px,transparent 2.5px),radial-gradient(circle at 42% 85%,rgba(255,255,255,.38) 0 1.5px,transparent 2.5px),radial-gradient(circle at 70% 82%,rgba(255,255,255,.35) 0 1.5px,transparent 2.5px),radial-gradient(circle at 92% 58%,rgba(255,255,255,.38) 0 1.5px,transparent 2.5px),radial-gradient(circle at 28% 72%,rgba(255,255,255,.32) 0 1px,transparent 2px),radial-gradient(circle at 58% 90%,rgba(255,255,255,.35) 0 1px,transparent 2px),linear-gradient(180deg,#06102a 0%,#0c1840 50%,#111e48 100%);transition:height .28s ease;}
     .jvp.dragging{cursor:grabbing}
     .jworld{position:absolute;left:0;top:0;width:3600px;height:1800px;transform-origin:0 0;will-change:transform;z-index:1;}
     .jisland{position:absolute;width:380px;height:370px;transform:translate(-50%,-50%);cursor:pointer;user-select:none;}
@@ -499,9 +502,9 @@
         <p class="about-desc-text">I'm a UX Researcher who values human-centered and ethical innovation. With a background in Computer Engineering and Human&ndash;Computer Interaction, I am passionate about understanding human needs and challenges to inform product decisions for interactive, accessible, and multimodal technologies.</p>
       </div>
  
-      <div style="margin-top:3.5rem;">
+      <div style="margin-top:2rem;">
         <h2 class="about-desc-title reveal" data-i18n="section.education">Education</h2>
-        <div class="space-y-5">
+        <div class="edu-grid">
  
           <div class="edu-card flex items-center gap-5 reveal">
             <!-- ADD / REPLACE EDUCATION LOGO HERE -->
@@ -557,7 +560,7 @@
         </div>
       </div>
  
-      <div style="margin-top:3.5rem;">
+      <div style="margin-top:2rem;">
         <h2 class="about-desc-title reveal" data-i18n="section.experience">Selected Experiences</h2>
  
         <!-- INTERACTIVE JOURNEY MAP -->
