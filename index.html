@@ -58,7 +58,7 @@
     .shadow-2xl{box-shadow:0 25px 50px -12px rgba(0,0,0,.25)}
     .bg-slate-700{background-color:#334155}
     .bg-slate-800{background-color:#1e293b}
-    .footer-bar{background-color:#1e293b;color:#94a3b8;text-align:center;padding:.15rem 3rem;margin-top:.15rem;} /* FOOTER — original navy colour and full width kept; horizontal padding increased, vertical padding reduced further for a longer, thinner band */
+    .footer-bar{background-color:#1e293b;color:#94a3b8;text-align:center;padding:.15rem 3rem;margin-top:0;} /* FOOTER — gap above now comes from .about-inner's padding-bottom so it matches the other section gaps exactly */
     .object-cover{object-fit:cover}
     .text-center{text-align:center}
     .text-base{font-size:1rem;line-height:1.5rem}
@@ -294,9 +294,9 @@
     @media(max-width:640px){.ptabs{gap:1.1rem}}
 
     /* ABOUT — sits on the Home view, below the hero */
-    .about-section{background:#f8fafc;padding:5rem 1.5rem;}
-    .about-inner{max-width:72rem;margin:0 auto;} /* widened so About Me / Education / Journey use more of the page width */
-    .about-block{margin-top:3.5rem;} /* equal, larger gap above Education and above Selected Experiences */
+    .about-section{background:#f8fafc;padding:5rem 1.5rem 0;}
+    .about-inner{max-width:72rem;margin:0 auto;padding-bottom:4rem;} /* widened so About Me / Education / Journey use more of the page width; bottom padding matches the gap between sections so the footer gap is equal too */
+    .about-block{margin-top:4rem;} /* equal, larger gap above Education and above Selected Experiences */
     .about-bio{font-family:'Times New Roman',Times,serif;font-size:1.1rem;line-height:1.65;color:#475569;font-weight:400;}
 
     /* ============================================================
@@ -328,14 +328,22 @@
       margin:0;
     }
     /* ============================================================
-       EDUCATION — styled as a plain transcript list (logo, degree,
-       institution, dates in a simple row with a thin divider),
-       not a bordered/boxed card grid.
+       EDUCATION — one card per row (never a grid). Each row keeps
+       the navy blue side-border card look, just stacked vertically
+       instead of boxed into a 2-column grid.
        ============================================================ */
-    .edu-transcript{display:flex;flex-direction:column;}
-    .edu-row{display:flex;align-items:center;gap:1.5rem;padding:1.5rem 0;border-bottom:1px solid #e2e8f0;}
-    .edu-row:first-child{padding-top:0;}
-    .edu-row:last-child{border-bottom:none;padding-bottom:0;}
+    .edu-transcript{display:flex;flex-direction:column;gap:1.25rem;}
+    .edu-row{
+      display:flex;align-items:center;gap:1.5rem;
+      background:#fff;
+      padding:1.5rem 1.75rem;
+      border:1.5px solid #dce2f0;
+      border-left:10px solid #15203d;
+      border-right:10px solid #15203d;
+      border-radius:1.5rem;
+      box-shadow:0 1px 4px rgba(21,32,61,.05);
+      transition:box-shadow .22s,border-color .22s,transform .22s;
+    }
     .edu-row .edu-logo{width:56px;height:56px;flex-shrink:0;object-fit:contain;}
     .edu-row-text h3{
       font-family:'Times New Roman',Times,serif;
@@ -614,7 +622,7 @@
     </section>
   </main>
 
-  <footer class="footer-bar reveal">
+  <footer class="footer-bar">
     <p>© Sruti Bhattacharjee. <span data-i18n="footer.rights">All rights reserved.</span></p>
   </footer>
 
@@ -1154,6 +1162,8 @@
       if(VALID_VIEWS.indexOf(view)===-1)view='home';
       document.querySelectorAll('.view').forEach(function(sec){sec.classList.toggle('active',sec.dataset.view===view);});
       document.querySelectorAll('#topbar [data-view]').forEach(function(btn){btn.classList.toggle('active',btn.dataset.view===view);});
+      const mainEl=document.getElementById('main-content');
+      if(mainEl)mainEl.style.display=(view==='work')?'':'none'; /* main-content only holds the Work page; hiding it on other pages stops its own padding from adding an invisible gap before the footer */
       if(view==='work')showWorkSub(opts.projectId||null);
       if(view==='home'&&typeof fitAll==='function'){
         requestAnimationFrame(function(){requestAnimationFrame(function(){
