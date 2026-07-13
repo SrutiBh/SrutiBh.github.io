@@ -296,7 +296,7 @@
     /* ABOUT — sits on the Home view, below the hero */
     .about-section{background:#f8fafc;padding:5rem 1.5rem 0;}
     .about-inner{max-width:72rem;margin:0 auto;padding-bottom:4rem;} /* widened so About Me / Education / Journey use more of the page width; bottom padding matches the gap between sections so the footer gap is equal too */
-    .about-block{margin-top:4rem;} /* equal, larger gap above Education and above Selected Experiences */
+    .about-block{margin-top:4rem;} /* equal, larger gap above Education and above Career Journey */
     .about-bio{font-family:'Times New Roman',Times,serif;font-size:1.1rem;line-height:1.65;color:#475569;font-weight:400;}
 
     /* ============================================================
@@ -347,6 +347,7 @@
       transition:box-shadow .22s,border-color .22s,transform .22s;
     }
     .edu-row .edu-logo{width:56px;height:56px;flex-shrink:0;object-fit:contain;}
+    .edu-row-text{min-width:0;} /* lets this flex item shrink below its content's natural width, which the nowrap institution line below would otherwise prevent */
     .edu-row-text h3{
       font-family:'Times New Roman',Times,serif;
       font-size:1.55rem;
@@ -361,7 +362,10 @@
       color:#15203d;
       margin:0 0 .25rem;
       white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
     }
+    @media(max-width:700px){.edu-row-text .edu-inst{white-space:normal;overflow:visible;text-overflow:clip;}} /* wraps normally on narrow screens instead of forcing the page wider than the viewport */
     .edu-row-text .edu-dates{
       font-family:'Times New Roman',Times,serif;
       font-size:1.55rem;
@@ -573,7 +577,7 @@
       </div>
 
       <div class="about-block">
-        <h2 class="about-desc-title reveal" data-i18n="section.experience">Selected Experiences</h2>
+        <h2 class="about-desc-title reveal" data-i18n="section.experience">Career Journey</h2>
 
         <!-- INTERACTIVE JOURNEY MAP -->
         <!-- Logos, city entries, years, notes, and tags are edited in the PLACES array inside the <script> section. -->
@@ -680,7 +684,7 @@
       en:{
         'nav.work':'Work','nav.journey':'Journey','nav.education':'Education','nav.cv':'CV','nav.contact':'Contact Me',
         'hero.subtitle':'Graduate Student &nbsp;\u00b7&nbsp; KTH Royal Institute of Technology',
-        'section.about':'About Me','section.education':'Education','section.experience':'Selected Experiences','section.portfolio':'Portfolio',
+        'section.about':'About Me','section.education':'Education','section.experience':'Career Journey','section.portfolio':'Portfolio',
         'about.p1':'I am a Human-Centric Computer Engineer specializing in Interactive Technology Design and Development based on User Experience and User Perception Analysis.',
         'about.p2':"I'm open to new roles and collaborations. Feel free to reach out if my background aligns with your team's goals.",
         'word.present':'Present',
