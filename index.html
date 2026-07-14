@@ -71,11 +71,24 @@
     .footer-bar{background-color:#1e293b;color:#94a3b8;text-align:center;padding:1rem 3rem;margin-top:0;} /* FOOTER — gap above now comes from .about-inner's padding-bottom so it matches the other section gaps exactly */
     .footer-pre{background:transparent;text-align:center;padding:2.5rem 1.5rem 1.5rem;}
     .footer-links{display:flex;justify-content:center;flex-wrap:wrap;gap:2.5rem;margin-bottom:1.1rem;}
-    .footer-link{display:inline-flex;align-items:center;gap:.5rem;color:#334155;text-decoration:underline;text-underline-offset:3px;font-family:'Times New Roman',Times,serif;font-size:1.55rem;font-weight:400;transition:color .18s ease,transform .18s ease;} /* matches About Me content: same font, size, colour */
-    .footer-link:hover{color:#15203d;transform:scale(1.08);}
-    .footer-social{display:flex;justify-content:center;gap:1rem;}
-    .footer-social a{display:flex;align-items:center;justify-content:center;color:#64748b;transition:color .18s ease,transform .18s ease;} /* smaller than the links row, but bigger than before */
-    .footer-social a:hover{color:#15203d;transform:scale(1.22);}
+    .footer-link{position:relative;display:inline-flex;align-items:center;gap:.6rem;color:#334155;text-decoration:none;font-family:'Times New Roman',Times,serif;font-size:1.55rem;font-weight:400;} /* matches About Me content: same font, size, colour */
+    .footer-link::after{content:'';position:absolute;left:0;right:0;bottom:-6px;height:1.5px;background:#15203d;transform:scaleX(0);transform-origin:left;transition:transform .22s ease;}
+    .footer-link:hover::after{transform:scaleX(1);}
+    .footer-icon-chip{
+      display:flex;align-items:center;justify-content:center;
+      width:2.3rem;height:2.3rem;
+      border-radius:999px;
+      background:#eef1f8;
+      color:#15203d;
+      transition:background-color .18s ease,color .18s ease;
+    }
+    .footer-link:hover .footer-icon-chip{background:#15203d;color:#fff;}
+    .footer-social{display:flex;justify-content:center;gap:.75rem;}
+    .footer-social a{display:flex;align-items:center;justify-content:center;color:#334155;transition:color .18s ease,transform .18s ease;}
+    .footer-social a:hover{color:#15203d;transform:scale(1.18);}
+    .footer-social a:hover svg{stroke-width:2.4;}
+    .footer-social .footer-icon-chip{width:2rem;height:2rem;} /* smaller than the links row, but still an icon chip like the Contact page */
+    .footer-social a:hover .footer-icon-chip{background:#15203d;color:#fff;}
     .object-cover{object-fit:cover}
     .text-center{text-align:center}
     .text-base{font-size:1rem;line-height:1.5rem}
@@ -810,9 +823,9 @@
 
   <div class="footer-pre">
     <nav class="footer-links">
-      <a href="mailto:srutib2636@gmail.com" class="footer-link"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><span>Contact</span></a>
-      <a href="#" class="footer-link" data-view="work"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg><span>Portfolio</span></a>
-      <a href="#" class="footer-link" data-scroll-target="homeAbout"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span>About</span></a>
+      <a href="mailto:srutib2636@gmail.com" class="footer-link"><span class="footer-icon-chip"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span>Contact</span></a>
+      <a href="#" class="footer-link" data-view="work"><span class="footer-icon-chip"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span><span>Portfolio</span></a>
+      <a href="#" class="footer-link" data-scroll-target="homeAbout"><span class="footer-icon-chip"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span><span>About</span></a>
     </nav>
     <div class="footer-social">
       <a href="https://www.linkedin.com/in/srutibhattacharjee/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M6.5 21.5h-5v-13h5v13zM4 6.5C2.5 6.5 1.5 5.3 1.5 4s1-2.4 2.5-2.4c1.6 0 2.5 1 2.6 2.5 0 1.4-1 2.4-2.6 2.4zm11.5 6c-1 0-2 .5-2 1.9v7.1h-5v-13h5v1.9c1-1.6 2.7-1.9 4-1.9 3 0 5 2 5 6.3v6.7h-5v-7c0-1.4-.5-1.9-2-1.9-.9 0-1.9.5-1.9 1.9v7.1h-5"/></svg></a>
