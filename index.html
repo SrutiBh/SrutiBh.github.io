@@ -891,7 +891,7 @@
         'edu.4.degree':'Undergrad Visiting Student, Computer Science and Engineering',
         'tab.all':'All Projects','tab.ux':'UX Research','tab.interaction':'Interaction Design','tab.visual':'Visual Computing',
         'lbl.image':'Image','lbl.video':'Video','lbl.gif':'GIF','lbl.code':'Code',
-        'proj.1.title':'Re-Designing VRLE for Effective Pedagogy',
+        'proj.1.title':'On Progress',
         'proj.1.desc':'Formulating how virtual reality-based learning environments can provide pedagogical support in effective learning.',
         'proj.2.title':'EdTech for Novice Programming Learners in Hybrid Collaborative Classes',
         'proj.2.desc':'Investigated design needs of EdTech to facilitate effective learning for novice programming students in hybrid collaborative learning environments.',
@@ -1103,9 +1103,9 @@
        ============================================================ */
     const WORK_CATEGORY='ux'; // which category shows in the Work grid
     const PROJECTS=[
+      {id:3,cat:'ux',meta:'KTH',img:'images/projects/VRvsRobovsZoomfinal.png',imgAlt:'Preview image of remote communication project',imgFit:'contain',links:[]},
       {id:1,cat:'ux',meta:'KTH · EPFL',img:'images/projects/vrle_classroom.jpeg',imgAlt:'Preview image of VR learning environment project',links:[]},
       {id:2,cat:'ux',meta:'University of Lausanne',img:'images/projects/unil.jpg',imgAlt:'Preview image of hybrid class research project',links:[]},
-      {id:3,cat:'ux',meta:'KTH',img:'images/projects/VRvsRobovsZoomfinal.png',imgAlt:'Preview image of remote communication project',links:[]},
       {id:4,cat:'interaction',meta:'EPFL',img:'images/projects/protest_project.png',imgAlt:'Augmented City interaction design',links:[]},
       {id:5,cat:'interaction',meta:'Ericsson',img:'images/projects/haptic_ericsson.png',imgAlt:'Preview image of haptic systems project',links:[{key:'lbl.code',href:'#'}]},
       {id:6,cat:'interaction',meta:'KTH',img:'images/projects/teach_figma.png',imgAlt:'Preview image of remote learning UX project',links:[]},
@@ -1131,8 +1131,9 @@
       const wrap=document.getElementById('workGridCards');
       const projectsToShow=PROJECTS.filter(function(p){return p.cat===WORK_CATEGORY;});
       wrap.innerHTML=projectsToShow.map(function(p){
+        const fitStyle=p.imgFit?(' style="object-fit:'+p.imgFit+';background:#e8ecf5;"'):'';
         return '<button type="button" class="work-card reveal" data-id="'+p.id+'">'
-          +'<img class="work-card-img" src="'+p.img+'" alt="'+p.imgAlt+'">'
+          +'<img class="work-card-img" src="'+p.img+'" alt="'+p.imgAlt+'"'+fitStyle+'>'
           +'<span class="work-card-overlay"><span class="work-card-title" data-i18n="proj.'+p.id+'.title">'+tr('proj.'+p.id+'.title')+'</span></span>'
           +'</button>';
       }).join('');
