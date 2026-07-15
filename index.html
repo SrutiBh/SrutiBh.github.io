@@ -502,8 +502,8 @@
     .jshell{position:relative;background:linear-gradient(180deg,#0d1328 0%,#111936 46%,#15203d 100%);border-radius:1rem;overflow:hidden;box-shadow:0 16px 40px rgba(15,23,42,.14);transition:all .28s ease;overscroll-behavior:contain;margin-left:-1vw;margin-right:-1vw;}
     .jicon-btn{width:34px;height:34px;border-radius:999px;border:1px solid rgba(255,255,255,.10);background:rgba(10,16,32,.26);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s,transform .15s,border-color .15s;font-family:'Times New Roman',Times,serif;font-size:.9rem;line-height:1;}
     .jicon-btn:hover{background:rgba(10,16,32,.38);border-color:rgba(255,255,255,.16);transform:translateY(-1px);}
-    .jvp{position:relative;height:620px;overflow:hidden;touch-action:none;overscroll-behavior:contain;cursor:grab;background:radial-gradient(circle at 88% 19%,#fffde8 0 58px,rgba(255,250,200,.18) 59px,transparent 130px),radial-gradient(circle at 10% 18%,rgba(255,255,255,.55) 0 1.5px,transparent 2.5px),radial-gradient(circle at 22% 32%,rgba(255,255,255,.45) 0 1.5px,transparent 2.5px),radial-gradient(circle at 38% 10%,rgba(255,255,255,.60) 0 1.5px,transparent 2.5px),radial-gradient(circle at 52% 22%,rgba(255,255,255,.45) 0 1.5px,transparent 2.5px),radial-gradient(circle at 67% 8%,rgba(255,255,255,.50) 0 1.5px,transparent 2.5px),radial-gradient(circle at 30% 55%,rgba(255,255,255,.40) 0 1px,transparent 2px),radial-gradient(circle at 78% 28%,rgba(255,255,255,.45) 0 1.5px,transparent 2.5px),radial-gradient(circle at 90% 18%,rgba(255,255,255,.40) 0 1px,transparent 2px),radial-gradient(circle at 15% 70%,rgba(255,255,255,.35) 0 1px,transparent 2px),radial-gradient(circle at 60% 75%,rgba(255,255,255,.40) 0 1px,transparent 2px),radial-gradient(circle at 8% 62%,rgba(255,255,255,.42) 0 1.5px,transparent 2.5px),radial-gradient(circle at 42% 85%,rgba(255,255,255,.38) 0 1.5px,transparent 2.5px),radial-gradient(circle at 70% 82%,rgba(255,255,255,.35) 0 1.5px,transparent 2.5px),radial-gradient(circle at 92% 58%,rgba(255,255,255,.38) 0 1.5px,transparent 2.5px),radial-gradient(circle at 28% 72%,rgba(255,255,255,.32) 0 1px,transparent 2px),radial-gradient(circle at 58% 90%,rgba(255,255,255,.35) 0 1px,transparent 2px),linear-gradient(180deg,#06102a 0%,#0c1840 50%,#111e48 100%);transition:height .28s ease;}
-    .jvp.dragging{cursor:grabbing}
+    .jvp{position:relative;height:620px;overflow:hidden;touch-action:pan-y;overscroll-behavior:contain;cursor:default;background:radial-gradient(circle at 88% 19%,#fffde8 0 58px,rgba(255,250,200,.18) 59px,transparent 130px),radial-gradient(circle at 10% 18%,rgba(255,255,255,.55) 0 1.5px,transparent 2.5px),radial-gradient(circle at 22% 32%,rgba(255,255,255,.45) 0 1.5px,transparent 2.5px),radial-gradient(circle at 38% 10%,rgba(255,255,255,.60) 0 1.5px,transparent 2.5px),radial-gradient(circle at 52% 22%,rgba(255,255,255,.45) 0 1.5px,transparent 2.5px),radial-gradient(circle at 67% 8%,rgba(255,255,255,.50) 0 1.5px,transparent 2.5px),radial-gradient(circle at 30% 55%,rgba(255,255,255,.40) 0 1px,transparent 2px),radial-gradient(circle at 78% 28%,rgba(255,255,255,.45) 0 1.5px,transparent 2.5px),radial-gradient(circle at 90% 18%,rgba(255,255,255,.40) 0 1px,transparent 2px),radial-gradient(circle at 15% 70%,rgba(255,255,255,.35) 0 1px,transparent 2px),radial-gradient(circle at 60% 75%,rgba(255,255,255,.40) 0 1px,transparent 2px),radial-gradient(circle at 8% 62%,rgba(255,255,255,.42) 0 1.5px,transparent 2.5px),radial-gradient(circle at 42% 85%,rgba(255,255,255,.38) 0 1.5px,transparent 2.5px),radial-gradient(circle at 70% 82%,rgba(255,255,255,.35) 0 1.5px,transparent 2.5px),radial-gradient(circle at 92% 58%,rgba(255,255,255,.38) 0 1.5px,transparent 2.5px),radial-gradient(circle at 28% 72%,rgba(255,255,255,.32) 0 1px,transparent 2px),radial-gradient(circle at 58% 90%,rgba(255,255,255,.35) 0 1px,transparent 2px),linear-gradient(180deg,#06102a 0%,#0c1840 50%,#111e48 100%);transition:height .28s ease;}
+    .jvp.dragging{cursor:default}
     .jworld{position:absolute;left:0;top:0;width:3600px;height:1800px;transform-origin:0 0;will-change:transform;z-index:1;}
     .jisland{position:absolute;width:380px;height:370px;transform:translate(-50%,-50%);cursor:pointer;user-select:none;}
     .jinner{position:absolute;inset:0;transition:transform .22s ease,filter .22s ease}
@@ -1346,11 +1346,9 @@
         });});
       }
       if(!opts.silent){
-        if(view==='home'){
+        requestAnimationFrame(function(){
           window.scrollTo({top:0,behavior:'smooth'});
-        }else{
-          document.getElementById('main-content').scrollIntoView({behavior:'smooth',block:'start'});
-        }
+        });
       }
     }
     function setHash(h){
@@ -1527,11 +1525,7 @@ const PLACES=[
     function focusOn(wx,wy,zoom){const vw=vp.clientWidth,vh=vp.clientHeight;S.ts=Math.max(S.minS,Math.min(S.maxS,zoom));S.tx=vw*.5-wx*S.ts;S.ty=vh*.5-wy*S.ts;}
     function fitAll(){const vw=vp.clientWidth||680,vh=vp.clientHeight||620;let minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity;islands.forEach(p=>{minX=Math.min(minX,p.x-300);maxX=Math.max(maxX,p.x+300);minY=Math.min(minY,p.y-380);maxY=Math.max(maxY,p.y+720);});const cW=maxX-minX,cH=maxY-minY,s=Math.min(vw/cW,vh/cH);S.ts=Math.max(S.minS,Math.min(S.maxS,s));S.tx=(vw-cW*S.ts)*.5-minX*S.ts;S.ty=(vh-cH*S.ts)*.5-minY*S.ts+100;}
     function resetView(){fitAll();closeDetail();}
-    let drag=false,moved=false,dsx=0,dsy=0,startTx=0,startTy=0;
-    vp.addEventListener('pointerdown',e=>{if(detail.contains(e.target))return;drag=true;moved=false;vp.classList.add('dragging');dsx=e.clientX;dsy=e.clientY;startTx=S.tx;startTy=S.ty;});
-    window.addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-dsx,dy=e.clientY-dsy;if(Math.abs(dx)>3||Math.abs(dy)>3)moved=true;S.tx=startTx+dx;S.ty=startTy+dy;});
-    window.addEventListener('pointerup',()=>{drag=false;vp.classList.remove('dragging');});
-    vp.addEventListener('click',e=>{if(detail.contains(e.target))return;if(suppressClose||moved)return;if(detail.classList.contains('open'))resetView();});
+    vp.addEventListener('click',e=>{if(detail.contains(e.target))return;if(suppressClose)return;if(detail.classList.contains('open'))resetView();});
     detail.addEventListener('pointerdown',e=>e.stopPropagation());detail.addEventListener('click',e=>e.stopPropagation());detail.addEventListener('dblclick',e=>e.stopPropagation());detail.addEventListener('wheel',e=>e.stopPropagation(),{passive:true});detail.addEventListener('touchstart',e=>e.stopPropagation(),{passive:true});detail.addEventListener('touchmove',e=>e.stopPropagation(),{passive:true});detailBody.addEventListener('pointerdown',e=>e.stopPropagation());detailBody.addEventListener('wheel',e=>e.stopPropagation(),{passive:true});
     const detailHeader=document.getElementById('jdetailHeader');
     let ddrag=false,ddx=0,ddy=0,dStartL=0,dStartT=0;
@@ -1549,9 +1543,11 @@ const PLACES=[
     });
     function clampDetailPos(){const vw=vp.clientWidth,vh=vp.clientHeight,dw=detail.offsetWidth,dh=detail.offsetHeight;detail.style.left=Math.max(0,Math.min(vw-dw,parseFloat(detail.style.left)||0))+'px';detail.style.top=Math.max(0,Math.min(vh-dh,parseFloat(detail.style.top)||0))+'px';}
     function tick(){const e=.13;S.s+=(S.ts-S.s)*e;S.x+=(S.tx-S.x)*e;S.y+=(S.ty-S.y)*e;world.style.transform=`translate(${S.x}px,${S.y}px) scale(${S.s})`;requestAnimationFrame(tick);}
-    function applyBodyOverflowState(){document.body.style.overflow=shell.matches(':hover')?'hidden':'';}
-    vp.addEventListener('mouseenter',()=>{applyBodyOverflowState();});
-    vp.addEventListener('mouseleave',()=>{applyBodyOverflowState();});
+    /* Body-scroll lock removed: it was tied to mouseenter/mouseleave on the
+       map, and if mouseleave ever didn't fire cleanly (fast mouse movement,
+       clicking a link while hovering, etc.), the page would get stuck
+       unable to scroll until reloaded. Not needed now that the map is no
+       longer draggable. */
     buildIslands();
     function initMap(){fitAll();S.s=S.ts;S.x=S.tx;S.y=S.ty;tick();}
     requestAnimationFrame(()=>requestAnimationFrame(initMap));
