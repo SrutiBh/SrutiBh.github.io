@@ -240,10 +240,14 @@
        Contact view is active (see showView() in the script below), so
        the image+card block sits with equal top/bottom and equal
        left/right gaps, without changing the Work or Interests layouts. */
-    #main-content.center-page{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1 0 auto;}
-    /* Blurred background layer — sits behind the contact-hero content only
-       (not on top of it), scoped to the Contact page via .center-page. */
-    #main-content.center-page::before{
+    #main-content.center-page{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1 0 auto;}
+    .contact-hero{display:flex;gap:3.5rem;align-items:stretch;}
+    .contact-photo{width:48%;max-width:560px;flex-shrink:0;}
+    .contact-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+    /* Blurred wall texture sits behind only this right-hand column (heading
+       box + contact card), not behind the photo or the rest of the page. */
+    .contact-right{position:relative;flex:1;min-width:0;display:flex;flex-direction:column;gap:1.5rem;}
+    .contact-right::before{
       content:'';
       position:absolute;
       inset:0;
@@ -255,11 +259,7 @@
       z-index:0;
       pointer-events:none;
     }
-    .contact-hero{position:relative;z-index:1;display:flex;gap:3.5rem;align-items:stretch;}
-    .contact-photo{width:48%;max-width:560px;flex-shrink:0;}
-    .contact-photo img{width:100%;height:100%;object-fit:cover;display:block;}
-    .contact-right{flex:1;min-width:0;display:flex;flex-direction:column;gap:1.5rem;}
-    .contact-heading-box{background:var(--color-bg-page);border-radius:.5rem;padding:1.75rem 2.25rem;}
+    .contact-heading-box{position:relative;z-index:1;background:var(--color-bg-page);border-radius:.5rem;padding:1.75rem 2.25rem;max-width:38rem;}
     /* Heading matches .about-desc-title exactly (same class used for
        "About Me" / "Education" / "Career Journey") for visual consistency. */
     .contact-heading{
@@ -270,7 +270,7 @@
       margin:0;
       white-space:nowrap;
     }
-    .contact-box{background:var(--color-bg-page);border-radius:.5rem;padding:2.75rem 2.5rem;display:flex;flex-direction:column;gap:2.75rem;max-width:38rem;}
+    .contact-box{position:relative;z-index:1;background:var(--color-bg-page);border-radius:.5rem;padding:2.75rem 2.5rem;display:flex;flex-direction:column;gap:2.75rem;max-width:38rem;}
     .contact-item{display:flex;align-items:center;gap:1.4rem;text-decoration:none;color:var(--color-navy-dark);}
     .contact-item-icon{
       flex-shrink:0;width:3.4rem;height:3.4rem;border-radius:999px;
