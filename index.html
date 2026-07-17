@@ -397,6 +397,12 @@
     .about-desc-text{font-family:var(--font-serif);font-size:1.55rem;line-height:1.6;font-weight:400;color:var(--color-text-body);margin:0;text-align:justify;text-justify:inter-word;}
     .edu-transcript{display:flex;flex-direction:column;gap:1.25rem;}
     .edu-row{display:flex;align-items:flex-start;gap:1.5rem;min-height:180px;background:#fff;padding:1.5rem 1.75rem;border:1.5px solid #dce2f0;border-left:10px solid var(--color-navy);border-right:10px solid var(--color-navy);border-radius:1.5rem;box-shadow:0 1px 4px rgba(21,32,61,.05);transition:box-shadow .22s,border-color .22s,transform .22s;}
+    /* Fixed-size box wrapping every logo, sized to the largest logo (WBUT,
+       132px). Since this box — not the image itself — is what the flex
+       row measures for spacing, every row's box starts at the same left
+       edge and the text after it starts at the same left edge too,
+       regardless of how large or small each individual logo is inside. */
+    .edu-logo-wrap{width:132px;height:132px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
     .edu-row .edu-logo{width:76px;height:76px;flex-shrink:0;object-fit:contain;}
     /* Per-institution size tweaks — KTH's badge already fills its box nicely
        at the base 88px, so it's left alone. The others have different
@@ -569,7 +575,7 @@
         <div class="edu-transcript">
 
           <div class="edu-row reveal">
-            <img src="images/logos/kth.png" alt="KTH" class="edu-logo"/>
+            <div class="edu-logo-wrap"><img src="images/logos/kth.png" alt="KTH" class="edu-logo"/></div>
             <div class="edu-row-text">
               <h3 data-i18n="edu.1.degree">Master of Science, Interactive Media Technology</h3>
               <p class="edu-inst">Kungliga Tekniska Högskolan (KTH), Sweden</p>
@@ -578,7 +584,7 @@
           </div>
 
           <div class="edu-row reveal">
-            <img src="images/logos/epfl.png" alt="EPFL" class="edu-logo edu-logo-epfl"/>
+            <div class="edu-logo-wrap"><img src="images/logos/epfl.png" alt="EPFL" class="edu-logo edu-logo-epfl"/></div>
             <div class="edu-row-text">
               <h3 data-i18n="edu.2.degree">Graduate Exchange Student, Computer and Communication Sciences</h3>
               <p class="edu-inst">École Polytechnique Fédérale de Lausanne (EPFL), Switzerland</p>
@@ -587,7 +593,7 @@
           </div>
 
           <div class="edu-row reveal">
-            <img src="images/logos/wbutnew_edited.jpg" alt="WBUT" class="edu-logo edu-logo-wbut"/>
+            <div class="edu-logo-wrap"><img src="images/logos/wbutnew_edited.jpg" alt="WBUT" class="edu-logo edu-logo-wbut"/></div>
             <div class="edu-row-text">
               <h3 data-i18n="edu.3.degree">Bachelor of Technology, Information Technology</h3>
               <p class="edu-inst">West Bengal University of Technology (WBUT), India</p>
@@ -596,7 +602,7 @@
           </div>
 
           <div class="edu-row reveal">
-            <img src="images/logos/iitkgp.jpg" alt="IIT KGP" class="edu-logo edu-logo-iitkgp"/>
+            <div class="edu-logo-wrap"><img src="images/logos/iitkgp.jpg" alt="IIT KGP" class="edu-logo edu-logo-iitkgp"/></div>
             <div class="edu-row-text">
               <h3 data-i18n="edu.4.degree">Undergrad Visiting Student, Computer Science and Engineering</h3>
               <p class="edu-inst">Indian Institute of Technology Kharagpur (IITKGP), India</p>
