@@ -247,18 +247,11 @@
     /* Blurred wall texture sits behind only this right-hand column (heading
        box + contact card), not behind the photo or the rest of the page. */
     .contact-right{position:relative;flex:1;min-width:0;display:flex;flex-direction:column;gap:1.5rem;}
-    .contact-right::before{
-      content:'';
-      position:absolute;
-      inset:0;
-      background-image:url('images/others/wall.jpg');
-      background-size:160%;
-      background-position:center;
-      filter:blur(1.5px) contrast(1.3);
-      opacity:.65;
-      z-index:0;
-      pointer-events:none;
-    }
+    /* Small decorative stone-stack illustration in the empty bottom-right
+       corner of the column (that space exists because .contact-right is
+       stretched to match the photo's height, but the boxes only take up
+       their own content height). Purely decorative, not blurred. */
+    .contact-stone-decor{position:absolute;bottom:0;right:0;width:150px;height:auto;pointer-events:none;z-index:1;}
     .contact-heading-box{position:relative;z-index:1;background:var(--color-bg-page);border-radius:.5rem;padding:1.75rem 2.25rem;max-width:38rem;}
     /* Heading matches .about-desc-title exactly (same class used for
        "About Me" / "Education" / "Career Journey") for visual consistency. */
@@ -651,6 +644,7 @@
               <span class="contact-item-text"><span>@srutibhattacharjee</span></span>
             </a>
           </div>
+          <img class="contact-stone-decor" src="images/others/stone.jpg" alt="" aria-hidden="true"/>
         </div>
       </div>
     </section>
