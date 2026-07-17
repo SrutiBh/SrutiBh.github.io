@@ -236,6 +236,11 @@
        and navy palette as the rest of the site (.about-desc-title /
        --color-navy-dark etc.) so it matches Home/About in tone.
        ============================================================ */
+    /* CONTACT PAGE CENTERING — toggled on #main-content only while the
+       Contact view is active (see showView() in the script below), so
+       the image+card block sits with equal top/bottom and equal
+       left/right gaps, without changing the Work or Interests layouts. */
+    #main-content.center-page{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1 0 auto;}
     .contact-hero{display:flex;gap:3.5rem;align-items:stretch;}
     .contact-photo{width:34%;max-width:380px;flex-shrink:0;background:linear-gradient(135deg,#e8ecf5 0%,#c0cbea 100%);}
     .contact-photo img{width:100%;height:100%;object-fit:contain;display:block;}
@@ -1148,6 +1153,7 @@
       document.querySelectorAll('#topbar [data-view]').forEach(function(btn){btn.classList.toggle('active',btn.dataset.view===view);});
       const mainEl=document.getElementById('main-content');
       if(mainEl)mainEl.style.display=(view==='work'||view==='interests'||view==='contact')?'':'none';
+      if(mainEl)mainEl.classList.toggle('center-page',view==='contact');
       if(view==='work')showWorkSub(opts.projectId||null);
       if(view==='home'&&typeof fitAll==='function'){
         requestAnimationFrame(function(){requestAnimationFrame(function(){
