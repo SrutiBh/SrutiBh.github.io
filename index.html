@@ -146,6 +146,7 @@
 
     html{min-height:100%;}
     body{font-family:var(--font-serif);background-color:var(--color-bg-page);display:flex;flex-direction:column;min-height:100vh;}
+    body.project-page-active{background-color:var(--color-white);} /* project case study pages use a pure white background throughout, not the site's usual off-white */
     /* STICKY FOOTER — on short pages (e.g. Contact), pushes the footer block
        down to the bottom of the viewport instead of leaving a blank gap
        below it; on tall pages, has no effect since content already fills
@@ -325,18 +326,21 @@
     .project-detail-img{width:100%;max-height:440px;border-radius:1.25rem;overflow:hidden;margin-bottom:2rem;background:linear-gradient(135deg,#e8ecf5 0%,#c0cbea 100%);}
     .project-detail-img img{width:100%;height:100%;object-fit:cover;display:block;}
 
-    .cs-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;border-top:1.5px solid var(--color-border);border-bottom:1.5px solid var(--color-border);padding:1.75rem 0;margin:2.5rem 0 3rem;}
-    .cs-stat-label{font-size:.78rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--color-text-faint-onlight);margin-bottom:.5rem;}
-    .cs-stat-value{font-size:.92rem;color:var(--color-footer-navy);line-height:1.5;}
-    .cs-section{padding:2.5rem 0;border-top:1px solid #eef2f6;}
+    .cs-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;border-top:1.5px solid var(--color-border);border-bottom:1.5px solid var(--color-border);padding:1.75rem 0;margin:2rem 0;}
+    .cs-stat-label{font-family:var(--font-serif);font-size:1.55rem;font-weight:400;letter-spacing:.04em;text-transform:uppercase;color:var(--color-text-body);margin-bottom:.5rem;}
+    .cs-stat-value{font-family:var(--font-serif);font-size:1.55rem;font-weight:400;color:var(--color-text-body);line-height:1.5;}
+    .cs-section{padding:2rem 0;border-top:1px solid #eef2f6;} /* 2rem top+bottom = 4rem between consecutive sections, matching Home page's .about-block gap */
     .cs-section:first-of-type{border-top:none;padding-top:0;}
-    .cs-section-title{font-family:var(--font-serif);font-size:1.55rem;font-weight:700;color:var(--color-navy-dark);margin-bottom:1.1rem;}
+    .cs-section-title{font-family:var(--font-serif);font-size:2rem;font-weight:700;color:var(--color-navy-dark);margin-bottom:1.1rem;}
     .cs-section-body{max-width:46rem;}
     .cs-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.9rem;}
-    .cs-list li{position:relative;padding-left:1.3rem;font-family:var(--font-serif);font-size:1.15rem;line-height:1.65;color:var(--color-text-muted);}
+    .cs-list li{position:relative;padding-left:1.3rem;font-family:var(--font-serif);font-size:1.55rem;font-weight:400;line-height:1.65;color:var(--color-text-muted);}
     .cs-list li::before{content:'';position:absolute;left:0;top:.65rem;width:5px;height:5px;border-radius:999px;background:var(--color-navy);}
-    .cs-p{font-family:var(--font-serif);font-size:1.15rem;line-height:1.7;color:var(--color-text-muted);margin:0 0 1rem;}
+    .cs-p{font-family:var(--font-serif);font-size:1.55rem;font-weight:400;line-height:1.7;color:var(--color-text-muted);margin:0 0 1rem;}
     .cs-p:last-child{margin-bottom:0;}
+    .cs-process-img{width:100%;margin:0 0 2rem;}
+    .cs-process-img img{width:100%;height:auto;display:block;}
+    .cs-tags{font-family:var(--font-serif);font-size:.92rem;color:var(--color-text-muted);margin:0 0 1.25rem;}
     .cs-sub{font-weight:700;color:var(--color-navy-dark);font-size:1rem;margin:1.4rem 0 .5rem;}
     .cs-sub:first-child{margin-top:0;}
     .cs-method{display:flex;flex-wrap:wrap;align-items:flex-start;gap:0;}
@@ -840,7 +844,7 @@
         'proj.1.desc':'Formulating how virtual reality-based learning environments can provide pedagogical support in effective learning.',
         'proj.2.title':'EdTech for Novice Programming Learners in Hybrid Collaborative Classes',
         'proj.2.desc':'Investigated design needs of EdTech to facilitate effective learning for novice programming students in hybrid collaborative learning environments.',
-        'proj.3.title':'Video Call, VR and Telepresence Robot for Group Interactions and Creative Thinking',
+        'proj.3.title':'Hybrid Group Collaboration Using New Media and Its Impact',
         'proj.3.desc':'Compared three existing multimodal media for remote communication and their impacts on independent thinking.',
         'proj.4.title':'Augmented City \u2014 Act to Protest',
         'proj.4.desc':'Designed an app to deliver improvements in city urbanism and collaboration during collaborative public events like protests and to promote street arts.',
@@ -1133,40 +1137,26 @@
     let currentProjectId=null;
     const CASE_STUDIES={
       3:{
+        question:'How does the choice of remote communication medium affect a group\u2019s creativity and sense of togetherness?',
+        description:'The Covid-19 pandemic made remote communication essential for interpersonal interaction and group work almost overnight. Humans communicate multimodally \u2014 through speech, gesture, visuals, and touch \u2014 whether simultaneously in person or through whatever channels a remote tool allows. This study compared three different remote communication technologies \u2014 a standard video call (Zoom), a virtual reality environment (VTime XR), and a telepresence robot (Furhat, operated via an Oculus headset) \u2014 to understand which modality components most affect group communication and collaborative creativity.',
+        processImg:'images/projects/furhat_steps.png',
+        processImgAlt:'Project process: Ideation, Technology Testing, Experiment Design, Peer Critique, Experiment Design Moderation, Prototype Development, Participant Recruitment, Scripting Questions and Tasks, Data Collection, Data Analysis, Reporting, Presenting',
         stats:[
           {label:'Team',value:'4 people group'},
-          {label:'Tools',value:'Zoom, VTime XR, Oculus Quest 2, Furhat Robot'},
-          {label:'Timeline',value:"6 Weeks, Nov 25, '20 \u2013 Jan 15, '21"}
+          {label:'Tools',value:'Zoom, Oculus HMD,<br>VTime XR, Furhat Robot'},
+          {label:'Timeline',value:'6 Weeks'}
         ],
-        overview:[
-          'The Covid-19 pandemic prompted the widespread use of remote communication for interpersonal interaction and group work.',
-          'Humans use multimodality extensively to communicate with each other, either simultaneously (in face-to-face conversations) or alternatively (using speech, writing, gestures, visuals, and touch).',
-          'This study aimed to identify key modality components for interactive communication media by analyzing the effect of different media on group communication and collaborative group work.'
+        usersAndTech:{
+          user:'Small groups of participants completing a collaborative storytelling task remotely, alongside one interviewer who operated each communication medium in turn.',
+          technology:'Zoom, VTime XR (virtual reality), and the Furhat Robot (telepresence robot manipulated via an Oculus HMD, with a custom control prototype built in Unity and C#).'
+        },
+        problem:'This was the first study to use the Furhat Robot as a telepresence device for remote group communication rather than a one-to-one conversation, so there was no existing usability data to build on. The team also had to design the experiment, build a custom Unity/C# prototype to control the robot\u2019s head movement and gaze, and run the full study in around six weeks \u2014 with only one week available for participant recruitment during the pandemic.',
+        goals:[
+          'Investigate the impact of remote group communication and collaborative work through the Furhat Robot, compared with Zoom and Virtual Reality.',
+          'Formulate usability insights for the three different remote communication media.',
+          'Examine the strengths and weaknesses of multimodal interactive communication interfaces.'
         ],
-        challenge:[
-          'This study was the first to use the Furhat Robot as a telepresence robot for remote group communication.',
-          'Arranging participants during the pandemic.',
-          'Only one week for participant recruitment.',
-          'Experiment design and prototype development within two weeks.'
-        ],
-        objectives:[
-          "Investigate the impact of remote group communication and remote collaborative work through the Furhat Robot as a telepresence robot, compared to Zoom and Virtual Reality.",
-          'Formulate usability insights for three different remote communication media.',
-          'Examine the strengths and weaknesses of multimodal interactive communication media interfaces.'
-        ],
-        myRole:[
-          'Writing interview protocol (English version).',
-          'Examining different Oculus VR apps for group communication.',
-          'Testing the Unity prototype used to manipulate the Furhat head via Oculus HMD.',
-          "Assisting group mates with data analysis and report documentation."
-        ],
-        method:['Experiment Design','Setup Environment','Participant Recruitment','Conduct Experiment','Data Analysis','Report Result'],
-        learned:[
-          'Used Oculus and VR for the first time, and learned about the different group-communication platforms available in VR.',
-          "Developed a prototype to manipulate the Furhat Robot's head movement and gaze using an HMD, in C#.",
-          'Learned the importance of different modalities in telecommunication interface design and development.',
-          'Learned different approaches to enabling a perception of bodily presence using different modalities.'
-        ],
+        researchTags:'Exploratory and evaluative  |  Within-subjects experiment  |  Storytelling task  |  Semi-structured interview  |  Team size: 4  |  Timeline: 6 weeks',
         emergingTechIntro:'Three multimodal emerging technologies were used between the participants and interviewer, to understand which modalities affect the user experience: Zoom (video-based communication), VTime XR (virtual-reality-based communication), and the Furhat Robot manipulated via Oculus HMD (telepresence-based communication). The Furhat manipulation prototype was built in Unity and C#, letting the interviewer control the robot\u2019s head movement and gaze from a distance while participants spoke with the robot directly.',
         modalityTable:{
           head:['Modality','vTime XR \u2014 Operator','vTime XR \u2014 Participants','FurHat \u2014 Operator','FurHat \u2014 Participants','Zoom \u2014 Operator','Zoom \u2014 Participants'],
@@ -1208,14 +1198,21 @@
           "Zoom scored lowest for perceived co-presence at <b>2.5/7</b> \u2014 less than half of Furhat's <b>5</b>.",
           'Participants felt they could contribute equally most on Furhat (<b>6/7</b>), against <b>4/7</b> on Zoom.'
         ],
-        keyFindings:[
+        recommendations:[
           "When designing the UI, it's important to keep the user experience close to a physical environment.",
           "Visual modality affects users' independent thinking.",
           'Haptic, motion, and sound modalities can make the media feel more realistic.',
           "Combining too many modalities in one UI can overwhelm the user if it doesn't feel close to physical space.",
           "Furhat would help more than VR in hybrid setups, if it could show the remote participant's facial expression as an avatar on its face.",
           'VR would be most helpful when all participants are remote and need to pursue interactive, shared activities.'
-        ]
+        ],
+        reflection:[
+          'Used Oculus and VR for the first time, and learned about the different group-communication platforms available in VR.',
+          "Developed a prototype to manipulate the Furhat Robot's head movement and gaze using an HMD, in C#.",
+          'Learned the importance of different modalities in telecommunication interface design and development.',
+          'Learned different approaches to enabling a perception of bodily presence using different modalities.'
+        ],
+        team:'I worked as part of a 4-person team on this project. My contributions included: writing the interview protocol (English version), reviewing different Oculus VR apps for group communication, testing the Unity prototype used to manipulate the Furhat robot\u2019s head via Oculus HMD, and supporting the team with data analysis and report documentation.'
       }
     };
 
@@ -1230,32 +1227,31 @@
         +'</tbody></table></div>';
     }
     function caseStudyHTML(cs){
-      const arrow='<div class="cs-method-arrow"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>';
-      const methodHTML=cs.method.map(function(step,i){
-        return '<div class="cs-method-step"><div class="cs-method-num">'+(i+1)+'</div><div class="cs-method-label">'+step+'</div></div>'
-          +(i<cs.method.length-1?arrow:'');
-      }).join('');
-      return '<div class="cs-stats reveal">'
-        +cs.stats.map(function(s){return '<div><div class="cs-stat-label">'+s.label+'</div><div class="cs-stat-value">'+s.value+'</div></div>';}).join('')
-        +'</div>'
-        +'<div class="cs-section reveal"><div class="cs-section-title">Overview</div><div class="cs-section-body">'+csListHTML(cs.overview)+'</div></div>'
-        +'<div class="cs-section reveal"><div class="cs-section-title">Challenge</div><div class="cs-section-body">'+csListHTML(cs.challenge)+'</div></div>'
-        +'<div class="cs-section reveal"><div class="cs-section-title">Study Objectives</div><div class="cs-section-body">'+csListHTML(cs.objectives)+'</div></div>'
-        +'<div class="cs-section reveal"><div class="cs-section-title">My Role</div><div class="cs-section-body">'+csListHTML(cs.myRole)+'</div></div>'
-        +'<div class="cs-section reveal"><div class="cs-section-title">Method</div><div class="cs-section-body"><div class="cs-method">'+methodHTML+'</div></div></div>'
-        +'<div class="cs-section reveal"><div class="cs-section-title">What I Learned</div><div class="cs-section-body">'+csListHTML(cs.learned)+'</div></div>'
-        +'<div class="cs-section reveal"><div class="cs-section-title">Emerging Technologies</div><div class="cs-section-body"><p class="cs-p">'+cs.emergingTechIntro+'</p>'+csTableHTML(cs.modalityTable)+'</div></div>'
-        +'<div class="cs-section reveal"><div class="cs-section-title">Experimental Design</div><div class="cs-section-body">'
-          +'<div class="cs-sub">Setup</div><p class="cs-p">'+cs.setup+'</p>'
-          +'<div class="cs-sub">Experimental Task</div><p class="cs-p">'+cs.task+'</p><p class="cs-p"><em>'+cs.taskExample+'</em></p>'
-          +'<div class="cs-sub">Questionnaire</div><p class="cs-p">'+cs.questionnaireIntro+'</p>'+csTableHTML(cs.questionnaireTable)
-          +'<div class="cs-sub">Interview</div><p class="cs-p">'+cs.interview+'</p>'
-        +'</div></div>'
-        +'<div class="cs-section reveal"><div class="cs-section-title">Results</div><div class="cs-section-body">'
-          +cs.results.map(function(r){return '<div class="cs-sub">'+r.tech+'</div>'+csListHTML(r.points);}).join('')
-        +'</div></div>'
-        +(cs.byTheNumbers?'<div class="cs-section cs-highlight reveal"><div class="cs-section-title">By the Numbers</div><div class="cs-section-body">'+csListHTML(cs.byTheNumbers)+'</div></div>':'')
-        +'<div class="cs-section cs-highlight reveal"><div class="cs-section-title">Key Findings</div><div class="cs-section-body">'+csListHTML(cs.keyFindings)+'</div></div>';
+      let html='';
+      if(cs.question)html+='<p class="cs-p reveal"><strong>'+cs.question+'</strong></p>';
+      if(cs.description)html+='<p class="cs-p reveal">'+cs.description+'</p>';
+      if(cs.processImg)html+='<div class="cs-process-img reveal"><img src="'+cs.processImg+'" alt="'+(cs.processImgAlt||'Project process steps')+'"></div>';
+      if(cs.stats)html+='<div class="cs-stats reveal">'+cs.stats.map(function(s){return '<div><div class="cs-stat-label">'+s.label+'</div><div class="cs-stat-value">'+s.value+'</div></div>';}).join('')+'</div>';
+      if(cs.usersAndTech)html+='<div class="cs-section reveal"><div class="cs-section-title">Users and Technology</div><div class="cs-section-body">'
+        +csListHTML(['<b>User</b> \u2014 '+cs.usersAndTech.user,'<b>Technology</b> \u2014 '+cs.usersAndTech.technology])+'</div></div>';
+      if(cs.problem)html+='<div class="cs-section reveal"><div class="cs-section-title">Problem</div><div class="cs-section-body"><p class="cs-p">'+cs.problem+'</p></div></div>';
+      if(cs.goals)html+='<div class="cs-section reveal"><div class="cs-section-title">Goals</div><div class="cs-section-body">'+csListHTML(cs.goals)+'</div></div>';
+      html+='<div class="cs-section reveal"><div class="cs-section-title">Research Design</div><div class="cs-section-body">'
+        +(cs.researchTags?'<p class="cs-tags">'+cs.researchTags+'</p>':'')
+        +'<div class="cs-sub">Emerging Technologies</div><p class="cs-p">'+cs.emergingTechIntro+'</p>'+csTableHTML(cs.modalityTable)
+        +'<div class="cs-sub">Experimental Setup</div><p class="cs-p">'+cs.setup+'</p>'
+        +'<div class="cs-sub">Experimental Task</div><p class="cs-p">'+cs.task+'</p><p class="cs-p"><em>'+cs.taskExample+'</em></p>'
+        +'<div class="cs-sub">Questionnaire</div><p class="cs-p">'+cs.questionnaireIntro+'</p>'+csTableHTML(cs.questionnaireTable)
+        +'<div class="cs-sub">Interview</div><p class="cs-p">'+cs.interview+'</p>'
+      +'</div></div>';
+      html+='<div class="cs-section reveal"><div class="cs-section-title">Result</div><div class="cs-section-body">'
+        +cs.results.map(function(r){return '<div class="cs-sub">'+r.tech+'</div>'+csListHTML(r.points);}).join('')
+        +(cs.byTheNumbers?'<div class="cs-sub">By the Numbers</div>'+csListHTML(cs.byTheNumbers):'')
+      +'</div></div>';
+      if(cs.recommendations)html+='<div class="cs-section reveal"><div class="cs-section-title">Design Recommendations</div><div class="cs-section-body">'+csListHTML(cs.recommendations)+'</div></div>';
+      if(cs.reflection)html+='<div class="cs-section reveal"><div class="cs-section-title">Reflection</div><div class="cs-section-body">'+csListHTML(cs.reflection)+'</div></div>';
+      if(cs.team)html+='<div class="cs-section reveal"><div class="cs-section-title">Team</div><div class="cs-section-body"><p class="cs-p">'+cs.team+'</p></div></div>';
+      return html;
     }
 
     function renderProjectDetail(id){
@@ -1267,18 +1263,11 @@
       }).join('');
       const cs=CASE_STUDIES[id];
       document.getElementById('workDetail').innerHTML=
-        '<button type="button" class="back-link" id="backToWorkBtn">'
-        +'<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>'
-        +'<span>'+tr('lbl.backToWork')+'</span></button>'
-        +'<div class="project-detail-img reveal"><img src="'+p.img+'" alt="'+p.imgAlt+'"></div>'
-        +'<p class="view-kicker">'+p.meta+'</p>'
+        '<p class="view-kicker">'+p.meta+'</p>'
         +'<h1 class="view-headline">'+tr('proj.'+id+'.title')+'</h1>'
-        +'<p class="view-sub">'+tr('proj.'+id+'.desc')+'</p>'
-        +(cs?caseStudyHTML(cs):'')
+        +'<div class="project-detail-img reveal"><img src="'+p.img+'" alt="'+p.imgAlt+'"></div>'
+        +(cs?caseStudyHTML(cs):'<p class="cs-p reveal">'+tr('proj.'+id+'.desc')+'</p>')
         +'<div class="proj-card-links">'+linksHtml+'</div>';
-      document.getElementById('backToWorkBtn').addEventListener('click',function(){
-        goToWork();
-      });
       if(window.observeReveals)window.observeReveals();
     }
 
@@ -1288,10 +1277,12 @@
         renderProjectDetail(projectId);
         grid.classList.remove('active');
         detail.classList.add('active');
+        document.body.classList.add('project-page-active');
       }else{
         currentProjectId=null;
         detail.classList.remove('active');
         grid.classList.add('active');
+        document.body.classList.remove('project-page-active');
       }
     }
 
@@ -1318,6 +1309,7 @@
       if(mainEl)mainEl.style.display=(view==='work'||view==='interests'||view==='contact')?'':'none';
       if(mainEl)mainEl.classList.toggle('center-page',view==='contact');
       if(view==='work')showWorkSub(opts.projectId||null);
+      else document.body.classList.remove('project-page-active');
       if(view==='home'&&typeof fitAll==='function'){
         requestAnimationFrame(function(){requestAnimationFrame(function(){
           if(!detail.classList.contains('open'))fitAll();
