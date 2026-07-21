@@ -99,6 +99,7 @@
     .footer-bar{background-color:var(--color-footer-navy);color:var(--color-text-faint);text-align:center;padding:1rem 3rem;margin-top:0;}
     .footer-pre{background:transparent;text-align:center;padding:2.5rem 1.5rem 1.5rem;}
     .footer-links{display:flex;justify-content:center;flex-wrap:wrap;gap:2.5rem;margin-bottom:1.1rem;}
+    .about-links{display:flex;justify-content:flex-start;flex-wrap:wrap;gap:2.5rem;margin-top:1.5rem;}
     .footer-link{position:relative;display:inline-flex;align-items:center;gap:.6rem;color:var(--color-text-body);text-decoration:none;font-family:var(--font-serif);font-size:1.55rem;font-weight:400;}
     .footer-link::after{content:'';position:absolute;left:0;right:0;bottom:-6px;height:1.5px;background:var(--color-navy);transform:scaleX(0);transform-origin:left;transition:transform .22s ease;}
     .footer-link:hover::after{transform:scaleX(1);}
@@ -202,7 +203,7 @@
        the PROJECTS array further down.
        ============================================================ */
     .work-slider-label{font-family:var(--font-serif);font-size:1rem;font-weight:700;color:var(--color-navy-dark);margin:2.5rem 0 1rem;}
-    .work-slider-wrap{display:flex;align-items:center;gap:.75rem;margin-top:4rem;}
+    .work-slider-wrap{display:flex;align-items:center;gap:.75rem;margin-top:0;}
     .work-slider{flex:1;min-width:0;display:flex;gap:1rem;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding:.25rem 0 .5rem;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none;}
     .work-slider::-webkit-scrollbar{display:none;}
     .work-slider-arrow{flex:0 0 auto;width:2.4rem;height:2.4rem;border-radius:999px;border:1.5px solid var(--color-border-light);background:#fff;color:var(--color-navy);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .18s ease,border-color .18s ease,color .18s ease;padding:0;}
@@ -389,6 +390,8 @@
     .cs-results-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;}
     .cs-results-col h4{font-weight:700;color:var(--color-navy-dark);font-size:.92rem;margin-bottom:.7rem;}
     .cs-img-strip{display:flex;gap:.6rem;border-radius:1rem;overflow:hidden;margin:.5rem 0 1.5rem;}
+    .cs-method-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin:1.4rem 0;}
+    @media(max-width:760px){.cs-method-grid{grid-template-columns:1fr;gap:1.25rem;}}
     .cs-img-strip img{flex:1;width:100%;height:100%;object-fit:cover;display:block;max-height:260px;}
     @media(max-width:760px){.cs-section{grid-template-columns:1fr;gap:.85rem;}.cs-columns{grid-template-columns:1fr;gap:1.75rem;}.cs-results-cols{grid-template-columns:1fr;gap:1.75rem;}.cs-steps{gap:.5rem 0;}.cs-step{width:5.6rem;}.cs-step-arrow{display:none;}.cs-img-strip{flex-direction:column;}}
 
@@ -574,6 +577,10 @@
       <div class="reveal">
         <div class="about-desc-title" data-i18n="section.about">About Me</div>
         <p class="about-desc-text" data-i18n="home.bio">I'm a mixed-method UX Research practitioner with a background in Multimodal Perception Analysis and Visual Computing. My interdisciplinary experience in AI and Human&ndash;Computer Interaction helps me uncover user needs and challenges to shape interactive, accessible, and immersive experiences. I aspire to advance ethical human&ndash;AI symbiosis through evidence-based product decisions.</p>
+        <nav class="about-links">
+          <a href="#" class="footer-link" data-view="contact"><span class="footer-icon-chip"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span data-i18n="about.nav.contact">Contact Me</span></a>
+          <a href="#" class="footer-link" data-view="work"><span class="footer-icon-chip"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span><span data-i18n="about.nav.work">My Work</span></a>
+        </nav>
       </div>
 
       <div class="about-block">
@@ -769,6 +776,7 @@
     <section id="portfolio" class="view" data-view="work">
       <div class="work-sub active" id="workGrid">
         <div class="work-grid reveal" id="workGridCards"></div>
+        <h3 class="gallery-subhead reveal">My Other Work</h3>
         <div class="work-slider-wrap reveal">
           <button type="button" class="work-slider-arrow" id="workSliderPrev" aria-label="Scroll projects left">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
@@ -844,7 +852,7 @@
         'proj.1.desc':'Formulating how virtual reality-based learning environments can provide pedagogical support in effective learning.',
         'proj.2.title':'EdTech for Novice Programming Learners in Hybrid Collaborative Classes',
         'proj.2.desc':'Investigated design needs of EdTech to facilitate effective learning for novice programming students in hybrid collaborative learning environments.',
-        'proj.3.title':'Hybrid Group Collaboration Using New Media and Its Impact',
+        'proj.3.title':'New Media Impact on Effective Hybrid Group Collaboration',
         'proj.3.desc':'Compared three existing multimodal media for remote communication and their impacts on independent thinking.',
         'proj.4.title':'Augmented City \u2014 Act to Protest',
         'proj.4.desc':'Designed an app to deliver improvements in city urbanism and collaboration during collaborative public events like protests and to promote street arts.',
@@ -872,12 +880,13 @@
         'gallery.travel':'Some Sunsets I Enjoyed','gallery.paintings':'Paintings','gallery.other':'Other','gallery.books':'Some Books From My Shelf',
         'gallery.paintings.placeholder':'Paintings go here','gallery.other.placeholder':'Anything else goes here',
         'country.india':'India','country.sweden':'Sweden','country.switzerland':'Switzerland',
-        'footer.nav.contact':'Contact','footer.nav.work':'Work','footer.nav.about':'About'
+        'footer.nav.contact':'Contact','footer.nav.work':'Work','footer.nav.about':'About',
+        'about.nav.contact':'Contact Me','about.nav.work':'My Work'
       },
       fr:{
         'nav.work':'Travaux','nav.journey':'Parcours','nav.education':'Formation','nav.cv':'CV','nav.contact':'Me Contacter',
         'hero.subtitle':'Chercheuse UX',
-        'section.about':'\u00c0 Propos de Moi','section.education':'Formation','section.experience':'Parcours de Carri\u00e8re','section.portfolio':'Portfolio','section.interests':'Centres d\u2019Int\u00e9r\u00eat','section.contact':'Me Contacter',
+        'section.about':'\u00c0 Propos De Moi','section.education':'Formation','section.experience':'Parcours De Carri\u00e8re','section.portfolio':'Portfolio','section.interests':'Centres d\u2019Int\u00e9r\u00eat','section.contact':'Me Contacter',
         'about.p1':"Je suis ing\u00e9nieure en informatique centr\u00e9e sur l'humain, sp\u00e9cialis\u00e9e dans la conception et le d\u00e9veloppement de technologies interactives, fond\u00e9es sur la recherche en exp\u00e9rience utilisateur et l'analyse de la perception utilisateur.",
         'about.p2':"Je suis ouverte \u00e0 de nouveaux postes et collaborations. N'h\u00e9sitez pas \u00e0 me contacter si mon profil correspond aux objectifs de votre \u00e9quipe.",
         'word.present':'Pr\u00e9sent',
@@ -914,10 +923,11 @@
         'lbl.backToWork':'Retour aux Travaux',
         'home.bio':"Je suis une praticienne en recherche UX \u00e0 m\u00e9thodes mixtes, avec une formation en analyse de la perception multimodale et en informatique visuelle. Mon exp\u00e9rience interdisciplinaire en IA et en interaction homme-machine m'aide \u00e0 cerner les besoins et les difficult\u00e9s des utilisateurs afin de fa\u00e7onner des exp\u00e9riences interactives, accessibles et immersives. J'aspire \u00e0 faire progresser une symbiose \u00e9thique entre l'humain et l'IA \u00e0 travers des d\u00e9cisions produit fond\u00e9es sur des donn\u00e9es probantes.",
         'contact.heading':'Travaillons Ensemble',
-        'gallery.travel':'Quelques Couchers de Soleil Que J\u2019ai Aim\u00e9s','gallery.paintings':'Peintures','gallery.other':'Autre','gallery.books':'Quelques Livres de Ma Biblioth\u00e8que',
+        'gallery.travel':'Quelques Couchers De Soleil Que J\u2019ai Aim\u00e9s','gallery.paintings':'Peintures','gallery.other':'Autre','gallery.books':'Quelques Livres De Ma Biblioth\u00e8que',
         'gallery.paintings.placeholder':'Les peintures seront ici','gallery.other.placeholder':'Tout le reste sera ici',
         'country.india':'Inde','country.sweden':'Su\u00e8de','country.switzerland':'Suisse',
         'footer.nav.contact':'Contact','footer.nav.work':'Travaux','footer.nav.about':'\u00c0 Propos',
+        'about.nav.contact':'Me Contacter','about.nav.work':'Mes Travaux',
         'proj.10.title':'Sweet API',
         'proj.10.desc':'Description provisoire \u2014 \u00e0 remplacer par le r\u00e9sum\u00e9 r\u00e9el du projet.'
       },
@@ -961,10 +971,11 @@
         'lbl.backToWork':'Tillbaka till Arbete',
         'home.bio':'Jag \u00e4r en UX-forskare med blandade metoder och en bakgrund inom multimodal perceptionsanalys och visuell databehandling. Min tv\u00e4rvetenskapliga erfarenhet inom AI och m\u00e4nniska-datorinteraktion hj\u00e4lper mig att f\u00f6rst\u00e5 anv\u00e4ndares behov och utmaningar f\u00f6r att forma interaktiva, tillg\u00e4ngliga och uppslukande upplevelser. Jag str\u00e4var efter att fr\u00e4mja en etisk symbios mellan m\u00e4nniska och AI genom evidensbaserade produktbeslut.',
         'contact.heading':'L\u00e5t Oss Samarbeta',
-        'gallery.travel':'N\u00e5gra Solnedg\u00e5ngar Jag Gillade','gallery.paintings':'M\u00e5lningar','gallery.other':'\u00d6vrigt','gallery.books':'N\u00e5gra B\u00f6cker fr\u00e5n Min Hylla',
+        'gallery.travel':'N\u00e5gra Solnedg\u00e5ngar Jag Gillade','gallery.paintings':'M\u00e5lningar','gallery.other':'\u00d6vrigt','gallery.books':'N\u00e5gra B\u00f6cker Fr\u00e5n Min Hylla',
         'gallery.paintings.placeholder':'M\u00e5lningar visas h\u00e4r','gallery.other.placeholder':'Allt annat visas h\u00e4r',
         'country.india':'Indien','country.sweden':'Sverige','country.switzerland':'Schweiz',
         'footer.nav.contact':'Kontakt','footer.nav.work':'Arbete','footer.nav.about':'Om',
+        'about.nav.contact':'Kontakta Mig','about.nav.work':'Mitt Arbete',
         'proj.10.title':'Sweet API',
         'proj.10.desc':'Platsh\u00e5llartext \u2014 ers\u00e4tt med den riktiga projektsammanfattningen.'
       },
@@ -1008,10 +1019,11 @@
         'lbl.backToWork':'Zur\u00fcck zu Arbeiten',
         'home.bio':'Ich bin eine UX-Researcherin mit gemischten Methoden und einem Hintergrund in multimodaler Wahrnehmungsanalyse und visuellem Computing. Meine interdisziplin\u00e4re Erfahrung in KI und Mensch-Computer-Interaktion hilft mir, Nutzerbed\u00fcrfnisse und Herausforderungen zu erkennen, um interaktive, barrierefreie und immersive Erlebnisse zu gestalten. Ich strebe danach, eine ethische Mensch-KI-Symbiose durch evidenzbasierte Produktentscheidungen voranzutreiben.',
         'contact.heading':'Lass Uns Zusammenarbeiten',
-        'gallery.travel':'Ein Paar Sonnenunterg\u00e4nge, die Mir Gefallen Haben','gallery.paintings':'Gem\u00e4lde','gallery.other':'Sonstiges','gallery.books':'Ein Paar B\u00fccher aus Meinem Regal',
+        'gallery.travel':'Ein Paar Sonnenunterg\u00e4nge, Die Mir Gefallen Haben','gallery.paintings':'Gem\u00e4lde','gallery.other':'Sonstiges','gallery.books':'Ein Paar B\u00fccher Aus Meinem Regal',
         'gallery.paintings.placeholder':'Gem\u00e4lde erscheinen hier','gallery.other.placeholder':'Alles andere erscheint hier',
         'country.india':'Indien','country.sweden':'Schweden','country.switzerland':'Schweiz',
         'footer.nav.contact':'Kontakt','footer.nav.work':'Arbeiten','footer.nav.about':'\u00dcber',
+        'about.nav.contact':'Kontakt','about.nav.work':'Meine Arbeit',
         'proj.10.title':'Sweet API',
         'proj.10.desc':'Platzhaltertext \u2014 durch die echte Projektzusammenfassung ersetzen.'
       },
@@ -1055,10 +1067,11 @@
         'lbl.backToWork':'Tilbake til Arbeid',
         'home.bio':'Jeg er en UX-forsker med blandede metoder og bakgrunn innen multimodal persepsjonsanalyse og visuell databehandling. Min tverrfaglige erfaring innen AI og menneske-maskin-interaksjon hjelper meg med \u00e5 avdekke brukerbehov og utfordringer for \u00e5 forme interaktive, tilgjengelige og oppslukende opplevelser. Jeg \u00f8nsker \u00e5 fremme en etisk symbiose mellom menneske og AI gjennom evidensbaserte produktbeslutninger.',
         'contact.heading':'La Oss Samarbeide',
-        'gallery.travel':'Noen Solnedganger Jeg Likte','gallery.paintings':'Malerier','gallery.other':'Annet','gallery.books':'Noen B\u00f8ker fra Hylla Mi',
+        'gallery.travel':'Noen Solnedganger Jeg Likte','gallery.paintings':'Malerier','gallery.other':'Annet','gallery.books':'Noen B\u00f8ker Fra Hylla Mi',
         'gallery.paintings.placeholder':'Malerier vises her','gallery.other.placeholder':'Alt annet vises her',
         'country.india':'India','country.sweden':'Sverige','country.switzerland':'Sveits',
         'footer.nav.contact':'Kontakt','footer.nav.work':'Arbeid','footer.nav.about':'Om',
+        'about.nav.contact':'Kontakt Meg','about.nav.work':'Mitt Arbeid',
         'proj.10.title':'Sweet API',
         'proj.10.desc':'Plassholdertekst \u2014 erstatt med den faktiske prosjektsammendraget.'
       }
@@ -1137,7 +1150,7 @@
     let currentProjectId=null;
     const CASE_STUDIES={
       3:{
-        question:'How does the choice of remote communication medium affect a group\u2019s creativity and sense of togetherness?',
+        question:'How do modalities present in new telecommunication media impact independent thinking in hybridly located group work?',
         description:'The Covid-19 pandemic made remote communication essential for interpersonal interaction and group work almost overnight. Humans communicate multimodally \u2014 through speech, gesture, visuals, and touch \u2014 whether simultaneously in person or through whatever channels a remote tool allows. This study compared three different remote communication technologies \u2014 a standard video call (Zoom), a virtual reality environment (VTime XR), and a telepresence robot (Furhat, operated via an Oculus headset) \u2014 to understand which modality components most affect group communication and collaborative creativity.',
         processImg:'images/projects/furhat_steps.png',
         processImgAlt:'Project process: Ideation, Technology Testing, Experiment Design, Peer Critique, Experiment Design Moderation, Prototype Development, Participant Recruitment, Scripting Questions and Tasks, Data Collection, Data Analysis, Reporting, Presenting',
@@ -1212,6 +1225,13 @@
           'Learned the importance of different modalities in telecommunication interface design and development.',
           'Learned different approaches to enabling a perception of bodily presence using different modalities.'
         ],
+        hypothesis:'Because Furhat offers a physically embodied presence that Zoom and VR avatars don\u2019t, participants were expected to feel a stronger sense of co-presence and find it easier to think and contribute independently when interacting through Furhat than through Zoom or VTime XR.',
+        hypothesisImgs:[
+          {src:'images/projects/furhat_fig1.jpg',alt:'Experiment setup: participant seated with the Furhat robot and a researcher wearing an Oculus headset'},
+          {src:'images/projects/furhat_fig2.jpg',alt:'Two participants seated in the experiment room with the Furhat robot and a screen showing the remote view'},
+          {src:'images/projects/furhat_fig3.jpg',alt:'Participant wearing an Oculus headset and holding VR controllers during the VTime XR condition'}
+        ],
+        voiceOfUsers:null,
         team:'I worked as part of a 4-person team on this project. My contributions included: writing the interview protocol (English version), reviewing different Oculus VR apps for group communication, testing the Unity prototype used to manipulate the Furhat robot\u2019s head via Oculus HMD, and supporting the team with data analysis and report documentation.'
       }
     };
@@ -1239,17 +1259,26 @@
       html+='<div class="cs-section reveal"><div class="cs-section-title">Research Design</div><div class="cs-section-body">'
         +(cs.researchTags?'<p class="cs-tags">'+cs.researchTags+'</p>':'')
         +'<div class="cs-sub">Emerging Technologies</div><p class="cs-p">'+cs.emergingTechIntro+'</p>'+csTableHTML(cs.modalityTable)
-        +'<div class="cs-sub">Experimental Setup</div><p class="cs-p">'+cs.setup+'</p>'
-        +'<div class="cs-sub">Experimental Task</div><p class="cs-p">'+cs.task+'</p><p class="cs-p"><em>'+cs.taskExample+'</em></p>'
+        +'<div class="cs-method-grid">'
+          +'<div><div class="cs-sub">Experimental Setup</div><p class="cs-p">'+cs.setup+'</p></div>'
+          +'<div><div class="cs-sub">Experimental Task</div><p class="cs-p">'+cs.task+'</p><p class="cs-p"><em>'+cs.taskExample+'</em></p></div>'
+          +'<div><div class="cs-sub">Interview</div><p class="cs-p">'+cs.interview+'</p></div>'
+        +'</div>'
         +'<div class="cs-sub">Questionnaire</div><p class="cs-p">'+cs.questionnaireIntro+'</p>'+csTableHTML(cs.questionnaireTable)
-        +'<div class="cs-sub">Interview</div><p class="cs-p">'+cs.interview+'</p>'
       +'</div></div>';
       html+='<div class="cs-section reveal"><div class="cs-section-title">Result</div><div class="cs-section-body">'
         +cs.results.map(function(r){return '<div class="cs-sub">'+r.tech+'</div>'+csListHTML(r.points);}).join('')
         +(cs.byTheNumbers?'<div class="cs-sub">By the Numbers</div>'+csListHTML(cs.byTheNumbers):'')
       +'</div></div>';
+      if(cs.hypothesis)html+='<div class="cs-section reveal"><div class="cs-section-title">Hypothesis</div><div class="cs-section-body">'
+        +'<p class="cs-p">'+cs.hypothesis+'</p>'
+        +(cs.hypothesisImgs?'<div class="cs-img-strip">'+cs.hypothesisImgs.map(function(im){return '<img src="'+im.src+'" alt="'+im.alt+'" onerror="this.closest(\'.cs-img-strip\').style.display=\'none\'">';}).join('')+'</div>':'')
+      +'</div></div>';
       if(cs.recommendations)html+='<div class="cs-section reveal"><div class="cs-section-title">Design Recommendations</div><div class="cs-section-body">'+csListHTML(cs.recommendations)+'</div></div>';
       if(cs.reflection)html+='<div class="cs-section reveal"><div class="cs-section-title">Reflection</div><div class="cs-section-body">'+csListHTML(cs.reflection)+'</div></div>';
+      html+='<div class="cs-section cs-highlight reveal"><div class="cs-section-title">Voice of Users</div><div class="cs-section-body">'
+        +(cs.voiceOfUsers&&cs.voiceOfUsers.length?cs.voiceOfUsers.map(function(q){return '<p class="cs-p"><em>\u201c'+q+'\u201d</em></p>';}).join(''):'<p class="cs-p"><em>Add real participant quotes here once available \u2014 placeholder, not filled in yet.</em></p>')
+      +'</div></div>';
       if(cs.team)html+='<div class="cs-section reveal"><div class="cs-section-title">Team</div><div class="cs-section-body"><p class="cs-p">'+cs.team+'</p></div></div>';
       return html;
     }
