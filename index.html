@@ -1264,6 +1264,7 @@
       if(cs.description)html+='<p class="cs-p reveal">'+cs.description+'</p>';
       if(cs.processImg)html+='<div class="cs-process-img reveal"><img src="'+cs.processImg+'" alt="'+(cs.processImgAlt||'Project process steps')+'"></div>';
       if(cs.stats)html+='<div class="cs-stats reveal">'+cs.stats.map(function(s){return '<div><div class="cs-stat-label">'+s.label+'</div><div class="cs-stat-value">'+s.value+'</div></div>';}).join('')+'</div>';
+      if(cs.teamList)html+='<div class="cs-section reveal"><div class="cs-section-title">Team</div><div class="cs-section-body">'+csListHTML(cs.teamList)+'</div></div>';
       if(cs.participants||cs.technology)html+='<div class="cs-section reveal"><div class="cs-section-title">Participants and Technology</div><div class="cs-section-body">'
         +(cs.participants?'<div class="cs-sub">Participants</div><p class="cs-p">'+cs.participants+'</p>':'')
         +(cs.technology?'<div class="cs-sub">Technology</div><p class="cs-p">'+cs.technology+'</p>':'')
@@ -1288,7 +1289,6 @@
       if(cs.voiceOfUsers&&cs.voiceOfUsers.length)html+='<div class="cs-section cs-highlight reveal"><div class="cs-section-title">Voice of Users</div><div class="cs-section-body">'
         +cs.voiceOfUsers.map(function(q){return '<p class="cs-p"><b>'+q.attribution+'</b> \u2014 <em>\u201c'+q.quote+'\u201d</em></p>';}).join('')
       +'</div></div>';
-      if(cs.teamList)html+='<div class="cs-section reveal"><div class="cs-section-title">Team</div><div class="cs-section-body">'+csListHTML(cs.teamList)+'</div></div>';
       return html;
     }
 
