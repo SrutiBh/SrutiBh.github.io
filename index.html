@@ -351,7 +351,8 @@
     .project-detail-img{width:100%;max-height:440px;border-radius:1.25rem;overflow:hidden;margin-bottom:2rem;background:linear-gradient(135deg,#e8ecf5 0%,#c0cbea 100%);}
     .project-detail-img img{width:100%;height:100%;object-fit:cover;display:block;}
 
-    .cs-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;border-top:1.5px solid var(--color-border);border-bottom:1.5px solid var(--color-border);padding:1.75rem 0;margin:2rem 0;}
+    .cs-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;border-top:1.5px solid var(--color-border);border-bottom:1.5px solid var(--color-border);padding:1.75rem 0;margin:2rem 0;}
+    @media(max-width:900px){.cs-stats{grid-template-columns:repeat(2,1fr);}}
     .cs-stat-label{font-family:var(--font-serif);font-size:1.55rem;font-weight:400;letter-spacing:.04em;text-transform:uppercase;color:var(--color-text-body);margin-bottom:.5rem;}
     .cs-stat-value{font-family:var(--font-serif);font-size:1.55rem;font-weight:400;color:var(--color-text-body);line-height:1.5;}
     .cs-section{padding:2rem 0;border-top:1px solid #eef2f6;} /* 2rem top+bottom = 4rem between consecutive sections, matching Home page's .about-block gap */
@@ -359,14 +360,14 @@
     .cs-section-title{font-family:var(--font-serif);font-size:2rem;font-weight:700;color:var(--color-navy-dark);margin-bottom:1.1rem;}
     .cs-section-body{max-width:46rem;}
     .cs-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.9rem;}
-    .cs-list li{position:relative;padding-left:1.3rem;font-family:var(--font-serif);font-size:1.55rem;font-weight:400;line-height:1.65;color:var(--color-text-muted);}
+    .cs-list li{position:relative;padding-left:1.3rem;font-family:var(--font-serif);font-size:1.55rem;font-weight:400;line-height:1.65;color:var(--color-text-body);}
     .cs-list li::before{content:'';position:absolute;left:0;top:.65rem;width:5px;height:5px;border-radius:999px;background:var(--color-navy);}
-    .cs-p{font-family:var(--font-serif);font-size:1.55rem;font-weight:400;line-height:1.7;color:var(--color-text-muted);margin:0 0 1rem;}
+    .cs-p{font-family:var(--font-serif);font-size:1.55rem;font-weight:400;line-height:1.7;color:var(--color-text-body);margin:0 0 1rem;}
     .cs-p:last-child{margin-bottom:0;}
     .cs-process-img{width:100%;margin:0 0 2rem;}
     .cs-process-img img{width:100%;height:auto;display:block;}
     .cs-tags{font-family:var(--font-serif);font-size:.92rem;color:var(--color-text-muted);margin:0 0 1.25rem;}
-    .cs-sub{font-weight:700;color:var(--color-navy-dark);font-size:1rem;margin:1.4rem 0 .5rem;}
+    .cs-sub{font-family:var(--font-serif);font-weight:700;color:var(--color-navy-dark);font-size:1.55rem;margin:1.4rem 0 .5rem;}
     .cs-sub:first-child{margin-top:0;}
     .cs-method{display:flex;flex-wrap:wrap;align-items:flex-start;gap:0;}
     .cs-method-step{display:flex;flex-direction:column;align-items:center;text-align:center;width:7.5rem;}
@@ -1118,7 +1119,7 @@
 
     const WORK_CATEGORY='ux';
     const PROJECTS=[
-      {id:3,cat:'ux',meta:'KTH',img:'images/projects/VRvsRobovsZoomfinal.png',imgAlt:'Preview image of remote communication project',imgFit:'contain',links:[]},
+      {id:3,cat:'ux',meta:'',img:'images/projects/VRvsRobovsZoomfinal.png',imgAlt:'Preview image of remote communication project',imgFit:'contain',links:[]},
       {id:1,cat:'ux',meta:'KTH · EPFL',img:'images/projects/vrle_classroom.jpeg',imgAlt:'Preview image of VR learning environment project',links:[]},
       {id:2,cat:'ux',meta:'University of Lausanne',img:'images/projects/unil.jpg',imgAlt:'Preview image of hybrid class research project',links:[]},
       {id:10,cat:'ux',meta:'',img:'images/projects/sweet_api.png',imgAlt:'Preview image of Sweet API project',links:[]},
@@ -1186,89 +1187,65 @@
     let currentProjectId=null;
     const CASE_STUDIES={
       3:{
-        question:'How do modalities present in new telecommunication media impact independent thinking in hybridly located group work?',
-        description:'The Covid-19 pandemic made remote communication essential for interpersonal interaction and group work almost overnight. Humans communicate multimodally \u2014 through speech, gesture, visuals, and touch \u2014 whether simultaneously in person or through whatever channels a remote tool allows. This study compared three different remote communication technologies \u2014 a standard video call (Zoom), a virtual reality environment (VTime XR), and a telepresence robot (Furhat, operated via an Oculus headset) \u2014 to understand which modality components most affect group communication and collaborative creativity.',
+        description:'As workplaces are increasingly shifting from physical to distributed environments, communication technologies have become mediators of human interaction rather than mere channels for information exchange. This study investigated how three multimodal telecommunication platforms, Zoom, VTime XR, and Telepresence Robot (Furhat operated via Oculus HMD), shape independent thinking and productivity during remote and hybrid group collaboration, providing insights into user perceptions of emerging workplace technologies.',
         processImg:'images/projects/furhat_steps.png',
         processImgAlt:'Project process: Ideation, Technology Testing, Experiment Design, Peer Critique, Experiment Design Moderation, Prototype Development, Participant Recruitment, Scripting Questions and Tasks, Data Collection, Data Analysis, Reporting, Presenting',
         stats:[
           {label:'Team',value:'4 people group'},
           {label:'Tools',value:'Zoom, Oculus HMD,<br>VTime XR, Furhat Robot'},
-          {label:'Timeline',value:'6 Weeks'}
+          {label:'Timeline',value:'6 Weeks'},
+          {label:'Location',value:'Stockholm, Sweden'}
         ],
-        usersAndTech:{
-          user:'Small groups of participants completing a collaborative storytelling task remotely, alongside one interviewer who operated each communication medium in turn.',
-          technology:'Zoom, VTime XR (virtual reality), and the Furhat Robot (telepresence robot manipulated via an Oculus HMD, with a custom control prototype built in Unity and C#).'
-        },
-        problem:'This was the first study to use the Furhat Robot as a telepresence device for remote group communication rather than a one-to-one conversation, so there was no existing usability data to build on. The team also had to design the experiment, build a custom Unity/C# prototype to control the robot\u2019s head movement and gaze, and run the full study in around six weeks \u2014 with only one week available for participant recruitment during the pandemic.',
-        goals:[
-          'Investigate the impact of remote group communication and collaborative work through the Furhat Robot, compared with Zoom and Virtual Reality.',
-          'Formulate usability insights for the three different remote communication media.',
-          'Examine the strengths and weaknesses of multimodal interactive communication interfaces.'
+        participants:'4 male (1 familiar with VR), 2 female, aged between 20\u201324.',
+        technology:'vTime XR app inside Oculus (Virtual Reality-based group interaction), Zoom (Video-based group interaction), Furhat controlled by HMD (Telepresence Robot for group interaction).',
+        challenges:[
+          {title:'First Time using Furhat as Telepresence Robot',body:'We had to design the experiment, build a custom Unity/C# prototype to control the robot\u2019s head movement and gaze, and complete the full study in 6 weeks.'},
+          {title:'Time Limit for Participant Recruitment',body:'We had only 1 week available for participant recruitment during the pandemic.'}
         ],
-        researchTags:'Exploratory and evaluative  |  Within-subjects experiment  |  Storytelling task  |  Semi-structured interview  |  Team size: 4  |  Timeline: 6 weeks',
-        emergingTechIntro:'Three multimodal emerging technologies were used between the participants and interviewer, to understand which modalities affect the user experience: Zoom (video-based communication), VTime XR (virtual-reality-based communication), and the Furhat Robot manipulated via Oculus HMD (telepresence-based communication). The Furhat manipulation prototype was built in Unity and C#, letting the interviewer control the robot\u2019s head movement and gaze from a distance while participants spoke with the robot directly.',
-        modalityTable:{
-          head:['Modality','vTime XR \u2014 Operator','vTime XR \u2014 Participants','FurHat \u2014 Operator','FurHat \u2014 Participants','Zoom \u2014 Operator','Zoom \u2014 Participants'],
-          rows:[
-            ['Body movement','Upper body, incl. partial hand gestures','Upper body, incl. partial hand gestures','Head movements only','Upper body, incl. full hand gestures','Upper body, incl. full hand gestures','Upper body, incl. full hand gestures'],
-            ['Facial expressions','\u2014','\u2014','\u2014','Facial expressions','Facial expressions','Facial expressions'],
-            ['Environment','Shared virtual environment','Shared virtual environment','Shared physical environment','Shared physical environment','\u2014','Shared physical environment (partial)'],
-            ['Audio','Synchronised audio','Synchronised audio','Synchronised audio','Synchronised audio','Synchronised audio','Synchronised audio'],
-            ['Gaze','Gaze (partial)','Gaze (partial)','Gaze (partial)','Gaze','\u2014','Gaze']
-          ]
-        },
-        setup:'The experiment was held at KTH campus in Stockholm, Sweden, and conducted in Swedish across three rooms: one for the interviewer, one for the participants and observer, and a third used specifically for the VR condition, where one participant was isolated while the others stayed in the remaining two rooms. Furhat and Zoom conditions used only two rooms. A PC running the Unity prototype connected the Furhat robot to an Oculus HMD in the interviewer\u2019s room \u2014 through it, the interviewer could see and hear the participants and manipulate the robot\u2019s head movement and gaze in real time. Zoom stayed within a single shared setup.',
-        task:'The task was a storytelling exercise: participants were given a setting, three characters, three objects, and a scenario they had to explain. Six exercises were created across a wide range of settings, characters and objects, designed to stimulate creativity.',
-        taskExample:'Setting: a busy day on a street in New York. Characters: a middle-aged man, the man\u2019s boss, and a talking cat. Objects: a large bag of unidentified white powder, a birthday cake, and a pair of bloody scissors. Scenario: the middle-aged man finds himself sitting in the middle of a busy street, wearing a suit and tie covered in white powder. What has happened?',
-        questionnaireIntro:'After each condition, participants completed a questionnaire covering how creative they felt and how distracted they were by the technology, alongside an initial questionnaire on age and prior experience with each platform. Each condition had ten questions, answered on a seven-point Likert scale, covering the naturalness of conversation, engagement, perceived presence, and creativity.',
-        questionnaireTable:{
-          head:['Question','Zoom','Furhat','VR'],
-          rows:[
-            ['How easy did you find it to be creative during the task?','4.75','6.25','5.5'],
-            ['How much did it seem as if you and the group were physically together?','2.5','5','3.75'],
-            ["How well could you observe the other participants' body language?",'4','5.25','4.625'],
-            ['How well did you understand who the other participants were addressing?','5.75','5','5.375'],
-            ['How well could you determine the mood of the remote participants?','5.5','5','5.25'],
-            ['How natural did the interaction with the other participants feel?','4','5.25','4.625'],
-            ['How close did you feel to the other participants?','4','4','4'],
-            ['How distracting was the technology during the conversation?','3.5','2.5','3'],
-            ['Could you express yourself as you would face-to-face?','3.5','5.75','4.625'],
-            ['Did all participants feel able to equally contribute?','4','6','5']
-          ]
-        },
-        interview:'After the final questionnaire, participants took part in a semi-structured interview reflecting on the experience as a whole \u2014 what they liked and disliked in each setting, any setting they preferred, how interaction compared across settings, and how creative they felt they could be.',
-        results:[
-          {tech:'VTime XR (VR)',points:['Fun, but distracting.','A noticeable discrepancy between real people and their avatars.']},
-          {tech:'Zoom (Video call)',points:['Easy and familiar.','Lacked a sense of presence.']},
-          {tech:'FurHat (Teleoperation robot)',points:['Physical embodiment made the operator feel present.','Did not feel human.','Gaze sometimes felt unsettling.']}
+        researchQuestion:'How do multimodal interactive workspace technologies impact independent thinking and group productivity?',
+        experimentDesign:[
+          {title:'Ethical Consent and Participant Compensation',body:'Before conducting every study, each participant was ensured of their freedom to withdraw, ask questions, and have privacy protection. Each participant gave consent to use their data according to KTH University research ethics guidelines. Each participant was compensated with a 30 SEK gift card.'},
+          {title:'Telepresence Robot Prototyping',body:'The Furhat manipulation prototype was built in Unity and C#, letting the interviewer control the robot\u2019s head movement and gaze from a distance while participants spoke with the robot directly.'},
+          {title:'Participants and Researcher Location Setup',body:'The experiment was held at KTH campus in Stockholm, Sweden, and conducted in Swedish across three rooms: one for the interviewer, one for the participants and observer, and a third used specifically for the VR condition, where one participant was isolated while the others stayed in the remaining two rooms. Furhat and Zoom conditions used only two rooms. A PC running the Unity prototype connected the Furhat robot to an Oculus HMD in the interviewer\u2019s room \u2014 through it, the interviewer could see and hear the participants and manipulate the robot\u2019s head movement and gaze in real time. Zoom stayed within a single shared setup.'},
+          {title:'Tasks Design',body:'The task was a storytelling exercise: participants were given a setting, three characters, three objects, and a scenario they had to explain. Six exercises were created across a wide range of settings, characters and objects, designed to stimulate creativity.',example:'Setting: a busy day on a street in New York. Characters: a middle-aged man, the man\u2019s boss, and a talking cat. Objects: a large bag of unidentified white powder, a birthday cake, and a pair of bloody scissors. Scenario: the middle-aged man finds himself sitting in the middle of a busy street, wearing a suit and tie covered in white powder. What has happened?'},
+          {title:'Questionnaire Design',body:'After each condition, participants completed a questionnaire covering how creative they felt and how distracted they were by the technology, alongside an initial questionnaire on age and prior experience with each platform. Each condition had ten questions, answered on a seven-point Likert scale, covering the naturalness of conversation, engagement, perceived presence, and creativity.'},
+          {title:'Prototype for Semi-Structured Interview',body:'After the final questionnaire, participants took part in a semi-structured interview reflecting on the experience as a whole \u2014 what they liked and disliked in each setting, any setting they preferred, how interaction compared across settings, and how creative they felt they could be.'}
         ],
-        byTheNumbers:[
-          'Furhat scored highest for ease of creativity at <b>6.25/7</b>, ahead of VR (<b>5.5</b>) and Zoom (<b>4.75</b>).',
-          "Zoom scored lowest for perceived co-presence at <b>2.5/7</b> \u2014 less than half of Furhat's <b>5</b>.",
-          'Participants felt they could contribute equally most on Furhat (<b>6/7</b>), against <b>4/7</b> on Zoom.'
-        ],
-        recommendations:[
-          "When designing the UI, it's important to keep the user experience close to a physical environment.",
-          "Visual modality affects users' independent thinking.",
-          'Haptic, motion, and sound modalities can make the media feel more realistic.',
-          "Combining too many modalities in one UI can overwhelm the user if it doesn't feel close to physical space.",
-          "Furhat would help more than VR in hybrid setups, if it could show the remote participant's facial expression as an avatar on its face.",
-          'VR would be most helpful when all participants are remote and need to pursue interactive, shared activities.'
-        ],
-        reflection:[
-          'Used Oculus and VR for the first time, and learned about the different group-communication platforms available in VR.',
-          "Developed a prototype to manipulate the Furhat Robot's head movement and gaze using an HMD, in C#.",
-          'Learned the importance of different modalities in telecommunication interface design and development.',
-          'Learned different approaches to enabling a perception of bodily presence using different modalities.'
-        ],
-        hypothesis:'Because Furhat offers a physically embodied presence that Zoom and VR avatars don\u2019t, participants were expected to feel a stronger sense of co-presence and find it easier to think and contribute independently when interacting through Furhat than through Zoom or VTime XR.',
+        hypothesis:'Users can find communicating through a telepresence robot more effective for productivity and less overwhelming than communicating through a virtual reality environment.',
         hypothesisImgs:[
           {src:'images/projects/furhat_fig1.jpg',alt:'Experiment setup: participant seated with the Furhat robot and a researcher wearing an Oculus headset'},
           {src:'images/projects/furhat_fig2.jpg',alt:'Two participants seated in the experiment room with the Furhat robot and a screen showing the remote view'},
           {src:'images/projects/furhat_fig3.jpg',alt:'Participant wearing an Oculus headset and holding VR controllers during the VTime XR condition'}
         ],
-        voiceOfUsers:null,
-        team:'I worked as part of a 4-person team on this project. My contributions included: writing the interview protocol (English version), reviewing different Oculus VR apps for group communication, testing the Unity prototype used to manipulate the Furhat robot\u2019s head via Oculus HMD, and supporting the team with data analysis and report documentation.'
+        dataAnalysisTags:'Task Performance  |  Post-Task Interviewing  |  Thematic Analysis',
+        byTheNumbers:[
+          'Furhat scored highest for ease of creativity at <b>6.25/7</b>, ahead of VR (<b>5.5</b>) and Zoom (<b>4.75</b>).',
+          "Zoom scored lowest for perceived co-presence at <b>2.5/7</b> \u2014 less than half of Furhat's <b>5</b>.",
+          'Participants felt they could contribute equally most on Furhat (<b>6/7</b>), against <b>4/7</b> on Zoom.'
+        ],
+        results:[
+          {tech:'vTime XR',points:['Fun, but distracting.','A noticeable discrepancy between real people and their avatars.']},
+          {tech:'Zoom (Video call)',points:['Easy and familiar.','Lacked a sense of presence.']},
+          {tech:'FurHat (Teleoperation robot)',points:['Physical embodiment made the operator feel present.','Did not feel human.','Gaze sometimes felt unsettling.']}
+        ],
+        reflection:[
+          "Combining too many modalities in one UI can overwhelm the user if it doesn't feel close to physical space.",
+          "Furhat would help more than VR in hybrid setups, if it could show the remote participant's facial expression as an avatar on its face.",
+          'VR would be most helpful when all participants are remote and need to pursue interactive, shared activities.'
+        ],
+        voiceOfUsers:[
+          {quote:'I felt like the Furhat user was actually in this room with us',attribution:'Furhat Telepresence'},
+          {quote:'I am always aware that the other group member is remotely joining me',attribution:'Zoom'},
+          {quote:'A lot was going on, but I felt like we were talking in the same room',attribution:'vTime XR'}
+        ],
+        teamList:[
+          'Myself (VR Technology Testing, Unity C# Prototype Developer, Experiment Designer, Furhat User in Experiment, Participants Coordination during Study, Questionnaire Survey Analysis, Report Writing)',
+          'Experiment Design Peer Reviewer (3 group members)',
+          'Interviewer (1 Swedish Speaker)',
+          'Observer (1 Swedish Speaker)',
+          'Swedish\u2013English Translator of collected data (1 Swedish Speaker)',
+          'Reporting and Presentation (Me and my 3 teammates)'
+        ]
       }
     };
 
@@ -1284,38 +1261,34 @@
     }
     function caseStudyHTML(cs){
       let html='';
-      if(cs.question)html+='<p class="cs-p reveal"><strong>'+cs.question+'</strong></p>';
       if(cs.description)html+='<p class="cs-p reveal">'+cs.description+'</p>';
       if(cs.processImg)html+='<div class="cs-process-img reveal"><img src="'+cs.processImg+'" alt="'+(cs.processImgAlt||'Project process steps')+'"></div>';
       if(cs.stats)html+='<div class="cs-stats reveal">'+cs.stats.map(function(s){return '<div><div class="cs-stat-label">'+s.label+'</div><div class="cs-stat-value">'+s.value+'</div></div>';}).join('')+'</div>';
-      if(cs.usersAndTech)html+='<div class="cs-section reveal"><div class="cs-section-title">Users and Technology</div><div class="cs-section-body">'
-        +csListHTML(['<b>User</b> \u2014 '+cs.usersAndTech.user,'<b>Technology</b> \u2014 '+cs.usersAndTech.technology])+'</div></div>';
-      if(cs.problem)html+='<div class="cs-section reveal"><div class="cs-section-title">Problem</div><div class="cs-section-body"><p class="cs-p">'+cs.problem+'</p></div></div>';
-      if(cs.goals)html+='<div class="cs-section reveal"><div class="cs-section-title">Goals</div><div class="cs-section-body">'+csListHTML(cs.goals)+'</div></div>';
-      html+='<div class="cs-section reveal"><div class="cs-section-title">Research Design</div><div class="cs-section-body">'
-        +(cs.researchTags?'<p class="cs-tags">'+cs.researchTags+'</p>':'')
-        +'<div class="cs-sub">Emerging Technologies</div><p class="cs-p">'+cs.emergingTechIntro+'</p>'+csTableHTML(cs.modalityTable)
-        +'<div class="cs-method-grid">'
-          +'<div><div class="cs-sub">Experimental Setup</div><p class="cs-p">'+cs.setup+'</p></div>'
-          +'<div><div class="cs-sub">Experimental Task</div><p class="cs-p">'+cs.task+'</p><p class="cs-p"><em>'+cs.taskExample+'</em></p></div>'
-          +'<div><div class="cs-sub">Interview</div><p class="cs-p">'+cs.interview+'</p></div>'
-        +'</div>'
-        +'<div class="cs-sub">Questionnaire</div><p class="cs-p">'+cs.questionnaireIntro+'</p>'+csTableHTML(cs.questionnaireTable)
+      if(cs.participants||cs.technology)html+='<div class="cs-section reveal"><div class="cs-section-title">Participants and Technology</div><div class="cs-section-body">'
+        +(cs.participants?'<div class="cs-sub">Participants</div><p class="cs-p">'+cs.participants+'</p>':'')
+        +(cs.technology?'<div class="cs-sub">Technology</div><p class="cs-p">'+cs.technology+'</p>':'')
       +'</div></div>';
-      html+='<div class="cs-section reveal"><div class="cs-section-title">Result</div><div class="cs-section-body">'
-        +cs.results.map(function(r){return '<div class="cs-sub">'+r.tech+'</div>'+csListHTML(r.points);}).join('')
-        +(cs.byTheNumbers?'<div class="cs-sub">By the Numbers</div>'+csListHTML(cs.byTheNumbers):'')
+      if(cs.challenges)html+='<div class="cs-section reveal"><div class="cs-section-title">Research Challenges</div><div class="cs-section-body">'
+        +cs.challenges.map(function(c){return '<div class="cs-sub">'+c.title+'</div><p class="cs-p">'+c.body+'</p>';}).join('')
+      +'</div></div>';
+      if(cs.researchQuestion)html+='<div class="cs-section reveal"><div class="cs-section-title">Research Question</div><div class="cs-section-body"><p class="cs-p">'+cs.researchQuestion+'</p></div></div>';
+      if(cs.experimentDesign)html+='<div class="cs-section reveal"><div class="cs-section-title">Experiment Design</div><div class="cs-section-body">'
+        +cs.experimentDesign.map(function(e){return '<div class="cs-sub">'+e.title+'</div><p class="cs-p">'+e.body+'</p>'+(e.example?'<p class="cs-p"><em>'+e.example+'</em></p>':'');}).join('')
       +'</div></div>';
       if(cs.hypothesis)html+='<div class="cs-section reveal"><div class="cs-section-title">Hypothesis</div><div class="cs-section-body">'
         +'<p class="cs-p">'+cs.hypothesis+'</p>'
         +(cs.hypothesisImgs?'<div class="cs-img-strip">'+cs.hypothesisImgs.map(function(im){return '<img src="'+im.src+'" alt="'+im.alt+'" onerror="this.closest(\'.cs-img-strip\').style.display=\'none\'">';}).join('')+'</div>':'')
       +'</div></div>';
-      if(cs.recommendations)html+='<div class="cs-section reveal"><div class="cs-section-title">Design Recommendations</div><div class="cs-section-body">'+csListHTML(cs.recommendations)+'</div></div>';
-      if(cs.reflection)html+='<div class="cs-section reveal"><div class="cs-section-title">Reflection</div><div class="cs-section-body">'+csListHTML(cs.reflection)+'</div></div>';
-      html+='<div class="cs-section cs-highlight reveal"><div class="cs-section-title">Voice of Users</div><div class="cs-section-body">'
-        +(cs.voiceOfUsers&&cs.voiceOfUsers.length?cs.voiceOfUsers.map(function(q){return '<p class="cs-p"><em>\u201c'+q+'\u201d</em></p>';}).join(''):'<p class="cs-p"><em>Add real participant quotes here once available \u2014 placeholder, not filled in yet.</em></p>')
+      if(cs.dataAnalysisTags)html+='<div class="cs-section reveal"><div class="cs-section-title">Data Analysis</div><div class="cs-section-body"><p class="cs-tags">'+cs.dataAnalysisTags+'</p></div></div>';
+      html+='<div class="cs-section reveal"><div class="cs-section-title">Result</div><div class="cs-section-body">'
+        +(cs.byTheNumbers?'<div class="cs-sub">By the Numbers</div>'+csListHTML(cs.byTheNumbers):'')
+        +cs.results.map(function(r){return '<div class="cs-sub">'+r.tech+'</div>'+csListHTML(r.points);}).join('')
       +'</div></div>';
-      if(cs.team)html+='<div class="cs-section reveal"><div class="cs-section-title">Team</div><div class="cs-section-body"><p class="cs-p">'+cs.team+'</p></div></div>';
+      if(cs.reflection)html+='<div class="cs-section reveal"><div class="cs-section-title">Reflection</div><div class="cs-section-body">'+csListHTML(cs.reflection)+'</div></div>';
+      if(cs.voiceOfUsers&&cs.voiceOfUsers.length)html+='<div class="cs-section cs-highlight reveal"><div class="cs-section-title">Voice of Users</div><div class="cs-section-body">'
+        +cs.voiceOfUsers.map(function(q){return '<p class="cs-p"><b>'+q.attribution+'</b> \u2014 <em>\u201c'+q.quote+'\u201d</em></p>';}).join('')
+      +'</div></div>';
+      if(cs.teamList)html+='<div class="cs-section reveal"><div class="cs-section-title">Team</div><div class="cs-section-body">'+csListHTML(cs.teamList)+'</div></div>';
       return html;
     }
 
@@ -1328,7 +1301,7 @@
       }).join('');
       const cs=CASE_STUDIES[id];
       document.getElementById('workDetail').innerHTML=
-        '<p class="view-kicker">'+p.meta+'</p>'
+        (p.meta?'<p class="view-kicker">'+p.meta+'</p>':'')
         +'<h1 class="view-headline">'+tr('proj.'+id+'.title')+'</h1>'
         +'<div class="project-detail-img reveal"><img src="'+p.img+'" alt="'+p.imgAlt+'"></div>'
         +(cs?caseStudyHTML(cs):'<p class="cs-p reveal">'+tr('proj.'+id+'.desc')+'</p>')
