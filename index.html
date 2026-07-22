@@ -208,7 +208,7 @@
     .edu-card{background:white;padding:1.5rem;border:1.5px solid #dce2f0;border-left:10px solid var(--color-navy);border-right:10px solid var(--color-navy);border-radius:1.5rem;box-shadow:0 1px 4px rgba(21,32,61,.05);transition:box-shadow .22s,border-color .22s,transform .22s;}
     .edu-card:hover{box-shadow:0 8px 30px rgba(21,32,61,.12);border-color:#8899cc;border-left-color:var(--color-navy);border-right-color:var(--color-navy);transform:translateY(-2px);}
 
-    .view{display:none;}
+    .view{display:none;width:100%;}
     .view.active{display:block;animation:pfadeUp .35s ease both;}
     header.hero-bg.view.active{display:flex;}
     .view-kicker{font-size:.85rem;font-weight:700;letter-spacing:.03em;color:var(--color-navy);margin:0 0 .85rem;}
@@ -295,7 +295,7 @@
        the image+card block sits with equal top/bottom and equal
        left/right gaps, without changing the Work or Interests layouts. */
     #main-content.center-page{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1 0 auto;}
-    .contact-hero{display:flex;gap:3.5rem;align-items:stretch;}
+    .contact-hero{display:flex;gap:3.5rem;align-items:stretch;align-self:stretch;width:100%;min-width:0;max-width:100%;}
     .contact-photo{width:480px;flex-shrink:0;}
     .contact-photo img{width:100%;height:100%;object-fit:cover;display:block;}
     /* Blurred wall texture sits behind only this right-hand column (heading
@@ -422,7 +422,7 @@
     @media(max-width:640px){.ptabs{gap:1.1rem}}
 
     .about-section{background:var(--color-bg-page);padding:5rem 1rem 0;}
-    .about-inner{max-width:56rem;margin:0 auto;padding-bottom:4rem;}
+    .about-inner{max-width:54rem;margin:0 auto;padding-bottom:4rem;}
     .about-block{margin-top:4rem;}
     .about-bio{font-family:var(--font-serif);font-size:1.1rem;line-height:1.65;color:var(--color-text-muted);font-weight:400;}
 
