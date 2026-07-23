@@ -579,12 +579,12 @@
 
     .hero-new{
       background:#fff; position:relative; overflow:hidden;
-      padding:6vh 3rem 8vh 3rem;
-      display:flex; flex-direction:column; justify-content:center;
+      padding:6vh 1rem 8vh 1rem;
+      flex-direction:column; justify-content:center;
     }
     header.hero-new.view.active{display:flex;}
     #heroTrailCanvas{ position:absolute; inset:0; z-index:0; pointer-events:none; }
-    .hero-new-inner{ position:relative; z-index:1; max-width:760px; }
+    .hero-new-inner{ position:relative; z-index:1; max-width:54rem; width:100%; margin:0 auto; }
     .hero-new-inner h1{
       font-family:var(--n-font-display); font-weight:800; letter-spacing:-0.02em;
       text-transform:uppercase; font-size:clamp(2.4rem,6vw,4.6rem); line-height:0.98;
@@ -595,8 +595,8 @@
       color:var(--n-ink); max-width:56ch; margin:0;
     }
 
-    .new-section{ background:var(--n-cream); padding:6vh 3rem; }
-    .new-section-inner{ max-width:1180px; margin:0 auto; }
+    .new-section{ background:var(--n-cream); padding:5rem 1rem; }
+    .new-section-inner{ max-width:54rem; margin:0 auto; }
     .new-section-heading{
       font-family:var(--n-font-display); font-weight:700; font-size:1.7rem;
       text-transform:uppercase; letter-spacing:-0.01em; color:var(--n-navy);
