@@ -317,12 +317,10 @@
 <section class="hero" id="heroSection">
   <canvas id="trailCanvas"></canvas>
   <div class="hero-inner">
-    <p class="kicker"><span class="dot"></span>UX Researcher · Interactive Media Technologist</p>
     <h1>Sruti<br>Bhattacharjee</h1>
     <p>I'm a mixed-method UX researcher and tinkerer working at the edge of multimodal perception, haptics, and human&ndash;AI interaction. I design for accessibility, immersive learning, and interfaces that actually notice how people move.</p>
     <p class="cta">Explore my work and interests below. Click <a href="#about">here</a> to find more about me and my career.</p>
   </div>
-  <p class="hero-hint">move your cursor — this page is tracking it, the way my research does</p>
 </section>
 
 <section class="work-section" id="work">
@@ -498,22 +496,35 @@
     setDropdownOpen(menuDd, false);
   });
 
-  /* ===== live cursor trail — records the actual cursor path =====
-     Every mouse position gets a pastel-yellow ball. Each ball inherits the
-     velocity of the mouse at the moment it was placed, then falls under
-     gravity: thrown fast, it arcs and rolls across the floor before
-     friction stops it; moved slowly, gravity dominates and it just drops
-     near where it was placed. Balls stay put while you're active — only
-     after 30s with no movement does everything fade away. */
+  /* ===== live cursor trail — paint drops, not bouncing balls =====
+     Each point along the cursor path becomes a drop of pastel-yellow
+     paint: it lands, spreads slightly as if soaking into paper, and then
+     stays exactly where it fell — like a painter's sketchbook, not a
+     ball rolling on a floor. Faster movement leaves a longer, thinner
+     smear (a flick of the brush); slower movement leaves a round dab.
+     Each point moves briefly in the same direction the cursor was
+     travelling when it was created, slows to a stop, holds there, then
+     slowly dissolves toward white — like vapour — rather than simply
+     fading to transparent. */
   const canvas = document.getElementById('trailCanvas');
   const ctx = canvas.getContext('2d');
   const heroSection = document.getElementById('heroSection');
   let points = [];
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const PASTEL_YELLOW = [253, 214, 111];
-  const GRAVITY = 0.55;
-  const FLOOR_FRICTION = 0.90;
-  const AIR_DRAG = 0.997;
+
+  // the final palette: pink, young-leaf green, sky blue — picked at
+  // random per point, each fades lighter toward white before it disappears.
+  // Pink and blue sampled directly from the user's watercolor reference image
+  const COLOR_PALETTE = [
+    [252, 216, 228], // FCD8E4 — soft pink
+    [172, 255, 72],  // ACFF48 — vivid young-leaf green
+    [180, 228, 240]  // B4E4F0 — sky blue
+  ];
+
+  const SPREAD_DURATION = 300;  // ms for a circle's pop-in
+  const SETTLE_DURATION = 550;  // ms of directional drift before it comes to rest
+  const POINT_LIFESPAN = 10000; // each point disappears 10s after it was created
+  const FADE_START = 6000;      // ms — vapour dissolve begins here
+  const FADE_DURATION = POINT_LIFESPAN - FADE_START; // slow, ~4s dissolve to white
 
   function resizeCanvas(){
     canvas.width = heroSection.clientWidth;
@@ -522,108 +533,111 @@
   resizeCanvas();
   window.addEventListener('resize', resizeCanvas);
 
-  function floorY(){ return canvas.height - 8; }
+  let lastX = null, lastY = null;
 
-  let lastX = null, lastY = null, lastMoveTime = performance.now();
-  const IDLE_LIMIT = 30000;   // ms of no movement before it starts fading
-  const FADE_DURATION = 3500; // ms to fully fade once idle limit is passed
-
-  function spawnBall(x, y, vx, vy){
-    const shade = 0.85 + Math.random() * 0.3;
+  function spawnDrop(x, y, dirX, dirY, speed){
+    const color = COLOR_PALETTE[Math.floor(Math.random() * COLOR_PALETTE.length)];
+    // initial travel distance in the cursor's direction, scaled by how
+    // fast the cursor was moving — friction brings it to a stop
+    const push = Math.min(60, 8 + speed * 1.4);
     points.push({
-      x, y, vx, vy,
-      radius: 6 + Math.random() * 6,
-      shade,
-      resting: false,
+      x, y,
+      vx: dirX * push,
+      vy: dirY * push,
+      radius: 14 + Math.random() * 20,
+      color,
       born: performance.now()
     });
-    if(points.length > 700) points.splice(0, points.length - 700);
+    if(points.length > 260) points.splice(0, points.length - 260);
   }
 
-  // gentle default resting cluster, echoing the reference's static blob
-  // cluster, so the hero never looks empty before anyone interacts
-  function seedRestingTrail(){
-    const cx = canvas.width * 0.82, cy = canvas.height * 0.28;
-    for(let i = 0; i < 9; i++){
-      const angle = i * 0.6;
-      const r = i * 12;
-      points.push({
-        x: cx + Math.cos(angle) * r * 0.6,
-        y: cy + Math.sin(angle) * r,
-        vx: 0, vy: 0,
-        radius: 14 - i * 0.6,
-        shade: 0.9,
-        resting: true,
-        born: performance.now()
-      });
-    }
-  }
-  if(!prefersReducedMotion) seedRestingTrail();
+  // no default cluster — the hero stays empty until the cursor actually
+  // moves over it; colour only exists where the cursor has touched
 
-  heroSection.addEventListener('mousemove', (e) => {
-    if(prefersReducedMotion) return;
+  // distance the cursor must travel before the next circle is placed —
+  // this is what keeps it reading as a cluster of overlapping blobs
+  // instead of a thin zigzag trail line
+  const MIN_SPAWN_GAP = 36;
+  let distSinceSpawn = 0;
+
+  function handleMove(clientX, clientY){
     const rect = heroSection.getBoundingClientRect();
-    const x = e.clientX - rect.left, y = e.clientY - rect.top;
+    // only record while the cursor is actually over the hero
+    if(clientX < rect.left || clientX > rect.right || clientY < rect.top || clientY > rect.bottom){
+      lastX = null; lastY = null;
+      return;
+    }
+    const x = clientX - rect.left, y = clientY - rect.top;
     if(lastX !== null){
-      // interpolate between the last recorded point and this one, so fast
-      // moves still record a continuous path instead of sparse dots
       const dx = x - lastX, dy = y - lastY;
       const dist = Math.hypot(dx, dy);
-      const steps = Math.max(1, Math.min(12, Math.round(dist / 6)));
-      for(let s = 1; s <= steps; s++){
-        const t = s / steps;
-        spawnBall(
-          lastX + dx * t, lastY + dy * t,
-          (dx / steps) * 0.9,           // velocity carried from the throw
-          (dy / steps) * 0.9 - 1.2      // slight upward pop so it arcs before falling
-        );
+      distSinceSpawn += dist;
+      if(distSinceSpawn >= MIN_SPAWN_GAP){
+        const dirX = dist > 0.01 ? dx / dist : 0;
+        const dirY = dist > 0.01 ? dy / dist : 0;
+        spawnDrop(x, y, dirX, dirY, dist);
+        distSinceSpawn = 0;
       }
     } else {
-      spawnBall(x, y, 0, 0);
+      spawnDrop(x, y, 0, 0, 0);
+      distSinceSpawn = 0;
     }
     lastX = x; lastY = y;
-    lastMoveTime = performance.now();
-  });
-  heroSection.addEventListener('mouseleave', () => { lastX = null; lastY = null; });
+  }
+
+  // listen at the window level with both pointer and mouse events —
+  // more robust than binding to a single element, in case the hero's own
+  // mousemove events get intercepted by a sandboxed preview environment
+  window.addEventListener('pointermove', (e) => handleMove(e.clientX, e.clientY));
+  window.addEventListener('mousemove', (e) => handleMove(e.clientX, e.clientY));
+  window.addEventListener('touchmove', (e) => {
+    if(e.touches && e.touches[0]) handleMove(e.touches[0].clientX, e.touches[0].clientY);
+  }, { passive:true });
+
+  function lerp(a, b, t){ return a + (b - a) * t; }
 
   function draw(){
     const now = performance.now();
-    const idleFor = now - lastMoveTime;
-    const globalFade = idleFor <= IDLE_LIMIT
-      ? 1
-      : Math.max(0, 1 - (idleFor - IDLE_LIMIT) / FADE_DURATION);
 
     ctx.clearRect(0,0,canvas.width,canvas.height);
 
-    if(globalFade > 0){
-      const floor = floorY();
-      points.forEach(p => {
-        if(!p.resting){
-          p.vy += GRAVITY;
-          p.x += p.vx;
-          p.y += p.vy;
-          p.vx *= AIR_DRAG;
+    points = points.filter(p => now - p.born < POINT_LIFESPAN);
 
-          if(p.y + p.radius >= floor){
-            p.y = floor - p.radius;
-            p.vy = -p.vy * 0.28;      // small bounce on landing
-            if(Math.abs(p.vy) < 1.2) p.vy = 0;
-            p.vx *= FLOOR_FRICTION;   // rolls, then friction brings it to rest
-            if(p.vy === 0 && Math.abs(p.vx) < 0.05){
-              p.vx = 0;
-            }
-          }
-        }
+    points.forEach(p => {
+      const age = now - p.born;
 
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI*2);
-        const [r,g,b] = PASTEL_YELLOW;
-        ctx.fillStyle = `rgba(${Math.min(255,r*p.shade)},${Math.min(255,g*p.shade)},${Math.min(255,b*p.shade)},${0.75 * globalFade})`;
-        ctx.fill();
-      });
-    } else if(points.length){
-      points = []; // fully idle-faded — clear the slate
-    }
+      // clean, simple grow-in — no overshoot bounce, no haze
+      const growT = Math.min(1, age / SPREAD_DURATION);
+      const grown = 1 - Math.pow(1 - growT, 3); // ease-out cubic
+      const radius = p.radius * grown;
+
+      // move in the cursor's direction, decelerating via friction, so it
+      // travels briefly then comes to rest at a settled position
+      if(age < SETTLE_DURATION){
+        const dt = Math.min(16, 1000/60);
+        p.x += p.vx * (dt/1000);
+        p.y += p.vy * (dt/1000);
+        const friction = Math.pow(0.02, dt/SETTLE_DURATION);
+        p.vx *= friction;
+        p.vy *= friction;
+      }
+
+      // once settled, it holds — then slowly dissolves toward white,
+      // like vapour, rather than just fading to transparent
+      const fadeT = age > FADE_START
+        ? Math.min(1, (age - FADE_START) / FADE_DURATION)
+        : 0;
+      const [pr, pg, pb] = p.color;
+      const cr = lerp(pr, 255, fadeT);
+      const cg = lerp(pg, 255, fadeT);
+      const cb = lerp(pb, 255, fadeT);
+      const alpha = 0.82 * (1 - fadeT * 0.85);
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, Math.max(radius, 0), 0, Math.PI*2);
+      ctx.fillStyle = `rgba(${cr},${cg},${cb},${alpha})`;
+      ctx.fill();
+    });
 
     requestAnimationFrame(draw);
   }
