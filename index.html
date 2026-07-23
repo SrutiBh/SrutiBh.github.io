@@ -1,700 +1,1937 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sruti Bhattacharjee | UX Researcher</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sruti Bhattacharjee | UX Researcher &amp; Interactive Media Technologist</title>
 
-  :root{
-    /* ===== Token system ===== */
-    --cream:      #FAF6EE;
-    --ink:        #17181C;
-    --ink-muted:  #5B5B62;
-    --navy:       #1B2A4A;
-    --gold:       #F5B301;
-    --gold-soft:  rgba(245,179,1,0.28);
-    --border:     #E7E0D0;
-    --white:      #FFFFFF;
+  <meta name="description" content="Portfolio of Sruti Bhattacharjee, a UX Researcher and graduate student at KTH Royal Institute of Technology specializing in interactive media technology, VR/AR, accessibility, and human-centered design.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://srutibhattacharjee.com/">
+  <link rel="icon" type="image/png" href="images/others/bcup-circle.png">
+  <link rel="apple-touch-icon" href="images/others/bcup-circle.png">
 
-    --display: 'Space Grotesk', sans-serif;
-    --body-font: 'Inter', sans-serif;
-    --mono: 'JetBrains Mono', monospace;
-  }
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Sruti Bhattacharjee | UX Researcher & Interactive Media Technologist">
+  <meta property="og:description" content="Portfolio of Sruti Bhattacharjee, a UX Researcher and graduate student at KTH Royal Institute of Technology specializing in interactive media technology, VR/AR, accessibility, and human-centered design.">
+  <meta property="og:image" content="https://srutibhattacharjee.com/images/profile/glass_profile.jpeg">
+  <meta property="og:url" content="https://srutibhattacharjee.com/">
 
-  *{ box-sizing:border-box; }
-  html,body{ margin:0; padding:0; }
-  body{
-    background: var(--white);
-    color: var(--ink);
-    font-family: var(--body-font);
-    -webkit-font-smoothing: antialiased;
-  }
-  a{ color:inherit; }
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Sruti Bhattacharjee | UX Researcher & Interactive Media Technologist">
+  <meta name="twitter:description" content="Portfolio of Sruti Bhattacharjee, a UX Researcher and graduate student at KTH Royal Institute of Technology specializing in interactive media technology, VR/AR, accessibility, and human-centered design.">
+  <meta name="twitter:image" content="https://srutibhattacharjee.com/images/profile/glass_profile.jpeg">
 
-  /* ===== top bar ===== */
-  .topbar{
-    position: sticky; top:0; z-index:50;
-    display:flex; align-items:center; justify-content:space-between;
-    padding: 1.3rem 3rem;
-    background: rgba(255,255,255,0.9);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--border);
-  }
-  .topbar .brand{
-    font-family: var(--display); font-weight:700; font-size:1.05rem; letter-spacing:-0.01em;
-  }
-  .topbar nav{ display:flex; gap:2.2rem; }
-  .topbar nav a{
-    font-family: var(--body-font); font-size:0.92rem; font-weight:500;
-    text-decoration:none; color: var(--ink-muted);
-    padding-bottom:0.2rem; border-bottom: 2px solid transparent;
-    transition: color 0.15s ease, border-color 0.15s ease;
-  }
-  .topbar nav a:hover, .topbar nav a.active{ color: var(--ink); border-color: var(--gold); }
-  @media(max-width:640px){ .topbar{ padding:1.1rem 1.4rem; } .topbar nav{ gap:1.2rem; } }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-  .topbar-right{ display:flex; align-items:center; gap:0.9rem; }
-  @media(max-width:640px){ .topbar-right nav{ display:none; } }
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Sruti Bhattacharjee",
+    "jobTitle": "UX Researcher",
+    "affiliation": {
+      "@type": "CollegeOrUniversity",
+      "name": "KTH Royal Institute of Technology"
+    },
+    "sameAs": [
+      "https://github.com/SrutiBh",
+      "https://www.linkedin.com/in/srutibhattacharjee/"
+    ]
+  }
+  </script>
 
-  .lang-dd{ position:relative; }
-  .lang-btn{
-    display:flex; align-items:center; gap:0.25rem;
-    width:2.4rem; height:2.4rem; padding:0; border-radius:999px;
-    border:1.5px solid var(--border); background:transparent; cursor:pointer;
-    font-family: var(--mono); font-size:0.68rem; font-weight:500; color: var(--ink-muted);
-    justify-content:center; transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
-  }
-  .lang-btn:hover{ background: var(--navy); border-color: var(--navy); color:#fff; }
-  .lang-dd.open .lang-btn{ background: var(--navy); border-color: var(--navy); color:#fff; }
-  .lang-menu{
-    position:absolute; top:calc(100% + 10px); right:0; background:#fff;
-    border-radius:0.75rem; box-shadow:0 14px 34px rgba(23,24,28,0.18);
-    padding:0.4rem; display:none; min-width:130px; z-index:70;
-  }
-  .lang-dd.open .lang-menu{ display:block; }
-  .lang-opt{
-    display:block; width:100%; padding:0.5rem 0.7rem; border-radius:0.5rem;
-    border:none; background:transparent; font-size:0.85rem; font-weight:500;
-    color: var(--navy); cursor:pointer; text-align:left; font-family: var(--body-font);
-  }
-  .lang-opt:hover{ background: var(--cream); }
-  .lang-opt.active{ background: var(--navy); color:#fff; }
+  <style>
+    .skip-link{position:absolute;left:-9999px;top:0;background:var(--color-navy,#15203d);color:#fff;padding:.75rem 1.25rem;z-index:200;border-radius:0 0 .5rem 0;font-family:var(--font-serif,'Times New Roman',Times,serif);text-decoration:none;}
+    .skip-link:focus{left:0;}
 
-  .menu-dd{ position:relative; }
-  .menu-btn{
-    display:flex; align-items:center; justify-content:center;
-    width:2.4rem; height:2.4rem; border-radius:999px; border:1.5px solid var(--border);
-    background:transparent; color: var(--navy); cursor:pointer;
-    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
-  }
-  .menu-btn:hover{ background: var(--navy); border-color: var(--navy); color:#fff; }
-  .menu-dd.open .menu-btn{ background: var(--navy); border-color: var(--navy); color:#fff; }
-  .menu-panel{
-    position:absolute; top:calc(100% + 10px); right:0; background:#fff;
-    border-radius:0.75rem; box-shadow:0 14px 34px rgba(23,24,28,0.18);
-    padding:0.4rem; display:none; min-width:170px; z-index:70;
-  }
-  .menu-dd.open .menu-panel{ display:block; }
-  .menu-opt{
-    display:block; width:100%; padding:0.6rem 0.75rem; border-radius:0.5rem;
-    border:none; background:transparent; font-size:0.92rem; font-weight:500;
-    color: var(--ink); cursor:pointer; text-align:left; font-family: var(--body-font);
-    text-decoration:none;
-  }
-  .menu-opt:hover{ background: var(--cream); }
+    :root{
+      --font-serif:'Times New Roman',Times,serif;
+      --color-navy:#15203d;
+      --color-navy-dark:#0f172a;
+      --color-footer-navy:#1e293b;
+      --color-text-body:#334155;
+      --color-text-muted:#475569;
+      --color-text-faint:#94a3b8;
+      --color-text-faint-onlight:#64748b;
+      --color-bg-page:#f8fafc;
+      --color-bg-hover:#eef1f8;
+      --color-white:#fff;
+      --color-border:#e2e8f0;
+      --color-border-light:#cbd5e1;
+    }
+    *,*::before,*::after{box-sizing:border-box;}
 
-  /* ===== hero — cursor trail lives here ===== */
-  .hero{
-    position: relative;
-    max-width: 1180px; margin: 0 auto;
-    padding: 6vh 3rem 8vh 3rem;
-    overflow: hidden;
-  }
-  #trailCanvas{
-    position: absolute; inset:0; z-index:0; pointer-events:none;
-  }
-  .hero-inner{ position:relative; z-index:1; max-width: 760px; }
-  .hero-inner .kicker{
-    font-family: var(--mono); font-size:0.78rem; letter-spacing:0.1em; text-transform:uppercase;
-    color: var(--ink-muted); margin-bottom:1.4rem;
-    display:flex; align-items:center; gap:0.6rem;
-  }
-  .hero-inner .kicker .dot{ width:7px; height:7px; border-radius:50%; background: var(--gold); }
-  .hero-inner h1{
-    font-family: var(--display); font-weight:800; letter-spacing:-0.02em;
-    font-size: clamp(2.6rem, 7vw, 5.4rem); line-height:0.98;
-    text-transform: uppercase;
-    color: var(--navy);
-    margin: 0 0 1.8rem 0;
-  }
-  .hero-inner p{
-    font-size: 1.18rem; line-height:1.7; color: var(--ink); max-width: 54ch;
-    margin: 0 0 1.3rem 0;
-  }
-  .hero-inner p.cta{
-    font-size: 1.05rem; color: var(--ink-muted);
-  }
-  .hero-inner p.cta a{
-    color: var(--navy); font-weight:600; text-decoration:none;
-    border-bottom: 2px solid var(--gold);
-  }
-  .hero-inner p.cta a:hover{ color: var(--gold); border-color: var(--navy); }
-  .hero-hint{
-    font-family: var(--mono); font-size:0.7rem; letter-spacing:0.06em; color: var(--ink-muted);
-    opacity:0.55; margin-top:2.4rem;
-  }
+    .absolute{position:absolute}
+    .relative{position:relative}
+    .flex{display:flex}
+    .flex-col{flex-direction:column}
+    .items-center{align-items:center}
+    .justify-center{justify-content:center}
+    .gap-5{gap:1.25rem}
+    .overflow-hidden{overflow:hidden}
+    .mx-auto{margin-left:auto;margin-right:auto}
+    .mt-0\.5{margin-top:.125rem}
+    .mt-3{margin-top:.75rem}
+    .mt-8{margin-top:2rem}
+    .mb-6{margin-bottom:1.5rem}
+    .p-6{padding:1.5rem}
+    .px-4{padding-left:1rem;padding-right:1rem}
+    .px-6{padding-left:1.5rem;padding-right:1.5rem}
+    .pt-6{padding-top:1.5rem}
+    .pb-2{padding-bottom:.5rem}
+    .pb-3{padding-bottom:.75rem}
+    .py-16{padding-top:4rem;padding-bottom:4rem}
+    .bottom-10{bottom:2.5rem}
+    .bottom-4{bottom:1rem}
+    .z-10{z-index:10}
+    .w-36{width:9rem}
+    .h-36{height:9rem}
+    .w-full{width:100%}
+    .h-full{height:100%}
+    .min-h-\[100dvh\]{min-height:85dvh}
+    .rounded-full{border-radius:9999px}
+    .border-4{border-width:4px}
+    .border-b-2{border-bottom-width:2px}
+    .border-white\/20{border-color:rgba(255,255,255,.2)}
+    .border-slate-200{border-color:var(--color-border)}
+    .shadow-2xl{box-shadow:0 25px 50px -12px rgba(0,0,0,.25)}
+    .bg-slate-700{background-color:var(--color-text-body)}
+    .bg-slate-800{background-color:var(--color-footer-navy)}
+    .footer-bar{background-color:var(--color-footer-navy);color:var(--color-text-faint);text-align:center;padding:1rem 3rem;margin-top:0;}
+    @media(max-width:480px){.footer-bar{padding:1rem 1.25rem;}}
+    @media(max-width:360px){.footer-bar{padding:1rem .75rem;font-size:.85rem;}}
+    .footer-pre{background:transparent;text-align:center;padding:2.5rem 1.5rem 1.5rem;}
+    .footer-links{display:flex;justify-content:center;flex-wrap:nowrap;overflow-x:auto;gap:2.5rem;margin-bottom:1.1rem;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+    .footer-links::-webkit-scrollbar{display:none;}
+    @media(max-width:480px){
+      .footer-links{gap:1.1rem;}
+      .footer-links .footer-link{font-size:1.05rem;gap:.4rem;}
+      .footer-links .footer-icon-chip{width:1.9rem;height:1.9rem;}
+      .footer-links .footer-icon-chip svg{width:13px;height:13px;}
+    }
+    @media(max-width:360px){
+      .footer-pre{padding-left:.75rem;padding-right:.75rem;}
+      .footer-links{gap:.6rem;}
+      .footer-links .footer-link{font-size:.92rem;gap:.3rem;}
+      .footer-links .footer-icon-chip{width:1.6rem;height:1.6rem;}
+      .footer-links .footer-icon-chip svg{width:11px;height:11px;}
+    }
+    .about-links{display:flex;justify-content:flex-start;flex-wrap:wrap;gap:2.5rem;margin-top:1.5rem;}
+    .footer-link{position:relative;display:inline-flex;align-items:center;gap:.6rem;color:var(--color-text-body);text-decoration:none;font-family:var(--font-serif);font-size:1.55rem;font-weight:400;}
+    .footer-link::after{content:'';position:absolute;left:0;right:0;bottom:-6px;height:1.5px;background:var(--color-navy);transform:scaleX(0);transform-origin:left;transition:transform .22s ease;}
+    .footer-link:hover::after{transform:scaleX(1);}
+    .footer-icon-chip{display:flex;align-items:center;justify-content:center;width:2.3rem;height:2.3rem;border-radius:999px;background:var(--color-bg-hover);color:var(--color-navy);transition:background-color .18s ease,color .18s ease;}
+    .footer-link:hover .footer-icon-chip{background:var(--color-navy);color:#fff;}
+    .footer-social{display:flex;justify-content:center;gap:.75rem;}
+    .footer-social a{display:flex;align-items:center;justify-content:center;color:var(--color-text-body);transition:color .18s ease,transform .18s ease;}
+    .footer-social a:hover{color:var(--color-navy);transform:scale(1.18);}
+    .footer-social a:hover svg{stroke-width:2.4;}
+    .footer-social .footer-icon-chip{width:2rem;height:2rem;}
+    .footer-social a:hover .footer-icon-chip{background:var(--color-navy);color:#fff;}
+    .object-cover{object-fit:cover}
+    .text-center{text-align:center}
+    .text-base{font-size:1rem;line-height:1.5rem}
+    .text-sm{font-size:.875rem;line-height:1.25rem}
+    .text-3xl{font-size:1.875rem;line-height:2.25rem}
+    .text-5xl{font-size:3rem;line-height:1}
+    .text-white{color:#fff}
+    .text-white\/40{color:rgba(255,255,255,.4)}
+    .text-slate-400{color:var(--color-text-faint)}
+    .text-slate-700{color:var(--color-text-body)}
+    .text-slate-800{color:var(--color-footer-navy)}
+    .text-slate-900{color:var(--color-navy-dark)}
+    .text-\[\var(--color-navy)\]{color:var(--color-navy)}
+    .font-light{font-weight:300}
+    .font-medium{font-weight:500}
+    .font-semibold{font-weight:600}
+    .tracking-wide{letter-spacing:.025em}
+    .transition-colors{transition-property:color,background-color,border-color;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:150ms}
+    .hover\:text-white\/80:hover{color:rgba(255,255,255,.8)}
+    .space-y-5>*+*{margin-top:1.25rem}
+    .container{width:100%}
+    @media(min-width:640px){.container{max-width:640px}}
+    @media(min-width:768px){.container{max-width:768px}}
+    @media(min-width:1024px){.container{max-width:1024px}}
+    @media(min-width:1280px){.container{max-width:1280px}}
+    @media(min-width:1536px){.container{max-width:1536px}}
+    .max-w-4xl{max-width:56rem}
+    @media(min-width:768px){
+      .md\:w-40{width:10rem}
+      .md\:h-40{height:10rem}
+      .md\:text-7xl{font-size:4.5rem;line-height:1}
+      .md\:text-xl{font-size:1.25rem;line-height:1.75rem}
+    }
 
-  /* ===== work section ===== */
-  .work-section{
-    background: var(--cream);
-    padding: 5vh 3rem 9vh 3rem;
-  }
-  .work-inner{ max-width: 1180px; margin:0 auto; }
+    html{min-height:100%;overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%;}
+    body{font-family:var(--font-serif);background-color:var(--color-bg-page);display:flex;flex-direction:column;min-height:100vh;overflow-x:clip;}
+    body.project-page-active{background-color:var(--color-white);} /* project case study pages use a pure white background throughout, not the site's usual off-white */
+    /* STICKY FOOTER — on short pages (e.g. Contact), pushes the footer block
+       down to the bottom of the viewport instead of leaving a blank gap
+       below it; on tall pages, has no effect since content already fills
+       the space. */
+    .footer-pre{margin-top:auto;}
+    .hero-bg{background-color:var(--color-navy);background-image:none;position:relative;}
+    .topbar{position:sticky;top:0;z-index:90;display:flex;align-items:center;justify-content:space-between;background:#fff;padding:1rem 2rem;box-shadow:0 1px 0 rgba(15,23,42,.08);gap:1.5rem;flex-wrap:wrap;}
+    .topbar-word{font-family:var(--font-serif);font-weight:700;color:var(--color-navy-dark);text-decoration:none;white-space:nowrap;background:none;border:none;padding:0;cursor:pointer;display:inline-flex;align-items:baseline;gap:.45rem;}
+    .topbar-word:hover .topbar-word-first{color:var(--color-text-body);}
+    .topbar-word-first{font-size:1.6rem;letter-spacing:-.015em;}
+    .topbar-word-last{font-size:1.2rem;font-weight:700;letter-spacing:.02em;color:var(--color-navy-dark);}
+    .topbar-right{display:flex;align-items:center;gap:1.75rem;flex-wrap:wrap;}
+    .topbar-links{display:flex;align-items:center;gap:2.25rem;flex-wrap:wrap;}
+    .topbar-links .nav-item{display:inline-block;background:none;border:none;padding:.2rem 0;font-size:1.3rem;font-weight:400;letter-spacing:.02em;color:var(--color-text-body);cursor:pointer;font-family:var(--font-serif);position:relative;text-decoration:none;white-space:nowrap;transition:color .18s ease;}
+    .topbar-links .nav-item::after{content:'';position:absolute;left:0;right:0;bottom:-6px;height:1.5px;background:var(--color-navy);transform:scaleX(0);transform-origin:left;transition:transform .22s ease;}
+    .topbar-links .nav-item:hover{color:var(--color-navy);}
+    .topbar-links .nav-item:hover::after{transform:scaleX(1);}
+    .topbar-links .nav-item.active{color:var(--color-navy);font-weight:700;}
+    .topbar-links .nav-item.active::after{transform:scaleX(1);}
+    .topbar .lang-menu{border:1px solid var(--color-border);}
+    .topbar .lang-opt{color:var(--color-navy-dark);}
+    .topbar .lang-opt:hover{background:#f1f5f9;}
+    @media(max-width:760px){
+      .topbar{padding:.85rem 1.1rem;gap:.9rem;}
+      .topbar-right{gap:1rem;}
+      .topbar-links{gap:1rem;}
+      .topbar-links .nav-item .label{display:none;}
+      .topbar-word{flex-direction:column;align-items:flex-start;gap:0;}
+      .topbar-word-first{font-size:1.15rem;line-height:1.25;}
+      .topbar-word-last{font-size:.95rem;line-height:1.25;}
+    }
+    .hero-name{font-family:var(--font-serif);font-weight:700;letter-spacing:-.02em;}
+    .section-title{font-family:var(--font-serif);font-weight:600;letter-spacing:-.01em;}
+    .pin-heading{position:sticky;top:73px;z-index:20;background:var(--color-bg-page);padding-top:.5rem;}
+    @media(max-width:760px){.pin-heading{top:58px;}}
 
-  .tabs{ display:flex; gap:2.2rem; margin-bottom: 3rem; border-bottom: 1px solid var(--border); }
-  .tabs button{
-    font-family: var(--display); font-weight:700; font-size:1.1rem; letter-spacing:-0.01em;
-    background:none; border:none; cursor:pointer; color: var(--ink-muted);
-    padding: 0 0 1rem 0; position:relative; text-transform: uppercase;
-  }
-  .tabs button.active{ color: var(--navy); }
-  .tabs button.active::after{
-    content:''; position:absolute; left:0; right:0; bottom:-1px; height:3px; background: var(--gold);
-  }
+    .entry-card{background:white;padding:1.5rem;border-radius:.75rem;box-shadow:0 4px 16px rgba(21,32,61,.13),0 1px 3px rgba(21,32,61,.07);transition:box-shadow .25s,transform .25s;}
+    .entry-card:hover{box-shadow:0 8px 28px rgba(21,32,61,.22),0 2px 6px rgba(21,32,61,.10);transform:translateY(-2px);}
 
-  .work-layout{ display:grid; grid-template-columns: 200px 1fr; gap: 3rem; align-items:start; }
-  @media(max-width:820px){ .work-layout{ grid-template-columns:1fr; } }
+    .edu-logo{width:64px;height:64px;flex-shrink:0;object-fit:contain;object-position:center;}
 
-  .filter-label{
-    font-family: var(--mono); font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase;
-    color: var(--ink-muted); margin-bottom:1.2rem;
-  }
-  .filter-list{ display:flex; flex-direction:column; gap:0.9rem; }
-  .filter-list button{
-    background:none; border:none; cursor:pointer; text-align:left; padding:0;
-    font-family: var(--body-font); font-size:1rem; color: var(--ink-muted);
-    transition: color 0.15s ease;
-  }
-  .filter-list button:hover{ color: var(--ink); }
-  .filter-list button.active{ color: var(--navy); font-weight:600; }
-  @media(max-width:820px){
-    .filter-list{ flex-direction:row; flex-wrap:wrap; gap:1.2rem; margin-bottom:2rem; }
-  }
+    .edu-card{background:white;padding:1.5rem;border:1.5px solid #dce2f0;border-left:10px solid var(--color-navy);border-right:10px solid var(--color-navy);border-radius:1.5rem;box-shadow:0 1px 4px rgba(21,32,61,.05);transition:box-shadow .22s,border-color .22s,transform .22s;}
+    .edu-card:hover{box-shadow:0 8px 30px rgba(21,32,61,.12);border-color:#8899cc;border-left-color:var(--color-navy);border-right-color:var(--color-navy);transform:translateY(-2px);}
 
-  .work-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 1.6rem; }
-  @media(max-width:640px){ .work-grid{ grid-template-columns:1fr; } }
+    .view{display:none;width:100%;}
+    .view.active{display:block;animation:pfadeUp .35s ease both;}
+    header.hero-bg.view.active{display:flex;}
+    .view-kicker{font-size:.85rem;font-weight:700;letter-spacing:.03em;color:var(--color-navy);margin:0 0 .85rem;}
+    .view-headline{font-family:var(--font-serif);font-weight:700;letter-spacing:-.01em;font-size:clamp(2.3rem,5vw,4rem);line-height:1.04;color:var(--color-navy-dark);margin:0 0 1.4rem;}
+    .view-sub{font-family:var(--font-serif);font-size:1.02rem;line-height:1.65;color:var(--color-text-muted);max-width:640px;margin:0 0 2.5rem;font-weight:400;}
 
-  .work-card{
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: 0.9rem;
-    overflow: hidden;
-    display:flex; flex-direction:column;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-  .work-card:hover{ transform: translateY(-3px); box-shadow: 0 14px 30px -14px rgba(27,42,74,0.25); }
-  .work-card .thumb{
-    aspect-ratio: 4/3;
-    display:flex; align-items:flex-end; padding:1.2rem;
-    position: relative;
-  }
-  .work-card .thumb .cat-tag{
-    font-family: var(--mono); font-size:0.62rem; letter-spacing:0.08em; text-transform:uppercase;
-    color: rgba(255,255,255,0.92);
-    background: rgba(0,0,0,0.22);
-    padding: 0.25rem 0.6rem; border-radius:999px;
-  }
-  .thumb.cat-ux{ background: linear-gradient(135deg,#8FA3D6 0%,#43508C 100%); }
-  .thumb.cat-interaction{ background: linear-gradient(135deg,#F2B279 0%,#D65D3A 100%); }
-  .thumb.cat-visual{ background: linear-gradient(135deg,#8FCBAE 0%,#2E7D5B 100%); }
+    @keyframes pfadeUp{from{opacity:0}to{opacity:1}}
 
-  .work-card .card-body{ padding: 1.3rem 1.4rem 1.5rem 1.4rem; flex:1; display:flex; flex-direction:column; }
-  .work-card .meta{
-    font-family: var(--mono); font-size:0.66rem; letter-spacing:0.06em; text-transform:uppercase;
-    color: var(--ink-muted); margin-bottom:0.5rem;
-  }
-  .work-card h3{
-    font-family: var(--display); font-weight:700; font-size:1.12rem; line-height:1.3;
-    margin: 0 0 0.55rem 0; color: var(--ink);
-  }
-  .work-card p{
-    font-size: 0.92rem; line-height:1.55; color: var(--ink-muted); margin:0;
-  }
+    .work-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+    @media(max-width:640px){.work-grid{grid-template-columns:1fr;}}
+    /* ============================================================
+       WORK SLIDER — a smaller, horizontally-scrolling row of extra
+       project tiles beneath the main Work grid. Cards are rectangular
+       (wider than tall) and snap into place as you scroll/swipe.
+       Add or remove items by toggling `slider:true` on entries in
+       the PROJECTS array further down.
+       ============================================================ */
+    .work-slider-label{font-family:var(--font-serif);font-size:1rem;font-weight:700;color:var(--color-navy-dark);margin:2.5rem 0 1rem;}
+    .work-slider-wrap{display:flex;align-items:center;gap:.75rem;margin-top:0;}
+    .work-slider{flex:1;min-width:0;display:flex;gap:1rem;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding:.25rem 0 .5rem;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none;}
+    .work-slider::-webkit-scrollbar{display:none;}
+    .work-slider-arrow{flex:0 0 auto;width:2.4rem;height:2.4rem;border-radius:999px;border:1.5px solid var(--color-border-light);background:#fff;color:var(--color-navy);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .18s ease,border-color .18s ease,color .18s ease;padding:0;}
+    .work-slider-arrow:hover{background:var(--color-navy);border-color:var(--color-navy);color:#fff;}
+    .work-slider-card{position:relative;flex:0 0 auto;width:260px;aspect-ratio:16/9;border:none;border-radius:.75rem;overflow:hidden;cursor:pointer;padding:0;scroll-snap-align:start;background:linear-gradient(135deg,#e8ecf5 0%,#c0cbea 100%);}
+    .work-slider-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease;}
+    .work-slider-card:hover .work-slider-img{transform:scale(1.06);}
+    .work-slider-overlay{position:absolute;inset:0;display:flex;align-items:flex-end;padding:.9rem;background:linear-gradient(0deg,rgba(15,23,42,.78) 0%,rgba(15,23,42,0) 60%);opacity:0;transition:opacity .25s ease;}
+    .work-slider-card:hover .work-slider-overlay,
+    .work-slider-card:focus-visible .work-slider-overlay{opacity:1;}
+    .work-slider-title{font-family:var(--font-serif);font-size:.95rem;font-weight:700;color:#fff;line-height:1.25;text-align:left;}
+    @media(max-width:640px){.work-slider-card{width:210px;}.work-slider-arrow{width:2rem;height:2rem;}}
+    .work-card{position:relative;display:block;width:100%;aspect-ratio:4/3.2;border:none;border-radius:1rem;overflow:hidden;cursor:pointer;padding:0;background:linear-gradient(135deg,#e8ecf5 0%,#c0cbea 100%);}
+    .work-card-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease;}
+    .work-card:hover .work-card-img{transform:scale(1.05);}
+    .work-card-overlay{position:absolute;inset:0;display:flex;align-items:flex-end;padding:1.5rem;background:linear-gradient(0deg,rgba(15,23,42,.75) 0%,rgba(15,23,42,0) 55%);opacity:0;transition:opacity .25s ease;}
+    .work-card:hover .work-card-overlay,
+    .work-card:focus-visible .work-card-overlay{opacity:1;}
+    .work-card-title{font-family:var(--font-serif);font-size:1.4rem;font-weight:700;color:#fff;line-height:1.25;text-align:left;}
 
-  /* ===== education strip ===== */
-  .edu-section{ background: var(--white); padding: 7vh 3rem; }
-  .about-block{ max-width: 760px; margin: 0 0 6vh 0; }
-  .about-block p{ font-size:1.08rem; line-height:1.75; color: var(--ink); margin:0; }
+    /* Matches .about-desc-title exactly (same style used for "About Me" /
+       "Education" / "Career Journey" on the Home page) so section names
+       here read consistently with the rest of the site. */
+    .gallery-subhead{font-family:var(--font-serif);font-size:2rem;font-weight:700;color:var(--color-navy-dark);margin:2.5rem 0 1.1rem;}
+    .about-block:first-of-type .gallery-subhead{margin-top:0;}
+    .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;}
+    @media(max-width:760px){.gallery-grid{grid-template-columns:repeat(2,1fr);}}
+    @media(max-width:480px){.gallery-grid{grid-template-columns:1fr;}}
+    .gallery-item{background:#fff;border-radius:.5rem;padding:.75rem .75rem 1rem;box-shadow:0 1px 3px rgba(15,23,42,.06),0 6px 18px rgba(15,23,42,.08);transition:box-shadow .22s ease,transform .22s ease;}
+    .gallery-item:hover{box-shadow:0 4px 10px rgba(15,23,42,.10),0 14px 30px rgba(15,23,42,.14);transform:translateY(-2px);}
+    .gallery-item img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;border-radius:.3rem;}
+    /* Caption font matches .jcity (the island name labels on the Career
+       Journey map) — same family/weight/letter-spacing. Scaled down from
+       the map's 3.6rem (sized for a big label on a large dark map) to a
+       size that fits under a small gallery thumbnail, and recolored to
+       navy since the map's white-with-black-outline treatment was built
+       for legibility over a dark background, not a white card. */
+    .gallery-caption{font-family:'Comic Sans MS','Comic Sans',cursive;font-weight:400;letter-spacing:.06em;font-size:1.05rem;color:var(--color-navy-dark);margin:.6rem 0 0;}
+    .gallery-placeholder{grid-column:1/-1;border:1.5px dashed var(--color-border-light);border-radius:1rem;padding:3rem 1.5rem;text-align:center;color:var(--color-text-faint-onlight);font-family:var(--font-serif);font-size:.95rem;}
 
-  .journey-teaser{ margin: 0 0 7vh 0; }
-  .journey-path{
-    display:flex; align-items:center; gap:0; position:relative;
-    padding: 1rem 0.5rem; overflow-x:auto;
-  }
-  .journey-path::before{
-    content:''; position:absolute; left:0.5rem; right:0.5rem; top:calc(1rem + 5px);
-    border-top: 1px dashed var(--border); z-index:0;
-  }
-  .journey-stop{
-    position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; gap:0.5rem;
-    flex-shrink:0; width: 96px;
-  }
-  .journey-dot{ width:10px; height:10px; border-radius:50%; background:#fff; border:2px solid var(--gold); }
-  .journey-stop .city{ font-family: var(--mono); font-size:0.68rem; color: var(--ink-muted); text-align:center; }
-  .edu-inner{ max-width: 1180px; margin:0 auto; }
-  .section-heading{
-    font-family: var(--display); font-weight:700; font-size:1.6rem; letter-spacing:-0.01em;
-    color: var(--navy); margin: 0 0 2rem 0; text-transform:uppercase;
-  }
-  .edu-row{
-    display:flex; justify-content:space-between; align-items:baseline; gap:1.5rem;
-    padding: 1.1rem 0; border-top: 1px solid var(--border);
-  }
-  .edu-row:last-child{ border-bottom: 1px solid var(--border); }
-  .edu-row .degree{ font-weight:600; font-size:1rem; }
-  .edu-row .inst{ color: var(--ink-muted); font-size:0.92rem; }
-  .edu-row .dates{ font-family: var(--mono); font-size:0.78rem; color: var(--ink-muted); white-space:nowrap; }
-  @media(max-width:700px){ .edu-row{ flex-direction:column; align-items:flex-start; gap:0.3rem; } }
+    /* ============================================================
+       BOOKS LIST — "Some Books From My Shelf". Each row is a single
+       clickable link (cover + title + author) opening the book's
+       Goodreads page in a new tab. Cover images are expected at
+       images/others/book/b1.jpg ... b7.jpg — falls back to a plain book
+       icon if the file is missing.
+       ============================================================ */
+    .book-list{display:flex;flex-direction:column;gap:1rem;}
+    .book-row{display:flex;align-items:center;gap:1.25rem;background:#fff;padding:1rem 1.25rem;border-radius:.75rem;text-decoration:none;box-shadow:0 1px 3px rgba(15,23,42,.06),0 6px 18px rgba(15,23,42,.08);transition:box-shadow .22s ease,transform .22s ease;}
+    .book-row:hover{box-shadow:0 4px 10px rgba(15,23,42,.10),0 14px 30px rgba(15,23,42,.14);transform:translateY(-2px);}
+    .book-cover{flex-shrink:0;width:52px;height:76px;border-radius:.25rem;overflow:hidden;background:var(--color-bg-hover);display:flex;align-items:center;justify-content:center;color:var(--color-navy);font-size:1.4rem;}
+    .book-cover img{width:100%;height:100%;object-fit:cover;display:block;}
+    .book-text{min-width:0;}
+    .book-title{font-family:var(--font-serif);font-size:1.15rem;font-weight:700;color:var(--color-navy-dark);line-height:1.3;margin:0 0 .25rem;}
+    .book-author{font-family:var(--font-serif);font-size:.92rem;font-weight:400;color:var(--color-text-faint-onlight);margin:0;}
 
-  /* ===== contact footer ===== */
-  .contact-section{ background: var(--navy); color: var(--white); padding: 8vh 3rem; text-align:center; }
-  .contact-section h2{
-    font-family: var(--display); font-weight:800; font-size: clamp(1.8rem,4vw,2.6rem);
-    text-transform:uppercase; margin: 0 0 1.6rem 0; letter-spacing:-0.01em;
-  }
-  .contact-links{ display:flex; gap:2rem; justify-content:center; flex-wrap:wrap; }
-  .contact-links a{
-    text-decoration:none; color: var(--white); font-size:0.98rem; font-weight:500;
-    border-bottom: 2px solid rgba(255,255,255,0.25);
-    padding-bottom:0.2rem;
-  }
-  .contact-links a:hover{ border-color: var(--gold); }
+    /* ============================================================
+       CONTACT PAGE — photo on the left, "LET'S WORK TOGETHER" heading
+       and a light info card on the right. Uses the same serif font
+       and navy palette as the rest of the site (.about-desc-title /
+       --color-navy-dark etc.) so it matches Home/About in tone.
+       ============================================================ */
+    /* CONTACT PAGE CENTERING — toggled on #main-content only while the
+       Contact view is active (see showView() in the script below), so
+       the image+card block sits with equal top/bottom and equal
+       left/right gaps, without changing the Work or Interests layouts. */
+    #main-content.center-page{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1 0 auto;}
+    .contact-hero{display:flex;gap:3.5rem;align-items:stretch;align-self:stretch;width:100%;min-width:0;max-width:100%;}
+    .contact-photo{width:480px;flex-shrink:0;}
+    .contact-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+    /* Blurred wall texture sits behind only this right-hand column (heading
+       box + contact card), not behind the photo or the rest of the page. */
+    .contact-right{position:relative;flex:1;min-width:0;display:flex;flex-direction:column;gap:1.5rem;}
+    /* Small decorative stone-stack image tucked into the bottom-right
+       corner, in the empty space below the contact card (that space
+       exists because .contact-right stretches to match the photo's
+       height, but the boxes only take up their own content height).
+       Sized small enough to never overlap the card's icons/text. */
+    .contact-stone-decor{position:absolute;bottom:0;right:0;width:90px;height:auto;pointer-events:none;z-index:1;}
+    .contact-heading-box{position:relative;z-index:1;background:var(--color-bg-page);border-radius:.5rem;padding:1.75rem 2.5rem;max-width:38rem;}
+    /* Heading matches .about-desc-title exactly (same class used for
+       "About Me" / "Education" / "Career Journey") for visual consistency. */
+    .contact-heading{
+      font-family:var(--font-serif);
+      font-size:2rem;
+      font-weight:700;
+      color:var(--color-navy-dark);
+      margin:0;
+      white-space:nowrap;
+    }
+    .contact-box{position:relative;z-index:1;background:var(--color-bg-page);border-radius:.5rem;padding:2.75rem 2.5rem;display:flex;flex-direction:column;gap:2.75rem;max-width:38rem;}
+    .contact-item{display:flex;align-items:center;gap:1.4rem;text-decoration:none;color:var(--color-navy-dark);}
+    .contact-item-icon{
+      flex-shrink:0;width:3.4rem;height:3.4rem;border-radius:999px;
+      border:1.5px solid var(--color-navy-dark);
+      display:flex;align-items:center;justify-content:center;
+      color:var(--color-navy-dark);
+      transition:background-color .15s ease,color .15s ease,border-color .15s ease;
+    }
+    .contact-item:hover .contact-item-icon{background:var(--color-navy-dark);color:#fff;}
+    .contact-item-icon svg{width:22px;height:22px;}
+    /* Text matches .about-desc-text's font-family/size/weight/colour
+       (the "About Me" paragraph style) for visual consistency. */
+    .contact-item-text{font-family:var(--font-serif);font-size:1.55rem;line-height:1.6;font-weight:400;color:var(--color-text-body);white-space:nowrap;}
+    .contact-item-text span{display:block;}
+    @media(max-width:760px){
+      .contact-hero{flex-direction:column;gap:2rem;}
+      .contact-photo{width:100%;max-width:340px;height:auto;}
+      .contact-photo img{height:auto;}
+      .contact-heading{font-size:1.7rem;white-space:normal;}
+      .contact-item-text{font-size:1.15rem;}
+      .contact-item-icon{width:2.8rem;height:2.8rem;}
+      .contact-box{padding:2rem 1.5rem;max-width:none;}
+      .contact-stone-decor{width:70px;}
+    }
 
-  footer.site-footer{
-    text-align:center; padding: 1.6rem; font-family: var(--mono); font-size:0.7rem;
-    color: var(--ink-muted); background: var(--navy);
-  }
-</style>
+    .work-sub{display:none;}
+    .work-sub.active{display:block;animation:pfadeUp .32s ease both;}
+    .back-link{display:inline-flex;align-items:center;gap:.4rem;font-size:.85rem;font-weight:600;color:var(--color-navy);background:none;border:none;cursor:pointer;padding:0;margin-bottom:1.75rem;font-family:var(--font-serif);}
+    .back-link:hover{text-decoration:underline;}
+    .project-detail-img{width:100%;max-height:440px;border-radius:1.25rem;overflow:hidden;margin-bottom:2rem;background:linear-gradient(135deg,#e8ecf5 0%,#c0cbea 100%);}
+    .project-detail-img img{width:100%;height:100%;object-fit:cover;display:block;}
+
+    .cs-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;border-top:1.5px solid var(--color-border);border-bottom:1.5px solid var(--color-border);padding:1.75rem 0;margin:2rem 0;}
+    @media(max-width:900px){.cs-stats{grid-template-columns:repeat(2,1fr);}}
+    .cs-stat-label{font-family:var(--font-serif);font-size:1.55rem;font-weight:400;letter-spacing:.04em;text-transform:uppercase;color:var(--color-text-body);margin-bottom:.5rem;}
+    .cs-stat-value{font-family:var(--font-serif);font-size:1.55rem;font-weight:400;color:var(--color-text-body);line-height:1.5;}
+    .cs-section{padding:2rem 0;border-top:1px solid #eef2f6;} /* 2rem top+bottom = 4rem between consecutive sections, matching Home page's .about-block gap */
+    .cs-section:first-of-type{border-top:none;padding-top:0;}
+    .cs-section-title{font-family:var(--font-serif);font-size:2rem;font-weight:700;color:var(--color-navy-dark);margin-bottom:1.1rem;}
+    .cs-section-body{max-width:46rem;}
+    .cs-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.9rem;}
+    .cs-list li{position:relative;padding-left:1.3rem;font-family:var(--font-serif);font-size:1.55rem;font-weight:400;line-height:1.65;color:var(--color-text-body);}
+    .cs-list li::before{content:'';position:absolute;left:0;top:.65rem;width:5px;height:5px;border-radius:999px;background:var(--color-navy);}
+    .cs-p{font-family:var(--font-serif);font-size:1.55rem;font-weight:400;line-height:1.7;color:var(--color-text-body);margin:0 0 1rem;}
+    .cs-p:last-child{margin-bottom:0;}
+    .cs-process-img{width:100%;margin:0 0 2rem;}
+    .cs-process-img img{width:100%;height:auto;display:block;}
+    .cs-tags{font-family:var(--font-serif);font-size:.92rem;color:var(--color-text-muted);margin:0 0 1.25rem;}
+    .cs-sub{font-family:var(--font-serif);font-weight:700;color:var(--color-navy-dark);font-size:1.55rem;margin:1.4rem 0 .5rem;}
+    .cs-sub:first-child{margin-top:0;}
+    .cs-method{display:flex;flex-wrap:wrap;align-items:flex-start;gap:0;}
+    .cs-method-step{display:flex;flex-direction:column;align-items:center;text-align:center;width:7.5rem;}
+    .cs-method-num{width:2.1rem;height:2.1rem;border-radius:999px;background:var(--color-navy);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-serif);font-weight:700;font-size:1rem;margin-bottom:.6rem;}
+    .cs-method-label{font-size:.8rem;font-weight:600;color:var(--color-footer-navy);line-height:1.4;}
+    .cs-method-arrow{flex:0 0 auto;width:2rem;color:var(--color-border-light);display:flex;align-items:center;justify-content:center;padding-top:1rem;}
+    .cs-section.cs-highlight{background:var(--color-bg-page);border-radius:1rem;padding:2rem 1.75rem;margin:1rem 0;border-top:none;}
+    .cs-list b{color:var(--color-navy);font-weight:700;}
+    .cs-table{width:100%;border-collapse:collapse;font-size:.84rem;margin-top:.5rem;}
+    .cs-table th,.cs-table td{border:1px solid var(--color-border);padding:.6rem .75rem;text-align:left;vertical-align:top;color:var(--color-text-muted);}
+    .cs-table th{background:var(--color-bg-page);color:var(--color-navy-dark);font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:.03em;}
+    .cs-table-wrap{overflow-x:auto;margin-top:.5rem;}
+    @media(max-width:700px){.cs-stats{grid-template-columns:1fr;gap:1.5rem;}.cs-section{grid-template-columns:1fr;gap:.75rem;}.cs-method{gap:.5rem;}.cs-method-arrow{display:none;}.cs-method-step{width:auto;flex-direction:row;text-align:left;gap:.6rem;}.cs-method-num{margin-bottom:0;flex-shrink:0;}}
+
+    .proj-card-links{display:flex;gap:.75rem;margin-top:.5rem;flex-wrap:wrap;}
+    .proj-card-links a{font-size:.8rem;font-weight:600;color:var(--color-navy);text-decoration:none;padding:4px 12px;border:1.5px solid #c2cde8;border-radius:999px;transition:background .15s,border-color .15s;}
+    .proj-card-links a:hover{background:var(--color-bg-hover);border-color:#8899cc;}
+
+    .cs-body{margin-top:3rem;}
+    .cs-meta-row{display:flex;flex-wrap:wrap;gap:2.5rem;padding:2rem 0;border-top:1.5px solid var(--color-border);border-bottom:1.5px solid var(--color-border);margin-bottom:3rem;}
+    .cs-meta-item{min-width:9rem;}
+    .cs-meta-label{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--color-text-faint-onlight);margin-bottom:.5rem;}
+    .cs-meta-value{font-size:.92rem;color:var(--color-footer-navy);line-height:1.5;}
+    .cs-section-label{font-size:.78rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--color-navy);padding-top:.15rem;}
+    .cs-section-body{min-width:0;}
+    .cs-columns{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;}
+    .cs-col-title{font-family:var(--font-serif);font-size:1.35rem;font-weight:700;color:var(--color-navy-dark);margin-bottom:.9rem;}
+    .cs-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.85rem;}
+    .cs-list li::before{content:'';position:absolute;left:0;top:.6em;width:5px;height:5px;border-radius:999px;background:#adbde0;}
+    .cs-list-num{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.85rem;counter-reset:cs-num;}
+    .cs-list-num li{position:relative;padding-left:1.6rem;font-size:.94rem;line-height:1.65;color:var(--color-text-muted);counter-increment:cs-num;}
+    .cs-list-num li::before{content:counter(cs-num);position:absolute;left:0;top:0;font-family:var(--font-serif);font-weight:700;color:var(--color-navy);font-size:.95rem;}
+    .cs-p b{color:var(--color-footer-navy);}
+    .cs-steps{display:flex;flex-wrap:wrap;align-items:flex-start;gap:0;}
+    .cs-step{display:flex;flex-direction:column;align-items:center;text-align:center;width:7.2rem;}
+    .cs-step-num{width:2.1rem;height:2.1rem;border-radius:999px;background:var(--color-navy);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-serif);font-weight:700;font-size:.95rem;margin-bottom:.6rem;}
+    .cs-step-label{font-size:.78rem;color:var(--color-text-muted);line-height:1.4;}
+    .cs-step-arrow{align-self:center;color:var(--color-border-light);margin:0 .35rem;padding-top:.6rem;font-size:.9rem;}
+    .cs-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+    .cs-table{width:100%;border-collapse:collapse;font-size:.92rem;min-width:560px;}
+    .cs-table th,.cs-table td{border:1px solid var(--color-border);padding:.6rem .75rem;text-align:left;vertical-align:top;}
+    .cs-table thead th{background:var(--color-bg-page);font-weight:700;color:var(--color-navy);font-size:.76rem;text-transform:uppercase;letter-spacing:.03em;}
+    .cs-table td{color:var(--color-text-muted);}
+    .cs-table tr td:first-child,.cs-table tr th:first-child{color:var(--color-footer-navy);font-weight:600;}
+    .cs-results-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;}
+    .cs-results-col h4{font-weight:700;color:var(--color-navy-dark);font-size:.92rem;margin-bottom:.7rem;}
+    .cs-img-strip{display:flex;gap:.6rem;border-radius:1rem;overflow:hidden;margin:.5rem 0 1.5rem;}
+    .cs-method-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin:1.4rem 0;}
+    @media(max-width:760px){.cs-method-grid{grid-template-columns:1fr;gap:1.25rem;}}
+    .cs-img-strip img{flex:1;width:100%;height:100%;object-fit:cover;display:block;max-height:260px;}
+    @media(max-width:760px){.cs-section{grid-template-columns:1fr;gap:.85rem;}.cs-columns{grid-template-columns:1fr;gap:1.75rem;}.cs-results-cols{grid-template-columns:1fr;gap:1.75rem;}.cs-steps{gap:.5rem 0;}.cs-step{width:5.6rem;}.cs-step-arrow{display:none;}.cs-img-strip{flex-direction:column;}}
+
+    @media(max-width:640px){.ptabs{gap:1.1rem}}
+
+    .about-section{background:var(--color-bg-page);padding:5rem 1rem 0;}
+    .about-inner{max-width:54rem;margin:0 auto;padding-bottom:4rem;}
+    .about-block{margin-top:4rem;}
+    .about-bio{font-family:var(--font-serif);font-size:1.1rem;line-height:1.65;color:var(--color-text-muted);font-weight:400;}
+
+    .about-desc-title{font-family:var(--font-serif);font-size:2rem;font-weight:700;color:var(--color-navy-dark);margin-bottom:1.1rem;}
+    .about-desc-text{font-family:var(--font-serif);font-size:1.55rem;line-height:1.6;font-weight:400;color:var(--color-text-body);margin:0;text-align:justify;text-justify:inter-word;}
+    .edu-transcript{display:flex;flex-direction:column;gap:1.25rem;}
+    .edu-row{display:flex;align-items:flex-start;gap:1.5rem;min-height:180px;background:#fff;padding:1.5rem 1.75rem;border:1.5px solid #dce2f0;border-left:10px solid var(--color-navy);border-right:10px solid var(--color-navy);border-radius:1.5rem;box-shadow:0 1px 4px rgba(21,32,61,.05);transition:box-shadow .22s,border-color .22s,transform .22s;}
+    /* Fixed-size box wrapping every logo, sized to the largest logo (WBUT,
+       132px). Since this box — not the image itself — is what the flex
+       row measures for spacing, every row's box starts at the same left
+       edge and the text after it starts at the same left edge too,
+       regardless of how large or small each individual logo is inside. */
+    .edu-logo-wrap{width:132px;height:132px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+    .edu-row .edu-logo{width:76px;height:76px;flex-shrink:0;object-fit:contain;}
+    @media(max-width:640px){
+      .edu-logo-wrap{width:64px;height:64px;}
+      .edu-row .edu-logo{width:44px;height:44px;}
+      .edu-row .edu-logo-epfl{width:62px;height:42px;}
+      .edu-row .edu-logo-wbut{width:64px;height:64px;}
+      .edu-row .edu-logo-iitkgp{width:54px;height:54px;}
+    }
+    /* Per-institution size tweaks — KTH's badge already fills its box nicely
+       at the base 88px, so it's left alone. The others have different
+       native proportions (EPFL is a wide wordmark; WBUT/IITKGP are smaller
+       circular seals) that read visually smaller inside the same box, so
+       they get roomier boxes here to look comparably sized next to KTH. */
+    .edu-row .edu-logo-epfl{width:130px;height:88px;}
+    .edu-row .edu-logo-wbut{width:132px;height:132px;}
+    .edu-row .edu-logo-iitkgp{width:110px;height:110px;}
+    .edu-row-text{min-width:0;align-self:center;}
+    .edu-row-text h3{font-family:var(--font-serif);font-size:1.55rem;font-weight:700;color:var(--color-navy-dark);margin:0 0 .35rem;}
+    .edu-row-text .edu-inst{font-family:var(--font-serif);font-size:1.55rem;font-weight:400;color:var(--color-navy);margin:0 0 .25rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    @media(max-width:700px){.edu-row-text .edu-inst{white-space:normal;overflow:visible;text-overflow:clip;}}
+    .edu-row-text .edu-dates{font-family:var(--font-serif);font-size:1.55rem;font-weight:400;color:var(--color-text-faint-onlight);margin:0;}
+
+    .about-highlight-row{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:center;margin:3rem 0;}
+    .about-highlight-text{font-size:1.35rem;line-height:1.5;color:var(--color-navy-dark);font-weight:600;}
+    .about-highlight-img{width:100%;aspect-ratio:4/3;border-radius:1rem;overflow:hidden;background:linear-gradient(135deg,#e8ecf5 0%,#c0cbea 100%);}
+    .about-highlight-img img{width:100%;height:100%;object-fit:cover;display:block;}
+    @media(max-width:700px){.about-highlight-row{grid-template-columns:1fr;}}
+
+    .about-cta{background:var(--color-navy);padding:5rem 1.5rem;text-align:center;}
+    .about-cta-text{color:#fff;font-size:1.8rem;font-weight:700;margin-bottom:1.75rem;}
+    .about-cta-btn{display:inline-block;border:1.5px solid rgba(255,255,255,.55);color:#fff;background:none;border-radius:999px;padding:.9rem 2.2rem;font-size:.95rem;font-weight:600;cursor:pointer;font-family:inherit;transition:background .18s,border-color .18s;}
+    .about-cta-btn:hover{background:rgba(255,255,255,.1);border-color:#fff;}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+    .fade-1{animation:fadeUp .7s ease .05s both}.fade-2{animation:fadeUp .7s ease .2s both}.fade-3{animation:fadeUp .7s ease .35s both}.fade-4{animation:fadeUp .7s ease .5s both}
+    @keyframes bounceY{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+    .bounce-icon{animation:bounceY 2.2s ease-in-out infinite}
+
+    .jshell{position:relative;background:linear-gradient(180deg,#0d1328 0%,#111936 46%,var(--color-navy) 100%);border-radius:1rem;overflow:hidden;box-shadow:0 16px 40px rgba(15,23,42,.14);transition:all .28s ease;overscroll-behavior:contain;margin-left:-1vw;margin-right:-1vw;}
+    .jicon-btn{width:34px;height:34px;border-radius:999px;border:1px solid rgba(255,255,255,.10);background:rgba(10,16,32,.26);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s,transform .15s,border-color .15s;font-family:var(--font-serif);font-size:.9rem;line-height:1;}
+    .jicon-btn:hover{background:rgba(10,16,32,.38);border-color:rgba(255,255,255,.16);transform:translateY(-1px);}
+    .jvp{position:relative;height:620px;overflow:hidden;touch-action:pan-y;overscroll-behavior:contain;cursor:default;background:radial-gradient(circle at 88% 19%,#fffde8 0 58px,rgba(255,250,200,.18) 59px,transparent 130px),radial-gradient(circle at 10% 18%,rgba(255,255,255,.55) 0 1.5px,transparent 2.5px),radial-gradient(circle at 22% 32%,rgba(255,255,255,.45) 0 1.5px,transparent 2.5px),radial-gradient(circle at 38% 10%,rgba(255,255,255,.60) 0 1.5px,transparent 2.5px),radial-gradient(circle at 52% 22%,rgba(255,255,255,.45) 0 1.5px,transparent 2.5px),radial-gradient(circle at 67% 8%,rgba(255,255,255,.50) 0 1.5px,transparent 2.5px),radial-gradient(circle at 30% 55%,rgba(255,255,255,.40) 0 1px,transparent 2px),radial-gradient(circle at 78% 28%,rgba(255,255,255,.45) 0 1.5px,transparent 2.5px),radial-gradient(circle at 90% 18%,rgba(255,255,255,.40) 0 1px,transparent 2px),radial-gradient(circle at 15% 70%,rgba(255,255,255,.35) 0 1px,transparent 2px),radial-gradient(circle at 60% 75%,rgba(255,255,255,.40) 0 1px,transparent 2px),radial-gradient(circle at 8% 62%,rgba(255,255,255,.42) 0 1.5px,transparent 2.5px),radial-gradient(circle at 42% 85%,rgba(255,255,255,.38) 0 1.5px,transparent 2.5px),radial-gradient(circle at 70% 82%,rgba(255,255,255,.35) 0 1.5px,transparent 2.5px),radial-gradient(circle at 92% 58%,rgba(255,255,255,.38) 0 1.5px,transparent 2.5px),radial-gradient(circle at 28% 72%,rgba(255,255,255,.32) 0 1px,transparent 2px),radial-gradient(circle at 58% 90%,rgba(255,255,255,.35) 0 1px,transparent 2px),linear-gradient(180deg,#06102a 0%,#0c1840 50%,#111e48 100%);transition:height .28s ease;}
+    .jvp.dragging{cursor:default}
+    .jworld{position:absolute;left:0;top:0;width:3600px;height:1800px;transform-origin:0 0;will-change:transform;z-index:1;}
+    .jisland{position:absolute;width:380px;height:370px;transform:translate(-50%,-50%);cursor:pointer;user-select:none;}
+    .jisland:focus-visible{outline:3px solid #fff;outline-offset:6px;border-radius:999px;}
+    .jinner{position:absolute;inset:0;transition:transform .22s ease,filter .22s ease}
+    .jisland:hover .jinner{transform:translateY(-12px) scale(1.28);filter:drop-shadow(0 14px 18px rgba(0,0,0,.35))}
+    .jisland.sel .jinner{transform:scale(1.07)}
+
+    .jlabel{position:absolute;left:50%;top:-72px;transform:translateX(-50%);text-align:center;pointer-events:none;white-space:nowrap;}
+    .jcity{font-family:'Comic Sans MS','Comic Sans',cursive;font-size:3.6rem;font-weight:400;letter-spacing:.14em;color:#fff;text-shadow:0 2px 0 rgba(0,0,0,1),0 4px 20px rgba(0,0,0,.85);-webkit-font-smoothing:antialiased;}
+    .jtop{position:absolute;left:50%;top:28px;width:248px;height:148px;transform:translateX(-50%);clip-path:polygon(10% 24%,25% 10%,67% 6%,88% 20%,94% 48%,81% 76%,40% 91%,13% 77%,5% 48%);}
+    .jrim{position:absolute;left:50%;top:155px;width:268px;height:22px;transform:translateX(-50%);clip-path:polygon(6% 24%,23% 2%,68% 0%,91% 18%,96% 54%,79% 100%,34% 100%,10% 82%,4% 52%);}
+    .jbot{position:absolute;left:50%;top:164px;width:172px;height:130px;transform:translateX(-50%);background:linear-gradient(180deg,#a0714f 0%,#7a5235 50%,#5c3d22 100%);clip-path:polygon(26% 0,77% 0,100% 19%,84% 55%,63% 100%,40% 92%,17% 58%,0 18%);}
+    .jtree{position:absolute;width:18px;height:44px}
+    .jtree::before{content:"";position:absolute;left:7px;bottom:0;width:5px;height:15px;background:#6b4423;border-radius:2px}
+    .jtree::after{content:"";position:absolute;left:0;top:0;width:18px;height:28px;background:#22a855;clip-path:polygon(50% 0,100% 44%,76% 44%,100% 100%,0 100%,24% 44%,0 44%)}
+    .jstone{position:absolute;width:10px;height:8px;background:#c8d6e0;border-radius:4px;opacity:.6}
+    .jyears{position:absolute;left:50%;top:314px;transform:translateX(-50%);width:340px;font-family:'Comic Sans MS','Comic Sans',cursive;font-size:2.1rem;font-weight:400;letter-spacing:.12em;color:#fff;text-shadow:0 2px 0 rgba(0,0,0,1),0 4px 14px rgba(0,0,0,.9);-webkit-text-stroke:.5px rgba(255,255,255,.6);white-space:normal;pointer-events:none;text-align:center;line-height:1.3;-webkit-font-smoothing:antialiased;}
+    .jmark-spire{position:absolute;left:50%;top:42px;transform:translateX(-50%);width:8px;height:38px}
+    .jmark-spire::before{content:"";position:absolute;left:3px;bottom:0;width:2px;height:28px;background:rgba(240,246,255,.85)}
+    .jmark-spire::after{content:"";position:absolute;left:50%;top:0;width:10px;height:10px;transform:translateX(-50%);border-radius:999px;background:rgba(225,238,255,.92)}
+    .jmark-arch{position:absolute;left:50%;top:58px;width:26px;height:20px;transform:translateX(-50%);border:3px solid rgba(238,244,248,.68);border-bottom:none;border-radius:16px 16px 0 0}
+    .jmark-pavilion{position:absolute;left:50%;top:54px;width:26px;height:16px;transform:translateX(-50%);background:rgba(240,244,250,.70);clip-path:polygon(50% 0,100% 34%,86% 34%,86% 100%,14% 100%,14% 34%,0 34%)}
+    .jdetail{position:absolute;width:280px;min-width:240px;max-width:calc(100% - 20px);min-height:80px;max-height:calc(100% - 20px);overflow:hidden;background:rgba(244,246,248,.98);color:#132642;border:1px solid rgba(20,40,70,.10);border-radius:12px;opacity:0;transform:translateY(18px) scale(.97);pointer-events:none;transition:opacity .26s ease,transform .26s ease;box-shadow:0 20px 50px rgba(15,23,42,.22);display:flex;flex-direction:column;z-index:3;}
+    .jdetail.open{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+    .jdetail-header{display:flex;align-items:flex-start;justify-content:space-between;padding:.9rem .9rem .6rem 1.1rem;cursor:grab;flex-shrink:0;border-bottom:1px solid rgba(20,40,70,.06);user-select:none}
+    .jdetail-header:active{cursor:grabbing}
+    .jdetail-body{padding:.75rem 1.1rem 1rem;overflow-y:auto;flex:1;cursor:auto;user-select:text;-webkit-user-select:text}
+    .jresize{position:absolute;z-index:5;touch-action:none}
+    .jresize-n,.jresize-s{left:12px;right:12px;height:10px}.jresize-n{top:-5px;cursor:n-resize}.jresize-s{bottom:-5px;cursor:s-resize}
+    .jresize-e,.jresize-w{top:12px;bottom:12px;width:10px}.jresize-e{right:-5px;cursor:e-resize}.jresize-w{left:-5px;cursor:w-resize}
+    .jresize-ne,.jresize-nw,.jresize-se,.jresize-sw{width:16px;height:16px;display:flex;align-items:flex-end;justify-content:flex-end}
+    .jresize-ne{top:-5px;right:-5px;cursor:ne-resize}.jresize-nw{top:-5px;left:-5px;cursor:nw-resize}.jresize-se{bottom:-5px;right:-5px;cursor:se-resize;padding:4px}.jresize-sw{bottom:-5px;left:-5px;cursor:sw-resize}
+    .jresize svg{opacity:.35;pointer-events:none}.jresize:hover svg{opacity:.7}
+    .jdetail-actions{display:none}
+    .jdtitle{font-family:var(--font-serif);font-size:1.9rem;color:#102744;line-height:1}.jdsubtitle{display:none}
+    .jcards-wrap{margin-top:0;display:grid;gap:.75rem}
+    .jcard{background:white;border:1px solid #e9edf1;border-radius:10px;padding:0;box-shadow:0 1px 6px rgba(20,40,70,.04);overflow:hidden}
+    .jcard-head{display:flex;align-items:center;gap:.9rem;padding:.95rem 1rem .85rem;border-bottom:1px solid #eef2f6;background:linear-gradient(180deg,rgba(248,250,252,.9),rgba(255,255,255,.98))}
+
+    .jlogo{width:4rem;height:4rem;min-width:4rem;flex-shrink:0;border-radius:999px;background:var(--color-bg-page);border:1px solid #f1f5f9;display:flex;align-items:center;justify-content:center;padding:.45rem;box-shadow:inset 0 1px 3px rgba(0,0,0,.06);overflow:hidden;color:#64748b}
+    .jlogo img{max-width:100%;max-height:100%;object-fit:contain;display:block}
+    .jorg-wrap{min-width:0;flex:1}.jorg{font-weight:600;font-size:.95rem;color:#0f203a;line-height:1.35}
+    .jroles{display:grid;gap:0}.jrole{padding:.9rem 1rem .95rem}.jrole+.jrole{border-top:1px solid #eef2f6}
+    .jct{font-weight:600;font-size:.97rem;color:#0f203a;line-height:1.35}.jcy{margin-top:.12rem;font-size:.82rem;color:#7b8ca3}
+    .jcn{margin-top:.4rem;font-size:.85rem;line-height:1.52;color:#5b6e87;white-space:pre-line}
+    .jtags{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.6rem}
+    .jtag{border:1px solid #dbe3ea;background:#f7f9fb;color:#7387a0;border-radius:999px;padding:.18rem .45rem;font-size:.6rem;letter-spacing:.04em;text-transform:uppercase}
+    @media(max-width:640px){.jvp{height:440px}.jdetail{width:calc(100% - 20px)!important;left:10px!important}.jlogo{width:3.3rem;height:3.3rem;min-width:3.3rem}}
+
+    .lang-dd{position:relative;}
+    .lang-btn{display:flex;align-items:center;justify-content:center;gap:.15rem;width:2.15rem;height:2.15rem;padding:0;border-radius:999px;border:1.5px solid var(--color-border-light);font-family:var(--font-serif);font-size:.66rem;font-weight:500;color:#3f4b5c;letter-spacing:.01em;background:transparent;cursor:pointer;transition:background .18s,border-color .18s,color .18s;}
+    .lang-btn:hover{background:var(--color-navy);border-color:var(--color-navy);color:#fff;}
+    .lang-dd.open .lang-btn{background:var(--color-navy);border-color:var(--color-navy);color:#fff;}
+    .lang-btn svg.chev{flex-shrink:0;transition:transform .18s ease;}
+    .lang-dd.open .lang-btn svg.chev{transform:rotate(180deg);}
+    .lang-menu{position:absolute;top:calc(100% + 10px);right:0;background:#fff;border-radius:.75rem;box-shadow:0 14px 34px rgba(21,32,61,.20);padding:.4rem;display:none;min-width:140px;z-index:70;}
+    .lang-dd.open .lang-menu{display:block;}
+    .lang-opt{display:flex;align-items:center;justify-content:space-between;width:100%;padding:.5rem .7rem;border-radius:.5rem;border:none;background:transparent;font-size:.82rem;font-weight:500;color:var(--color-navy);cursor:pointer;text-align:left;font-family:var(--font-serif);}
+    .lang-opt:hover{background:var(--color-bg-hover);}
+    .lang-opt.active{background:var(--color-navy);color:#fff;}
+
+    .menu-dd{position:relative;}
+    .menu-btn{display:flex;align-items:center;justify-content:center;width:2.15rem;height:2.15rem;border-radius:999px;border:1.5px solid var(--color-border-light);background:transparent;color:var(--color-navy);cursor:pointer;transition:background .18s,border-color .18s,color .18s;}
+    .menu-btn:hover{background:var(--color-navy);border-color:var(--color-navy);color:#fff;}
+    .menu-dd.open .menu-btn{background:var(--color-navy);border-color:var(--color-navy);color:#fff;}
+    .menu-panel{position:absolute;top:calc(100% + 10px);right:0;background:#fff;border-radius:.75rem;box-shadow:0 14px 34px rgba(21,32,61,.20);padding:.4rem;display:none;min-width:160px;z-index:70;}
+    .menu-dd.open .menu-panel{display:block;}
+    .menu-opt{display:block;width:100%;padding:.55rem .7rem;border-radius:.5rem;border:none;background:transparent;font-size:1.3rem;font-weight:400;color:var(--color-text-body);cursor:pointer;text-align:left;font-family:var(--font-serif);text-decoration:none;}
+    .menu-opt:hover{background:var(--color-bg-hover);}
+
+    .reveal{opacity:0;transform:translateY(26px);transition:opacity .65s ease,transform .65s ease;}
+    .reveal.in-view{opacity:1;transform:translateY(0);}
+    @media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important;transition:none!important;}}
+    /* ============================================================
+       NEW HERO + WORK/INTERESTS SECTION — ghibli soft-pastel system.
+       Deliberately separate token names (--n-*) so the untouched
+       topbar/footer (still on --font-serif / --color-navy) don't
+       collide with this. To be unified later once header/footer
+       are revisited.
+       ============================================================ */
+    :root{
+      --n-font-display:'Space Grotesk', sans-serif;
+      --n-font-body:'Inter', sans-serif;
+      --n-font-mono:'JetBrains Mono', monospace;
+      --n-ink:#17181C;
+      --n-ink-muted:#5B5B62;
+      --n-navy:#1B2A4A;
+      --n-cream:#FAF6EE;
+      --n-border:#E7E0D0;
+      --n-pink:#FCD8E4;
+      --n-green:#ACFF48;
+      --n-blue:#B4E4F0;
+    }
+
+    .hero-new{
+      background:#fff; position:relative; overflow:hidden;
+      padding:6vh 3rem 8vh 3rem;
+      display:flex; flex-direction:column; justify-content:center;
+    }
+    header.hero-new.view.active{display:flex;}
+    #heroTrailCanvas{ position:absolute; inset:0; z-index:0; pointer-events:none; }
+    .hero-new-inner{ position:relative; z-index:1; max-width:760px; }
+    .hero-new-inner h1{
+      font-family:var(--n-font-display); font-weight:800; letter-spacing:-0.02em;
+      text-transform:uppercase; font-size:clamp(2.4rem,6vw,4.6rem); line-height:0.98;
+      color:var(--n-navy); margin:0 0 1.4rem 0;
+    }
+    .hero-new-inner p{
+      font-family:var(--n-font-body); font-size:1.1rem; line-height:1.7;
+      color:var(--n-ink); max-width:56ch; margin:0;
+    }
+
+    .new-section{ background:var(--n-cream); padding:6vh 3rem; }
+    .new-section-inner{ max-width:1180px; margin:0 auto; }
+    .new-section-heading{
+      font-family:var(--n-font-display); font-weight:700; font-size:1.7rem;
+      text-transform:uppercase; letter-spacing:-0.01em; color:var(--n-navy);
+      margin:0 0 2rem 0;
+    }
+    .new-section-heading.second{ margin-top:5vh; }
+
+    .n-work-grid{ display:grid; grid-template-columns:1fr 1fr; gap:1.6rem; }
+    @media(max-width:640px){ .n-work-grid{ grid-template-columns:1fr; } }
+    .n-work-card{
+      background:#fff; border:1px solid var(--n-border); border-radius:0.9rem;
+      overflow:hidden; cursor:pointer; display:flex; flex-direction:column;
+      transition:transform 0.2s ease, box-shadow 0.2s ease; padding:0; text-align:left;
+      font-family:inherit;
+    }
+    .n-work-card:hover{ transform:translateY(-3px); box-shadow:0 14px 30px -14px rgba(27,42,74,0.25); }
+    .n-work-card .n-thumb{ aspect-ratio:4/3; display:block; overflow:hidden; }
+    .n-work-card .n-thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+    .n-work-card .n-body{ padding:1.1rem 1.2rem 1.3rem 1.2rem; }
+    .n-work-card .n-meta{ font-family:var(--n-font-mono); font-size:0.66rem; letter-spacing:0.06em; text-transform:uppercase; color:var(--n-ink-muted); margin-bottom:0.4rem; }
+    .n-work-card h3{ font-family:var(--n-font-display); font-weight:700; font-size:1.05rem; margin:0; color:var(--n-ink); }
+
+    .n-gallery-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1.1rem; margin-bottom:3rem; }
+    @media(max-width:760px){ .n-gallery-grid{ grid-template-columns:repeat(2,1fr); } }
+    .n-gallery-item{ background:#fff; border:1px solid var(--n-border); border-radius:0.75rem; overflow:hidden; }
+    .n-gallery-item img{ width:100%; aspect-ratio:4/3; object-fit:cover; display:block; }
+    .n-gallery-caption{ font-family:var(--n-font-mono); font-size:0.72rem; letter-spacing:0.04em; text-transform:uppercase; color:var(--n-ink-muted); padding:0.6rem 0.75rem; margin:0; }
+
+    .n-book-list{ display:flex; flex-direction:column; gap:0.9rem; }
+    .n-book-row{ display:flex; align-items:center; gap:1.1rem; background:#fff; border:1px solid var(--n-border); border-radius:0.75rem; padding:0.85rem 1.1rem; text-decoration:none; }
+    .n-book-cover{ flex-shrink:0; width:44px; height:64px; border-radius:0.25rem; overflow:hidden; background:var(--n-cream); }
+    .n-book-cover img{ width:100%; height:100%; object-fit:cover; display:block; }
+    .n-book-title{ font-family:var(--n-font-display); font-weight:700; font-size:0.98rem; color:var(--n-ink); margin:0 0 0.2rem 0; }
+    .n-book-author{ font-family:var(--n-font-body); font-size:0.85rem; color:var(--n-ink-muted); margin:0; }
+    .n-tabs{ display:flex; gap:2.2rem; margin-bottom:2.5rem; border-bottom:1px solid var(--n-border); }
+    .n-tab-btn{
+      font-family:var(--n-font-display); font-weight:700; font-size:1.05rem; letter-spacing:-0.01em;
+      text-transform:uppercase; background:none; border:none; cursor:pointer; color:var(--n-ink-muted);
+      padding:0 0 1rem 0; position:relative;
+    }
+    .n-tab-btn.active{ color:var(--n-navy); }
+    .n-tab-btn.active::after{ content:''; position:absolute; left:0; right:0; bottom:-1px; height:3px; background:var(--n-green); }
+
+    .n-layout{ display:grid; grid-template-columns:200px 1fr; gap:2.5rem; align-items:start; }
+    @media(max-width:820px){ .n-layout{ grid-template-columns:1fr; } }
+    .n-filter-label{ font-family:var(--n-font-mono); font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--n-ink-muted); margin-bottom:1.1rem; }
+    .n-filter-list{ display:flex; flex-direction:column; gap:0.85rem; }
+    .n-filter-list button{ background:none; border:none; cursor:pointer; text-align:left; padding:0; font-family:var(--n-font-body); font-size:0.98rem; color:var(--n-ink-muted); }
+    .n-filter-list button.active{ color:var(--n-navy); font-weight:600; }
+    @media(max-width:820px){ .n-filter-list{ flex-direction:row; flex-wrap:wrap; gap:1.1rem; margin-bottom:1.5rem; } }
+  </style>
 </head>
-<body>
 
-<nav class="topbar">
-  <div class="brand">Sruti Bhattacharjee</div>
-  <div class="topbar-right">
-    <nav>
-      <a href="#work" class="active">Work</a>
-      <a href="#about">About</a>
-      <a href="#education">Education</a>
-      <a href="#contact">Contact</a>
+<body class="text-slate-700">
+
+  <a href="#" class="skip-link" id="skipLink">Skip to main content</a>
+
+  <nav class="topbar" id="topbar">
+    <button type="button" class="topbar-word" data-view="home"><span class="topbar-word-first">Sruti</span><span class="topbar-word-last">Bhattacharjee</span></button>
+    <div class="topbar-right">
+      <div class="topbar-links" id="topbarLinks"></div>
+      <div class="lang-dd">
+        <button type="button" class="lang-btn" aria-haspopup="true" aria-expanded="false"><svg class="chev" xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg><span class="lang-current">EN</span></button>
+        <div class="lang-menu">
+          <button type="button" class="lang-opt" data-lang="en">English</button>
+          <button type="button" class="lang-opt" data-lang="fr">Français</button>
+          <button type="button" class="lang-opt" data-lang="de">Deutsch</button>
+          <button type="button" class="lang-opt" data-lang="sv">Svenska</button>
+          <button type="button" class="lang-opt" data-lang="no">Norsk</button>
+        </div>
+      </div>
+      <div class="menu-dd">
+        <button type="button" class="menu-btn" aria-haspopup="true" aria-expanded="false" aria-label="Menu">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <div class="menu-panel">
+          <button type="button" class="menu-opt" data-view="home" data-i18n="menu.portfolio">Portfolio</button>
+          <button type="button" class="menu-opt" data-view="about" data-i18n="menu.about">About</button>
+          <a class="menu-opt" href="papers/cv_1page.pdf" target="_blank" rel="noopener noreferrer" data-i18n="nav.cv">CV</a>
+          <button type="button" class="menu-opt" data-view="contact" data-i18n="menu.contact">Contact</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero-new min-h-[100dvh] relative view" id="heroSection" data-view="home">
+    <canvas id="heroTrailCanvas"></canvas>
+    <div class="hero-new-inner">
+      <h1>Sruti<br>Bhattacharjee</h1>
+      <p data-i18n="home.bio.short">I'm a mixed-method UX researcher and tinkerer working at the edge of multimodal perception, haptics, and human&ndash;AI interaction. I design for accessibility, immersive learning, and interfaces that actually notice how people move.</p>
+    </div>
+  </header>
+
+  <section class="view" data-view="home" id="homeAbout">
+    <div class="new-section">
+      <div class="new-section-inner">
+
+        <div class="n-tabs">
+          <button type="button" class="n-tab-btn active" data-tab="work" data-i18n="section.portfolio">Work</button>
+          <button type="button" class="n-tab-btn" data-tab="interests" data-i18n="section.interests">Interests</button>
+        </div>
+
+        <div class="n-layout" id="homeWorkPane">
+          <div>
+            <div class="n-filter-label">Filter</div>
+            <div class="n-filter-list" id="homeFilterList">
+              <button type="button" class="active" data-cat="all">All Projects</button>
+              <button type="button" data-cat="ux">UX Research</button>
+              <button type="button" data-cat="interaction">Interaction Design</button>
+              <button type="button" data-cat="visual">Visual Computing</button>
+            </div>
+          </div>
+          <div class="n-work-grid reveal" id="homeWorkGrid"></div>
+        </div>
+
+        <div class="n-layout" id="homeInterestsPane" style="display:none;">
+          <div></div>
+          <div>
+            <h3 class="new-section-heading" data-i18n="gallery.travel">Travel Photography</h3>
+            <div class="n-gallery-grid reveal" id="homeGalleryGrid"></div>
+
+            <h3 class="new-section-heading" data-i18n="gallery.books">Some Books From My Shelf</h3>
+            <div class="n-book-list reveal" id="homeBookList"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <section class="view about-section" data-view="about" id="aboutView">
+    <div class="about-inner">
+      <div class="reveal">
+        <div class="about-desc-title" data-i18n="section.about">About Me</div>
+        <p class="about-desc-text" data-i18n="home.bio">I'm a mixed-method UX Research practitioner with a background in Multimodal Perception Analysis and Visual Computing. My interdisciplinary experience in AI and Human&ndash;Computer Interaction helps me uncover user needs and challenges to shape interactive, accessible, and immersive experiences. I aspire to advance ethical human&ndash;AI symbiosis through evidence-based product decisions.</p>
+      </div>
+
+      <div class="about-block">
+        <h2 class="about-desc-title reveal" data-i18n="section.education">Education</h2>
+        <div class="edu-transcript">
+
+          <div class="edu-row reveal">
+            <div class="edu-logo-wrap"><img src="images/logos/kth.png" alt="KTH" class="edu-logo"/></div>
+            <div class="edu-row-text">
+              <h3 data-i18n="edu.1.degree">Master of Science, Interactive Media Technology</h3>
+              <p class="edu-inst">Kungliga Tekniska Högskolan (KTH), Sweden</p>
+              <p class="edu-dates">2020 – <span data-i18n="word.present">Present</span> &nbsp;·&nbsp; 4.4/5</p>
+            </div>
+          </div>
+
+          <div class="edu-row reveal">
+            <div class="edu-logo-wrap"><img src="images/logos/epfl.png" alt="EPFL" class="edu-logo edu-logo-epfl"/></div>
+            <div class="edu-row-text">
+              <h3 data-i18n="edu.2.degree">Graduate Exchange Student, Computer and Communication Sciences</h3>
+              <p class="edu-inst">École Polytechnique Fédérale de Lausanne (EPFL), Switzerland</p>
+              <p class="edu-dates">2021 – 2023 &nbsp;·&nbsp; 4.2/6</p>
+            </div>
+          </div>
+
+          <div class="edu-row reveal">
+            <div class="edu-logo-wrap"><img src="images/logos/wbutnew_edited.jpg" alt="WBUT" class="edu-logo edu-logo-wbut"/></div>
+            <div class="edu-row-text">
+              <h3 data-i18n="edu.3.degree">Bachelor of Technology, Information Technology</h3>
+              <p class="edu-inst">West Bengal University of Technology (WBUT), India</p>
+              <p class="edu-dates">2014 – 2019 &nbsp;·&nbsp; 6.8/10</p>
+            </div>
+          </div>
+
+          <div class="edu-row reveal">
+            <div class="edu-logo-wrap"><img src="images/logos/iitkgp.jpg" alt="IIT KGP" class="edu-logo edu-logo-iitkgp"/></div>
+            <div class="edu-row-text">
+              <h3 data-i18n="edu.4.degree">Undergrad Visiting Student, Computer Science and Engineering</h3>
+              <p class="edu-inst">Indian Institute of Technology Kharagpur (IITKGP), India</p>
+              <p class="edu-dates">2017 – 2018 &nbsp;·&nbsp; 9.0/10</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-block">
+        <h2 class="about-desc-title reveal" data-i18n="section.experience">Career Journey</h2>
+
+        <div class="jshell reveal" id="jshell">
+          <div class="jvp" id="jvp">
+            <div class="jworld" id="jworld"></div>
+            <div class="jdetail" id="jdetail">
+              <div class="jdetail-header" id="jdetailHeader">
+                <div><div class="jdtitle" id="jdtitle">—</div><div class="jdsubtitle" id="jdsubtitle"></div></div>
+                <div class="jdetail-actions"></div>
+              </div>
+              <div class="jdetail-body" id="jdetailBody"><div class="jcards-wrap" id="jcards"></div></div>
+              <div class="jresize jresize-n" data-dir="n"></div><div class="jresize jresize-s" data-dir="s"></div>
+              <div class="jresize jresize-e" data-dir="e"></div><div class="jresize jresize-w" data-dir="w"></div>
+              <div class="jresize jresize-ne" data-dir="ne"></div><div class="jresize jresize-nw" data-dir="nw"></div>
+              <div class="jresize jresize-se" data-dir="se"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M9 1L1 9M9 5L5 9" stroke="#60748c" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+              <div class="jresize jresize-sw" data-dir="sw"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <main id="main-content" class="container mx-auto max-w-4xl px-4 py-16">
+
+    <section id="interests" class="view" data-view="interests">
+
+      <div class="about-block">
+        <h3 class="gallery-subhead reveal" data-i18n="gallery.travel">Travel Photography</h3>
+        <div class="gallery-grid reveal">
+          <div class="gallery-item reveal">
+            <img src="images/others/sunset/India.jpg" alt="Sunset in India"/>
+            <p class="gallery-caption" data-i18n="country.india">India</p>
+          </div>
+          <div class="gallery-item reveal">
+            <img src="images/others/sunset/Sweden.jpg" alt="Sunset in Sweden"/>
+            <p class="gallery-caption" data-i18n="country.sweden">Sweden</p>
+          </div>
+          <div class="gallery-item reveal">
+            <img src="images/others/sunset/Switzerland.jpg" alt="Sunset in Switzerland"/>
+            <p class="gallery-caption" data-i18n="country.switzerland">Switzerland</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAINTINGS SECTION — currently turned OFF (commented out).
+           To turn it back ON: remove the opening and closing HTML
+           comment markers surrounding this block, so the section
+           becomes active again.
+      <div class="about-block">
+        <h3 class="gallery-subhead reveal" data-i18n="gallery.paintings">Paintings</h3>
+        <div class="gallery-grid reveal">
+          <div class="gallery-placeholder" data-i18n="gallery.paintings.placeholder">Paintings go here</div>
+        </div>
+      </div>
+      -->
+
+      <div class="about-block">
+        <h3 class="gallery-subhead reveal" data-i18n="gallery.books">Some Books From My Shelf</h3>
+        <div class="book-list reveal">
+          <a class="book-row" href="https://www.goodreads.com/book/show/20564827-love-letters-of-the-great-war" target="_blank" rel="noopener noreferrer">
+            <span class="book-cover"><img src="images/others/book/b1.jpg" alt="" onerror="this.style.display='none';this.parentElement.textContent='📖'"/></span>
+            <span class="book-text">
+              <p class="book-title">Love Letters of the Great War</p>
+              <p class="book-author">edited by Mandy Kirkby</p>
+            </span>
+          </a>
+          <a class="book-row" href="https://www.goodreads.com/book/show/75555793-beautiful-world-where-are-you" target="_blank" rel="noopener noreferrer">
+            <span class="book-cover"><img src="images/others/book/b2.jpg" alt="" onerror="this.style.display='none';this.parentElement.textContent='📖'"/></span>
+            <span class="book-text">
+              <p class="book-title">Beautiful World, Where Are You</p>
+              <p class="book-author">by Sally Rooney</p>
+            </span>
+          </a>
+          <a class="book-row" href="https://www.goodreads.com/book/show/40167204-mixing-work-with-pleasure" target="_blank" rel="noopener noreferrer">
+            <span class="book-cover"><img src="images/others/book/b3.jpg" alt="" onerror="this.style.display='none';this.parentElement.textContent='📖'"/></span>
+            <span class="book-text">
+              <p class="book-title">Mixing Work with Pleasure: My Life at Studio Ghibli</p>
+              <p class="book-author">by Toshio Suzuki</p>
+            </span>
+          </a>
+          <a class="book-row" href="https://www.goodreads.com/book/show/6271219-problem-solving-101" target="_blank" rel="noopener noreferrer">
+            <span class="book-cover"><img src="images/others/book/b4.jpg" alt="" onerror="this.style.display='none';this.parentElement.textContent='📖'"/></span>
+            <span class="book-text">
+              <p class="book-title">Problem Solving 101: A Simple Book for Smart People</p>
+              <p class="book-author">by Ken Watanabe</p>
+            </span>
+          </a>
+          <a class="book-row" href="https://www.goodreads.com/book/show/57008042-your-head-is-a-houseboat" target="_blank" rel="noopener noreferrer">
+            <span class="book-cover"><img src="images/others/book/b5.jpg" alt="" onerror="this.style.display='none';this.parentElement.textContent='📖'"/></span>
+            <span class="book-text">
+              <p class="book-title">Your Head is a Houseboat: A Chaotic Guide to Mental Clarity</p>
+              <p class="book-author">by Campbell Walker</p>
+            </span>
+          </a>
+          <a class="book-row" href="https://www.goodreads.com/book/show/52219386-almond" target="_blank" rel="noopener noreferrer">
+            <span class="book-cover"><img src="images/others/book/b6.jpg" alt="" onerror="this.style.display='none';this.parentElement.textContent='📖'"/></span>
+            <span class="book-text">
+              <p class="book-title">Almond</p>
+              <p class="book-author">by Sohn Won-Pyung</p>
+            </span>
+          </a>
+          <a class="book-row" href="https://www.goodreads.com/book/show/209050254-bacteria-to-ai" target="_blank" rel="noopener noreferrer">
+            <span class="book-cover"><img src="images/others/book/b7.jpg" alt="" onerror="this.style.display='none';this.parentElement.textContent='📖'"/></span>
+            <span class="book-text">
+              <p class="book-title">Bacteria to AI: Human Futures with Our Nonhuman Symbionts</p>
+              <p class="book-author">by N. Katherine Hayles</p>
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="view" data-view="contact">
+      <div class="contact-hero">
+        <div class="contact-photo reveal">
+          <img src="images/others/me.jpg" alt="Sruti Bhattacharjee" onerror="this.style.display='none';this.parentElement.style.display='flex';this.parentElement.style.alignItems='center';this.parentElement.style.justifyContent='center';this.parentElement.innerHTML='<span style=&quot;font-size:3rem&quot;>👩‍💻</span>'"/>
+        </div>
+        <div class="contact-right">
+          <div class="contact-heading-box reveal">
+            <h2 class="contact-heading" data-i18n="contact.heading">Let's Work Together</h2>
+          </div>
+          <div class="contact-box reveal">
+            <a class="contact-item" href="tel:+33744429154">
+              <span class="contact-item-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+              <span class="contact-item-text"><span>+33 07 44 42 91 54</span><span>+91 74 39 35 61 39</span></span>
+            </a>
+            <a class="contact-item" href="mailto:srutib2636@gmail.com">
+              <span class="contact-item-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
+              <span class="contact-item-text"><span>srutib2636@gmail.com</span></span>
+            </a>
+            <a class="contact-item" href="https://www.linkedin.com/in/srutibhattacharjee/" target="_blank" rel="noopener noreferrer">
+              <span class="contact-item-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M6.5 21.5h-5v-13h5v13zM4 6.5C2.5 6.5 1.5 5.3 1.5 4s1-2.4 2.5-2.4c1.6 0 2.5 1 2.6 2.5 0 1.4-1 2.4-2.6 2.4zm11.5 6c-1 0-2 .5-2 1.9v7.1h-5v-13h5v1.9c1-1.6 2.7-1.9 4-1.9 3 0 5 2 5 6.3v6.7h-5v-7c0-1.4-.5-1.9-2-1.9-.9 0-1.9.5-1.9 1.9v7.1h-5"/></svg></span>
+              <span class="contact-item-text"><span>@srutibhattacharjee</span></span>
+            </a>
+          </div>
+          <!-- CORNER WATERCOLOR IMAGE — currently turned OFF (commented out).
+               To turn it back ON: remove the opening and closing HTML
+               comment markers surrounding the img tag below, so it
+               becomes active again.
+          <img class="contact-stone-decor" src="images/others/bluestone.png" alt="" aria-hidden="true"/>
+          -->
+        </div>
+      </div>
+    </section>
+
+    <section id="portfolio" class="view" data-view="work">
+      <div class="work-sub active" id="workGrid">
+        <div class="work-grid reveal" id="workGridCards"></div>
+        <h3 class="gallery-subhead reveal">My Other Work</h3>
+        <div class="work-slider-wrap reveal">
+          <button type="button" class="work-slider-arrow" id="workSliderPrev" aria-label="Scroll projects left">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <div class="work-slider" id="workSliderCards"></div>
+          <button type="button" class="work-slider-arrow" id="workSliderNext" aria-label="Scroll projects right">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="work-sub" id="workDetail"></div>
+    </section>
+  </main>
+
+  <div class="footer-pre">
+    <nav class="footer-links">
+      <a href="mailto:srutib2636@gmail.com" class="footer-link"><span class="footer-icon-chip"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span data-i18n="footer.nav.contact">Contact</span></a>
+      <a href="#" class="footer-link" data-view="home"><span class="footer-icon-chip"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span><span data-i18n="footer.nav.portfolio">Portfolio</span></a>
+      <a href="#" class="footer-link" data-view="about"><span class="footer-icon-chip"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span><span data-i18n="footer.nav.about">About</span></a>
     </nav>
-    <div class="lang-dd" id="langDd">
-      <button type="button" class="lang-btn" aria-haspopup="true" aria-expanded="false">EN</button>
-      <div class="lang-menu">
-        <button type="button" class="lang-opt active" data-lang="en">English</button>
-        <button type="button" class="lang-opt" data-lang="fr">Français</button>
-        <button type="button" class="lang-opt" data-lang="de">Deutsch</button>
-        <button type="button" class="lang-opt" data-lang="sv">Svenska</button>
-        <button type="button" class="lang-opt" data-lang="no">Norsk</button>
-      </div>
-    </div>
-    <div class="menu-dd" id="menuDd">
-      <button type="button" class="menu-btn" aria-haspopup="true" aria-expanded="false" aria-label="Menu">
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      </button>
-      <div class="menu-panel">
-        <a class="menu-opt" href="#work">Work</a>
-        <a class="menu-opt" href="#about">About</a>
-        <a class="menu-opt" href="#education">Education</a>
-        <a class="menu-opt" href="#contact">Contact</a>
-      </div>
+    <div class="footer-social">
+      <a href="https://www.linkedin.com/in/srutibhattacharjee/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M6.5 21.5h-5v-13h5v13zM4 6.5C2.5 6.5 1.5 5.3 1.5 4s1-2.4 2.5-2.4c1.6 0 2.5 1 2.6 2.5 0 1.4-1 2.4-2.6 2.4zm11.5 6c-1 0-2 .5-2 1.9v7.1h-5v-13h5v1.9c1-1.6 2.7-1.9 4-1.9 3 0 5 2 5 6.3v6.7h-5v-7c0-1.4-.5-1.9-2-1.9-.9 0-1.9.5-1.9 1.9v7.1h-5"/></svg></a>
+      <a href="mailto:srutib2636@gmail.com" aria-label="Email"><svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+      <a href="https://github.com/SrutiBh" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg></a>
     </div>
   </div>
-</nav>
 
-<section class="hero" id="heroSection">
-  <canvas id="trailCanvas"></canvas>
-  <div class="hero-inner">
-    <h1>Sruti<br>Bhattacharjee</h1>
-    <p>I'm a mixed-method UX researcher and tinkerer working at the edge of multimodal perception, haptics, and human&ndash;AI interaction. I design for accessibility, immersive learning, and interfaces that actually notice how people move.</p>
-    <p class="cta">Explore my work and interests below. Click <a href="#about">here</a> to find more about me and my career.</p>
-  </div>
-</section>
+  <footer class="footer-bar">
+    <p>© Sruti Bhattacharjee. <span data-i18n="footer.rights">All rights reserved.</span></p>
+  </footer>
 
-<section class="work-section" id="work">
-  <div class="work-inner">
-    <div class="tabs">
-      <button type="button" class="tab-btn active" data-tab="work">Work</button>
-      <button type="button" class="tab-btn" data-tab="interests">Interests</button>
-    </div>
+  <script>
+    document.addEventListener('DOMContentLoaded',function(){
+    const prefersReducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const revealObserver=prefersReducedMotion?null:new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){entry.target.classList.toggle('in-view',entry.isIntersecting);});
+    },{threshold:0.12,rootMargin:'0px 0px -6% 0px'});
+    window.observeReveals=function(){
+      if(!revealObserver){
+        document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in-view');});
+        return;
+      }
+      document.querySelectorAll('.reveal').forEach(function(el){revealObserver.observe(el);});
+    };
+    window.observeReveals();
 
-    <div class="work-layout" id="workPane">
-      <div>
-        <div class="filter-label">Filter</div>
-        <div class="filter-list" id="filterList">
-          <button type="button" class="active" data-cat="all">All Projects</button>
-          <button type="button" data-cat="ux">UX Research</button>
-          <button type="button" data-cat="interaction">Interaction Design</button>
-          <button type="button" data-cat="visual">Visual Computing</button>
-        </div>
-      </div>
-      <div class="work-grid" id="workGrid"></div>
-    </div>
-
-    <div class="work-layout" id="interestsPane" style="display:none;">
-      <div></div>
-      <div>
-        <div class="filter-label">Some sunsets I enjoyed</div>
-        <div class="work-grid">
-          <div class="work-card"><div class="thumb cat-ux"><span class="cat-tag">India</span></div></div>
-          <div class="work-card"><div class="thumb cat-interaction"><span class="cat-tag">Sweden</span></div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="edu-section" id="about">
-  <div class="edu-inner">
-    <h2 class="section-heading">About Me</h2>
-    <div class="about-block">
-      <p>I'm a mixed-method UX Research practitioner with a background in Multimodal Perception Analysis and Visual Computing. My interdisciplinary experience in AI and Human&ndash;Computer Interaction helps me uncover user needs and challenges to shape interactive, accessible, and immersive experiences. I aspire to advance ethical human&ndash;AI symbiosis through evidence-based product decisions.</p>
-    </div>
-
-    <h2 class="section-heading">Career Journey</h2>
-    <div class="journey-teaser">
-      <div class="journey-path">
-        <div class="journey-stop"><div class="journey-dot"></div><span class="city">Kanpur</span></div>
-        <div class="journey-stop"><div class="journey-dot"></div><span class="city">Chennai</span></div>
-        <div class="journey-stop"><div class="journey-dot"></div><span class="city">Kharagpur</span></div>
-        <div class="journey-stop"><div class="journey-dot"></div><span class="city">Chicago</span></div>
-        <div class="journey-stop"><div class="journey-dot"></div><span class="city">Lyon</span></div>
-        <div class="journey-stop"><div class="journey-dot"></div><span class="city">Kolkata</span></div>
-        <div class="journey-stop"><div class="journey-dot"></div><span class="city">Stockholm</span></div>
-        <div class="journey-stop"><div class="journey-dot"></div><span class="city">Lausanne</span></div>
-        <div class="journey-stop"><div class="journey-dot"></div><span class="city">Jyväskylä</span></div>
-        <div class="journey-stop"><div class="journey-dot"></div><span class="city">Paris</span></div>
-      </div>
-    </div>
-
-    <h2 class="section-heading" id="education">Education</h2>
-    <div class="edu-row">
-      <div><div class="degree">Master of Science, Interactive Media Technology</div><div class="inst">Kungliga Tekniska Högskolan (KTH), Sweden</div></div>
-      <div class="dates">2020 – Present</div>
-    </div>
-    <div class="edu-row">
-      <div><div class="degree">Graduate Exchange, Computer and Communication Sciences</div><div class="inst">École Polytechnique Fédérale de Lausanne (EPFL), Switzerland</div></div>
-      <div class="dates">2021 – 2023</div>
-    </div>
-    <div class="edu-row">
-      <div><div class="degree">Bachelor of Technology, Information Technology</div><div class="inst">West Bengal University of Technology (WBUT), India</div></div>
-      <div class="dates">2014 – 2019</div>
-    </div>
-    <div class="edu-row">
-      <div><div class="degree">Undergrad Visiting Student, Computer Science and Engineering</div><div class="inst">Indian Institute of Technology Kharagpur (IITKGP), India</div></div>
-      <div class="dates">2017 – 2018</div>
-    </div>
-  </div>
-</section>
-
-<section class="contact-section" id="contact">
-  <h2>Let's work together</h2>
-  <div class="contact-links">
-    <a href="mailto:srutib2636@gmail.com">srutib2636@gmail.com</a>
-    <a href="tel:+33744429154">+33 07 44 42 91 54</a>
-    <a href="https://www.linkedin.com/in/srutibhattacharjee/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-    <a href="https://github.com/SrutiBh" target="_blank" rel="noopener noreferrer">GitHub</a>
-  </div>
-</section>
-
-<footer class="site-footer">© Sruti Bhattacharjee. All rights reserved.</footer>
-
-<script>
-  /* ===== Work data — pulled from the real portfolio content ===== */
-  const PROJECTS = [
-    { cat:'ux', meta:'', title:'On Progress', desc:'Formulating how virtual reality-based learning environments can provide pedagogical support in effective learning.' },
-    { cat:'ux', meta:'University of Lausanne', title:'EdTech for Novice Programming Learners in Hybrid Collaborative Classes', desc:'Investigated design needs of EdTech to facilitate effective learning for novice programming students in hybrid collaborative learning environments.' },
-    { cat:'ux', meta:'KTH · Stockholm', title:'New Media Impact on Effective Hybrid Group Collaboration', desc:'Compared three multimodal telecommunication platforms — Zoom, VTime XR, and a Furhat telepresence robot — and their impact on independent thinking and productivity.' },
-    { cat:'ux', meta:'', title:'Sweet API', desc:'Placeholder description — replace with the real project summary.' },
-    { cat:'interaction', meta:'EPFL', title:'Augmented City — Act to Protest', desc:'Designed an app to deliver improvements in city urbanism and collaboration during public events like protests, and to promote street art.' },
-    { cat:'interaction', meta:'Ericsson', title:'Effect of Latency on Haptic Perception', desc:'Implemented and analysed the impact of latency and jitter on haptic stiffness perception in haptic teleoperation systems.' },
-    { cat:'interaction', meta:'KTH', title:'Re-Designing Video Call for Remote Learning', desc:"Examined the impact of Zoom and other video-based applications on teachers' experience and redesigned a new interface for improved usability." },
-    { cat:'visual', meta:'EPFL', title:'Facial Expression Recognition in Virtual Reality using Machine Learning', desc:'Built a VR avatar emotion recognition pipeline.' },
-    { cat:'visual', meta:'EPFL', title:'Venice Time Machine: 2020 Building Heights Detection', desc:'Developed a 3D model of Venice to preserve current building height and geographical location based on Google Earth data.' },
-    { cat:'visual', meta:'KTH', title:'Rogue-Mike Game', desc:'Developed a Windows OS-based video game using C# and Unreal Engine.' }
-  ];
-
-  const grid = document.getElementById('workGrid');
-  function renderGrid(filter){
-    const items = filter === 'all' ? PROJECTS : PROJECTS.filter(p => p.cat === filter);
-    grid.innerHTML = items.map(p => `
-      <div class="work-card">
-        <div class="thumb cat-${p.cat}"><span class="cat-tag">${p.cat === 'ux' ? 'UX Research' : p.cat === 'interaction' ? 'Interaction' : 'Visual'}</span></div>
-        <div class="card-body">
-          ${p.meta ? `<div class="meta">${p.meta}</div>` : ''}
-          <h3>${p.title}</h3>
-          <p>${p.desc}</p>
-        </div>
-      </div>
-    `).join('');
-  }
-  renderGrid('all');
-
-  document.querySelectorAll('#filterList button').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('#filterList button').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      renderGrid(btn.dataset.cat);
+    const skipLink=document.getElementById('skipLink');
+    if(skipLink)skipLink.addEventListener('click',function(e){
+      e.preventDefault();
+      const activeView=document.querySelector('.view.active');
+      if(!activeView)return;
+      const target=activeView.querySelector('h1,h2')||activeView;
+      target.setAttribute('tabindex','-1');
+      target.focus();
+      target.scrollIntoView({behavior:'smooth',block:'start'});
     });
-  });
 
-  document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const isWork = btn.dataset.tab === 'work';
-      document.getElementById('workPane').style.display = isWork ? 'grid' : 'none';
-      document.getElementById('interestsPane').style.display = isWork ? 'none' : 'grid';
-    });
-  });
+    const TRANSLATIONS={
+      en:{
+        'nav.work':'Work','nav.journey':'Journey','nav.education':'Education','nav.cv':'CV','nav.contact':'Contact Me',
+        'hero.subtitle':'UX Researcher',
+        'section.about':'About Me','section.education':'Education','section.experience':'Career Journey','section.portfolio':'Portfolio','section.interests':'Interests','section.contact':'Contact Me',
+        'about.p1':'I am a Human-Centric Computer Engineer specializing in Interactive Technology Design and Development based on User Experience and User Perception Analysis.',
+        'about.p2':"I'm open to new roles and collaborations. Feel free to reach out if my background aligns with your team's goals.",
+        'word.present':'Present',
+        'edu.1.degree':'Master of Science, Interactive Media Technology',
+        'edu.2.degree':'Graduate Exchange Student, Computer and Communication Sciences',
+        'edu.3.degree':'Bachelor of Technology, Information Technology',
+        'edu.4.degree':'Undergrad Visiting Student, Computer Science and Engineering',
+        'tab.all':'All Projects','tab.ux':'UX Research','tab.interaction':'Interaction Design','tab.visual':'Visual Computing',
+        'lbl.image':'Image','lbl.video':'Video','lbl.gif':'GIF','lbl.code':'Code',
+        'proj.1.title':'On Progress',
+        'proj.1.desc':'Formulating how virtual reality-based learning environments can provide pedagogical support in effective learning.',
+        'proj.2.title':'EdTech for Novice Programming Learners in Hybrid Collaborative Classes',
+        'proj.2.desc':'Investigated design needs of EdTech to facilitate effective learning for novice programming students in hybrid collaborative learning environments.',
+        'proj.3.title':'New Media Impact on Effective Hybrid Group Collaboration',
+        'proj.3.desc':'Compared three existing multimodal media for remote communication and their impacts on independent thinking.',
+        'proj.4.title':'Augmented City \u2014 Act to Protest',
+        'proj.4.desc':'Designed an app to deliver improvements in city urbanism and collaboration during collaborative public events like protests and to promote street arts.',
+        'proj.5.title':'Effect of Latency on Haptic Perception',
+        'proj.5.desc':'Implemented and analysed the impact of latency and jitter on haptic stiffness perception in haptic teleoperation systems.',
+        'proj.6.title':'Re-Designing Video Call for Remote Learning',
+        'proj.6.desc':"Examined the impact of Zoom and other video-based applications on teachers' experience and redesigned a new interface for improved usability.",
+        'proj.7.title':'Facial Expression Recognition in Virtual Reality using Machine Learning',
+        'proj.7.desc':'Built a VR avatar emotion recognition pipeline',
+        'proj.8.title':'Venice Time Machine: 2020 Building Heights Detection',
+        'proj.8.desc':'Developed a 3D model of Venice to preserve current building height and geographical location based on Google Earth data.',
+        'proj.9.title':'Rogue-Mike Game',
+        'proj.9.desc':'Developed a Windows OS-based video game using C# and Unreal Engine.',
+        'proj.10.title':'Sweet API',
+        'proj.10.desc':'Placeholder description — replace with the real project summary.',
+        'view.work.headline':'Where research becomes interface.',
+        'view.journey.headline':'Ten cities, one throughline.',
+        'view.journey.sub':'From Kanpur to Paris \u2014 a decade of labs, research groups and classrooms across four countries.',
+        'view.education.headline':'Learning across borders.',
+        'view.education.sub':'Degrees and exchanges spanning Sweden, Switzerland and India, each shaping how I think about technology and people.',
+        'footer.rights':'All rights reserved.',
+        'lbl.backToWork':'Back to Work',
+        'home.bio':"I'm a mixed-method UX Research practitioner with a background in Multimodal Perception Analysis and Visual Computing. My interdisciplinary experience in AI and Human\u2013Computer Interaction helps me uncover user needs and challenges to shape interactive, accessible, and immersive experiences. I aspire to advance ethical human\u2013AI symbiosis through evidence-based product decisions.",
+        'contact.heading':"Let's Work Together",
+        'gallery.travel':'Some Sunsets I Enjoyed','gallery.paintings':'Paintings','gallery.other':'Other','gallery.books':'Some Books From My Shelf',
+        'gallery.paintings.placeholder':'Paintings go here','gallery.other.placeholder':'Anything else goes here',
+        'country.india':'India','country.sweden':'Sweden','country.switzerland':'Switzerland',
+        'footer.nav.contact':'Contact','footer.nav.work':'Work','footer.nav.about':'About','footer.nav.portfolio':'Portfolio',
+        'about.nav.contact':'Contact Me','about.nav.work':'My Work',
+        'menu.about':'About','menu.contact':'Contact'
+      },
+      fr:{
+        'nav.work':'Travaux','nav.journey':'Parcours','nav.education':'Formation','nav.cv':'CV','nav.contact':'Me Contacter',
+        'hero.subtitle':'Chercheuse UX',
+        'section.about':'\u00c0 Propos De Moi','section.education':'Formation','section.experience':'Parcours De Carri\u00e8re','section.portfolio':'Portfolio','section.interests':'Int\u00e9r\u00eats','section.contact':'Me Contacter',
+        'about.p1':"Je suis ing\u00e9nieure en informatique centr\u00e9e sur l'humain, sp\u00e9cialis\u00e9e dans la conception et le d\u00e9veloppement de technologies interactives, fond\u00e9es sur la recherche en exp\u00e9rience utilisateur et l'analyse de la perception utilisateur.",
+        'about.p2':"Je suis ouverte \u00e0 de nouveaux postes et collaborations. N'h\u00e9sitez pas \u00e0 me contacter si mon profil correspond aux objectifs de votre \u00e9quipe.",
+        'word.present':'Pr\u00e9sent',
+        'edu.1.degree':"Master en Technologie des M\u00e9dias Interactifs",
+        'edu.2.degree':'\u00c9tudiante en \u00e9change, Sciences Informatiques et Communication',
+        'edu.3.degree':"Licence en Technologie de l'Information",
+        'edu.4.degree':'\u00c9tudiante invit\u00e9e de premier cycle, Informatique et Ing\u00e9nierie',
+        'tab.all':'Tous les Projets','tab.ux':'Recherche UX','tab.interaction':"Design d'Interaction",'tab.visual':'Informatique Visuelle',
+        'lbl.image':'Image','lbl.video':'Vid\u00e9o','lbl.gif':'GIF','lbl.code':'Code',
+        'proj.1.title':'Repenser les EVRA pour une P\u00e9dagogie Efficace',
+        'proj.1.desc':"Formulation de la mani\u00e8re dont les environnements d'apprentissage en r\u00e9alit\u00e9 virtuelle peuvent offrir un soutien p\u00e9dagogique pour un apprentissage efficace.",
+        'proj.2.title':'EdTech pour les Apprenants Novices en Programmation dans des Classes Collaboratives Hybrides',
+        'proj.2.desc':"\u00c9tude des besoins de conception en EdTech pour faciliter un apprentissage efficace chez les \u00e9tudiants novices en programmation dans des environnements d'apprentissage collaboratif hybride.",
+        'proj.3.title':'Appel Vid\u00e9o, RV et Robot de T\u00e9l\u00e9pr\u00e9sence pour les Interactions de Groupe et la Pens\u00e9e Cr\u00e9ative',
+        'proj.3.desc':'Comparaison de trois m\u00e9dias multimodaux existants pour la communication \u00e0 distance et leurs impacts sur la pens\u00e9e ind\u00e9pendante.',
+        'proj.4.title':'Ville Augment\u00e9e \u2014 Agir pour Manifester',
+        'proj.4.desc':"Conception d'une application visant \u00e0 am\u00e9liorer l'urbanisme et la collaboration lors d'\u00e9v\u00e9nements publics collaboratifs comme les manifestations, tout en promouvant l'art urbain.",
+        'proj.5.title':'Effet de la Latence sur la Perception Haptique',
+        'proj.5.desc':'Mise en \u0153uvre et analyse de l\u2019impact de la latence et de la gigue sur la perception de la rigidit\u00e9 haptique dans les syst\u00e8mes de t\u00e9l\u00e9op\u00e9ration haptique.',
+        'proj.6.title':"Repenser l'Appel Vid\u00e9o pour l'Apprentissage \u00e0 Distance",
+        'proj.6.desc':"\u00c9tude de l'impact de Zoom et d'autres applications vid\u00e9o sur l'exp\u00e9rience des enseignants, et refonte d'une nouvelle interface pour une meilleure utilisabilit\u00e9.",
+        'proj.7.title':'Reconnaissance des Expressions Faciales en R\u00e9alit\u00e9 Virtuelle par Apprentissage Automatique',
+        'proj.7.desc':"D\u00e9veloppement d'un pipeline de reconnaissance des \u00e9motions pour avatars en RV.",
+        'proj.8.title':'Venice Time Machine\u202f: D\u00e9tection des Hauteurs des B\u00e2timents en 2020',
+        'proj.8.desc':"D\u00e9veloppement d'un mod\u00e8le 3D de Venise pour pr\u00e9server la hauteur actuelle des b\u00e2timents et leur emplacement g\u00e9ographique \u00e0 partir des donn\u00e9es de Google Earth.",
+        'proj.9.title':'Jeu Rogue-Mike',
+        'proj.9.desc':'D\u00e9veloppement d\u2019un jeu vid\u00e9o sur Windows utilisant C# et Unreal Engine.',
+        'view.work.headline':'L\u00e0 o\u00f9 la recherche devient interface.',
+        'view.journey.headline':'Dix villes, un seul fil conducteur.',
+        'view.journey.sub':'De Kanpur \u00e0 Paris \u2014 une d\u00e9cennie de laboratoires, de groupes de recherche et de salles de classe \u00e0 travers quatre pays.',
+        'view.education.headline':'Apprendre au-del\u00e0 des fronti\u00e8res.',
+        'view.education.sub':'Des dipl\u00f4mes et \u00e9changes entre la Su\u00e8de, la Suisse et l\u2019Inde, qui ont chacun fa\u00e7onn\u00e9 ma vision de la technologie et des personnes.',
+        'footer.rights':'Tous droits r\u00e9serv\u00e9s.',
+        'lbl.backToWork':'Retour aux Travaux',
+        'home.bio':"Je suis une praticienne en recherche UX \u00e0 m\u00e9thodes mixtes, avec une formation en analyse de la perception multimodale et en informatique visuelle. Mon exp\u00e9rience interdisciplinaire en IA et en interaction homme-machine m'aide \u00e0 cerner les besoins et les difficult\u00e9s des utilisateurs afin de fa\u00e7onner des exp\u00e9riences interactives, accessibles et immersives. J'aspire \u00e0 faire progresser une symbiose \u00e9thique entre l'humain et l'IA \u00e0 travers des d\u00e9cisions produit fond\u00e9es sur des donn\u00e9es probantes.",
+        'contact.heading':'Travaillons Ensemble',
+        'gallery.travel':'Quelques Couchers De Soleil Que J\u2019ai Aim\u00e9s','gallery.paintings':'Peintures','gallery.other':'Autre','gallery.books':'Quelques Livres De Ma Biblioth\u00e8que',
+        'gallery.paintings.placeholder':'Les peintures seront ici','gallery.other.placeholder':'Tout le reste sera ici',
+        'country.india':'Inde','country.sweden':'Su\u00e8de','country.switzerland':'Suisse',
+        'footer.nav.contact':'Contact','footer.nav.work':'Travaux','footer.nav.about':'\u00c0 Propos',
+        'about.nav.contact':'Me Contacter','about.nav.work':'Mes Travaux',
+        'menu.about':'\u00c0 Propos','menu.contact':'Contact',
+        'proj.10.title':'Sweet API',
+        'proj.10.desc':'Description provisoire \u2014 \u00e0 remplacer par le r\u00e9sum\u00e9 r\u00e9el du projet.'
+      },
+      sv:{
+        'nav.work':'Arbete','nav.journey':'Resa','nav.education':'Utbildning','nav.cv':'CV','nav.contact':'Kontakta Mig',
+        'hero.subtitle':'UX-forskare',
+        'section.about':'Om Mig','section.education':'Utbildning','section.experience':'Karri\u00e4rresa','section.portfolio':'Portfolio','section.interests':'Intressen','section.contact':'Kontakta Mig',
+        'about.p1':'Jag \u00e4r en m\u00e4nniskocentrerad dataingenj\u00f6r som specialiserar mig p\u00e5 design och utveckling av interaktiv teknik baserat p\u00e5 anv\u00e4ndarupplevelse och anv\u00e4ndarperceptionsanalys.',
+        'about.p2':'Jag \u00e4r \u00f6ppen f\u00f6r nya roller och samarbeten. H\u00f6r g\u00e4rna av dig om min bakgrund passar ditt teams m\u00e5l.',
+        'word.present':'Nuvarande',
+        'edu.1.degree':'Masterexamen, Interaktiv Medieteknik',
+        'edu.2.degree':'Utbytesstudent, Data- och Kommunikationsvetenskap',
+        'edu.3.degree':'Kandidatexamen, Informationsteknik',
+        'edu.4.degree':'G\u00e4studerande p\u00e5 grundniv\u00e5, Datavetenskap och Teknik',
+        'tab.all':'Alla Projekt','tab.ux':'UX-forskning','tab.interaction':'Interaktionsdesign','tab.visual':'Visuell Databehandling',
+        'lbl.image':'Bild','lbl.video':'Video','lbl.gif':'GIF','lbl.code':'Kod',
+        'proj.1.title':'Omdesign av VRLE f\u00f6r Effektiv Pedagogik',
+        'proj.1.desc':'Utforskar hur virtual reality-baserade l\u00e4rmilj\u00f6er kan ge pedagogiskt st\u00f6d f\u00f6r effektivt l\u00e4rande.',
+        'proj.2.title':'EdTech f\u00f6r Nyb\u00f6rjare inom Programmering i Hybrida Samarbetsklasser',
+        'proj.2.desc':'Unders\u00f6kte designbehoven f\u00f6r EdTech f\u00f6r att underl\u00e4tta effektivt l\u00e4rande f\u00f6r nyb\u00f6rjare inom programmering i hybrida samarbetsmilj\u00f6er.',
+        'proj.3.title':'Videosamtal, VR och Telepresence-robot f\u00f6r Gruppinteraktioner och Kreativt T\u00e4nkande',
+        'proj.3.desc':'J\u00e4mf\u00f6rde tre befintliga multimodala medier f\u00f6r distanskommunikation och deras inverkan p\u00e5 sj\u00e4lvst\u00e4ndigt t\u00e4nkande.',
+        'proj.4.title':'Augmented City \u2014 Agera f\u00f6r att Protestera',
+        'proj.4.desc':'Designade en app f\u00f6r att f\u00f6rb\u00e4ttra stadsplanering och samarbete under kollaborativa offentliga evenemang som protester, samt fr\u00e4mja gatukonst.',
+        'proj.5.title':'Effekten av Latens p\u00e5 Haptisk Perception',
+        'proj.5.desc':'Implementerade och analyserade effekten av latens och jitter p\u00e5 haptisk styvhetsperception i haptiska teleoperationssystem.',
+        'proj.6.title':'Omdesign av Videosamtal f\u00f6r Distansundervisning',
+        'proj.6.desc':'Unders\u00f6kte hur Zoom och andra videobaserade applikationer p\u00e5verkar l\u00e4rares upplevelse och omdesignade ett nytt gr\u00e4nssnitt f\u00f6r f\u00f6rb\u00e4ttrad anv\u00e4ndbarhet.',
+        'proj.7.title':'Igenk\u00e4nning av Ansiktsuttryck i Virtual Reality med Maskininl\u00e4rning',
+        'proj.7.desc':'Byggde en pipeline f\u00f6r k\u00e4nsloigenk\u00e4nning hos VR-avatarer.',
+        'proj.8.title':'Venice Time Machine: H\u00f6jddetektering av Byggnader 2020',
+        'proj.8.desc':'Utvecklade en 3D-modell av Venedig f\u00f6r att bevara nuvarande byggnadsh\u00f6jd och geografisk plats baserat p\u00e5 Google Earth-data.',
+        'proj.9.title':'Rogue-Mike-spelet',
+        'proj.9.desc':'Utvecklade ett Windows-baserat videospel med C# och Unreal Engine.',
+        'view.work.headline':'D\u00e4r forskning blir gr\u00e4nssnitt.',
+        'view.journey.headline':'Tio st\u00e4der, en r\u00f6d tr\u00e5d.',
+        'view.journey.sub':'Fr\u00e5n Kanpur till Paris \u2014 ett decennium av labb, forskargrupper och klassrum i fyra l\u00e4nder.',
+        'view.education.headline':'L\u00e4rande \u00f6ver gr\u00e4nser.',
+        'view.education.sub':'Examina och utbyten i Sverige, Schweiz och Indien, som alla har format hur jag t\u00e4nker kring teknik och m\u00e4nniskor.',
+        'footer.rights':'Alla r\u00e4ttigheter f\u00f6rbeh\u00e5llna.',
+        'lbl.backToWork':'Tillbaka till Arbete',
+        'home.bio':'Jag \u00e4r en UX-forskare med blandade metoder och en bakgrund inom multimodal perceptionsanalys och visuell databehandling. Min tv\u00e4rvetenskapliga erfarenhet inom AI och m\u00e4nniska-datorinteraktion hj\u00e4lper mig att f\u00f6rst\u00e5 anv\u00e4ndares behov och utmaningar f\u00f6r att forma interaktiva, tillg\u00e4ngliga och uppslukande upplevelser. Jag str\u00e4var efter att fr\u00e4mja en etisk symbios mellan m\u00e4nniska och AI genom evidensbaserade produktbeslut.',
+        'contact.heading':'L\u00e5t Oss Samarbeta',
+        'gallery.travel':'N\u00e5gra Solnedg\u00e5ngar Jag Gillade','gallery.paintings':'M\u00e5lningar','gallery.other':'\u00d6vrigt','gallery.books':'N\u00e5gra B\u00f6cker Fr\u00e5n Min Hylla',
+        'gallery.paintings.placeholder':'M\u00e5lningar visas h\u00e4r','gallery.other.placeholder':'Allt annat visas h\u00e4r',
+        'country.india':'Indien','country.sweden':'Sverige','country.switzerland':'Schweiz',
+        'footer.nav.contact':'Kontakt','footer.nav.work':'Arbete','footer.nav.about':'Om',
+        'about.nav.contact':'Kontakta Mig','about.nav.work':'Mitt Arbete',
+        'menu.about':'Om Mig','menu.contact':'Kontakt',
+        'proj.10.title':'Sweet API',
+        'proj.10.desc':'Platsh\u00e5llartext \u2014 ers\u00e4tt med den riktiga projektsammanfattningen.'
+      },
+      de:{
+        'nav.work':'Arbeiten','nav.journey':'Werdegang','nav.education':'Ausbildung','nav.cv':'Lebenslauf','nav.contact':'Kontakt',
+        'hero.subtitle':'UX-Researcherin',
+        'section.about':'\u00dcber Mich','section.education':'Ausbildung','section.experience':'Karriereweg','section.portfolio':'Portfolio','section.interests':'Interessen','section.contact':'Kontakt',
+        'about.p1':'Ich bin eine Human-Centric Computer Engineer, spezialisiert auf interaktives Technologiedesign und -entwicklung auf Basis von Nutzererfahrungs- und Nutzerwahrnehmungsanalyse.',
+        'about.p2':'Ich bin offen f\u00fcr neue Positionen und Kooperationen. Kontaktieren Sie mich gerne, wenn mein Hintergrund zu den Zielen Ihres Teams passt.',
+        'word.present':'Heute',
+        'edu.1.degree':'Master of Science, Interaktive Medientechnologie',
+        'edu.2.degree':'Austauschstudentin, Informatik und Kommunikationswissenschaften',
+        'edu.3.degree':'Bachelor of Technology, Informationstechnologie',
+        'edu.4.degree':'Gaststudentin (Bachelor), Informatik und Ingenieurwesen',
+        'tab.all':'Alle Projekte','tab.ux':'UX-Forschung','tab.interaction':'Interaktionsdesign','tab.visual':'Visuelles Computing',
+        'lbl.image':'Bild','lbl.video':'Video','lbl.gif':'GIF','lbl.code':'Code',
+        'proj.1.title':'Neugestaltung von VRLE f\u00fcr effektive P\u00e4dagogik',
+        'proj.1.desc':'Untersuchung, wie VR-basierte Lernumgebungen p\u00e4dagogische Unterst\u00fctzung f\u00fcr effektives Lernen bieten k\u00f6nnen.',
+        'proj.2.title':'EdTech f\u00fcr Programmier-Einsteiger in hybriden kollaborativen Klassen',
+        'proj.2.desc':'Untersuchung der Designanforderungen von EdTech zur F\u00f6rderung effektiven Lernens bei Programmier-Einsteigern in hybriden kollaborativen Lernumgebungen.',
+        'proj.3.title':'Videoanruf, VR und Telepr\u00e4senzroboter f\u00fcr Gruppeninteraktionen und kreatives Denken',
+        'proj.3.desc':'Vergleich dreier bestehender multimodaler Medien f\u00fcr Fernkommunikation und deren Einfluss auf unabh\u00e4ngiges Denken.',
+        'proj.4.title':'Augmented City \u2014 Handeln f\u00fcr den Protest',
+        'proj.4.desc':'Entwicklung einer App zur Verbesserung von Stadtplanung und Zusammenarbeit bei kollaborativen \u00f6ffentlichen Veranstaltungen wie Protesten und zur F\u00f6rderung von Stra\u00dfenkunst.',
+        'proj.5.title':'Einfluss von Latenz auf die haptische Wahrnehmung',
+        'proj.5.desc':'Umsetzung und Analyse der Auswirkungen von Latenz und Jitter auf die haptische Steifigkeitswahrnehmung in haptischen Teleoperationssystemen.',
+        'proj.6.title':'Neugestaltung von Videoanrufen f\u00fcr Fernunterricht',
+        'proj.6.desc':'Untersuchung der Auswirkungen von Zoom und anderen videobasierten Anwendungen auf die Erfahrung von Lehrkr\u00e4ften und Neugestaltung einer Oberfl\u00e4che f\u00fcr bessere Nutzbarkeit.',
+        'proj.7.title':'Gesichtsausdruckserkennung in Virtual Reality mittels maschinellem Lernen',
+        'proj.7.desc':'Entwicklung einer Pipeline zur Emotionserkennung f\u00fcr VR-Avatare.',
+        'proj.8.title':'Venice Time Machine: Erkennung der Geb\u00e4udeh\u00f6hen 2020',
+        'proj.8.desc':'Entwicklung eines 3D-Modells von Venedig zur Erhaltung der aktuellen Geb\u00e4udeh\u00f6hen und geografischen Lage basierend auf Google-Earth-Daten.',
+        'proj.9.title':'Rogue-Mike-Spiel',
+        'proj.9.desc':'Entwicklung eines Windows-Videospiels mit C# und Unreal Engine.',
+        'view.work.headline':'Wo Forschung zur Schnittstelle wird.',
+        'view.journey.headline':'Zehn St\u00e4dte, ein roter Faden.',
+        'view.journey.sub':'Von Kanpur bis Paris \u2014 ein Jahrzehnt aus Laboren, Forschungsgruppen und H\u00f6rs\u00e4len in vier L\u00e4ndern.',
+        'view.education.headline':'Lernen \u00fcber Grenzen hinweg.',
+        'view.education.sub':'Abschl\u00fcsse und Austauschprogramme in Schweden, der Schweiz und Indien, die jeweils meine Sicht auf Technologie und Menschen gepr\u00e4gt haben.',
+        'footer.rights':'Alle Rechte vorbehalten.',
+        'lbl.backToWork':'Zur\u00fcck zu Arbeiten',
+        'home.bio':'Ich bin eine UX-Researcherin mit gemischten Methoden und einem Hintergrund in multimodaler Wahrnehmungsanalyse und visuellem Computing. Meine interdisziplin\u00e4re Erfahrung in KI und Mensch-Computer-Interaktion hilft mir, Nutzerbed\u00fcrfnisse und Herausforderungen zu erkennen, um interaktive, barrierefreie und immersive Erlebnisse zu gestalten. Ich strebe danach, eine ethische Mensch-KI-Symbiose durch evidenzbasierte Produktentscheidungen voranzutreiben.',
+        'contact.heading':'Lass Uns Zusammenarbeiten',
+        'gallery.travel':'Ein Paar Sonnenunterg\u00e4nge, Die Mir Gefallen Haben','gallery.paintings':'Gem\u00e4lde','gallery.other':'Sonstiges','gallery.books':'Ein Paar B\u00fccher Aus Meinem Regal',
+        'gallery.paintings.placeholder':'Gem\u00e4lde erscheinen hier','gallery.other.placeholder':'Alles andere erscheint hier',
+        'country.india':'Indien','country.sweden':'Schweden','country.switzerland':'Schweiz',
+        'footer.nav.contact':'Kontakt','footer.nav.work':'Arbeiten','footer.nav.about':'\u00dcber',
+        'about.nav.contact':'Kontakt','about.nav.work':'Meine Arbeit',
+        'menu.about':'\u00dcber','menu.contact':'Kontakt',
+        'proj.10.title':'Sweet API',
+        'proj.10.desc':'Platzhaltertext \u2014 durch die echte Projektzusammenfassung ersetzen.'
+      },
+      no:{
+        'nav.work':'Arbeid','nav.journey':'Reise','nav.education':'Utdanning','nav.cv':'CV','nav.contact':'Kontakt Meg',
+        'hero.subtitle':'UX-forsker',
+        'section.about':'Om Meg','section.education':'Utdanning','section.experience':'Karrierereise','section.portfolio':'Portef\u00f8lje','section.interests':'Interesser','section.contact':'Kontakt Meg',
+        'about.p1':'Jeg er en menneskesentrert dataingeni\u00f8r som spesialiserer meg p\u00e5 design og utvikling av interaktiv teknologi basert p\u00e5 brukeropplevelse og brukerpersepsjonsanalyse.',
+        'about.p2':'Jeg er \u00e5pen for nye roller og samarbeid. Ta gjerne kontakt hvis min bakgrunn passer med teamets m\u00e5l.',
+        'word.present':'N\u00e5v\u00e6rende',
+        'edu.1.degree':'Mastergrad, Interaktiv Medieteknologi',
+        'edu.2.degree':'Utvekslingsstudent, Data- og Kommunikasjonsvitenskap',
+        'edu.3.degree':'Bachelorgrad, Informasjonsteknologi',
+        'edu.4.degree':'Gjestestudent p\u00e5 bachelorniv\u00e5, Datavitenskap og Ingeni\u00f8rfag',
+        'tab.all':'Alle Prosjekter','tab.ux':'UX-forskning','tab.interaction':'Interaksjonsdesign','tab.visual':'Visuell Databehandling',
+        'lbl.image':'Bilde','lbl.video':'Video','lbl.gif':'GIF','lbl.code':'Kode',
+        'proj.1.title':'Redesign av VRLE for Effektiv Pedagogikk',
+        'proj.1.desc':'Utforsker hvordan VR-baserte l\u00e6ringsmilj\u00f8er kan gi pedagogisk st\u00f8tte for effektiv l\u00e6ring.',
+        'proj.2.title':'EdTech for Nybegynnere innen Programmering i Hybride Samarbeidsklasser',
+        'proj.2.desc':'Unders\u00f8kte designbehovene for EdTech for \u00e5 legge til rette for effektiv l\u00e6ring for nybegynnere innen programmering i hybride samarbeidsmilj\u00f8er.',
+        'proj.3.title':'Videosamtale, VR og Telepresence-robot for Gruppeinteraksjoner og Kreativ Tenkning',
+        'proj.3.desc':'Sammenlignet tre eksisterende multimodale medier for fjernkommunikasjon og deres innvirkning p\u00e5 selvstendig tenkning.',
+        'proj.4.title':'Augmented City \u2014 Handle for \u00e5 Protestere',
+        'proj.4.desc':'Designet en app for \u00e5 forbedre byplanlegging og samarbeid under kollaborative offentlige arrangementer som protester, og fremme gatekunst.',
+        'proj.5.title':'Effekten av Latens p\u00e5 Haptisk Persepsjon',
+        'proj.5.desc':'Implementerte og analyserte effekten av latens og jitter p\u00e5 haptisk stivhetspersepsjon i haptiske teleoperasjonssystemer.',
+        'proj.6.title':'Redesign av Videosamtale for Fjernundervisning',
+        'proj.6.desc':'Unders\u00f8kte hvordan Zoom og andre videobaserte applikasjoner p\u00e5virker l\u00e6reres opplevelse, og redesignet et nytt grensesnitt for forbedret brukervennlighet.',
+        'proj.7.title':'Gjenkjenning av Ansiktsuttrykk i Virtual Reality med Maskinl\u00e6ring',
+        'proj.7.desc':'Bygde en pipeline for f\u00f8lelsesgjenkjenning hos VR-avatarer.',
+        'proj.8.title':'Venice Time Machine: H\u00f8ydedeteksjon av Bygninger 2020',
+        'proj.8.desc':'Utviklet en 3D-modell av Venezia for \u00e5 bevare n\u00e5v\u00e6rende bygningsh\u00f8yde og geografisk plassering basert p\u00e5 Google Earth-data.',
+        'proj.9.title':'Rogue-Mike-spillet',
+        'proj.9.desc':'Utviklet et Windows-basert videospill med C# og Unreal Engine.',
+        'view.work.headline':'Der forskning blir grensesnitt.',
+        'view.journey.headline':'Ti byer, en r\u00f8d tr\u00e5d.',
+        'view.journey.sub':'Fra Kanpur til Paris \u2014 et ti\u00e5r med laboratorier, forskningsgrupper og klasserom i fire land.',
+        'view.education.headline':'L\u00e6ring p\u00e5 tvers av grenser.',
+        'view.education.sub':'Grader og utvekslinger i Sverige, Sveits og India, som hver har formet hvordan jeg tenker om teknologi og mennesker.',
+        'footer.rights':'Alle rettigheter forbeholdt.',
+        'lbl.backToWork':'Tilbake til Arbeid',
+        'home.bio':'Jeg er en UX-forsker med blandede metoder og bakgrunn innen multimodal persepsjonsanalyse og visuell databehandling. Min tverrfaglige erfaring innen AI og menneske-maskin-interaksjon hjelper meg med \u00e5 avdekke brukerbehov og utfordringer for \u00e5 forme interaktive, tilgjengelige og oppslukende opplevelser. Jeg \u00f8nsker \u00e5 fremme en etisk symbiose mellom menneske og AI gjennom evidensbaserte produktbeslutninger.',
+        'contact.heading':'La Oss Samarbeide',
+        'gallery.travel':'Noen Solnedganger Jeg Likte','gallery.paintings':'Malerier','gallery.other':'Annet','gallery.books':'Noen B\u00f8ker Fra Hylla Mi',
+        'gallery.paintings.placeholder':'Malerier vises her','gallery.other.placeholder':'Alt annet vises her',
+        'country.india':'India','country.sweden':'Sverige','country.switzerland':'Sveits',
+        'footer.nav.contact':'Kontakt','footer.nav.work':'Arbeid','footer.nav.about':'Om',
+        'about.nav.contact':'Kontakt Meg','about.nav.work':'Mitt Arbeid',
+        'menu.about':'Om','menu.contact':'Kontakt',
+        'proj.10.title':'Sweet API',
+        'proj.10.desc':'Plassholdertekst \u2014 erstatt med den faktiske prosjektsammendraget.'
+      }
+    };
 
-  /* ===== language dropdown + hamburger menu ===== */
-  function setDropdownOpen(dd, open){ dd.classList.toggle('open', open); }
-  const langDd = document.getElementById('langDd');
-  const menuDd = document.getElementById('menuDd');
+    let currentLang='en';
+    try{ currentLang=localStorage.getItem('siteLang')||'en'; }catch(e){ currentLang='en'; }
 
-  langDd.querySelector('.lang-btn').addEventListener('click', (e) => {
-    e.stopPropagation();
-    const willOpen = !langDd.classList.contains('open');
-    setDropdownOpen(menuDd, false);
-    setDropdownOpen(langDd, willOpen);
-  });
-  langDd.querySelectorAll('.lang-opt').forEach(opt => {
-    opt.addEventListener('click', (e) => {
-      e.stopPropagation();
-      langDd.querySelectorAll('.lang-opt').forEach(o => o.classList.remove('active'));
-      opt.classList.add('active');
-      langDd.querySelector('.lang-btn').textContent = opt.dataset.lang.toUpperCase();
-      setDropdownOpen(langDd, false);
-    });
-  });
+    const WORK_CATEGORY='ux';
+    const PROJECTS=[
+      {id:3,cat:'ux',meta:'',img:'images/projects/VRvsRobovsZoomfinal.png',imgAlt:'Preview image of remote communication project',imgFit:'contain',links:[]},
+      {id:1,cat:'ux',meta:'KTH · EPFL',img:'images/projects/vrle_classroom.jpeg',imgAlt:'Preview image of VR learning environment project',links:[]},
+      {id:2,cat:'ux',meta:'University of Lausanne',img:'images/projects/unil.jpg',imgAlt:'Preview image of hybrid class research project',links:[]},
+      {id:10,cat:'ux',meta:'',img:'images/projects/sweet_api.png',imgAlt:'Preview image of Sweet API project',links:[]},
+      {id:4,cat:'interaction',slider:true,meta:'EPFL',img:'images/projects/protest_project.png',imgAlt:'Augmented City interaction design',links:[]},
+      {id:5,cat:'interaction',slider:true,meta:'Ericsson',img:'images/projects/haptic_ericsson.png',imgAlt:'Preview image of haptic systems project',links:[{key:'lbl.code',href:'#'}]},
+      {id:6,cat:'interaction',slider:true,meta:'KTH',img:'images/projects/teach_figma.png',imgAlt:'Preview image of remote learning UX project',links:[]},
+      {id:7,cat:'visual',meta:'EPFL',img:'images/projects/iig_project.png',imgAlt:'Preview image of IIG EPFL project',links:[{key:'lbl.code',href:'#'}]},
+      {id:8,cat:'visual',meta:'EPFL',img:'images/projects/venice1.png',imgAlt:'Preview image of 3D city modelling project',links:[{key:'lbl.code',href:'#'}]},
+      {id:9,cat:'visual',meta:'KTH',img:'images/projects/r_mike.gif',imgAlt:'Preview image of game development project',links:[{key:'lbl.code',href:'#'}]}
+    ];
 
-  menuDd.querySelector('.menu-btn').addEventListener('click', (e) => {
-    e.stopPropagation();
-    const willOpen = !menuDd.classList.contains('open');
-    setDropdownOpen(langDd, false);
-    setDropdownOpen(menuDd, willOpen);
-  });
-  menuDd.querySelectorAll('.menu-opt').forEach(opt => {
-    opt.addEventListener('click', () => setDropdownOpen(menuDd, false));
-  });
+    function tr(key){
+      const dict=TRANSLATIONS[currentLang]||TRANSLATIONS.en;
+      return (dict&&dict[key]!==undefined)?dict[key]:(TRANSLATIONS.en[key]!==undefined?TRANSLATIONS.en[key]:key);
+    }
 
-  document.addEventListener('click', () => {
-    setDropdownOpen(langDd, false);
-    setDropdownOpen(menuDd, false);
-  });
+    function renderWorkGrid(){
+      const wrap=document.getElementById('workGridCards');
+      const projectsToShow=PROJECTS.filter(function(p){return p.cat===WORK_CATEGORY;});
+      wrap.innerHTML=projectsToShow.map(function(p){
+        const fitStyle=p.imgFit?(' style="object-fit:'+p.imgFit+';background:#e8ecf5;"'):'';
+        return '<button type="button" class="work-card reveal" data-id="'+p.id+'">'
+          +'<img class="work-card-img" src="'+p.img+'" alt="'+p.imgAlt+'"'+fitStyle+'>'
+          +'<span class="work-card-overlay"><span class="work-card-title" data-i18n="proj.'+p.id+'.title">'+tr('proj.'+p.id+'.title')+'</span></span>'
+          +'</button>';
+      }).join('');
+      wrap.querySelectorAll('.work-card').forEach(function(card){
+        card.addEventListener('click',function(){
+          goToProject(parseInt(card.dataset.id,10));
+        });
+      });
+      if(window.observeReveals)window.observeReveals();
+    }
 
-  /* ===== live cursor trail — paint drops, not bouncing balls =====
-     Each point along the cursor path becomes a tiny soot-sprite: a round
-     fluffy body with a few small tufts, sometimes with two small eyes.
-     It moves briefly in the cursor's direction, settles in place, then
-     gives a small idle wiggle while it rests — like a living thing, not
-     a ball or a cloud — before slowly dissolving toward white, closing
-     its eyes first if it had any. */
-  const canvas = document.getElementById('trailCanvas');
-  const ctx = canvas.getContext('2d');
-  const heroSection = document.getElementById('heroSection');
-  let points = [];
+    /* ============================================================
+       WORK SLIDER — smaller, horizontally-scrolling row of extra
+       project tiles below the main grid. Pulls any project flagged
+       `slider:true` in the PROJECTS array above, regardless of its
+       `cat`. Reuses goToProject() so clicking a card opens the same
+       full project page as the main grid.
+       ============================================================ */
+    function renderWorkSlider(){
+      const wrap=document.getElementById('workSliderCards');
+      if(!wrap)return;
+      const projectsToShow=PROJECTS.filter(function(p){return p.slider===true;});
+      wrap.innerHTML=projectsToShow.map(function(p){
+        const fitStyle=p.imgFit?(' style="object-fit:'+p.imgFit+';background:#e8ecf5;"'):'';
+        return '<button type="button" class="work-slider-card reveal" data-id="'+p.id+'">'
+          +'<img class="work-slider-img" src="'+p.img+'" alt="'+p.imgAlt+'"'+fitStyle+'>'
+          +'<span class="work-slider-overlay"><span class="work-slider-title" data-i18n="proj.'+p.id+'.title">'+tr('proj.'+p.id+'.title')+'</span></span>'
+          +'</button>';
+      }).join('');
+      wrap.querySelectorAll('.work-slider-card').forEach(function(card){
+        card.addEventListener('click',function(){
+          goToProject(parseInt(card.dataset.id,10));
+        });
+      });
+      const prevBtn=document.getElementById('workSliderPrev'),nextBtn=document.getElementById('workSliderNext');
+      const scrollStep=function(){const card=wrap.querySelector('.work-slider-card');const gap=16;return card?card.getBoundingClientRect().width+gap:280;};
+      if(prevBtn)prevBtn.onclick=function(){wrap.scrollBy({left:-scrollStep(),behavior:'smooth'});};
+      if(nextBtn)nextBtn.onclick=function(){wrap.scrollBy({left:scrollStep(),behavior:'smooth'});};
+      if(window.observeReveals)window.observeReveals();
+    }
 
-  // the final palette: pink, young-leaf green, sky blue — picked at
-  // random per point, each fades lighter toward white before it disappears.
-  // Pink and blue sampled directly from the user's watercolor reference image
-  const COLOR_PALETTE = [
-    [252, 216, 228], // FCD8E4 — soft pink
-    [172, 255, 72],  // ACFF48 — vivid young-leaf green
-    [180, 228, 240]  // B4E4F0 — sky blue
-  ];
+    let currentProjectId=null;
+    const CASE_STUDIES={
+      3:{
+        description:'As workplaces are increasingly shifting from physical to distributed environments, communication technologies have become mediators of human interaction rather than mere channels for information exchange. This study investigated how three multimodal telecommunication platforms, Zoom, VTime XR, and Telepresence Robot (Furhat operated via Oculus HMD), shape independent thinking and productivity during remote and hybrid group collaboration, providing insights into user perceptions of emerging workplace technologies.',
+        processImg:'images/projects/furhat_steps.png',
+        processImgAlt:'Project process: Ideation, Technology Testing, Experiment Design, Peer Critique, Experiment Design Moderation, Prototype Development, Participant Recruitment, Scripting Questions and Tasks, Data Collection, Data Analysis, Reporting, Presenting',
+        stats:[
+          {label:'Team',value:'4 people group'},
+          {label:'Tools',value:'Zoom, Oculus HMD,<br>VTime XR, Furhat Robot'},
+          {label:'Timeline',value:'6 Weeks'},
+          {label:'Location',value:'Stockholm, Sweden'}
+        ],
+        participants:'4 male (1 familiar with VR), 2 female, aged between 20\u201324.',
+        technology:'vTime XR app inside Oculus (Virtual Reality-based group interaction), Zoom (Video-based group interaction), Furhat controlled by HMD (Telepresence Robot for group interaction).',
+        challenges:[
+          {title:'First Time using Furhat as Telepresence Robot',body:'We had to design the experiment, build a custom Unity/C# prototype to control the robot\u2019s head movement and gaze, and complete the full study in 6 weeks.'},
+          {title:'Time Limit for Participant Recruitment',body:'We had only 1 week available for participant recruitment during the pandemic.'}
+        ],
+        researchQuestion:'How do multimodal interactive workspace technologies impact independent thinking and group productivity?',
+        experimentDesign:[
+          {title:'Ethical Consent and Participant Compensation',body:'Before conducting every study, each participant was ensured of their freedom to withdraw, ask questions, and have privacy protection. Each participant gave consent to use their data according to KTH University research ethics guidelines. Each participant was compensated with a 30 SEK gift card.'},
+          {title:'Telepresence Robot Prototyping',body:'The Furhat manipulation prototype was built in Unity and C#, letting the interviewer control the robot\u2019s head movement and gaze from a distance while participants spoke with the robot directly.'},
+          {title:'Participants and Researcher Location Setup',body:'The experiment was held at KTH campus in Stockholm, Sweden, and conducted in Swedish across three rooms: one for the interviewer, one for the participants and observer, and a third used specifically for the VR condition, where one participant was isolated while the others stayed in the remaining two rooms. Furhat and Zoom conditions used only two rooms. A PC running the Unity prototype connected the Furhat robot to an Oculus HMD in the interviewer\u2019s room \u2014 through it, the interviewer could see and hear the participants and manipulate the robot\u2019s head movement and gaze in real time. Zoom stayed within a single shared setup.'},
+          {title:'Tasks Design',body:'The task was a storytelling exercise: participants were given a setting, three characters, three objects, and a scenario they had to explain. Six exercises were created across a wide range of settings, characters and objects, designed to stimulate creativity.',example:'Setting: a busy day on a street in New York. Characters: a middle-aged man, the man\u2019s boss, and a talking cat. Objects: a large bag of unidentified white powder, a birthday cake, and a pair of bloody scissors. Scenario: the middle-aged man finds himself sitting in the middle of a busy street, wearing a suit and tie covered in white powder. What has happened?'},
+          {title:'Questionnaire Design',body:'After each condition, participants completed a questionnaire covering how creative they felt and how distracted they were by the technology, alongside an initial questionnaire on age and prior experience with each platform. Each condition had ten questions, answered on a seven-point Likert scale, covering the naturalness of conversation, engagement, perceived presence, and creativity.'},
+          {title:'Prototype for Semi-Structured Interview',body:'After the final questionnaire, participants took part in a semi-structured interview reflecting on the experience as a whole \u2014 what they liked and disliked in each setting, any setting they preferred, how interaction compared across settings, and how creative they felt they could be.'}
+        ],
+        hypothesis:'Users can find communicating through a telepresence robot more effective for productivity and less overwhelming than communicating through a virtual reality environment.',
+        hypothesisImgs:[
+          {src:'images/projects/furhat_fig1.jpg',alt:'Experiment setup: participant seated with the Furhat robot and a researcher wearing an Oculus headset'},
+          {src:'images/projects/furhat_fig2.jpg',alt:'Two participants seated in the experiment room with the Furhat robot and a screen showing the remote view'},
+          {src:'images/projects/furhat_fig3.jpg',alt:'Participant wearing an Oculus headset and holding VR controllers during the VTime XR condition'}
+        ],
+        dataAnalysisTags:'Task Performance  |  Post-Task Interviewing  |  Thematic Analysis',
+        byTheNumbers:[
+          'Furhat scored highest for ease of creativity at <b>6.25/7</b>, ahead of VR (<b>5.5</b>) and Zoom (<b>4.75</b>).',
+          "Zoom scored lowest for perceived co-presence at <b>2.5/7</b> \u2014 less than half of Furhat's <b>5</b>.",
+          'Participants felt they could contribute equally most on Furhat (<b>6/7</b>), against <b>4/7</b> on Zoom.'
+        ],
+        results:[
+          {tech:'vTime XR',points:['Fun, but distracting.','A noticeable discrepancy between real people and their avatars.']},
+          {tech:'Zoom (Video call)',points:['Easy and familiar.','Lacked a sense of presence.']},
+          {tech:'FurHat (Teleoperation robot)',points:['Physical embodiment made the operator feel present.','Did not feel human.','Gaze sometimes felt unsettling.']}
+        ],
+        reflection:[
+          "Combining too many modalities in one UI can overwhelm the user if it doesn't feel close to physical space.",
+          "Furhat would help more than VR in hybrid setups, if it could show the remote participant's facial expression as an avatar on its face.",
+          'VR would be most helpful when all participants are remote and need to pursue interactive, shared activities.'
+        ],
+        voiceOfUsers:[
+          {quote:'I felt like the Furhat user was actually in this room with us',attribution:'Furhat Telepresence'},
+          {quote:'I am always aware that the other group member is remotely joining me',attribution:'Zoom'},
+          {quote:'A lot was going on, but I felt like we were talking in the same room',attribution:'vTime XR'}
+        ],
+        teamList:[
+          'Myself (VR Technology Testing, Unity C# Prototype Developer, Experiment Designer, Furhat User in Experiment, Participants Coordination during Study, Questionnaire Survey Analysis, Report Writing)',
+          'Experiment Design Peer Reviewer (3 group members)',
+          'Interviewer (1 Swedish Speaker)',
+          'Observer (1 Swedish Speaker)',
+          'Swedish\u2013English Translator of collected data (1 Swedish Speaker)',
+          'Reporting and Presentation (Me and my 3 teammates)'
+        ]
+      }
+    };
 
-  // a few small tufts scattered around the body edge — just enough for a
-  // fluffy silhouette, far fewer than a full cloud so it stays simple
-  function buildTufts(){
-    const tufts = [];
-    const count = 4 + Math.floor(Math.random() * 3);
-    for(let i = 0; i < count; i++){
-      const angle = (i / count) * Math.PI * 2 + Math.random() * 0.5;
-      const dist = 0.78 + Math.random() * 0.22;
-      tufts.push({
-        dx: Math.cos(angle) * dist,
-        dy: Math.sin(angle) * dist,
-        r: 0.16 + Math.random() * 0.12
+    function csListHTML(items){
+      return '<ul class="cs-list">'+items.map(function(i){return '<li>'+i+'</li>';}).join('')+'</ul>';
+    }
+    function csTableHTML(t){
+      return '<div class="cs-table-wrap"><table class="cs-table"><thead><tr>'
+        +t.head.map(function(h){return '<th>'+h+'</th>';}).join('')
+        +'</tr></thead><tbody>'
+        +t.rows.map(function(r){return '<tr>'+r.map(function(c){return '<td>'+c+'</td>';}).join('')+'</tr>';}).join('')
+        +'</tbody></table></div>';
+    }
+    function caseStudyHTML(cs){
+      let html='';
+      if(cs.description)html+='<p class="cs-p reveal">'+cs.description+'</p>';
+      if(cs.processImg)html+='<div class="cs-process-img reveal"><img src="'+cs.processImg+'" alt="'+(cs.processImgAlt||'Project process steps')+'"></div>';
+      if(cs.stats)html+='<div class="cs-stats reveal">'+cs.stats.map(function(s){return '<div><div class="cs-stat-label">'+s.label+'</div><div class="cs-stat-value">'+s.value+'</div></div>';}).join('')+'</div>';
+      if(cs.teamList)html+='<div class="cs-section reveal"><div class="cs-section-title">Team</div><div class="cs-section-body">'+csListHTML(cs.teamList)+'</div></div>';
+      if(cs.participants||cs.technology)html+='<div class="cs-section reveal"><div class="cs-section-title">Participants and Technology</div><div class="cs-section-body">'
+        +(cs.participants?'<div class="cs-sub">Participants</div><p class="cs-p">'+cs.participants+'</p>':'')
+        +(cs.technology?'<div class="cs-sub">Technology</div><p class="cs-p">'+cs.technology+'</p>':'')
+      +'</div></div>';
+      if(cs.challenges)html+='<div class="cs-section reveal"><div class="cs-section-title">Research Challenges</div><div class="cs-section-body">'
+        +cs.challenges.map(function(c){return '<div class="cs-sub">'+c.title+'</div><p class="cs-p">'+c.body+'</p>';}).join('')
+      +'</div></div>';
+      if(cs.researchQuestion)html+='<div class="cs-section reveal"><div class="cs-section-title">Research Question</div><div class="cs-section-body"><p class="cs-p">'+cs.researchQuestion+'</p></div></div>';
+      if(cs.experimentDesign)html+='<div class="cs-section reveal"><div class="cs-section-title">Experiment Design</div><div class="cs-section-body">'
+        +cs.experimentDesign.map(function(e){return '<div class="cs-sub">'+e.title+'</div><p class="cs-p">'+e.body+'</p>'+(e.example?'<p class="cs-p"><em>'+e.example+'</em></p>':'');}).join('')
+      +'</div></div>';
+      if(cs.hypothesis)html+='<div class="cs-section reveal"><div class="cs-section-title">Hypothesis</div><div class="cs-section-body">'
+        +'<p class="cs-p">'+cs.hypothesis+'</p>'
+        +(cs.hypothesisImgs?'<div class="cs-img-strip">'+cs.hypothesisImgs.map(function(im){return '<img src="'+im.src+'" alt="'+im.alt+'" onerror="this.closest(\'.cs-img-strip\').style.display=\'none\'">';}).join('')+'</div>':'')
+      +'</div></div>';
+      if(cs.dataAnalysisTags)html+='<div class="cs-section reveal"><div class="cs-section-title">Data Analysis</div><div class="cs-section-body"><p class="cs-tags">'+cs.dataAnalysisTags+'</p></div></div>';
+      html+='<div class="cs-section reveal"><div class="cs-section-title">Result</div><div class="cs-section-body">'
+        +(cs.byTheNumbers?'<div class="cs-sub">By the Numbers</div>'+csListHTML(cs.byTheNumbers):'')
+        +cs.results.map(function(r){return '<div class="cs-sub">'+r.tech+'</div>'+csListHTML(r.points);}).join('')
+      +'</div></div>';
+      if(cs.reflection)html+='<div class="cs-section reveal"><div class="cs-section-title">Reflection</div><div class="cs-section-body">'+csListHTML(cs.reflection)+'</div></div>';
+      if(cs.voiceOfUsers&&cs.voiceOfUsers.length)html+='<div class="cs-section cs-highlight reveal"><div class="cs-section-title">Voice of Users</div><div class="cs-section-body">'
+        +cs.voiceOfUsers.map(function(q){return '<p class="cs-p"><b>'+q.attribution+'</b> \u2014 <em>\u201c'+q.quote+'\u201d</em></p>';}).join('')
+      +'</div></div>';
+      return html;
+    }
+
+    function renderProjectDetail(id){
+      const p=PROJECTS.find(function(x){return x.id===id;});
+      if(!p)return;
+      currentProjectId=id;
+      const linksHtml=p.links.map(function(l){
+        return '<a href="'+l.href+'" target="_blank" rel="noopener noreferrer">'+tr(l.key)+'</a>';
+      }).join('');
+      const cs=CASE_STUDIES[id];
+      document.getElementById('workDetail').innerHTML=
+        (p.meta?'<p class="view-kicker">'+p.meta+'</p>':'')
+        +'<h1 class="view-headline">'+tr('proj.'+id+'.title')+'</h1>'
+        +'<div class="project-detail-img reveal"><img src="'+p.img+'" alt="'+p.imgAlt+'"></div>'
+        +(cs?caseStudyHTML(cs):'<p class="cs-p reveal">'+tr('proj.'+id+'.desc')+'</p>')
+        +'<div class="proj-card-links">'+linksHtml+'</div>';
+      if(window.observeReveals)window.observeReveals();
+    }
+
+    function showWorkSub(projectId){
+      const grid=document.getElementById('workGrid'),detail=document.getElementById('workDetail');
+      if(projectId){
+        renderProjectDetail(projectId);
+        grid.classList.remove('active');
+        detail.classList.add('active');
+        document.body.classList.add('project-page-active');
+      }else{
+        currentProjectId=null;
+        detail.classList.remove('active');
+        grid.classList.add('active');
+        document.body.classList.remove('project-page-active');
+      }
+    }
+
+    function topbarLinksHTML(){
+      return '';
+    }
+    document.getElementById('topbarLinks').innerHTML=topbarLinksHTML();
+    renderWorkGrid();
+    renderWorkSlider();
+
+    /* ============================================================
+       NEW HOME SECTIONS — Work + Interests embedded directly in the
+       home scroll, replacing the old About/Education/Career Journey
+       block. Reuses the same PROJECTS data and image paths as the
+       existing standalone Work/Interests views (left untouched for now).
+       ============================================================ */
+    function renderHomeWork(filter){
+      const wrap=document.getElementById('homeWorkGrid');
+      if(!wrap)return;
+      const cat=filter||'all';
+      const projectsToShow=cat==='all'?PROJECTS:PROJECTS.filter(function(p){return p.cat===cat;});
+      wrap.innerHTML=projectsToShow.map(function(p){
+        const fitStyle=p.imgFit?(' style="object-fit:'+p.imgFit+';background:#e8ecf5;"'):'';
+        return '<button type="button" class="n-work-card" data-id="'+p.id+'">'
+          +'<span class="n-thumb"><img src="'+p.img+'" alt="'+p.imgAlt+'"'+fitStyle+'></span>'
+          +'<span class="n-body"><span class="n-meta">'+(p.meta||'')+'</span><h3 data-i18n="proj.'+p.id+'.title">'+tr('proj.'+p.id+'.title')+'</h3></span>'
+          +'</button>';
+      }).join('');
+      wrap.querySelectorAll('.n-work-card').forEach(function(card){
+        card.addEventListener('click',function(){ goToProject(parseInt(card.dataset.id,10)); });
+      });
+      if(window.observeReveals)window.observeReveals();
+    }
+
+    const homeFilterList=document.getElementById('homeFilterList');
+    if(homeFilterList){
+      homeFilterList.querySelectorAll('button').forEach(function(btn){
+        btn.addEventListener('click',function(){
+          homeFilterList.querySelectorAll('button').forEach(function(b){b.classList.remove('active');});
+          btn.classList.add('active');
+          renderHomeWork(btn.dataset.cat);
+        });
       });
     }
-    return tufts;
-  }
-
-  const SPREAD_DURATION = 300;  // ms for a sprite's pop-in
-  const SETTLE_DURATION = 550;  // ms of directional drift before it comes to rest
-  const POINT_LIFESPAN = 10000; // each sprite disappears 10s after it was created
-  const FADE_START = 6000;      // ms — vapour dissolve begins here
-  const FADE_DURATION = POINT_LIFESPAN - FADE_START; // slow, ~4s dissolve to white
-  const EYES_CLOSE_AT = 0.5;    // fraction into the fade where eyes vanish first
-
-  function resizeCanvas(){
-    canvas.width = heroSection.clientWidth;
-    canvas.height = heroSection.clientHeight;
-  }
-  resizeCanvas();
-  window.addEventListener('resize', resizeCanvas);
-
-  let lastX = null, lastY = null;
-
-  function spawnDrop(x, y, dirX, dirY, speed){
-    const color = COLOR_PALETTE[Math.floor(Math.random() * COLOR_PALETTE.length)];
-    // initial travel distance in the cursor's direction, scaled by how
-    // fast the cursor was moving — friction brings it to a stop
-    const push = Math.min(60, 8 + speed * 1.4);
-    points.push({
-      x, y,
-      vx: dirX * push,
-      vy: dirY * push,
-      radius: 15 + Math.random() * 16,
-      tufts: buildTufts(),
-      hasEyes: Math.random() < 0.4,
-      color,
-      wigglePhase: Math.random() * Math.PI * 2,
-      wiggleSpeed: 1.3 + Math.random() * 0.8,
-      born: performance.now()
+    document.querySelectorAll('.n-tab-btn').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        document.querySelectorAll('.n-tab-btn').forEach(function(b){b.classList.remove('active');});
+        btn.classList.add('active');
+        const isWork=btn.dataset.tab==='work';
+        const workPane=document.getElementById('homeWorkPane'), interestsPane=document.getElementById('homeInterestsPane');
+        if(workPane)workPane.style.display=isWork?'grid':'none';
+        if(interestsPane)interestsPane.style.display=isWork?'none':'grid';
+      });
     });
-    if(points.length > 200) points.splice(0, points.length - 200);
-  }
 
-  // no default cluster — the hero stays empty until the cursor actually
-  // moves over it; colour only exists where the cursor has touched
-
-  // distance the cursor must travel before the next sprite is placed —
-  // this is what keeps individual sprites distinguishable
-  const MIN_SPAWN_GAP = 40;
-  let distSinceSpawn = 0;
-
-  function handleMove(clientX, clientY){
-    const rect = heroSection.getBoundingClientRect();
-    // only record while the cursor is actually over the hero
-    if(clientX < rect.left || clientX > rect.right || clientY < rect.top || clientY > rect.bottom){
-      lastX = null; lastY = null;
-      return;
+    const HOME_GALLERY=[
+      {img:'images/others/sunset/India.jpg', alt:'Sunset in India', key:'country.india'},
+      {img:'images/others/sunset/Sweden.jpg', alt:'Sunset in Sweden', key:'country.sweden'},
+      {img:'images/others/sunset/Switzerland.jpg', alt:'Sunset in Switzerland', key:'country.switzerland'}
+    ];
+    function renderHomeGallery(){
+      const wrap=document.getElementById('homeGalleryGrid');
+      if(!wrap)return;
+      wrap.innerHTML=HOME_GALLERY.map(function(g){
+        return '<div class="n-gallery-item"><img src="'+g.img+'" alt="'+g.alt+'"><p class="n-gallery-caption" data-i18n="'+g.key+'">'+tr(g.key)+'</p></div>';
+      }).join('');
+      if(window.observeReveals)window.observeReveals();
     }
-    const x = clientX - rect.left, y = clientY - rect.top;
-    if(lastX !== null){
-      const dx = x - lastX, dy = y - lastY;
-      const dist = Math.hypot(dx, dy);
-      distSinceSpawn += dist;
-      if(distSinceSpawn >= MIN_SPAWN_GAP){
-        const dirX = dist > 0.01 ? dx / dist : 0;
-        const dirY = dist > 0.01 ? dy / dist : 0;
-        spawnDrop(x, y, dirX, dirY, dist);
+
+    const HOME_BOOKS=[
+      {img:'images/others/book/b1.jpg', title:'Love Letters of the Great War', author:'edited by Mandy Kirkby', url:'https://www.goodreads.com/book/show/20564827-love-letters-of-the-great-war'},
+      {img:'images/others/book/b2.jpg', title:'Beautiful World, Where Are You', author:'by Sally Rooney', url:'https://www.goodreads.com/book/show/75555793-beautiful-world-where-are-you'},
+      {img:'images/others/book/b3.jpg', title:'Mixing Work with Pleasure: My Life at Studio Ghibli', author:'by Toshio Suzuki', url:'https://www.goodreads.com/book/show/40167204-mixing-work-with-pleasure'},
+      {img:'images/others/book/b4.jpg', title:'Problem Solving 101: A Simple Book for Smart People', author:'by Ken Watanabe', url:'https://www.goodreads.com/book/show/6271219-problem-solving-101'},
+      {img:'images/others/book/b5.jpg', title:'Your Head is a Houseboat: A Chaotic Guide to Mental Clarity', author:'by Campbell Walker', url:'https://www.goodreads.com/book/show/57008042-your-head-is-a-houseboat'},
+      {img:'images/others/book/b6.jpg', title:'Almond', author:'by Sohn Won-Pyung', url:'https://www.goodreads.com/book/show/52219386-almond'},
+      {img:'images/others/book/b7.jpg', title:'Bacteria to AI: Human Futures with Our Nonhuman Symbionts', author:'by N. Katherine Hayles', url:'https://www.goodreads.com/book/show/209050254-bacteria-to-ai'}
+    ];
+    function renderHomeBooks(){
+      const wrap=document.getElementById('homeBookList');
+      if(!wrap)return;
+      wrap.innerHTML=HOME_BOOKS.map(function(b){
+        return '<a class="n-book-row" href="'+b.url+'" target="_blank" rel="noopener noreferrer">'
+          +'<span class="n-book-cover"><img src="'+b.img+'" alt="" onerror="this.style.display=\'none\'"></span>'
+          +'<span><p class="n-book-title">'+b.title+'</p><p class="n-book-author">'+b.author+'</p></span>'
+          +'</a>';
+      }).join('');
+    }
+    renderHomeWork('all');
+    renderHomeGallery();
+    renderHomeBooks();
+
+    const VALID_VIEWS=['home','about','work','interests','contact'];
+    function parseHash(){
+      const h=(location.hash||'#home').replace('#','');
+      const m=h.match(/^project-(\d+)$/);
+      if(m)return{view:'work',projectId:parseInt(m[1],10)};
+      return{view:VALID_VIEWS.indexOf(h)!==-1?h:'home',projectId:null};
+    }
+    function showView(view,opts){
+      opts=opts||{};
+      if(VALID_VIEWS.indexOf(view)===-1)view='home';
+      document.querySelectorAll('.view').forEach(function(sec){sec.classList.toggle('active',sec.dataset.view===view);});
+      document.querySelectorAll('#topbar [data-view]').forEach(function(btn){btn.classList.toggle('active',btn.dataset.view===view);});
+      const mainEl=document.getElementById('main-content');
+      if(mainEl)mainEl.style.display=(view==='work'||view==='interests'||view==='contact')?'':'none';
+      if(mainEl)mainEl.classList.toggle('center-page',view==='contact');
+      if(view==='work')showWorkSub(opts.projectId||null);
+      else document.body.classList.remove('project-page-active');
+      if(view==='about'&&typeof fitAll==='function'){
+        requestAnimationFrame(function(){requestAnimationFrame(function(){
+          if(!detail.classList.contains('open'))fitAll();
+          S.s=S.ts;S.x=S.tx;S.y=S.ty;
+        });});
+      }
+      if(!opts.silent){
+        requestAnimationFrame(function(){
+          window.scrollTo({top:0,behavior:'smooth'});
+        });
+      }
+    }
+    function setHash(h){
+      try{ if(location.hash!=='#'+h)location.hash=h; }catch(err){ }
+    }
+    function goToProject(id){
+      setHash('project-'+id);
+      showView('work',{projectId:id});
+    }
+    function goToWork(){
+      setHash('work');
+      showView('work',{projectId:null});
+    }
+    document.querySelectorAll('#topbar [data-view]').forEach(function(btn){
+      btn.addEventListener('click',function(e){
+        e.preventDefault();
+        const view=btn.dataset.view;
+        setHash(view);
+        showView(view,{projectId:null});
+      });
+    });
+    const heroScrollBtn=document.getElementById('heroScrollBtn');
+    if(heroScrollBtn)heroScrollBtn.addEventListener('click',function(){
+      const el=document.getElementById('homeAbout');
+      if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+    });
+    const aboutCtaBtn=document.getElementById('aboutCtaBtn');
+    if(aboutCtaBtn)aboutCtaBtn.addEventListener('click',function(){goToWork();});
+    window.addEventListener('hashchange',function(){
+      const route=parseHash();
+      showView(route.view,{silent:true,projectId:route.projectId});
+    });
+
+
+    const LANG_LABEL={en:'EN',fr:'FR',sv:'SV',de:'DE',no:'NO'};
+
+    function applyStaticTranslations(lang){
+      const dict=TRANSLATIONS[lang]||TRANSLATIONS.en;
+      document.querySelectorAll('[data-i18n]').forEach(function(el){
+        const key=el.getAttribute('data-i18n');
+        if(dict[key]!==undefined) el.innerHTML=dict[key];
+      });
+      document.documentElement.setAttribute('lang',lang);
+      document.querySelectorAll('.lang-current').forEach(function(el){el.textContent=LANG_LABEL[lang]||'EN';});
+      document.querySelectorAll('.lang-opt').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});
+    }
+
+    function setLanguage(lang){
+      if(!TRANSLATIONS[lang])lang='en';
+      currentLang=lang;
+      try{ localStorage.setItem('siteLang',lang); }catch(e){ }
+      applyStaticTranslations(lang);
+      if(typeof selectedIdx!=='undefined'&&selectedIdx>-1)selectPlace(selectedIdx);
+      if(currentProjectId)renderProjectDetail(currentProjectId);
+      document.querySelectorAll('.lang-dd.open').forEach(function(dd){setDropdownOpen(dd,false);});
+    }
+
+    function setDropdownOpen(dd,open){
+      dd.classList.toggle('open',open);
+      const btn=dd.querySelector('.lang-btn,.menu-btn');
+      if(btn)btn.setAttribute('aria-expanded',open?'true':'false');
+    }
+    document.addEventListener('keydown',function(e){
+      if(e.key!=='Escape')return;
+      const openDd=document.querySelector('.lang-dd.open,.menu-dd.open');
+      if(!openDd)return;
+      setDropdownOpen(openDd,false);
+      const btn=openDd.querySelector('.lang-btn,.menu-btn');
+      if(btn)btn.focus();
+    });
+
+    document.querySelectorAll('.lang-dd').forEach(function(dd){
+      const btn=dd.querySelector('.lang-btn');
+      btn.addEventListener('click',function(e){
+        e.stopPropagation();
+        const willOpen=!dd.classList.contains('open');
+        document.querySelectorAll('.lang-dd').forEach(function(o){setDropdownOpen(o,false);});
+        setDropdownOpen(dd,willOpen);
+      });
+      dd.querySelectorAll('.lang-opt').forEach(function(opt){
+        opt.addEventListener('click',function(e){e.stopPropagation();setLanguage(opt.dataset.lang);});
+      });
+    });
+    document.addEventListener('click',function(){document.querySelectorAll('.lang-dd.open').forEach(function(dd){setDropdownOpen(dd,false);});});
+
+    document.querySelectorAll('.menu-dd').forEach(function(dd){
+      const btn=dd.querySelector('.menu-btn');
+      btn.addEventListener('click',function(e){
+        e.stopPropagation();
+        const willOpen=!dd.classList.contains('open');
+        document.querySelectorAll('.menu-dd').forEach(function(o){setDropdownOpen(o,false);});
+        setDropdownOpen(dd,willOpen);
+      });
+      dd.querySelectorAll('.menu-opt[data-scroll-target]').forEach(function(opt){
+        opt.addEventListener('click',function(e){
+          e.stopPropagation();
+          setDropdownOpen(dd,false);
+          const targetId=opt.dataset.scrollTarget;
+          setHash('home');
+          showView('home',{silent:true});
+          requestAnimationFrame(function(){
+            const el=document.getElementById(targetId);
+            if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+          });
+        });
+      });
+      dd.querySelectorAll('.menu-opt[data-view]').forEach(function(opt){
+        opt.addEventListener('click',function(e){
+          e.stopPropagation();
+          setDropdownOpen(dd,false);
+          const view=opt.dataset.view;
+          setHash(view);
+          showView(view,{projectId:null});
+        });
+      });
+    });
+    document.addEventListener('click',function(){document.querySelectorAll('.menu-dd.open').forEach(function(dd){setDropdownOpen(dd,false);});});
+
+    document.querySelectorAll('.footer-link[data-view]').forEach(function(opt){
+      opt.addEventListener('click',function(e){
+        e.preventDefault();
+        const view=opt.dataset.view;
+        setHash(view);
+        showView(view,{projectId:null});
+      });
+    });
+    document.querySelectorAll('.footer-link[data-scroll-target]').forEach(function(opt){
+      opt.addEventListener('click',function(e){
+        e.preventDefault();
+        const targetId=opt.dataset.scrollTarget;
+        setHash('home');
+        showView('home',{silent:true});
+        requestAnimationFrame(function(){
+          const el=document.getElementById(targetId);
+          if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+        });
+      });
+    });
+
+const PLACES=[
+      {city:"Kanpur",mark:"spire",top:"#BFEA7A",rim:"#9ED65A",years:["2015","2017","2019"],groups:[{org:"IIT Kanpur, India",logo:"images/logos/iitk.jpg",alt:"IIT Kanpur",experiences:[{title:"Winter Internship",year:"2015",note:"Tessellation and Topological Pattern Generation and Recognition",title_fr:"Stage d'hiver",title_zh:"寒假实习",note_fr:"Génération et reconnaissance de motifs topologiques par pavage",note_zh:"镶嵌与拓扑图案的生成与识别",title_de:"Winterpraktikum",note_de:"Erzeugung und Erkennung von Tessellierungs- und topologischen Mustern",title_ja:"冬季インターンシップ",note_ja:"テッセレーションおよびトポロジカルパターンの生成と認識",tags:["Persistent Homology","Simplicial Complexes","Periodic-Aperiodic","Convex-Concave"]},{title:"OffCycle Internship",year:"2017",note:"Old Document Restoration using Image Processing, Video Subtitle Removal using Inpainting",title_fr:"Stage hors cycle",title_zh:"非周期实习",note_fr:"Restauration de documents anciens par traitement d'image, suppression de sous-titres vidéo par inpainting",note_zh:"利用图像处理技术修复旧文档,利用图像修复技术去除视频字幕",title_de:"Praktikum außerhalb des Zyklus",note_de:"Restaurierung alter Dokumente mittels Bildverarbeitung, Entfernung von Videountertiteln mittels Inpainting",title_ja:"オフサイクルインターンシップ",note_ja:"画像処理を用いた古文書の修復、インペインティングを用いた動画字幕の除去",tags:["Matlab","Fourier Transform","Singular value decomposition","Harmonic analysis","Morphological Operations","PDE"]},{title:"Research Assistantship",year:"2019",note:"Musical Script Generation from Harmonium Playing Video using Computer Vision",title_fr:"Assistanat de recherche",title_zh:"研究助理",note_fr:"Génération de partitions musicales à partir de vidéos de jeu à l'harmonium par vision par ordinateur",note_zh:"利用计算机视觉从演奏簧风琴的视频中生成乐谱",title_de:"Forschungsassistenz",note_de:"Erzeugung von Notenschrift aus Harmonium-Spielvideos mittels Computer Vision",title_ja:"研究助手",note_ja:"コンピュータビジョンを用いたハルモニウム演奏動画からの楽譜生成",tags:["Python","Pytorch","OpenCV","Matlab"]}]}]},
+      {city:"Chennai",mark:"arch",top:"#C7F66C",rim:"#9BE548",years:["2016"],groups:[{org:"IIT Madras, India",logo:"images/logos/iitm.png",alt:"IIT Madras",experiences:[{title:"Summer Internship",year:"2016",note:"Cloth Simulation and Modelling",title_fr:"Stage d'été",title_zh:"暑期实习",note_fr:"Simulation et modélisation de tissus",note_zh:"布料模拟与建模",title_de:"Sommerpraktikum",note_de:"Stoffsimulation und -modellierung",title_ja:"夏季インターンシップ",note_ja:"布のシミュレーションとモデリング",tags:["OpenGL","Visual C++","Bullet Physics","Rigid_Body-Cloth-Collision"]}]}]},
+      {city:"Kharagpur",mark:"spire",top:"#AEEF57",rim:"#84D933",years:["2017","2018","2019","2020"],groups:[{org:"IIT Kharagpur, India",logo:"images/logos/iitkgp.jpg",alt:"IIT Kharagpur",experiences:[{title:"Visiting Undergraduate Thesis Student",year:"2017",note:"Effectiveness of Image Processing Methods on Counterfeit Integrated Circuit (IC) Detection",title_fr:"Étudiante invitée en mémoire de licence",title_zh:"本科毕业论文访问学生",note_fr:"Efficacité des méthodes de traitement d'image pour la détection de circuits intégrés contrefaits",note_zh:"图像处理方法在假冒集成电路(IC)检测中的有效性",title_de:"Gast-Bachelorarbeitsstudentin",note_de:"Wirksamkeit von Bildverarbeitungsmethoden bei der Erkennung gefälschter integrierter Schaltkreise (IC)",title_ja:"学部卒業論文訪問学生",note_ja:"画像処理手法による偽造集積回路(IC)検出の有効性",tags:["Matlab","OpenCV"]},{title:"Visiting Undergraduate Thesis Student",year:"2018",note:"Effectiveness of Computer Vision Methods on Counterfeit Integrated Circuit (IC) Detection",title_fr:"Étudiante invitée en mémoire de licence",title_zh:"本科毕业论文访问学生",note_fr:"Efficacité des méthodes de vision par ordinateur pour la détection de circuits intégrés contrefaits",note_zh:"计算机视觉方法在假冒集成电路(IC)检测中的有效性",title_de:"Gast-Bachelorarbeitsstudentin",note_de:"Wirksamkeit von Computer-Vision-Methoden bei der Erkennung gefälschter integrierter Schaltkreise (IC)",title_ja:"学部卒業論文訪問学生",note_ja:"コンピュータビジョン手法による偽造集積回路(IC)検出の有効性",tags:["Dataset Generation","Masked RCNN","YOLOv2","Tensorflow","Anaconda Spyder","Python","OpenCV","Matplotlib"]},{title:"Remote Research Assistant",year:"2019",note:"Changes in Emotional Perception for Indian Classical Music Listeners",title_fr:"Assistante de recherche à distance",title_zh:"远程研究助理",note_fr:"Évolution de la perception émotionnelle chez les auditeurs de musique classique indienne",note_zh:"印度古典音乐听众情绪感知的变化",title_de:"Externe Forschungsassistentin",note_de:"Veränderungen der emotionalen Wahrnehmung bei Hörern indischer klassischer Musik",title_ja:"リモート研究助手",note_ja:"インド古典音楽聴取者の感情知覚の変化",tags:["Matlab"]},{title:"Research Associate",year:"2020",note:"DeepFakeFace Video Detection",title_fr:"Associée de recherche",title_zh:"研究助理(副研究员)",note_fr:"Détection vidéo de deepfakes faciaux",note_zh:"DeepFake换脸视频检测",title_de:"Wissenschaftliche Mitarbeiterin",note_de:"Erkennung von DeepFake-Gesichtsvideos",title_ja:"リサーチアソシエイト",note_ja:"ディープフェイク顔動画の検出",tags:["Python","Pytorch","Interframe Differences"]}]}]},
+      {city:"Chicago",mark:"pavilion",top:"#b8bfb8",rim:"#969d96",years:["2018","2019"],groups:[{org:"UIUC, USA",logo:"images/logos/uiuc.png",alt:"UIUC",experiences:[{title:"Remote Intern",year:"2018–2019",note:"Infant's Emotion-based Need Detection using PyraMiD-LSTM",title_fr:"Stagiaire à distance",title_zh:"远程实习生",note_fr:"Détection des besoins des nourrissons basée sur les émotions à l'aide de PyraMiD-LSTM",note_zh:"利用PyraMiD-LSTM进行基于情绪的婴儿需求检测",title_de:"Externe Praktikantin",note_de:"Emotionsbasierte Bedürfniserkennung bei Säuglingen mittels PyraMiD-LSTM",title_ja:"リモートインターン",note_ja:"PyraMiD-LSTMを用いた乳児の感情に基づくニーズ検出",tags:["Python","PyTorch","DyNet","XNMT","Signal Processing"]}]}]},
+      {city:"Lyon",mark:"arch",top:"#c2c9c0",rim:"#a0a89e",years:["2019"],groups:[{org:"CNRS at Claude Bernard Lyon 1, France",logo:"images/logos/cnrs.png",alt:"CNRS",experiences:[{title:"Remote Research",year:"2019",note:"Symmetry Pattern Detection and Analysis",title_fr:"Recherche à distance",title_zh:"远程研究",note_fr:"Détection et analyse de motifs de symétrie",note_zh:"对称图案检测与分析",title_de:"Externe Forschung",note_de:"Erkennung und Analyse von Symmetriemustern",title_ja:"リモート研究",note_ja:"対称パターンの検出と分析",tags:["Tessellation","Computational Crystallography","Frieze group","Wallpaper Group","Point Group","Space group"]}]}]},
+      {city:"Kolkata",mark:"pavilion",top:"#85B7EB",rim:"#378ADD",years:["2019"],groups:[{org:"NSHM College, India",logo:"images/logos/nshm.png",alt:"NSHM",experiences:[{title:"Visiting Lecturer",year:"2019",note:"Guest Lecturer for the course '3D Computer Graphics using OpenGL and C++'",title_fr:"Chargée de cours invitée",title_zh:"客座讲师",note_fr:"Enseignante invitée pour le cours « Infographie 3D avec OpenGL et C++ »",note_zh:"担任课程《使用OpenGL与C++的三维计算机图形学》客座讲师",title_de:"Gastdozentin",note_de:"Gastdozentin für den Kurs „3D-Computergrafik mit OpenGL und C++“",title_ja:"客員講師",note_ja:"「OpenGLとC++による3Dコンピュータグラフィックス」講座のゲスト講師",tags:["Visual Studio","C++","OpenGL","Co-ordinate Geometry","Vectors"]}]}]},
+      {city:"Stockholm",mark:"spire",top:"#FF9A2E",rim:"#E07010",years:["2020-2022","2024-2025"],groups:[{org:"KTH Royal Institute of Technology, Sweden",logo:"images/logos/kth.png",alt:"KTH",experiences:[{title:"Teaching Assistant",year:"2020, 2022, 2024, 2025",note:"Computer Visualisation, Machine Learning, Python Programming Fundamentals, Multivariable Calculus, Computer Networking",title_fr:"Assistante d'enseignement",title_zh:"助教",note_fr:"Visualisation informatique, apprentissage automatique, fondamentaux de la programmation Python, calcul à plusieurs variables, réseaux informatiques",note_zh:"计算机可视化、机器学习、Python编程基础、多元微积分、计算机网络",title_de:"Wissenschaftliche Hilfskraft (Lehre)",note_de:"Computervisualisierung, Maschinelles Lernen, Grundlagen der Python-Programmierung, Mehrdimensionale Analysis, Computernetzwerke",title_ja:"ティーチングアシスタント",note_ja:"コンピュータビジュアライゼーション、機械学習、Pythonプログラミング基礎、多変数微積分、コンピュータネットワーク",tags:["Python","Pytorch","OpenGL","C++","Inviwo","Tomcat 9","Docker","DBMS/SQL","Spring","Netbeans 12 JDK 8","Java","Jakarta Mail"]},{title:"Research Assistant",year:"2021-2022",note:"Machine Learning for Digital Pathology",title_fr:"Assistante de recherche",title_zh:"研究助理",note_fr:"Apprentissage automatique pour la pathologie numérique",note_zh:"用于数字病理学的机器学习",title_de:"Forschungsassistentin",note_de:"Maschinelles Lernen für digitale Pathologie",title_ja:"研究助手",note_ja:"デジタル病理学のための機械学習",tags:["PyQT","Pytorch","HTML","JavaScript","PyQT"]}]},{org:"Ericsson, Sweden",logo:"images/logos/Ericsson2.jpg",alt:"Ericsson",experiences:[{title:"Summer R&D Intern",year:"2021",note:" Examined Impact of Network Changes on Perception in Haptic Teleoperation System",title_fr:"Stagiaire R&D d'été",title_zh:"暑期研发实习生",note_fr:"Étude de l'impact des changements de réseau sur la perception dans un système de téléopération haptique",note_zh:"研究了网络变化对触觉遥操作系统中感知的影响",title_de:"Sommerpraktikantin F&E",note_de:"Untersuchung des Einflusses von Netzwerkänderungen auf die Wahrnehmung in haptischen Teleoperationssystemen",title_ja:"夏季研究開発インターン",note_ja:"触覚遠隔操作システムにおける知覚へのネットワーク変化の影響を調査",tags:["Python","ROS","Omni Haptic","Miro","Kanban","A/B Testing"]}]}]},
+      {city:"Lausanne",mark:"pavilion",top:"#F9E04B",rim:"#E6C418",years:["2021","2022","2023"],groups:[{org:"EPFL, Switzerland",logo:"images/logos/epfl.png",alt:"EPFL",experiences:[{title:"Graduate Exchange in Computer and Communication Sciences",year:"2021 – 2022",note:"MSc Courses",title_fr:"Échange de troisième cycle en sciences informatiques et de la communication",title_zh:"计算机与通信科学研究生交换项目",note_fr:"Cours de master",note_zh:"硕士课程",title_de:"Graduiertenaustausch in Informatik und Kommunikationswissenschaften",note_de:"Master-Kurse",title_ja:"コンピュータ・コミュニケーション科学における大学院交換留学",note_ja:"修士課程コース",tags:["Digital Humanities","Computer Vision","Virtual Reality","City Design"]},{title:"Visiting Graduate Thesis Student in Computer Science",year:"2022 – 2023",note:"Teacher's Perspective and Tacit Knowledge in Virtual Reality based Education Technology Development",title_fr:"Étudiante invitée en mémoire de master en informatique",title_zh:"计算机科学硕士论文访问学生",note_fr:"Perspective des enseignants et connaissances tacites dans le développement de technologies éducatives basées sur la réalité virtuelle",note_zh:"基于虚拟现实的教育技术开发中的教师视角与隐性知识",title_de:"Gast-Masterarbeitsstudentin in Informatik",note_de:"Perspektive der Lehrenden und implizites Wissen bei der Entwicklung VR-basierter Bildungstechnologie",title_ja:"コンピュータサイエンス修士論文訪問学生",note_ja:"VRベース教育テクノロジー開発における教師の視点と暗黙知",tags:["Startup","VRLE","UX Research"]}]},{org:"University of Lausanne, Switzerland",logo:"images/logos/UNIL.jpg",alt:"UNIL",experiences:[{title:"Research Assistant",year:"2023",note:"Collaborative Programming Learning Media for Novices in Hybrid Classes",title_fr:"Assistante de recherche",title_zh:"研究助理",note_fr:"Supports d'apprentissage collaboratif de la programmation pour débutants en classes hybrides",note_zh:"面向混合课堂编程初学者的协作式学习媒介",title_de:"Forschungsassistentin",note_de:"Kollaborative Lernmedien für Programmier-Einsteiger in hybriden Klassen",title_ja:"研究助手",note_ja:"ハイブリッドクラスにおける初心者向け協働プログラミング学習メディア",tags:["UX Research","EdTech"]}]}]},
+      {city:"Jyväskylä",mark:"arch",top:"#F9E04B",rim:"#E6C418",years:["2025"],groups:[{org:"University of Jyväskylä, Finland",logo:"images/logos/jyu_transparent.png",alt:"JYU",experiences:[{title:"Summer Trainee",year:"2025",note:"Accessible Multimodal Interactive Graph Navigation System",title_fr:"Stagiaire d'été",title_zh:"暑期实习生",note_fr:"Système accessible de navigation graphique interactive multimodale",note_zh:"无障碍多模态交互式图形导航系统",title_de:"Barrierefreies multimodales interaktives Graphennavigationssystem",title_ja:"アクセシブルなマルチモーダル・インタラクティブグラフナビゲーションシステム",note_de:"Barrierefreies multimodales interaktives Graphennavigationssystem",note_ja:"アクセシブルなマルチモーダル・インタラクティブグラフナビゲーションシステム",tags:["Accessibility","Multimodal Design","Figma","Claude AI","Python"]}]}]},
+      {city:"Paris",mark:"arch",top:"#E8B6C6",rim:"#D48CA5",years:["2025-Present"],groups:[{org:"CAEL - Centre d'Animation Expression Loisirs de Bourg-La-Reine",logo:"images/logos/cael.png",alt:"CAEL",experiences:[{title:"French Language Training",year:"2025-Present",note:"Ateliers Sociolinguistisques A1−A2",title_fr:"Formation en langue française",title_zh:"法语培训",note_fr:"Ateliers Sociolinguistisques A1−A2",note_zh:"社会语言学工作坊 A1−A2",title_de:"Französischsprachtraining",note_de:"Soziolinguistische Workshops A1−A2",title_ja:"フランス語トレーニング",note_ja:"社会言語学ワークショップ A1−A2",tags:["French","DELF A2"]}]}]}
+    ];
+
+    const POSITIONS=[{x:-100,y:500},{x:-100,y:1300},{x:400,y:900},{x:820,y:350},{x:820,y:1450},{x:1400,y:900},{x:2500,y:900},{x:1950,y:500},{x:1950,y:1300},{x:3100,y:900}];
+    var detail, S;
+    if(document.getElementById('jshell')){
+    const shell=document.getElementById('jshell'),world=document.getElementById('jworld'),vp=document.getElementById('jvp'),detailBody=document.getElementById('jdetailBody'),dtitle=document.getElementById('jdtitle'),dsub=document.getElementById('jdsubtitle'),dcards=document.getElementById('jcards');
+    detail=document.getElementById('jdetail');
+    S={s:1,x:0,y:0,ts:1,tx:0,ty:0,minS:.05,maxS:2.2};
+    const islands=PLACES.map((p,i)=>({...p,...POSITIONS[i],el:null}));
+    function markHTML(t){return t==='spire'?'<div class="jmark-spire"></div>':t==='arch'?'<div class="jmark-arch"></div>':'<div class="jmark-pavilion"></div>';}
+    function yearsLabel(p){if(!p.years||!p.years.length)return'';const l=[];for(let i=0;i<p.years.length;i+=2)l.push(p.years.slice(i,i+2).join(', '));return l.join('<br>');}
+    function buildIslands(){islands.forEach((p,i)=>{const el=document.createElement('div');el.className='jisland';el.style.cssText=`left:${p.x}px;top:${p.y}px`;el.setAttribute('role','button');el.setAttribute('tabindex','0');el.setAttribute('aria-label',p.city);el.innerHTML=`<div class="jinner"><div class="jlabel"><div class="jcity">${p.city}</div></div><div class="jtop" style="background:${p.top}"></div><div class="jrim" style="background:${p.rim}"></div><div class="jbot"></div>${markHTML(p.mark)}<div class="jtree" style="left:114px;top:108px"></div><div class="jtree" style="left:168px;top:88px;transform:scale(1.15)"></div><div class="jtree" style="left:82px;top:96px;transform:scale(0.85)"></div><div class="jstone" style="left:158px;top:162px"></div><div class="jstone" style="left:178px;top:170px"></div></div><div class="jyears">${yearsLabel(p)}</div>`;el.addEventListener('click',e=>{e.stopPropagation();selectPlace(i);});el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();e.stopPropagation();selectPlace(i);}});world.appendChild(el);p.el=el;});}
+    let selectedIdx=-1,suppressClose=false;
+    const cardState={left:null,top:null,width:null,height:null};
+    function saveCardState(){if(!detail.classList.contains('open'))return;cardState.left=detail.style.left;cardState.top=detail.style.top;cardState.width=detail.style.width;cardState.height=detail.style.height;}
+    function applyCardState(){if(cardState.left!==null)detail.style.left=cardState.left;if(cardState.top!==null)detail.style.top=cardState.top;if(cardState.width!==null)detail.style.width=cardState.width;if(cardState.height!==null)detail.style.height=cardState.height;}
+    function selectPlace(i){suppressClose=true;selectedIdx=i;const p=islands[i];islands.forEach((is,j)=>is.el.classList.toggle('sel',j===i));dtitle.textContent=p.city;dsub.textContent='';dcards.innerHTML=(p.groups||[]).map(g=>`<div class="jcard"><div class="jcard-head"><div class="jlogo"><img src="${g.logo||''}" alt="${g.alt||g.org||p.city}" onerror="var p=this.parentElement;p.innerHTML='🏛️';p.style.fontSize='1.25rem';"></div><div class="jorg-wrap"><div class="jorg">${g.org||p.city}</div></div></div><div class="jroles">${(g.experiences||[]).map(e=>{const tt=e['title_'+currentLang]||e.title;const nn=e['note_'+currentLang]||e.note;return `<div class="jrole"><div class="jct">${tt}</div><div class="jcy">${e.year}</div><div class="jcn">${nn}</div><div class="jtags">${(e.tags||[]).map(t=>`<span class="jtag">${t}</span>`).join('')}</div></div>`;}).join('')}</div></div>`).join('');const wasOpen=detail.classList.contains('open');if(wasOpen){saveCardState();detail.style.transition='none';applyCardState();requestAnimationFrame(()=>{detail.style.transition='';});}else{detail.classList.add('open');if(cardState.left!==null)applyCardState();else positionDetail();}focusOn(p.x,p.y,1.1);setTimeout(()=>{suppressClose=false;},50);}
+    function closeDetail(){if(detail.classList.contains('open'))saveCardState();detail.classList.remove('open');islands.forEach(is=>is.el.classList.remove('sel'));selectedIdx=-1;}
+    function focusOn(wx,wy,zoom){const vw=vp.clientWidth,vh=vp.clientHeight;S.ts=Math.max(S.minS,Math.min(S.maxS,zoom));S.tx=vw*.5-wx*S.ts;S.ty=vh*.5-wy*S.ts;}
+    function fitAll(){const vw=vp.clientWidth||680,vh=vp.clientHeight||620;let minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity;islands.forEach(p=>{minX=Math.min(minX,p.x-300);maxX=Math.max(maxX,p.x+300);minY=Math.min(minY,p.y-380);maxY=Math.max(maxY,p.y+720);});const cW=maxX-minX,cH=maxY-minY,s=Math.min(vw/cW,vh/cH);S.ts=Math.max(S.minS,Math.min(S.maxS,s));S.tx=(vw-cW*S.ts)*.5-minX*S.ts;S.ty=(vh-cH*S.ts)*.5-minY*S.ts+100;}
+    function resetView(){fitAll();closeDetail();}
+    vp.addEventListener('click',e=>{if(detail.contains(e.target))return;if(suppressClose)return;if(detail.classList.contains('open'))resetView();});
+    document.addEventListener('click',e=>{
+      if(!detail.classList.contains('open'))return;
+      if(shell.contains(e.target))return; /* clicks inside the map itself are already handled above */
+      if(suppressClose)return;
+      resetView();
+    });
+    detail.addEventListener('pointerdown',e=>e.stopPropagation());detail.addEventListener('click',e=>e.stopPropagation());detail.addEventListener('dblclick',e=>e.stopPropagation());detail.addEventListener('wheel',e=>e.stopPropagation(),{passive:true});detail.addEventListener('touchstart',e=>e.stopPropagation(),{passive:true});detail.addEventListener('touchmove',e=>e.stopPropagation(),{passive:true});detailBody.addEventListener('pointerdown',e=>e.stopPropagation());detailBody.addEventListener('wheel',e=>e.stopPropagation(),{passive:true});
+    const detailHeader=document.getElementById('jdetailHeader');
+    let ddrag=false,ddx=0,ddy=0,dStartL=0,dStartT=0;
+    function positionDetail(){const vw=vp.clientWidth,dw=detail.offsetWidth;detail.style.left=(vw-dw-14)+'px';detail.style.top='14px';detail.style.right='auto';detail.style.bottom='auto';saveCardState();}
+    detailHeader.addEventListener('pointerdown',e=>{if(e.target.closest('button'))return;ddrag=true;detailHeader.setPointerCapture(e.pointerId);const r=detail.getBoundingClientRect(),vr=vp.getBoundingClientRect();dStartL=r.left-vr.left;dStartT=r.top-vr.top;ddx=e.clientX;ddy=e.clientY;e.stopPropagation();});
+    detailHeader.addEventListener('pointermove',e=>{if(!ddrag)return;const dx=e.clientX-ddx,dy=e.clientY-ddy,vw=vp.clientWidth,vh=vp.clientHeight,dw=detail.offsetWidth,dh=detail.offsetHeight;detail.style.left=Math.max(0,Math.min(vw-dw,dStartL+dx))+'px';detail.style.top=Math.max(0,Math.min(vh-dh,dStartT+dy))+'px';saveCardState();e.stopPropagation();});
+    detailHeader.addEventListener('pointerup',e=>{ddrag=false;e.stopPropagation();});
+    const resizeHandles=detail.querySelectorAll('.jresize');
+    let rdrag=false,resizeDir='',rdx=0,rdy=0,rStartW=0,rStartH=0,rStartL=0,rStartT=0;
+    const MIN_W=240,MIN_H=80;
+    resizeHandles.forEach(h=>{
+      h.addEventListener('pointerdown',e=>{rdrag=true;resizeDir=h.dataset.dir;h.setPointerCapture(e.pointerId);const r=detail.getBoundingClientRect(),vr=vp.getBoundingClientRect();rStartW=r.width;rStartH=r.height;rStartL=r.left-vr.left;rStartT=r.top-vr.top;rdx=e.clientX;rdy=e.clientY;e.stopPropagation();});
+      h.addEventListener('pointermove',e=>{if(!rdrag)return;const dx=e.clientX-rdx,dy=e.clientY-rdy,vw=vp.clientWidth,vh=vp.clientHeight;let nW=rStartW,nH=rStartH,nL=rStartL,nT=rStartT;if(resizeDir.includes('e'))nW=Math.max(MIN_W,Math.min(vw-nL,rStartW+dx));if(resizeDir.includes('s'))nH=Math.max(MIN_H,Math.min(vh-nT,rStartH+dy));if(resizeDir.includes('w')){nL=Math.max(0,Math.min(rStartL+rStartW-MIN_W,rStartL+dx));nW=rStartW-(nL-rStartL);}if(resizeDir.includes('n')){nT=Math.max(0,Math.min(rStartT+rStartH-MIN_H,rStartT+dy));nH=rStartH-(nT-rStartT);}if(nL+nW>vw)nW=vw-nL;if(nT+nH>vh)nH=vh-nT;detail.style.left=nL+'px';detail.style.top=nT+'px';detail.style.width=nW+'px';detail.style.height=nH+'px';saveCardState();e.stopPropagation();});
+      h.addEventListener('pointerup',e=>{rdrag=false;resizeDir='';e.stopPropagation();});
+    });
+    function clampDetailPos(){const vw=vp.clientWidth,vh=vp.clientHeight,dw=detail.offsetWidth,dh=detail.offsetHeight;detail.style.left=Math.max(0,Math.min(vw-dw,parseFloat(detail.style.left)||0))+'px';detail.style.top=Math.max(0,Math.min(vh-dh,parseFloat(detail.style.top)||0))+'px';}
+    function tick(){const e=.13;S.s+=(S.ts-S.s)*e;S.x+=(S.tx-S.x)*e;S.y+=(S.ty-S.y)*e;world.style.transform=`translate(${S.x}px,${S.y}px) scale(${S.s})`;requestAnimationFrame(tick);}
+    buildIslands();
+    function initMap(){fitAll();S.s=S.ts;S.x=S.tx;S.y=S.ty;tick();}
+    requestAnimationFrame(()=>requestAnimationFrame(initMap));
+    window.addEventListener('resize',()=>{if(!detail.classList.contains('open'))fitAll();else clampDetailPos();});
+    }
+    applyStaticTranslations(currentLang);
+    (function(){ const route=parseHash(); showView(route.view,{silent:true,projectId:route.projectId}); })();
+    });
+  </script>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function(){
+    const canvas = document.getElementById('heroTrailCanvas');
+    const heroSection = document.getElementById('heroSection');
+    if(!canvas || !heroSection) return;
+    const ctx = canvas.getContext('2d');
+    let points = [];
+
+    const COLOR_PALETTE = [
+      [252, 216, 228], // FCD8E4 — soft pink
+      [172, 255, 72],  // ACFF48 — vivid young-leaf green
+      [180, 228, 240]  // B4E4F0 — sky blue
+    ];
+
+    function buildTufts(){
+      const tufts = [];
+      const count = 4 + Math.floor(Math.random() * 3);
+      for(let i = 0; i < count; i++){
+        const angle = (i / count) * Math.PI * 2 + Math.random() * 0.5;
+        const dist = 0.78 + Math.random() * 0.22;
+        tufts.push({
+          dx: Math.cos(angle) * dist,
+          dy: Math.sin(angle) * dist,
+          r: 0.16 + Math.random() * 0.12
+        });
+      }
+      return tufts;
+    }
+
+    const SPREAD_DURATION = 300;
+    const SETTLE_DURATION = 550;
+    const POINT_LIFESPAN = 10000;
+    const FADE_START = 6000;
+    const FADE_DURATION = POINT_LIFESPAN - FADE_START;
+    const EYES_CLOSE_AT = 0.5;
+
+    function resizeCanvas(){
+      canvas.width = heroSection.clientWidth;
+      canvas.height = heroSection.clientHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    let lastX = null, lastY = null;
+
+    function spawnDrop(x, y, dirX, dirY, speed){
+      const color = COLOR_PALETTE[Math.floor(Math.random() * COLOR_PALETTE.length)];
+      const push = Math.min(60, 8 + speed * 1.4);
+      points.push({
+        x, y,
+        vx: dirX * push,
+        vy: dirY * push,
+        radius: 15 + Math.random() * 16,
+        tufts: buildTufts(),
+        hasEyes: Math.random() < 0.4,
+        color,
+        wigglePhase: Math.random() * Math.PI * 2,
+        wiggleSpeed: 1.3 + Math.random() * 0.8,
+        born: performance.now()
+      });
+      if(points.length > 200) points.splice(0, points.length - 200);
+    }
+
+    const MIN_SPAWN_GAP = 40;
+    let distSinceSpawn = 0;
+
+    function handleMove(clientX, clientY){
+      const rect = heroSection.getBoundingClientRect();
+      if(clientX < rect.left || clientX > rect.right || clientY < rect.top || clientY > rect.bottom){
+        lastX = null; lastY = null;
+        return;
+      }
+      const x = clientX - rect.left, y = clientY - rect.top;
+      if(lastX !== null){
+        const dx = x - lastX, dy = y - lastY;
+        const dist = Math.hypot(dx, dy);
+        distSinceSpawn += dist;
+        if(distSinceSpawn >= MIN_SPAWN_GAP){
+          const dirX = dist > 0.01 ? dx / dist : 0;
+          const dirY = dist > 0.01 ? dy / dist : 0;
+          spawnDrop(x, y, dirX, dirY, dist);
+          distSinceSpawn = 0;
+        }
+      } else {
+        spawnDrop(x, y, 0, 0, 0);
         distSinceSpawn = 0;
       }
-    } else {
-      spawnDrop(x, y, 0, 0, 0);
-      distSinceSpawn = 0;
+      lastX = x; lastY = y;
     }
-    lastX = x; lastY = y;
-  }
 
-  // listen at the window level with both pointer and mouse events —
-  // more robust than binding to a single element, in case the hero's own
-  // mousemove events get intercepted by a sandboxed preview environment
-  window.addEventListener('pointermove', (e) => handleMove(e.clientX, e.clientY));
-  window.addEventListener('mousemove', (e) => handleMove(e.clientX, e.clientY));
-  window.addEventListener('touchmove', (e) => {
-    if(e.touches && e.touches[0]) handleMove(e.touches[0].clientX, e.touches[0].clientY);
-  }, { passive:true });
+    window.addEventListener('pointermove', (e) => handleMove(e.clientX, e.clientY));
+    window.addEventListener('mousemove', (e) => handleMove(e.clientX, e.clientY));
+    window.addEventListener('touchmove', (e) => {
+      if(e.touches && e.touches[0]) handleMove(e.touches[0].clientX, e.touches[0].clientY);
+    }, { passive:true });
 
-  function lerp(a, b, t){ return a + (b - a) * t; }
+    function lerp(a, b, t){ return a + (b - a) * t; }
 
-  function draw(){
-    const now = performance.now();
+    function draw(){
+      const now = performance.now();
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      points = points.filter(p => now - p.born < POINT_LIFESPAN);
 
-    ctx.clearRect(0,0,canvas.width,canvas.height);
+      points.forEach(p => {
+        const age = now - p.born;
+        const growT = Math.min(1, age / SPREAD_DURATION);
+        const grown = 1 - Math.pow(1 - growT, 3);
+        const radius = p.radius * grown;
 
-    points = points.filter(p => now - p.born < POINT_LIFESPAN);
+        let wiggleAngle = 0, jitterX = 0, jitterY = 0;
+        if(age < SETTLE_DURATION){
+          const dt = Math.min(16, 1000/60);
+          p.x += p.vx * (dt/1000);
+          p.y += p.vy * (dt/1000);
+          const friction = Math.pow(0.02, dt/SETTLE_DURATION);
+          p.vx *= friction;
+          p.vy *= friction;
+        } else {
+          const t = now/1000 * p.wiggleSpeed + p.wigglePhase;
+          wiggleAngle = Math.sin(t) * 0.16;
+          jitterX = Math.sin(t * 1.3) * 1.6;
+          jitterY = Math.cos(t * 1.1) * 1.2;
+        }
 
-    points.forEach(p => {
-      const age = now - p.born;
+        const fadeT = age > FADE_START
+          ? Math.min(1, (age - FADE_START) / FADE_DURATION)
+          : 0;
+        const [pr, pg, pb] = p.color;
+        const cr = lerp(pr, 255, fadeT);
+        const cg = lerp(pg, 255, fadeT);
+        const cb = lerp(pb, 255, fadeT);
+        const alpha = 0.82 * (1 - fadeT * 0.85);
 
-      // clean, simple grow-in — no overshoot bounce, no haze
-      const growT = Math.min(1, age / SPREAD_DURATION);
-      const grown = 1 - Math.pow(1 - growT, 3); // ease-out cubic
-      const radius = p.radius * grown;
+        ctx.save();
+        ctx.translate(p.x + jitterX, p.y + jitterY);
+        ctx.rotate(wiggleAngle);
 
-      // move in the cursor's direction, decelerating via friction, so it
-      // travels briefly then comes to rest at a settled position
-      let wiggleAngle = 0, jitterX = 0, jitterY = 0;
-      if(age < SETTLE_DURATION){
-        const dt = Math.min(16, 1000/60);
-        p.x += p.vx * (dt/1000);
-        p.y += p.vy * (dt/1000);
-        const friction = Math.pow(0.02, dt/SETTLE_DURATION);
-        p.vx *= friction;
-        p.vy *= friction;
-      } else {
-        // once settled, a small idle wiggle — a living creature at rest,
-        // not a ball that stopped or a cloud that keeps drifting away
-        const t = now/1000 * p.wiggleSpeed + p.wigglePhase;
-        wiggleAngle = Math.sin(t) * 0.16;
-        jitterX = Math.sin(t * 1.3) * 1.6;
-        jitterY = Math.cos(t * 1.1) * 1.2;
-      }
-
-      // once settled, it holds — then slowly dissolves toward white,
-      // like vapour, rather than just fading to transparent
-      const fadeT = age > FADE_START
-        ? Math.min(1, (age - FADE_START) / FADE_DURATION)
-        : 0;
-      const [pr, pg, pb] = p.color;
-      const cr = lerp(pr, 255, fadeT);
-      const cg = lerp(pg, 255, fadeT);
-      const cb = lerp(pb, 255, fadeT);
-      const alpha = 0.82 * (1 - fadeT * 0.85);
-
-      ctx.save();
-      ctx.translate(p.x + jitterX, p.y + jitterY);
-      ctx.rotate(wiggleAngle);
-
-      ctx.beginPath();
-      ctx.moveTo(radius, 0);
-      ctx.arc(0, 0, Math.max(radius, 0), 0, Math.PI*2);
-      p.tufts.forEach(t => {
-        const tx = t.dx * radius, ty = t.dy * radius, tr = t.r * radius;
-        ctx.moveTo(tx + tr, ty);
-        ctx.arc(tx, ty, Math.max(tr,0), 0, Math.PI*2);
-      });
-      ctx.fillStyle = `rgba(${cr},${cg},${cb},${alpha})`;
-      ctx.fill();
-
-      // small dark eyes on some sprites — they close (vanish) partway
-      // through the fade, as if drifting off, before the body dissolves
-      if(p.hasEyes && fadeT < EYES_CLOSE_AT){
-        const eyeFade = 1 - Math.min(1, fadeT / EYES_CLOSE_AT);
-        const eyeR = radius * 0.09;
-        const eyeSpacing = radius * 0.32;
-        const eyeY = -radius * 0.08;
-        ctx.fillStyle = `rgba(70,60,55,${0.75 * eyeFade})`;
         ctx.beginPath();
-        ctx.arc(-eyeSpacing, eyeY, Math.max(eyeR,0), 0, Math.PI*2);
-        ctx.arc(eyeSpacing, eyeY, Math.max(eyeR,0), 0, Math.PI*2);
+        ctx.moveTo(radius, 0);
+        ctx.arc(0, 0, Math.max(radius, 0), 0, Math.PI*2);
+        p.tufts.forEach(t => {
+          const tx = t.dx * radius, ty = t.dy * radius, tr = t.r * radius;
+          ctx.moveTo(tx + tr, ty);
+          ctx.arc(tx, ty, Math.max(tr,0), 0, Math.PI*2);
+        });
+        ctx.fillStyle = `rgba(${cr},${cg},${cb},${alpha})`;
         ctx.fill();
-      }
 
-      ctx.restore();
-    });
+        if(p.hasEyes && fadeT < EYES_CLOSE_AT){
+          const eyeFade = 1 - Math.min(1, fadeT / EYES_CLOSE_AT);
+          const eyeR = radius * 0.09;
+          const eyeSpacing = radius * 0.32;
+          const eyeY = -radius * 0.08;
+          ctx.fillStyle = `rgba(70,60,55,${0.75 * eyeFade})`;
+          ctx.beginPath();
+          ctx.arc(-eyeSpacing, eyeY, Math.max(eyeR,0), 0, Math.PI*2);
+          ctx.arc(eyeSpacing, eyeY, Math.max(eyeR,0), 0, Math.PI*2);
+          ctx.fill();
+        }
 
-    requestAnimationFrame(draw);
-  }
-  draw();
-</script>
+        ctx.restore();
+      });
 
+      requestAnimationFrame(draw);
+    }
+    draw();
+  });
+  </script>
 </body>
 </html>
