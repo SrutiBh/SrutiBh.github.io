@@ -497,15 +497,12 @@
   });
 
   /* ===== live cursor trail — paint drops, not bouncing balls =====
-     Each point along the cursor path becomes a drop of pastel-yellow
-     paint: it lands, spreads slightly as if soaking into paper, and then
-     stays exactly where it fell — like a painter's sketchbook, not a
-     ball rolling on a floor. Faster movement leaves a longer, thinner
-     smear (a flick of the brush); slower movement leaves a round dab.
-     Each point moves briefly in the same direction the cursor was
-     travelling when it was created, slows to a stop, holds there, then
-     slowly dissolves toward white — like vapour — rather than simply
-     fading to transparent. */
+     Each point along the cursor path becomes a tiny soot-sprite: a round
+     fluffy body with a few small tufts, sometimes with two small eyes.
+     It moves briefly in the cursor's direction, settles in place, then
+     gives a small idle wiggle while it rests — like a living thing, not
+     a ball or a cloud — before slowly dissolving toward white, closing
+     its eyes first if it had any. */
   const canvas = document.getElementById('trailCanvas');
   const ctx = canvas.getContext('2d');
   const heroSection = document.getElementById('heroSection');
@@ -520,11 +517,29 @@
     [180, 228, 240]  // B4E4F0 — sky blue
   ];
 
-  const SPREAD_DURATION = 300;  // ms for a circle's pop-in
+  // a few small tufts scattered around the body edge — just enough for a
+  // fluffy silhouette, far fewer than a full cloud so it stays simple
+  function buildTufts(){
+    const tufts = [];
+    const count = 4 + Math.floor(Math.random() * 3);
+    for(let i = 0; i < count; i++){
+      const angle = (i / count) * Math.PI * 2 + Math.random() * 0.5;
+      const dist = 0.78 + Math.random() * 0.22;
+      tufts.push({
+        dx: Math.cos(angle) * dist,
+        dy: Math.sin(angle) * dist,
+        r: 0.16 + Math.random() * 0.12
+      });
+    }
+    return tufts;
+  }
+
+  const SPREAD_DURATION = 300;  // ms for a sprite's pop-in
   const SETTLE_DURATION = 550;  // ms of directional drift before it comes to rest
-  const POINT_LIFESPAN = 10000; // each point disappears 10s after it was created
+  const POINT_LIFESPAN = 10000; // each sprite disappears 10s after it was created
   const FADE_START = 6000;      // ms — vapour dissolve begins here
   const FADE_DURATION = POINT_LIFESPAN - FADE_START; // slow, ~4s dissolve to white
+  const EYES_CLOSE_AT = 0.5;    // fraction into the fade where eyes vanish first
 
   function resizeCanvas(){
     canvas.width = heroSection.clientWidth;
@@ -544,20 +559,23 @@
       x, y,
       vx: dirX * push,
       vy: dirY * push,
-      radius: 14 + Math.random() * 20,
+      radius: 15 + Math.random() * 16,
+      tufts: buildTufts(),
+      hasEyes: Math.random() < 0.4,
       color,
+      wigglePhase: Math.random() * Math.PI * 2,
+      wiggleSpeed: 1.3 + Math.random() * 0.8,
       born: performance.now()
     });
-    if(points.length > 260) points.splice(0, points.length - 260);
+    if(points.length > 200) points.splice(0, points.length - 200);
   }
 
   // no default cluster — the hero stays empty until the cursor actually
   // moves over it; colour only exists where the cursor has touched
 
-  // distance the cursor must travel before the next circle is placed —
-  // this is what keeps it reading as a cluster of overlapping blobs
-  // instead of a thin zigzag trail line
-  const MIN_SPAWN_GAP = 36;
+  // distance the cursor must travel before the next sprite is placed —
+  // this is what keeps individual sprites distinguishable
+  const MIN_SPAWN_GAP = 40;
   let distSinceSpawn = 0;
 
   function handleMove(clientX, clientY){
@@ -613,6 +631,7 @@
 
       // move in the cursor's direction, decelerating via friction, so it
       // travels briefly then comes to rest at a settled position
+      let wiggleAngle = 0, jitterX = 0, jitterY = 0;
       if(age < SETTLE_DURATION){
         const dt = Math.min(16, 1000/60);
         p.x += p.vx * (dt/1000);
@@ -620,6 +639,13 @@
         const friction = Math.pow(0.02, dt/SETTLE_DURATION);
         p.vx *= friction;
         p.vy *= friction;
+      } else {
+        // once settled, a small idle wiggle — a living creature at rest,
+        // not a ball that stopped or a cloud that keeps drifting away
+        const t = now/1000 * p.wiggleSpeed + p.wigglePhase;
+        wiggleAngle = Math.sin(t) * 0.16;
+        jitterX = Math.sin(t * 1.3) * 1.6;
+        jitterY = Math.cos(t * 1.1) * 1.2;
       }
 
       // once settled, it holds — then slowly dissolves toward white,
@@ -633,10 +659,36 @@
       const cb = lerp(pb, 255, fadeT);
       const alpha = 0.82 * (1 - fadeT * 0.85);
 
+      ctx.save();
+      ctx.translate(p.x + jitterX, p.y + jitterY);
+      ctx.rotate(wiggleAngle);
+
       ctx.beginPath();
-      ctx.arc(p.x, p.y, Math.max(radius, 0), 0, Math.PI*2);
+      ctx.moveTo(radius, 0);
+      ctx.arc(0, 0, Math.max(radius, 0), 0, Math.PI*2);
+      p.tufts.forEach(t => {
+        const tx = t.dx * radius, ty = t.dy * radius, tr = t.r * radius;
+        ctx.moveTo(tx + tr, ty);
+        ctx.arc(tx, ty, Math.max(tr,0), 0, Math.PI*2);
+      });
       ctx.fillStyle = `rgba(${cr},${cg},${cb},${alpha})`;
       ctx.fill();
+
+      // small dark eyes on some sprites — they close (vanish) partway
+      // through the fade, as if drifting off, before the body dissolves
+      if(p.hasEyes && fadeT < EYES_CLOSE_AT){
+        const eyeFade = 1 - Math.min(1, fadeT / EYES_CLOSE_AT);
+        const eyeR = radius * 0.09;
+        const eyeSpacing = radius * 0.32;
+        const eyeY = -radius * 0.08;
+        ctx.fillStyle = `rgba(70,60,55,${0.75 * eyeFade})`;
+        ctx.beginPath();
+        ctx.arc(-eyeSpacing, eyeY, Math.max(eyeR,0), 0, Math.PI*2);
+        ctx.arc(eyeSpacing, eyeY, Math.max(eyeR,0), 0, Math.PI*2);
+        ctx.fill();
+      }
+
+      ctx.restore();
     });
 
     requestAnimationFrame(draw);
