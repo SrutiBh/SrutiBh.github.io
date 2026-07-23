@@ -498,24 +498,22 @@
     setDropdownOpen(menuDd, false);
   });
 
-  /* ===== live cursor trail — thrown colour, Holi-style =====
-     Dots spawn at the cursor with real momentum (direction + speed of the
-     mouse), drift and settle under light gravity/friction like flung
-     powder, and stay put while you're active. Only after 30s with no
-     movement in the hero does everything fade away. */
+  /* ===== live cursor trail — records the actual cursor path =====
+     Every mouse position gets a pastel-yellow ball. Each ball inherits the
+     velocity of the mouse at the moment it was placed, then falls under
+     gravity: thrown fast, it arcs and rolls across the floor before
+     friction stops it; moved slowly, gravity dominates and it just drops
+     near where it was placed. Balls stay put while you're active — only
+     after 30s with no movement does everything fade away. */
   const canvas = document.getElementById('trailCanvas');
   const ctx = canvas.getContext('2d');
   const heroSection = document.getElementById('heroSection');
   let points = [];
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const HOLI_COLORS = [
-    [245,179,1],   // gold
-    [230,72,99],   // pink-red
-    [255,140,66],  // orange
-    [82,183,136],  // teal-green
-    [123,97,255],  // violet
-    [255,90,130]   // magenta
-  ];
+  const PASTEL_YELLOW = [253, 214, 111];
+  const GRAVITY = 0.55;
+  const FLOOR_FRICTION = 0.90;
+  const AIR_DRAG = 0.997;
 
   function resizeCanvas(){
     canvas.width = heroSection.clientWidth;
@@ -524,29 +522,26 @@
   resizeCanvas();
   window.addEventListener('resize', resizeCanvas);
 
+  function floorY(){ return canvas.height - 8; }
+
   let lastX = null, lastY = null, lastMoveTime = performance.now();
   const IDLE_LIMIT = 30000;   // ms of no movement before it starts fading
   const FADE_DURATION = 3500; // ms to fully fade once idle limit is passed
 
-  function spawnBurst(x, y, vx, vy){
-    const count = 2 + Math.floor(Math.random() * 2);
-    for(let i = 0; i < count; i++){
-      const angle = Math.random() * Math.PI * 2;
-      const spread = 0.6 + Math.random() * 1.4;
-      points.push({
-        x, y,
-        vx: vx * 0.25 + Math.cos(angle) * spread,
-        vy: vy * 0.25 + Math.sin(angle) * spread,
-        radius: 5 + Math.random() * 9,
-        color: HOLI_COLORS[Math.floor(Math.random() * HOLI_COLORS.length)],
-        born: performance.now()
-      });
-    }
-    if(points.length > 400) points.splice(0, points.length - 400);
+  function spawnBall(x, y, vx, vy){
+    const shade = 0.85 + Math.random() * 0.3;
+    points.push({
+      x, y, vx, vy,
+      radius: 6 + Math.random() * 6,
+      shade,
+      resting: false,
+      born: performance.now()
+    });
+    if(points.length > 700) points.splice(0, points.length - 700);
   }
 
-  // gentle default resting cluster, echoing the static blob cluster,
-  // so the hero never looks empty before anyone interacts
+  // gentle default resting cluster, echoing the reference's static blob
+  // cluster, so the hero never looks empty before anyone interacts
   function seedRestingTrail(){
     const cx = canvas.width * 0.82, cy = canvas.height * 0.28;
     for(let i = 0; i < 9; i++){
@@ -557,7 +552,8 @@
         y: cy + Math.sin(angle) * r,
         vx: 0, vy: 0,
         radius: 14 - i * 0.6,
-        color: HOLI_COLORS[i % HOLI_COLORS.length],
+        shade: 0.9,
+        resting: true,
         born: performance.now()
       });
     }
@@ -568,9 +564,23 @@
     if(prefersReducedMotion) return;
     const rect = heroSection.getBoundingClientRect();
     const x = e.clientX - rect.left, y = e.clientY - rect.top;
-    const vx = lastX === null ? 0 : x - lastX;
-    const vy = lastY === null ? 0 : y - lastY;
-    spawnBurst(x, y, vx, vy);
+    if(lastX !== null){
+      // interpolate between the last recorded point and this one, so fast
+      // moves still record a continuous path instead of sparse dots
+      const dx = x - lastX, dy = y - lastY;
+      const dist = Math.hypot(dx, dy);
+      const steps = Math.max(1, Math.min(12, Math.round(dist / 6)));
+      for(let s = 1; s <= steps; s++){
+        const t = s / steps;
+        spawnBall(
+          lastX + dx * t, lastY + dy * t,
+          (dx / steps) * 0.9,           // velocity carried from the throw
+          (dy / steps) * 0.9 - 1.2      // slight upward pop so it arcs before falling
+        );
+      }
+    } else {
+      spawnBall(x, y, 0, 0);
+    }
     lastX = x; lastY = y;
     lastMoveTime = performance.now();
   });
@@ -586,16 +596,29 @@
     ctx.clearRect(0,0,canvas.width,canvas.height);
 
     if(globalFade > 0){
+      const floor = floorY();
       points.forEach(p => {
-        // friction + light gravity, so thrown colour settles like flung powder
-        p.vx *= 0.94;
-        p.vy = p.vy * 0.94 + 0.06;
-        p.x += p.vx;
-        p.y += p.vy;
+        if(!p.resting){
+          p.vy += GRAVITY;
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vx *= AIR_DRAG;
+
+          if(p.y + p.radius >= floor){
+            p.y = floor - p.radius;
+            p.vy = -p.vy * 0.28;      // small bounce on landing
+            if(Math.abs(p.vy) < 1.2) p.vy = 0;
+            p.vx *= FLOOR_FRICTION;   // rolls, then friction brings it to rest
+            if(p.vy === 0 && Math.abs(p.vx) < 0.05){
+              p.vx = 0;
+            }
+          }
+        }
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI*2);
-        ctx.fillStyle = `rgba(${p.color[0]},${p.color[1]},${p.color[2]},${0.55 * globalFade})`;
+        const [r,g,b] = PASTEL_YELLOW;
+        ctx.fillStyle = `rgba(${Math.min(255,r*p.shade)},${Math.min(255,g*p.shade)},${Math.min(255,b*p.shade)},${0.75 * globalFade})`;
         ctx.fill();
       });
     } else if(points.length){
