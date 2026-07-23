@@ -1832,6 +1832,10 @@ const PLACES=[
     let distSinceSpawn = 0;
 
     function handleMove(clientX, clientY){
+      if(!heroSection.classList.contains('active')){
+        lastX = null; lastY = null;
+        return;
+      }
       const rect = heroSection.getBoundingClientRect();
       if(clientX < rect.left || clientX > rect.right || clientY < rect.top || clientY > rect.bottom){
         lastX = null; lastY = null;
