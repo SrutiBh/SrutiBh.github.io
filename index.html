@@ -102,7 +102,7 @@
     .footer-bar{background-color:var(--n-green);color:var(--color-navy);text-align:center;padding:1rem 3rem;margin-top:0;}
     @media(max-width:480px){.footer-bar{padding:1rem 1.25rem;}}
     @media(max-width:360px){.footer-bar{padding:1rem .75rem;font-size:.85rem;}}
-    .footer-pre{background:transparent;text-align:center;padding:2.5rem 1.5rem 1.5rem;}
+    .footer-pre{background:#FFFFDE;text-align:center;padding:2.5rem 1.5rem 1.5rem;}
     .footer-links{display:flex;justify-content:center;flex-wrap:nowrap;overflow-x:auto;gap:2.5rem;margin-bottom:1.1rem;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
     .footer-links::-webkit-scrollbar{display:none;}
     @media(max-width:480px){
@@ -119,17 +119,17 @@
       .footer-links .footer-icon-chip svg{width:11px;height:11px;}
     }
     .about-links{display:flex;justify-content:flex-start;flex-wrap:wrap;gap:2.5rem;margin-top:1.5rem;}
-    .footer-link{position:relative;display:inline-flex;align-items:center;gap:.6rem;color:var(--color-text-body);text-decoration:none;font-family:var(--font-serif);font-size:1.55rem;font-weight:400;}
-    .footer-link::after{content:'';position:absolute;left:0;right:0;bottom:-6px;height:1.5px;background:var(--color-navy);transform:scaleX(0);transform-origin:left;transition:transform .22s ease;}
+    .footer-link{position:relative;display:inline-flex;align-items:center;gap:.6rem;color:#0200FC;text-decoration:none;font-family:var(--font-serif);font-size:1.55rem;font-weight:400;}
+    .footer-link::after{content:'';position:absolute;left:0;right:0;bottom:-6px;height:1.5px;background:#0200FC;transform:scaleX(0);transform-origin:left;transition:transform .22s ease;}
     .footer-link:hover::after{transform:scaleX(1);}
-    .footer-icon-chip{display:flex;align-items:center;justify-content:center;width:2.3rem;height:2.3rem;border-radius:999px;background:var(--color-bg-hover);color:var(--color-navy);transition:background-color .18s ease,color .18s ease;}
-    .footer-link:hover .footer-icon-chip{background:var(--color-navy);color:#fff;}
+    .footer-icon-chip{display:flex;align-items:center;justify-content:center;width:2.3rem;height:2.3rem;border-radius:999px;background:var(--color-bg-hover);color:#0200FC;transition:background-color .18s ease,color .18s ease;}
+    .footer-link:hover .footer-icon-chip{background:#0200FC;color:#fff;}
     .footer-social{display:flex;justify-content:center;gap:.75rem;}
-    .footer-social a{display:flex;align-items:center;justify-content:center;color:var(--color-text-body);transition:color .18s ease,transform .18s ease;}
-    .footer-social a:hover{color:var(--color-navy);transform:scale(1.18);}
+    .footer-social a{display:flex;align-items:center;justify-content:center;color:#0200FC;transition:color .18s ease,transform .18s ease;}
+    .footer-social a:hover{color:#0200FC;transform:scale(1.18);}
     .footer-social a:hover svg{stroke-width:2.4;}
     .footer-social .footer-icon-chip{width:2rem;height:2rem;}
-    .footer-social a:hover .footer-icon-chip{background:var(--color-navy);color:#fff;}
+    .footer-social a:hover .footer-icon-chip{background:#0200FC;color:#fff;}
     .object-cover{object-fit:cover}
     .text-center{text-align:center}
     .text-base{font-size:1rem;line-height:1.5rem}
@@ -165,7 +165,7 @@
     }
 
     html{min-height:100%;overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%;}
-    body{font-family:var(--font-serif);background-color:var(--color-bg-page);display:flex;flex-direction:column;min-height:100vh;overflow-x:clip;}
+    body{font-family:var(--font-serif);background-color:#FFFFDE;display:flex;flex-direction:column;min-height:100vh;overflow-x:clip;}
     body.project-page-active{background-color:var(--color-white);} /* project case study pages use a pure white background throughout, not the site's usual off-white */
     /* STICKY FOOTER — on short pages (e.g. Contact), pushes the footer block
        down to the bottom of the viewport instead of leaving a blank gap
@@ -174,10 +174,10 @@
     .footer-pre{margin-top:auto;}
     .hero-bg{background-color:var(--color-navy);background-image:none;position:relative;}
     .topbar{position:sticky;top:0;z-index:90;display:flex;align-items:center;justify-content:space-between;background:#fff;padding:1rem 2rem;box-shadow:0 1px 0 rgba(15,23,42,.08);gap:1.5rem;flex-wrap:wrap;}
-    .topbar-word{font-family:var(--font-serif);font-weight:700;color:var(--color-navy-dark);text-decoration:none;white-space:nowrap;background:none;border:none;padding:0;cursor:pointer;display:inline-flex;align-items:baseline;gap:.45rem;}
-    .topbar-word:hover .topbar-word-first{color:var(--color-text-body);}
+    .topbar-word{font-family:var(--font-serif);font-weight:700;color:#000;text-decoration:none;white-space:nowrap;background:none;border:none;padding:0;cursor:pointer;display:inline-flex;align-items:baseline;gap:.45rem;}
+    .topbar-word:hover .topbar-word-first{color:#000;}
     .topbar-word-first{font-size:1.6rem;letter-spacing:-.015em;}
-    .topbar-word-last{font-size:1.2rem;font-weight:700;letter-spacing:.02em;color:var(--color-navy-dark);}
+    .topbar-word-last{font-size:1.2rem;font-weight:700;letter-spacing:.02em;color:#000;}
     .topbar-right{display:flex;align-items:center;gap:1.75rem;flex-wrap:wrap;}
     .topbar-links{display:flex;align-items:center;gap:2.25rem;flex-wrap:wrap;}
     .topbar-links .nav-item{display:inline-block;background:none;border:none;padding:.2rem 0;font-size:1.3rem;font-weight:400;letter-spacing:.02em;color:var(--color-text-body);cursor:pointer;font-family:var(--font-serif);position:relative;text-decoration:none;white-space:nowrap;transition:color .18s ease;}
@@ -188,7 +188,7 @@
     .topbar-links .nav-item.active::after{transform:scaleX(1);}
     .topbar .lang-menu{border:1px solid var(--color-border);}
     .topbar .lang-opt{color:var(--color-navy-dark);}
-    .topbar .lang-opt:hover{background:#f1f5f9;}
+    .topbar .lang-opt:hover{background:rgba(2,0,252,.08);}
     @media(max-width:760px){
       .topbar{padding:.85rem 1.1rem;gap:.9rem;}
       .topbar-right{gap:1rem;}
@@ -243,6 +243,7 @@
        "Education" / "Career Journey" on the Home page) so section names
        here read consistently with the rest of the site. */
     .gallery-subhead{font-family:var(--font-serif);font-size:2rem;font-weight:700;color:var(--color-navy-dark);margin:2.5rem 0 1.1rem;}
+    .my-other-work-heading{color:#0200FC;}
     .about-block:first-of-type .gallery-subhead{margin-top:0;}
     .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;}
     @media(max-width:760px){.gallery-grid{grid-template-columns:repeat(2,1fr);}}
@@ -285,44 +286,44 @@
        Contact view is active (see showView() in the script below), so
        the image+card block sits with equal top/bottom and equal
        left/right gaps, without changing the Work or Interests layouts. */
-    #main-content.center-page{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1 0 auto;}
+    #main-content.center-page{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1 0 auto;min-height:145vh;}
     .contact-hero{display:flex;gap:3.5rem;align-items:stretch;align-self:stretch;width:100%;min-width:0;max-width:100%;}
     .contact-photo{width:480px;flex-shrink:0;}
     .contact-photo img{width:100%;height:100%;object-fit:cover;display:block;}
     /* Blurred wall texture sits behind only this right-hand column (heading
        box + contact card), not behind the photo or the rest of the page. */
-    .contact-right{position:relative;flex:1;min-width:0;display:flex;flex-direction:column;gap:1.5rem;}
+    .contact-right{position:relative;flex:1;min-width:0;display:flex;flex-direction:column;gap:1.1rem;}
     /* Small decorative stone-stack image tucked into the bottom-right
        corner, in the empty space below the contact card (that space
        exists because .contact-right stretches to match the photo's
        height, but the boxes only take up their own content height).
        Sized small enough to never overlap the card's icons/text. */
     .contact-stone-decor{position:absolute;bottom:0;right:0;width:90px;height:auto;pointer-events:none;z-index:1;}
-    .contact-heading-box{position:relative;z-index:1;background:var(--color-bg-page);border-radius:.5rem;padding:1.75rem 2.5rem;max-width:38rem;}
+    .contact-heading-box{position:relative;z-index:1;background:#FFFFDE;border-radius:.5rem;padding:1.75rem 2.5rem;max-width:38rem;}
     /* Heading matches .about-desc-title exactly (same class used for
        "About Me" / "Education" / "Career Journey") for visual consistency. */
     .contact-heading{
       font-family:var(--font-serif);
       font-size:2rem;
       font-weight:700;
-      color:var(--color-navy-dark);
+      color:#0200FC;
       margin:0;
       white-space:nowrap;
     }
-    .contact-box{position:relative;z-index:1;background:var(--color-bg-page);border-radius:.5rem;padding:2.75rem 2.5rem;display:flex;flex-direction:column;gap:2.75rem;max-width:38rem;}
-    .contact-item{display:flex;align-items:center;gap:1.4rem;text-decoration:none;color:var(--color-navy-dark);}
+    .contact-box{position:relative;z-index:1;background:#FFFFDE;border-radius:.5rem;padding:2.75rem 2.5rem;display:flex;flex-direction:column;gap:2.75rem;max-width:38rem;}
+    .contact-item{display:flex;align-items:center;justify-content:space-between;gap:1.4rem;text-decoration:none;color:#000;}
     .contact-item-icon{
       flex-shrink:0;width:3.4rem;height:3.4rem;border-radius:999px;
-      border:1.5px solid var(--color-navy-dark);
+      border:1.5px solid #000;
       display:flex;align-items:center;justify-content:center;
-      color:var(--color-navy-dark);
+      color:#000;
       transition:background-color .15s ease,color .15s ease,border-color .15s ease;
     }
-    .contact-item:hover .contact-item-icon{background:var(--color-navy-dark);color:#fff;}
+    .contact-item:hover .contact-item-icon{background:#000;color:#fff;}
     .contact-item-icon svg{width:22px;height:22px;}
     /* Text matches .about-desc-text's font-family/size/weight/colour
        (the "About Me" paragraph style) for visual consistency. */
-    .contact-item-text{font-family:var(--font-serif);font-size:1.55rem;line-height:1.6;font-weight:400;color:var(--color-text-body);white-space:nowrap;}
+    .contact-item-text{font-family:var(--font-serif);font-size:1.55rem;line-height:1.6;font-weight:400;color:#000;white-space:nowrap;}
     .contact-item-text span{display:block;}
     @media(max-width:760px){
       .contact-hero{flex-direction:column;gap:2rem;}
@@ -415,13 +416,21 @@
 
     @media(max-width:640px){.ptabs{gap:1.1rem}}
 
-    .about-section{background:var(--color-bg-page);padding:5rem 1rem 0;}
+    .about-section{background:#FFFFDE;padding:5rem 1rem 0;}
     .about-inner{max-width:54rem;margin:0 auto;padding-bottom:4rem;}
     .about-block{margin-top:4rem;}
+    .about-me-row{display:flex;gap:2.5rem;align-items:stretch;}
+    .about-me-photo{width:260px;flex-shrink:0;border-radius:1rem;overflow:hidden;background:linear-gradient(135deg,#e8ecf5 0%,#c0cbea 100%);}
+    .about-me-photo img{width:100%;height:100%;object-fit:contain;display:block;}
+    .about-me-text{flex:1;min-width:0;}
+    @media(max-width:760px){
+      .about-me-row{flex-direction:column;gap:1.5rem;}
+      .about-me-photo{width:100%;max-width:280px;aspect-ratio:3/4;}
+    }
     .about-bio{font-family:var(--font-serif);font-size:1.1rem;line-height:1.65;color:var(--color-text-muted);font-weight:400;}
 
-    .about-desc-title{font-family:var(--font-serif);font-size:2rem;font-weight:700;color:var(--color-navy-dark);margin-bottom:1.1rem;}
-    .about-desc-text{font-family:var(--font-serif);font-size:1.55rem;line-height:1.6;font-weight:400;color:var(--color-text-body);margin:0;text-align:justify;text-justify:inter-word;}
+    .about-desc-title{font-family:var(--font-serif);font-size:2rem;font-weight:700;color:#0200FC;margin-bottom:1.1rem;}
+    .about-desc-text{font-family:var(--font-serif);font-size:1.55rem;line-height:1.6;font-weight:400;color:#000;margin:0;text-align:justify;text-justify:inter-word;}
     .edu-transcript{display:flex;flex-direction:column;gap:1.25rem;}
     .edu-row{display:flex;align-items:flex-start;gap:1.5rem;min-height:180px;background:#fff;padding:1.5rem 1.75rem;border:1.5px solid #dce2f0;border-left:10px solid var(--n-green);border-right:10px solid var(--n-green);border-radius:1.5rem;box-shadow:0 1px 4px rgba(21,32,61,.05);transition:box-shadow .22s,border-color .22s,transform .22s;}
     /* Fixed-size box wrapping every logo, sized to the largest logo (WBUT,
@@ -447,8 +456,8 @@
     .edu-row .edu-logo-wbut{width:132px;height:132px;}
     .edu-row .edu-logo-iitkgp{width:110px;height:110px;}
     .edu-row-text{min-width:0;align-self:center;}
-    .edu-row-text h3{font-family:var(--font-serif);font-size:1.55rem;font-weight:700;color:var(--color-navy-dark);margin:0 0 .35rem;}
-    .edu-row-text .edu-inst{font-family:var(--font-serif);font-size:1.55rem;font-weight:400;color:var(--color-navy);margin:0 0 .25rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .edu-row-text h3{font-family:var(--font-serif);font-size:1.55rem;font-weight:700;color:#0200FC;margin:0 0 .35rem;}
+    .edu-row-text .edu-inst{font-family:var(--font-serif);font-size:1.55rem;font-weight:400;color:#000;margin:0 0 .25rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
     @media(max-width:700px){.edu-row-text .edu-inst{white-space:normal;overflow:visible;text-overflow:clip;}}
     .edu-row-text .edu-dates{font-family:var(--font-serif);font-size:1.55rem;font-weight:400;color:var(--color-text-faint-onlight);margin:0;}
 
@@ -537,25 +546,25 @@
     @media(max-width:640px){.jvp{height:440px}.jdetail{width:calc(100% - 20px)!important;left:10px!important}.jlogo{width:3.3rem;height:3.3rem;min-width:3.3rem}}
 
     .lang-dd{position:relative;}
-    .lang-btn{display:flex;align-items:center;justify-content:center;gap:.15rem;width:2.15rem;height:2.15rem;padding:0;border-radius:999px;border:1.5px solid var(--color-border-light);font-family:var(--font-serif);font-size:.66rem;font-weight:500;color:#3f4b5c;letter-spacing:.01em;background:transparent;cursor:pointer;transition:background .18s,border-color .18s,color .18s;}
-    .lang-btn:hover{background:var(--color-navy);border-color:var(--color-navy);color:#fff;}
-    .lang-dd.open .lang-btn{background:var(--color-navy);border-color:var(--color-navy);color:#fff;}
+    .lang-btn{display:flex;align-items:center;justify-content:center;gap:.15rem;width:2.15rem;height:2.15rem;padding:0;border-radius:999px;border:1.5px solid transparent;font-family:var(--font-serif);font-size:.66rem;font-weight:500;color:#0200FC;letter-spacing:.01em;background:transparent;cursor:pointer;transition:background .18s,border-color .18s,color .18s;}
+    .lang-btn:hover{background:#0200FC;border-color:#0200FC;color:#fff;}
+    .lang-dd.open .lang-btn{background:#0200FC;border-color:#0200FC;color:#fff;}
     .lang-btn svg.chev{flex-shrink:0;transition:transform .18s ease;}
     .lang-dd.open .lang-btn svg.chev{transform:rotate(180deg);}
     .lang-menu{position:absolute;top:calc(100% + 10px);right:0;background:#fff;border-radius:.75rem;box-shadow:0 14px 34px rgba(21,32,61,.20);padding:.4rem;display:none;min-width:140px;z-index:70;}
     .lang-dd.open .lang-menu{display:block;}
     .lang-opt{display:flex;align-items:center;justify-content:space-between;width:100%;padding:.5rem .7rem;border-radius:.5rem;border:none;background:transparent;font-size:.82rem;font-weight:500;color:var(--color-navy);cursor:pointer;text-align:left;font-family:var(--font-serif);}
-    .lang-opt:hover{background:var(--color-bg-hover);}
-    .lang-opt.active{background:var(--color-navy);color:#fff;}
+    .lang-opt:hover{background:rgba(2,0,252,.08);}
+    .lang-opt.active{background:#0200FC;color:#fff;}
 
     .menu-dd{position:relative;}
-    .menu-btn{display:flex;align-items:center;justify-content:center;width:2.15rem;height:2.15rem;border-radius:999px;border:1.5px solid var(--color-border-light);background:transparent;color:var(--color-navy);cursor:pointer;transition:background .18s,border-color .18s,color .18s;}
-    .menu-btn:hover{background:var(--color-navy);border-color:var(--color-navy);color:#fff;}
-    .menu-dd.open .menu-btn{background:var(--color-navy);border-color:var(--color-navy);color:#fff;}
+    .menu-btn{display:flex;align-items:center;justify-content:center;width:2.15rem;height:2.15rem;border-radius:999px;border:1.5px solid var(--color-border-light);background:transparent;color:#0200FC;cursor:pointer;transition:background .18s,border-color .18s,color .18s;}
+    .menu-btn:hover{background:#0200FC;border-color:#0200FC;color:#fff;}
+    .menu-dd.open .menu-btn{background:#0200FC;border-color:#0200FC;color:#fff;}
     .menu-panel{position:absolute;top:calc(100% + 10px);right:0;background:#fff;border-radius:.75rem;box-shadow:0 14px 34px rgba(21,32,61,.20);padding:.4rem;display:none;min-width:160px;z-index:70;}
     .menu-dd.open .menu-panel{display:block;}
     .menu-opt{display:block;width:100%;padding:.55rem .7rem;border-radius:.5rem;border:none;background:transparent;font-size:1.3rem;font-weight:400;color:var(--color-text-body);cursor:pointer;text-align:left;font-family:var(--font-serif);text-decoration:none;}
-    .menu-opt:hover{background:var(--color-bg-hover);}
+    .menu-opt:hover{background:#FFFFDE;}
 
     .reveal{opacity:0;transform:translateY(26px);transition:opacity .65s ease,transform .65s ease;}
     .reveal.in-view{opacity:1;transform:translateY(0);}
@@ -590,16 +599,16 @@
     #heroTrailCanvas{ position:absolute; inset:0; z-index:0; pointer-events:none; }
     .hero-new-inner{ position:relative; z-index:1; max-width:54rem; width:100%; margin:0 auto; }
     .hero-new-inner h1{
-      font-family:var(--n-font-display); font-weight:800; letter-spacing:-0.02em;
-      text-transform:uppercase; font-size:clamp(2.4rem,6vw,4.6rem); line-height:0.98;
-      color:var(--n-navy); margin:0 0 1.4rem 0;
+      font-family:var(--font-serif); font-weight:700; letter-spacing:normal;
+      text-transform:none; font-size:clamp(1.5rem,5.5vw,3rem); line-height:1.05;
+      color:#0200FC; margin:0 0 1.4rem 0; white-space:nowrap;
     }
     .hero-new-inner p{
-      font-family:var(--n-font-body); font-size:1.1rem; line-height:1.7;
-      color:var(--n-ink); max-width:56ch; margin:0;
+      font-family:var(--font-serif); font-size:1.55rem; line-height:1.6;
+      font-weight:400; color:#000; max-width:100%; margin:0; text-align:justify; text-justify:inter-word;
     }
 
-    .new-section{ background:var(--color-bg-page); padding:5rem 1rem; }
+    .new-section{ background:#FFFFDE; padding:5rem 1rem; }
     .new-section-inner{ max-width:54rem; margin:0 auto; }
     .new-section-heading{
       font-family:var(--n-font-display); font-weight:700; font-size:1.7rem;
@@ -622,11 +631,11 @@
     .n-book-author{ font-family:var(--n-font-body); font-size:0.85rem; color:var(--n-ink-muted); margin:0; }
     .n-tabs{ display:flex; gap:2.2rem; margin-bottom:2.5rem; border-bottom:1px solid var(--n-border); }
     .n-tab-btn{
-      font-family:var(--n-font-display); font-weight:700; font-size:1.05rem; letter-spacing:-0.01em;
-      text-transform:uppercase; background:none; border:none; cursor:pointer; color:var(--n-ink-muted);
+      font-family:var(--font-serif); font-weight:700; font-size:2rem; letter-spacing:normal;
+      text-transform:none; background:none; border:none; cursor:pointer; color:#000;
       padding:0 0 1rem 0; position:relative;
     }
-    .n-tab-btn.active{ color:var(--n-navy); }
+    .n-tab-btn.active{ color:#0200FC; }
     .n-tab-btn.active::after{ content:''; position:absolute; left:0; right:0; bottom:-1px; height:3px; background:var(--n-green); }
 
     .n-layout{ display:grid; grid-template-columns:200px 1fr; gap:2.5rem; align-items:start; }
@@ -665,7 +674,6 @@
           <button type="button" class="menu-opt" data-view="home" data-i18n="menu.portfolio">Portfolio</button>
           <button type="button" class="menu-opt" data-view="about" data-i18n="menu.about">About</button>
           <a class="menu-opt" href="papers/cv_1page.pdf" target="_blank" rel="noopener noreferrer" data-i18n="nav.cv">CV</a>
-          <button type="button" class="menu-opt" data-view="contact" data-i18n="menu.contact">Contact</button>
         </div>
       </div>
     </div>
@@ -674,8 +682,12 @@
   <header class="hero-new min-h-[100dvh] relative view" id="heroSection" data-view="home">
     <canvas id="heroTrailCanvas"></canvas>
     <div class="hero-new-inner">
-      <h1>Sruti<br>Bhattacharjee</h1>
+      <h1>Sruti Bhattacharjee</h1>
       <p data-i18n="home.bio.short">I'm a mixed-method UX researcher and tinkerer working at the edge of multimodal perception, haptics, and human&ndash;AI interaction. I design for accessibility, immersive learning, and interfaces that actually notice how people move.</p>
+      <nav class="about-links">
+        <a href="mailto:srutib2636@gmail.com" class="footer-link"><span class="footer-icon-chip"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span data-i18n="about.nav.contact">Contact Me</span></a>
+        <a href="#" class="footer-link" data-view="about"><span class="footer-icon-chip"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span><span data-i18n="menu.about">About</span></a>
+      </nav>
     </div>
   </header>
 
@@ -690,7 +702,7 @@
 
         <div id="homeWorkPane">
           <div class="work-grid reveal" id="homeWorkGrid"></div>
-          <h3 class="gallery-subhead reveal">My Other Work</h3>
+          <h3 class="gallery-subhead my-other-work-heading reveal">My Other Work</h3>
           <div class="work-grid-3 reveal" id="homeWorkSliderCards"></div>
         </div>
 
@@ -712,9 +724,18 @@
 
   <section class="view about-section" data-view="about" id="aboutView">
     <div class="about-inner">
-      <div class="reveal">
-        <div class="about-desc-title" data-i18n="section.about">About Me</div>
-        <p class="about-desc-text" data-i18n="home.bio">I'm a mixed-method UX Research practitioner with a background in Multimodal Perception Analysis and Visual Computing. My interdisciplinary experience in AI and Human&ndash;Computer Interaction helps me uncover user needs and challenges to shape interactive, accessible, and immersive experiences. I aspire to advance ethical human&ndash;AI symbiosis through evidence-based product decisions.</p>
+      <div class="about-me-row reveal">
+        <div class="about-me-photo">
+          <img src="images/others/me.jpg" alt="Sruti Bhattacharjee" onerror="this.style.display='none';this.parentElement.style.display='flex';this.parentElement.style.alignItems='center';this.parentElement.style.justifyContent='center';this.parentElement.innerHTML='<span style=&quot;font-size:3rem&quot;>👩‍💻</span>'"/>
+        </div>
+        <div class="about-me-text">
+          <div class="about-desc-title" data-i18n="section.about">About Me</div>
+          <p class="about-desc-text" data-i18n="home.bio">I'm a mixed-method UX Research practitioner with a background in Multimodal Perception Analysis and Visual Computing. My interdisciplinary experience in AI and Human&ndash;Computer Interaction helps me uncover user needs and challenges to shape interactive, accessible, and immersive experiences. I aspire to advance ethical human&ndash;AI symbiosis through evidence-based product decisions.</p>
+          <nav class="about-links">
+            <a href="mailto:srutib2636@gmail.com" class="footer-link"><span class="footer-icon-chip"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span data-i18n="footer.nav.contact">Contact</span></a>
+            <a href="#" class="footer-link" data-view="home"><span class="footer-icon-chip"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span><span data-i18n="footer.nav.portfolio">Portfolio</span></a>
+          </nav>
+        </div>
       </div>
 
       <div class="about-block">
@@ -892,17 +913,13 @@
             <h2 class="contact-heading" data-i18n="contact.heading">Let's Work Together</h2>
           </div>
           <div class="contact-box reveal">
-            <a class="contact-item" href="tel:+33744429154">
-              <span class="contact-item-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
-              <span class="contact-item-text"><span>+33 07 44 42 91 54</span><span>+91 74 39 35 61 39</span></span>
-            </a>
             <a class="contact-item" href="mailto:srutib2636@gmail.com">
+              <span class="contact-item-text"><span>Contact me here</span></span>
               <span class="contact-item-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
-              <span class="contact-item-text"><span>srutib2636@gmail.com</span></span>
             </a>
             <a class="contact-item" href="https://www.linkedin.com/in/srutibhattacharjee/" target="_blank" rel="noopener noreferrer">
+              <span class="contact-item-text"><span>Connect with me</span></span>
               <span class="contact-item-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M6.5 21.5h-5v-13h5v13zM4 6.5C2.5 6.5 1.5 5.3 1.5 4s1-2.4 2.5-2.4c1.6 0 2.5 1 2.6 2.5 0 1.4-1 2.4-2.6 2.4zm11.5 6c-1 0-2 .5-2 1.9v7.1h-5v-13h5v1.9c1-1.6 2.7-1.9 4-1.9 3 0 5 2 5 6.3v6.7h-5v-7c0-1.4-.5-1.9-2-1.9-.9 0-1.9.5-1.9 1.9v7.1h-5"/></svg></span>
-              <span class="contact-item-text"><span>@srutibhattacharjee</span></span>
             </a>
           </div>
           <!-- CORNER WATERCOLOR IMAGE — currently turned OFF (commented out).
@@ -918,7 +935,7 @@
     <section id="portfolio" class="view" data-view="work">
       <div class="work-sub active" id="workGrid">
         <div class="work-grid reveal" id="workGridCards"></div>
-        <h3 class="gallery-subhead reveal">My Other Work</h3>
+        <h3 class="gallery-subhead my-other-work-heading reveal">My Other Work</h3>
         <div class="work-grid-3 reveal" id="workSliderCards"></div>
       </div>
       <div class="work-sub" id="workDetail"></div>
@@ -1770,6 +1787,9 @@
       if(typeof selectedIdx!=='undefined'&&selectedIdx>-1)selectPlace(selectedIdx);
       if(currentProjectId)renderProjectDetail(currentProjectId);
       document.querySelectorAll('.lang-dd.open').forEach(function(dd){setDropdownOpen(dd,false);});
+      if(typeof window.__syncHeroHeightToBioEnd==='function'){
+        requestAnimationFrame(()=>requestAnimationFrame(window.__syncHeroHeightToBioEnd));
+      }
     }
 
     function setDropdownOpen(dd,open){
@@ -2016,6 +2036,44 @@ const PLACES=[
     }
     applyStaticTranslations(currentLang);
     (function(){ const route=parseHash(); showView(route.view,{silent:true,projectId:route.projectId}); })();
+
+    /* ============================================================
+       HERO HEIGHT SYNC — the About page's bio paragraph ends with
+       "...ethical human–AI symbiosis through evidence-based product
+       decisions." This measures the exact vertical position where
+       that line ends on the About page, then sets the Home page's
+       hero section (the white area with the interactive paint-trail
+       canvas) to that same height, so the hero's bottom edge lines up
+       on the same horizontal line as the end of that bio text.
+       Re-measured on load, on resize, and after a language switch,
+       since text reflow changes how many lines the paragraph wraps to.
+       ============================================================ */
+    function syncHeroHeightToBioEnd(){
+      const aboutSection=document.getElementById('aboutView');
+      const heroSection=document.getElementById('heroSection');
+      if(!aboutSection||!heroSection)return;
+      const textEl=aboutSection.querySelector('.about-desc-text');
+      if(!textEl)return;
+      const wasActive=aboutSection.classList.contains('active');
+      const prevStyle=aboutSection.getAttribute('style');
+      if(!wasActive){
+        aboutSection.style.cssText='display:block !important;position:absolute;visibility:hidden;top:0;left:0;width:100%;pointer-events:none;z-index:-1;';
+      }
+      const sectionRect=aboutSection.getBoundingClientRect();
+      const textRect=textEl.getBoundingClientRect();
+      const targetHeight=Math.round(textRect.bottom-sectionRect.top);
+      if(!wasActive){
+        if(prevStyle!==null)aboutSection.setAttribute('style',prevStyle);
+        else aboutSection.removeAttribute('style');
+      }
+      if(targetHeight>0){
+        heroSection.style.minHeight=targetHeight+'px';
+        heroSection.style.height=targetHeight+'px';
+      }
+    }
+    requestAnimationFrame(()=>requestAnimationFrame(syncHeroHeightToBioEnd));
+    window.addEventListener('resize',syncHeroHeightToBioEnd);
+    window.__syncHeroHeightToBioEnd=syncHeroHeightToBioEnd;
     });
   </script>
 
