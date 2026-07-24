@@ -481,8 +481,12 @@
     .jshell{position:relative;background:linear-gradient(180deg,#0d1328 0%,#111936 46%,var(--color-navy) 100%);border-radius:1rem;overflow:hidden;box-shadow:0 16px 40px rgba(15,23,42,.14);transition:all .28s ease;overscroll-behavior:contain;margin-left:-1vw;margin-right:-1vw;}
     .jicon-btn{width:34px;height:34px;border-radius:999px;border:1px solid rgba(255,255,255,.10);background:rgba(10,16,32,.26);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s,transform .15s,border-color .15s;font-family:var(--font-serif);font-size:.9rem;line-height:1;}
     .jicon-btn:hover{background:rgba(10,16,32,.38);border-color:rgba(255,255,255,.16);transform:translateY(-1px);}
-    .jvp{position:relative;height:620px;overflow:hidden;touch-action:pan-y;overscroll-behavior:contain;cursor:default;background:radial-gradient(circle at 88% 19%,#fffde8 0 58px,rgba(255,250,200,.18) 59px,transparent 130px),radial-gradient(circle at 10% 18%,rgba(255,255,255,.55) 0 1.5px,transparent 2.5px),radial-gradient(circle at 22% 32%,rgba(255,255,255,.45) 0 1.5px,transparent 2.5px),radial-gradient(circle at 38% 10%,rgba(255,255,255,.60) 0 1.5px,transparent 2.5px),radial-gradient(circle at 52% 22%,rgba(255,255,255,.45) 0 1.5px,transparent 2.5px),radial-gradient(circle at 67% 8%,rgba(255,255,255,.50) 0 1.5px,transparent 2.5px),radial-gradient(circle at 30% 55%,rgba(255,255,255,.40) 0 1px,transparent 2px),radial-gradient(circle at 78% 28%,rgba(255,255,255,.45) 0 1.5px,transparent 2.5px),radial-gradient(circle at 90% 18%,rgba(255,255,255,.40) 0 1px,transparent 2px),radial-gradient(circle at 15% 70%,rgba(255,255,255,.35) 0 1px,transparent 2px),radial-gradient(circle at 60% 75%,rgba(255,255,255,.40) 0 1px,transparent 2px),radial-gradient(circle at 8% 62%,rgba(255,255,255,.42) 0 1.5px,transparent 2.5px),radial-gradient(circle at 42% 85%,rgba(255,255,255,.38) 0 1.5px,transparent 2.5px),radial-gradient(circle at 70% 82%,rgba(255,255,255,.35) 0 1.5px,transparent 2.5px),radial-gradient(circle at 92% 58%,rgba(255,255,255,.38) 0 1.5px,transparent 2.5px),radial-gradient(circle at 28% 72%,rgba(255,255,255,.32) 0 1px,transparent 2px),radial-gradient(circle at 58% 90%,rgba(255,255,255,.35) 0 1px,transparent 2px),linear-gradient(180deg,#06102a 0%,#0c1840 50%,#111e48 100%);transition:height .28s ease;}
+    .jvp{position:relative;height:620px;overflow:hidden;touch-action:pan-y;overscroll-behavior:contain;cursor:default;background:linear-gradient(180deg, #FDECC8 0%, #FFC9A8 22%, #BFE3E0 48%, #7FBFD6 75%, #4E8FBF 100%);transition:height .28s ease;}
     .jvp.dragging{cursor:default}
+    .jvp-sun{position:absolute;top:26px;right:48px;width:74px;height:74px;border-radius:50%;background:radial-gradient(circle at 35% 35%, #FFF6DD, #E8A94C 70%);opacity:0.9;z-index:0;pointer-events:none;}
+    .jvp-clouds{position:absolute;inset:0;overflow:hidden;z-index:0;pointer-events:none;}
+    .jvp-cloud{position:absolute;opacity:0.95;animation:jvpdrift linear infinite;}
+    @keyframes jvpdrift{from{transform:translateX(-160px);}to{transform:translateX(calc(100% + 160px));}}
     .jworld{position:absolute;left:0;top:0;width:3600px;height:1800px;transform-origin:0 0;will-change:transform;z-index:1;}
     .jisland{position:absolute;width:380px;height:370px;transform:translate(-50%,-50%);cursor:pointer;user-select:none;}
     .jisland:focus-visible{outline:3px solid #fff;outline-offset:6px;border-radius:999px;}
@@ -782,6 +786,8 @@
 
         <div class="jshell reveal" id="jshell">
           <div class="jvp" id="jvp">
+            <div class="jvp-sun"></div>
+            <div class="jvp-clouds" id="jvpClouds"></div>
             <div class="jworld" id="jworld"></div>
             <div class="jdetail" id="jdetail">
               <div class="jdetail-header" id="jdetailHeader">
@@ -1756,6 +1762,30 @@ const PLACES=[
     function clampDetailPos(){const vw=vp.clientWidth,vh=vp.clientHeight,dw=detail.offsetWidth,dh=detail.offsetHeight;detail.style.left=Math.max(0,Math.min(vw-dw,parseFloat(detail.style.left)||0))+'px';detail.style.top=Math.max(0,Math.min(vh-dh,parseFloat(detail.style.top)||0))+'px';}
     function tick(){const e=.13;S.s+=(S.ts-S.s)*e;S.x+=(S.tx-S.x)*e;S.y+=(S.ty-S.y)*e;world.style.transform=`translate(${S.x}px,${S.y}px) scale(${S.s})`;requestAnimationFrame(tick);}
     buildIslands();
+    (function buildJvpClouds(){
+      const cloudLayer=document.getElementById('jvpClouds');
+      if(!cloudLayer)return;
+      const defs=[
+        {top:'6%', scale:1, dur:55, delay:0},
+        {top:'16%', scale:0.7, dur:75, delay:-18},
+        {top:'34%', scale:1.2, dur:65, delay:-38},
+        {top:'50%', scale:0.8, dur:85, delay:-8},
+        {top:'10%', scale:0.6, dur:95, delay:-50}
+      ];
+      defs.forEach(c=>{
+        const cl=document.createElement('div');
+        cl.className='jvp-cloud';
+        cl.style.top=c.top;
+        cl.style.animationDuration=c.dur+'s';
+        cl.style.animationDelay=c.delay+'s';
+        cl.innerHTML=`<svg width="${120*c.scale}" height="${60*c.scale}" viewBox="0 0 120 60">
+          <ellipse cx="30" cy="38" rx="28" ry="18" fill="#fff" opacity="0.95"></ellipse>
+          <ellipse cx="60" cy="26" rx="34" ry="24" fill="#fff" opacity="0.95"></ellipse>
+          <ellipse cx="92" cy="38" rx="24" ry="16" fill="#fff" opacity="0.95"></ellipse>
+        </svg>`;
+        cloudLayer.appendChild(cl);
+      });
+    })();
     function initMap(){fitAll();S.s=S.ts;S.x=S.tx;S.y=S.ty;tick();}
     requestAnimationFrame(()=>requestAnimationFrame(initMap));
     window.addEventListener('resize',()=>{if(!detail.classList.contains('open'))fitAll();else clampDetailPos();});
