@@ -214,8 +214,8 @@
     .view{display:none;width:100%;}
     .view.active{display:block;animation:pfadeUp .35s ease both;}
     header.hero-bg.view.active{display:flex;}
-    .view-kicker{font-size:.85rem;font-weight:700;letter-spacing:.03em;color:var(--color-navy);margin:0 0 .85rem;}
-    .view-headline{font-family:var(--font-serif);font-weight:700;letter-spacing:-.01em;font-size:clamp(2.3rem,5vw,4rem);line-height:1.04;color:var(--color-navy-dark);margin:0 0 1.4rem;}
+    .view-kicker{font-size:1.55rem;font-weight:700;letter-spacing:.03em;color:var(--color-navy);margin:0 0 .85rem;}
+    .view-headline{font-family:var(--font-serif);font-weight:700;letter-spacing:-.01em;font-size:clamp(2.6rem,5vw,4rem);line-height:1.04;color:var(--color-navy-dark);margin:0 0 1.4rem;}
     .view-sub{font-family:var(--font-serif);font-size:1.02rem;line-height:1.65;color:var(--color-text-muted);max-width:640px;margin:0 0 2.5rem;font-weight:400;}
 
     @keyframes pfadeUp{from{opacity:0}to{opacity:1}}
@@ -360,7 +360,7 @@
     .cs-stat-value{font-family:var(--font-serif);font-size:1.55rem;font-weight:400;color:var(--color-text-body);line-height:1.5;}
     .cs-section{padding:2rem 0;border-top:1px solid #eef2f6;} /* 2rem top+bottom = 4rem between consecutive sections, matching Home page's .about-block gap */
     .cs-section:first-of-type{border-top:none;padding-top:0;}
-    .cs-section-title{font-family:var(--font-serif);font-size:2rem;font-weight:700;color:var(--color-navy-dark);margin-bottom:1.1rem;}
+    .cs-section-title{font-family:var(--font-serif);font-size:2.3rem;font-weight:700;color:var(--color-navy-dark);margin-bottom:1.1rem;}
     .cs-section-body{max-width:46rem;}
     .cs-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.9rem;}
     .cs-list li{position:relative;padding-left:1.3rem;font-family:var(--font-serif);font-size:1.55rem;font-weight:400;line-height:1.65;color:var(--color-text-body);}
@@ -370,7 +370,9 @@
     .cs-process-img{width:100%;margin:0 0 2rem;}
     .cs-process-img img{width:100%;height:auto;display:block;}
     .cs-tags{font-family:var(--font-serif);font-size:.92rem;color:var(--color-text-muted);margin:0 0 1.25rem;}
-    .cs-sub{font-family:var(--font-serif);font-weight:700;color:var(--color-navy-dark);font-size:1.55rem;margin:1.4rem 0 .5rem;}
+    .cs-sub{font-family:var(--font-serif);font-weight:700;color:var(--color-navy-dark);font-size:2rem;margin:1.4rem 0 .5rem;}
+    .cs-subsub{font-family:var(--font-serif);font-weight:600;color:var(--color-navy);font-size:1.75rem;margin:1.1rem 0 .4rem;}
+    .cs-challenge-label{font-family:var(--font-serif);font-weight:700;font-size:1.55rem;color:var(--color-navy-dark);margin:0 0 .5rem;}
     .cs-sub:first-child{margin-top:0;}
     .cs-method{display:flex;flex-wrap:wrap;align-items:flex-start;gap:0;}
     .cs-method-step{display:flex;flex-direction:column;align-items:center;text-align:center;width:7.5rem;}
@@ -1313,65 +1315,137 @@
     let currentProjectId=null;
     const CASE_STUDIES={
       3:{
-        description:'As workplaces are increasingly shifting from physical to distributed environments, communication technologies have become mediators of human interaction rather than mere channels for information exchange. This study investigated how three multimodal telecommunication platforms, Zoom, VTime XR, and Telepresence Robot (Furhat operated via Oculus HMD), shape independent thinking and productivity during remote and hybrid group collaboration, providing insights into user perceptions of emerging workplace technologies.',
-        processImg:'images/projects/furhat_steps.png',
-        processImgAlt:'Project process: Ideation, Technology Testing, Experiment Design, Peer Critique, Experiment Design Moderation, Prototype Development, Participant Recruitment, Scripting Questions and Tasks, Data Collection, Data Analysis, Reporting, Presenting',
-        stats:[
-          {label:'Team',value:'4 people group'},
-          {label:'Tools',value:'Zoom, Oculus HMD,<br>VTime XR, Furhat Robot'},
-          {label:'Timeline',value:'6 Weeks'},
-          {label:'Location',value:'Stockholm, Sweden'}
+        studyContext:'As workplaces and educational institutions increasingly shift toward distributed collaboration, telecommunication technologies are evolving from simple communication channels into multimodal interaction systems. In addition to the influence of individual modalities, the presence of different combinations of diverse modalities such as visual, auditory, haptic, etc. may also impact users\u2019 perception of self-presence, co-presence, and the collaborative environment. Hence, understanding how these multimodal interaction designs affect collaborative experiences is essential for designing future remote communication systems. This study compared different multimodal interaction designs implemented through three telecommunication systems \u2014 a video-based communication platform, a virtual reality\u2013based communication platform, and a telepresence robot\u2013based communication platform \u2014 to inform how group collaboration is impacted differently by them.',
+        researchObjective:'To investigate how the presence of different modalities in different telecommunication media influences users\u2019 ability to think independently, which impacts productivity directly during remote group work.',
+        researchQuestion:'How do multimodal collaborative technologies influence group productivity during remote collaboration?',
+        myRole:{
+          intro:'I led the experimental design and coordinated the overall research process from planning to reporting. I collaborated with 3 teammates who reviewed the study design and coordinated participant recruitment, wrote the research report, and prepared the final presentation slides.',
+          responsibilitiesLabel:'My primary responsibilities included:',
+          responsibilities:[
+            'Designing the experimental protocol and participant workflow',
+            'Developing the Furhat telepresence prototype using Unity, C#, and Python',
+            'Operating the Furhat robot during experimental sessions',
+            'Analyzing questionnaire data'
+          ],
+          outro:'My Swedish-speaking teammates supported participant interviews, observation, and translation of qualitative responses.'
+        },
+        /* ============================================================
+           RESEARCH METHOD — fill in below. Each block has a `format`
+           field set to either 'prose' or 'bullets':
+             - 'prose'   -> renders the `prose` string as a paragraph
+             - 'bullets' -> renders the `bullets` array as a bulleted list
+           Both `prose` and `bullets` are left in place as placeholders so
+           you can write either version and just flip `format` to switch
+           which one displays. Same pattern applies to every `challenge`
+           block nested inside each subsection.
+           ============================================================ */
+        researchMethod:[
+          {
+            title:'Getting Started',
+            format:'prose',
+            prose:'Write the getting started content here.',
+            bullets:['Write point one here','Write point two here'],
+            challenge:{
+              format:'prose',
+              prose:'Write the challenge encountered here.',
+              bullets:['Write challenge point one here','Write challenge point two here']
+            }
+          },
+          {
+            title:'Experiment Design',
+            subsections:[
+              {
+                title:'Storyboarding to Brainstorm Participant Journey',
+                format:'prose',
+                prose:'Write the storyboarding content here.',
+                bullets:['Write point one here','Write point two here'],
+                challenge:{
+                  format:'prose',
+                  prose:'Write the challenge encountered here.',
+                  bullets:['Write challenge point one here','Write challenge point two here']
+                }
+              },
+              {
+                title:'Technology Selection and Prototype Development',
+                format:'prose',
+                prose:'Write the technology selection and prototype development content here.',
+                bullets:['Write point one here','Write point two here'],
+                challenge:{
+                  format:'prose',
+                  prose:'Write the challenge encountered here.',
+                  bullets:['Write challenge point one here','Write challenge point two here']
+                }
+              },
+              {
+                title:'Task Design',
+                format:'prose',
+                prose:'Write the task design content here.',
+                bullets:['Write point one here','Write point two here'],
+                challenge:{
+                  format:'prose',
+                  prose:'Write the challenge encountered here.',
+                  bullets:['Write challenge point one here','Write challenge point two here']
+                }
+              }
+            ]
+          },
+          {
+            title:'Data Collection',
+            subsections:[
+              {
+                title:'Protocol Development',
+                format:'prose',
+                prose:'Write the protocol development content here.',
+                bullets:['Write point one here','Write point two here'],
+                challenge:{
+                  format:'prose',
+                  prose:'Write the challenge encountered here.',
+                  bullets:['Write challenge point one here','Write challenge point two here']
+                }
+              },
+              {
+                title:'Team Role Finalization',
+                format:'prose',
+                prose:'Write the team role finalization content here.',
+                bullets:['Write point one here','Write point two here'],
+                challenge:{
+                  format:'prose',
+                  prose:'Write the challenge encountered here.',
+                  bullets:['Write challenge point one here','Write challenge point two here']
+                }
+              }
+            ]
+          },
+          {
+            title:'Data Analysis',
+            format:'prose',
+            prose:'Write the data analysis content here.',
+            bullets:['Write point one here','Write point two here'],
+            challenge:{
+              format:'prose',
+              prose:'Write the challenge encountered here.',
+              bullets:['Write challenge point one here','Write challenge point two here']
+            }
+          }
         ],
-        participants:'4 male (1 familiar with VR), 2 female, aged between 20\u201324.',
-        technology:'vTime XR app inside Oculus (Virtual Reality-based group interaction), Zoom (Video-based group interaction), Furhat controlled by HMD (Telepresence Robot for group interaction).',
-        challenges:[
-          {title:'First Time using Furhat as Telepresence Robot',body:'We had to design the experiment, build a custom Unity/C# prototype to control the robot\u2019s head movement and gaze, and complete the full study in 6 weeks.'},
-          {title:'Time Limit for Participant Recruitment',body:'We had only 1 week available for participant recruitment during the pandemic.'}
-        ],
-        researchQuestion:'How do multimodal interactive workspace technologies impact independent thinking and group productivity?',
-        experimentDesign:[
-          {title:'Ethical Consent and Participant Compensation',body:'Before conducting every study, each participant was ensured of their freedom to withdraw, ask questions, and have privacy protection. Each participant gave consent to use their data according to KTH University research ethics guidelines. Each participant was compensated with a 30 SEK gift card.'},
-          {title:'Telepresence Robot Prototyping',body:'The Furhat manipulation prototype was built in Unity and C#, letting the interviewer control the robot\u2019s head movement and gaze from a distance while participants spoke with the robot directly.'},
-          {title:'Participants and Researcher Location Setup',body:'The experiment was held at KTH campus in Stockholm, Sweden, and conducted in Swedish across three rooms: one for the interviewer, one for the participants and observer, and a third used specifically for the VR condition, where one participant was isolated while the others stayed in the remaining two rooms. Furhat and Zoom conditions used only two rooms. A PC running the Unity prototype connected the Furhat robot to an Oculus HMD in the interviewer\u2019s room \u2014 through it, the interviewer could see and hear the participants and manipulate the robot\u2019s head movement and gaze in real time. Zoom stayed within a single shared setup.'},
-          {title:'Tasks Design',body:'The task was a storytelling exercise: participants were given a setting, three characters, three objects, and a scenario they had to explain. Six exercises were created across a wide range of settings, characters and objects, designed to stimulate creativity.',example:'Setting: a busy day on a street in New York. Characters: a middle-aged man, the man\u2019s boss, and a talking cat. Objects: a large bag of unidentified white powder, a birthday cake, and a pair of bloody scissors. Scenario: the middle-aged man finds himself sitting in the middle of a busy street, wearing a suit and tie covered in white powder. What has happened?'},
-          {title:'Questionnaire Design',body:'After each condition, participants completed a questionnaire covering how creative they felt and how distracted they were by the technology, alongside an initial questionnaire on age and prior experience with each platform. Each condition had ten questions, answered on a seven-point Likert scale, covering the naturalness of conversation, engagement, perceived presence, and creativity.'},
-          {title:'Prototype for Semi-Structured Interview',body:'After the final questionnaire, participants took part in a semi-structured interview reflecting on the experience as a whole \u2014 what they liked and disliked in each setting, any setting they preferred, how interaction compared across settings, and how creative they felt they could be.'}
-        ],
-        hypothesis:'Users can find communicating through a telepresence robot more effective for productivity and less overwhelming than communicating through a virtual reality environment.',
-        hypothesisImgs:[
-          {src:'images/projects/furhat_fig1.jpg',alt:'Experiment setup: participant seated with the Furhat robot and a researcher wearing an Oculus headset'},
-          {src:'images/projects/furhat_fig2.jpg',alt:'Two participants seated in the experiment room with the Furhat robot and a screen showing the remote view'},
-          {src:'images/projects/furhat_fig3.jpg',alt:'Participant wearing an Oculus headset and holding VR controllers during the VTime XR condition'}
-        ],
-        dataAnalysisTags:'Task Performance  |  Post-Task Interviewing  |  Thematic Analysis',
-        byTheNumbers:[
-          'Furhat scored highest for ease of creativity at <b>6.25/7</b>, ahead of VR (<b>5.5</b>) and Zoom (<b>4.75</b>).',
-          "Zoom scored lowest for perceived co-presence at <b>2.5/7</b> \u2014 less than half of Furhat's <b>5</b>.",
-          'Participants felt they could contribute equally most on Furhat (<b>6/7</b>), against <b>4/7</b> on Zoom.'
-        ],
-        results:[
-          {tech:'vTime XR',points:['Fun, but distracting.','A noticeable discrepancy between real people and their avatars.']},
-          {tech:'Zoom (Video call)',points:['Easy and familiar.','Lacked a sense of presence.']},
-          {tech:'FurHat (Teleoperation robot)',points:['Physical embodiment made the operator feel present.','Did not feel human.','Gaze sometimes felt unsettling.']}
-        ],
-        reflection:[
-          "Combining too many modalities in one UI can overwhelm the user if it doesn't feel close to physical space.",
-          "Furhat would help more than VR in hybrid setups, if it could show the remote participant's facial expression as an avatar on its face.",
-          'VR would be most helpful when all participants are remote and need to pursue interactive, shared activities.'
-        ],
-        voiceOfUsers:[
-          {quote:'I felt like the Furhat user was actually in this room with us',attribution:'Furhat Telepresence'},
-          {quote:'I am always aware that the other group member is remotely joining me',attribution:'Zoom'},
-          {quote:'A lot was going on, but I felt like we were talking in the same room',attribution:'vTime XR'}
-        ],
-        teamList:[
-          'Myself (VR Technology Testing, Unity C# Prototype Developer, Experiment Designer, Furhat User in Experiment, Participants Coordination during Study, Questionnaire Survey Analysis, Report Writing)',
-          'Experiment Design Peer Reviewer (3 group members)',
-          'Interviewer (1 Swedish Speaker)',
-          'Observer (1 Swedish Speaker)',
-          'Swedish\u2013English Translator of collected data (1 Swedish Speaker)',
-          'Reporting and Presentation (Me and my 3 teammates)'
-        ]
+        /* Below three sections use the same prose/bullets `format` toggle
+           as Research Method — write into whichever field you intend to
+           use and set `format` accordingly. */
+        voiceOfParticipants:{
+          format:'prose',
+          prose:'Write the voice of participants content here.',
+          bullets:['Write point one here','Write point two here']
+        },
+        impact:{
+          format:'prose',
+          prose:'Write the impact content here.',
+          bullets:['Write point one here','Write point two here']
+        },
+        personalReflection:{
+          format:'prose',
+          prose:'Write the personal reflection content here.',
+          bullets:['Write point one here','Write point two here']
+        }
       }
     };
 
@@ -1385,36 +1459,42 @@
         +t.rows.map(function(r){return '<tr>'+r.map(function(c){return '<td>'+c+'</td>';}).join('')+'</tr>';}).join('')
         +'</tbody></table></div>';
     }
+    function renderMethodContent(block){
+      if(!block) return '';
+      if(block.format==='bullets') return csListHTML(block.bullets||[]);
+      return '<p class="cs-p">'+(block.prose||'')+'</p>';
+    }
+    function renderMethodBlock(item, isSub){
+      let html = '<div class="'+(isSub?'cs-subsub':'cs-sub')+'">'+item.title+'</div>';
+      if(item.subsections){
+        html += item.subsections.map(function(sub){ return renderMethodBlock(sub, true); }).join('');
+      } else {
+        html += renderMethodContent(item);
+        if(item.challenge){
+          html += '<div class="cs-highlight"><div class="cs-challenge-label">Challenges Encountered</div>'
+            + renderMethodContent(item.challenge)
+            + '</div>';
+        }
+      }
+      return html;
+    }
     function caseStudyHTML(cs){
       let html='';
-      if(cs.description)html+='<p class="cs-p reveal">'+cs.description+'</p>';
-      if(cs.processImg)html+='<div class="cs-process-img reveal"><img src="'+cs.processImg+'" alt="'+(cs.processImgAlt||'Project process steps')+'"></div>';
-      if(cs.stats)html+='<div class="cs-stats reveal">'+cs.stats.map(function(s){return '<div><div class="cs-stat-label">'+s.label+'</div><div class="cs-stat-value">'+s.value+'</div></div>';}).join('')+'</div>';
-      if(cs.teamList)html+='<div class="cs-section reveal"><div class="cs-section-title">Team</div><div class="cs-section-body">'+csListHTML(cs.teamList)+'</div></div>';
-      if(cs.participants||cs.technology)html+='<div class="cs-section reveal"><div class="cs-section-title">Participants and Technology</div><div class="cs-section-body">'
-        +(cs.participants?'<div class="cs-sub">Participants</div><p class="cs-p">'+cs.participants+'</p>':'')
-        +(cs.technology?'<div class="cs-sub">Technology</div><p class="cs-p">'+cs.technology+'</p>':'')
-      +'</div></div>';
-      if(cs.challenges)html+='<div class="cs-section reveal"><div class="cs-section-title">Research Challenges</div><div class="cs-section-body">'
-        +cs.challenges.map(function(c){return '<div class="cs-sub">'+c.title+'</div><p class="cs-p">'+c.body+'</p>';}).join('')
-      +'</div></div>';
+      if(cs.studyContext)html+='<div class="cs-section reveal"><div class="cs-section-title">Study Context</div><div class="cs-section-body"><p class="cs-p">'+cs.studyContext+'</p></div></div>';
+      if(cs.researchObjective)html+='<div class="cs-section reveal"><div class="cs-section-title">Research Objective</div><div class="cs-section-body"><p class="cs-p">'+cs.researchObjective+'</p></div></div>';
       if(cs.researchQuestion)html+='<div class="cs-section reveal"><div class="cs-section-title">Research Question</div><div class="cs-section-body"><p class="cs-p">'+cs.researchQuestion+'</p></div></div>';
-      if(cs.experimentDesign)html+='<div class="cs-section reveal"><div class="cs-section-title">Experiment Design</div><div class="cs-section-body">'
-        +cs.experimentDesign.map(function(e){return '<div class="cs-sub">'+e.title+'</div><p class="cs-p">'+e.body+'</p>'+(e.example?'<p class="cs-p"><em>'+e.example+'</em></p>':'');}).join('')
+      if(cs.myRole)html+='<div class="cs-section reveal"><div class="cs-section-title">My Role</div><div class="cs-section-body">'
+        +(cs.myRole.intro?'<p class="cs-p">'+cs.myRole.intro+'</p>':'')
+        +(cs.myRole.responsibilitiesLabel?'<p class="cs-p">'+cs.myRole.responsibilitiesLabel+'</p>':'')
+        +(cs.myRole.responsibilities?csListHTML(cs.myRole.responsibilities):'')
+        +(cs.myRole.outro?'<p class="cs-p">'+cs.myRole.outro+'</p>':'')
       +'</div></div>';
-      if(cs.hypothesis)html+='<div class="cs-section reveal"><div class="cs-section-title">Hypothesis</div><div class="cs-section-body">'
-        +'<p class="cs-p">'+cs.hypothesis+'</p>'
-        +(cs.hypothesisImgs?'<div class="cs-img-strip">'+cs.hypothesisImgs.map(function(im){return '<img src="'+im.src+'" alt="'+im.alt+'" onerror="this.closest(\'.cs-img-strip\').style.display=\'none\'">';}).join('')+'</div>':'')
+      if(cs.researchMethod)html+='<div class="cs-section reveal"><div class="cs-section-title">Research Method</div><div class="cs-section-body">'
+        +cs.researchMethod.map(function(item){ return renderMethodBlock(item, false); }).join('')
       +'</div></div>';
-      if(cs.dataAnalysisTags)html+='<div class="cs-section reveal"><div class="cs-section-title">Data Analysis</div><div class="cs-section-body"><p class="cs-tags">'+cs.dataAnalysisTags+'</p></div></div>';
-      html+='<div class="cs-section reveal"><div class="cs-section-title">Result</div><div class="cs-section-body">'
-        +(cs.byTheNumbers?'<div class="cs-sub">By the Numbers</div>'+csListHTML(cs.byTheNumbers):'')
-        +cs.results.map(function(r){return '<div class="cs-sub">'+r.tech+'</div>'+csListHTML(r.points);}).join('')
-      +'</div></div>';
-      if(cs.reflection)html+='<div class="cs-section reveal"><div class="cs-section-title">Reflection</div><div class="cs-section-body">'+csListHTML(cs.reflection)+'</div></div>';
-      if(cs.voiceOfUsers&&cs.voiceOfUsers.length)html+='<div class="cs-section cs-highlight reveal"><div class="cs-section-title">Voice of Users</div><div class="cs-section-body">'
-        +cs.voiceOfUsers.map(function(q){return '<p class="cs-p"><b>'+q.attribution+'</b> \u2014 <em>\u201c'+q.quote+'\u201d</em></p>';}).join('')
-      +'</div></div>';
+      if(cs.voiceOfParticipants)html+='<div class="cs-section cs-highlight reveal"><div class="cs-section-title">Voice of Participants</div><div class="cs-section-body">'+renderMethodContent(cs.voiceOfParticipants)+'</div></div>';
+      if(cs.impact)html+='<div class="cs-section reveal"><div class="cs-section-title">Impact</div><div class="cs-section-body">'+renderMethodContent(cs.impact)+'</div></div>';
+      if(cs.personalReflection)html+='<div class="cs-section reveal"><div class="cs-section-title">Personal Reflection</div><div class="cs-section-body">'+renderMethodContent(cs.personalReflection)+'</div></div>';
       return html;
     }
 
