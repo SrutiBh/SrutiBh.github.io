@@ -243,16 +243,19 @@
     .work-slider-card:focus-visible .work-slider-overlay{opacity:1;}
     .work-slider-title{font-family:var(--font-serif);font-size:.95rem;font-weight:700;color:#fff;line-height:1.25;text-align:left;}
     @media(max-width:640px){.work-slider-card{width:210px;}.work-slider-arrow{width:2rem;height:2rem;}}
-    .work-card{position:relative;display:block;width:100%;aspect-ratio:4/3.2;border:none;border-radius:1rem;overflow:hidden;cursor:pointer;padding:0;background:linear-gradient(135deg,#e8ecf5 0%,#c0cbea 100%);}
+    .work-card{position:relative;display:flex;flex-direction:column;width:100%;border:none;border-radius:.5rem;cursor:pointer;padding:.65rem .65rem 0;background:#fff;text-align:center;font-family:inherit;box-shadow:0 12px 26px rgba(15,23,42,.16),0 2px 6px rgba(15,23,42,.08);}
+    .work-card::before{content:'';position:absolute;top:-9px;left:50%;width:17px;height:17px;border-radius:50%;transform:translateX(-50%);background:radial-gradient(circle at 32% 28%, #dcffa8, var(--n-green) 55%, #7fbf2e 100%);box-shadow:0 3px 5px rgba(15,23,42,.35),inset -2px -2px 3px rgba(0,0,0,.15);z-index:2;}
     .work-card.is-disabled{cursor:default;opacity:.55;}
     .work-card.is-disabled:hover .work-card-img{transform:none;}
     .work-card.is-disabled:hover .work-card-overlay{opacity:0;}
+    .work-card-thumb{position:relative;width:100%;aspect-ratio:4/3.2;border-radius:.15rem;overflow:hidden;background:linear-gradient(135deg,#e8ecf5 0%,#c0cbea 100%);}
     .work-card-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease;}
     .work-card:hover .work-card-img{transform:scale(1.05);}
     .work-card-overlay{position:absolute;inset:0;display:flex;align-items:flex-end;padding:1.5rem;background:linear-gradient(0deg,rgba(15,23,42,.75) 0%,rgba(15,23,42,0) 55%);opacity:0;transition:opacity .25s ease;}
     .work-card:hover .work-card-overlay,
     .work-card:focus-visible .work-card-overlay{opacity:1;}
     .work-card-title{font-family:var(--font-serif);font-size:1.4rem;font-weight:700;color:#fff;line-height:1.25;text-align:left;}
+    .work-card-meta{font-family:var(--font-serif);font-size:.85rem;font-weight:700;letter-spacing:.03em;color:var(--color-navy);padding:1rem .3rem 1.15rem;}
 
     /* Matches .about-desc-title exactly (same style used for "About Me" /
        "Education" / "Career Journey" on the Home page) so section names
@@ -623,23 +626,6 @@
     }
     .new-section-heading.second{ margin-top:5vh; }
 
-    .n-work-grid{ display:grid; grid-template-columns:1fr 1fr; gap:1.6rem; }
-    @media(max-width:640px){ .n-work-grid{ grid-template-columns:1fr; } }
-    .n-work-card{
-      background:#fff; border:1px solid var(--n-border); border-radius:0.9rem;
-      overflow:hidden; cursor:pointer; display:flex; flex-direction:column;
-      transition:transform 0.2s ease, box-shadow 0.2s ease; padding:0; text-align:left;
-      font-family:inherit;
-    }
-    .n-work-card:hover{ transform:translateY(-3px); box-shadow:0 14px 30px -14px rgba(27,42,74,0.25); }
-    .n-work-card.is-disabled{ cursor:default; opacity:.55; }
-    .n-work-card.is-disabled:hover{ transform:none; box-shadow:none; }
-    .n-work-card .n-thumb{ aspect-ratio:4/3; display:block; overflow:hidden; }
-    .n-work-card .n-thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
-    .n-work-card .n-body{ padding:1.1rem 1.2rem 1.3rem 1.2rem; }
-    .n-work-card .n-meta{ font-family:var(--n-font-mono); font-size:0.66rem; letter-spacing:0.06em; text-transform:uppercase; color:var(--n-ink-muted); margin-bottom:0.4rem; }
-    .n-work-card h3{ font-family:var(--n-font-display); font-weight:700; font-size:1.05rem; margin:0; color:var(--n-ink); }
-
     .n-gallery-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1.1rem; margin-bottom:3rem; }
     @media(max-width:760px){ .n-gallery-grid{ grid-template-columns:repeat(2,1fr); } }
     .n-gallery-item{ background:#fff; border:1px solid var(--n-border); border-radius:0.75rem; overflow:hidden; }
@@ -720,17 +706,18 @@
           <button type="button" class="n-tab-btn" data-tab="interests" data-i18n="section.interests">Interests</button>
         </div>
 
-        <div class="n-layout" id="homeWorkPane">
-          <div>
-            <div class="n-filter-label">Filter</div>
-            <div class="n-filter-list" id="homeFilterList">
-              <button type="button" class="active" data-cat="all">All Projects</button>
-              <button type="button" data-cat="ux">UX Research</button>
-              <button type="button" data-cat="interaction">Interaction Design</button>
-              <button type="button" data-cat="visual">Visual Computing</button>
-            </div>
+        <div id="homeWorkPane">
+          <div class="work-grid reveal" id="homeWorkGrid"></div>
+          <h3 class="gallery-subhead reveal">My Other Work</h3>
+          <div class="work-slider-wrap reveal">
+            <button type="button" class="work-slider-arrow" id="homeWorkSliderPrev" aria-label="Scroll projects left">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <div class="work-slider" id="homeWorkSliderCards"></div>
+            <button type="button" class="work-slider-arrow" id="homeWorkSliderNext" aria-label="Scroll projects right">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
           </div>
-          <div class="n-work-grid reveal" id="homeWorkGrid"></div>
         </div>
 
         <div class="n-layout" id="homeInterestsPane" style="display:none;">
@@ -1268,10 +1255,10 @@
 
     const WORK_CATEGORY='ux';
     const PROJECTS=[
-      {id:3,cat:'ux',meta:'',img:'images/projects/VRvsRobovsZoomfinal.png',imgAlt:'Preview image of remote communication project',imgFit:'contain',links:[]},
+      {id:3,cat:'ux',meta:'Multimodal Telecommunication · Sweden',img:'images/projects/VRvsRobovsZoomfinal.png',imgAlt:'Preview image of remote communication project',imgFit:'contain',links:[]},
       {id:1,cat:'ux',meta:'KTH · EPFL',img:'images/projects/vrle_classroom.jpeg',imgAlt:'Preview image of VR learning environment project',links:[]},
-      {id:2,cat:'ux',meta:'University of Lausanne',img:'images/projects/unil.jpg',imgAlt:'Preview image of hybrid class research project',links:[]},
-      {id:10,cat:'ux',meta:'',img:'images/projects/sweet_api.png',imgAlt:'Preview image of Sweet API project',links:[]},
+      {id:2,cat:'ux',meta:'Education Technology · Switzerland',img:'images/projects/unil.jpg',imgAlt:'Preview image of hybrid class research project',links:[]},
+      {id:10,cat:'ux',meta:'Gerontechnology · India',img:'images/projects/sweet_api.png',imgAlt:'Preview image of Sweet API project',links:[]},
       {id:4,cat:'interaction',slider:true,meta:'EPFL',img:'images/projects/protest_project.png',imgAlt:'Augmented City interaction design',links:[]},
       {id:5,cat:'interaction',slider:true,meta:'Ericsson',img:'images/projects/haptic_ericsson.png',imgAlt:'Preview image of haptic systems project',links:[{key:'lbl.code',href:'#'}]},
       {id:6,cat:'interaction',slider:true,meta:'KTH',img:'images/projects/teach_figma.png',imgAlt:'Preview image of remote learning UX project',links:[]},
@@ -1292,8 +1279,11 @@
         const fitStyle=p.imgFit?(' style="object-fit:'+p.imgFit+';background:#e8ecf5;"'):'';
         const disabledClass=p.id===1?' is-disabled':'';
         return '<button type="button" class="work-card reveal'+disabledClass+'" data-id="'+p.id+'">'
-          +'<img class="work-card-img" src="'+p.img+'" alt="'+p.imgAlt+'"'+fitStyle+'>'
-          +'<span class="work-card-overlay"><span class="work-card-title" data-i18n="proj.'+p.id+'.title">'+tr('proj.'+p.id+'.title')+'</span></span>'
+          +'<span class="work-card-thumb">'
+            +'<img class="work-card-img" src="'+p.img+'" alt="'+p.imgAlt+'"'+fitStyle+'>'
+            +'<span class="work-card-overlay"><span class="work-card-title" data-i18n="proj.'+p.id+'.title">'+tr('proj.'+p.id+'.title')+'</span></span>'
+          +'</span>'
+          +'<span class="work-card-meta">'+(p.meta||'')+'</span>'
           +'</button>';
       }).join('');
       wrap.querySelectorAll('.work-card').forEach(function(card){
@@ -1630,20 +1620,22 @@
        block. Reuses the same PROJECTS data and image paths as the
        existing standalone Work/Interests views (left untouched for now).
        ============================================================ */
-    function renderHomeWork(filter){
+    function renderHomeWork(){
       const wrap=document.getElementById('homeWorkGrid');
       if(!wrap)return;
-      const cat=filter||'all';
-      const projectsToShow=cat==='all'?PROJECTS:PROJECTS.filter(function(p){return p.cat===cat;});
+      const projectsToShow=PROJECTS.filter(function(p){return p.cat===WORK_CATEGORY;});
       wrap.innerHTML=projectsToShow.map(function(p){
         const fitStyle=p.imgFit?(' style="object-fit:'+p.imgFit+';background:#e8ecf5;"'):'';
         const disabledClass=p.id===1?' is-disabled':'';
-        return '<button type="button" class="n-work-card'+disabledClass+'" data-id="'+p.id+'">'
-          +'<span class="n-thumb"><img src="'+p.img+'" alt="'+p.imgAlt+'"'+fitStyle+'></span>'
-          +'<span class="n-body"><span class="n-meta">'+(p.meta||'')+'</span><h3 data-i18n="proj.'+p.id+'.title">'+tr('proj.'+p.id+'.title')+'</h3></span>'
+        return '<button type="button" class="work-card reveal'+disabledClass+'" data-id="'+p.id+'">'
+          +'<span class="work-card-thumb">'
+            +'<img class="work-card-img" src="'+p.img+'" alt="'+p.imgAlt+'"'+fitStyle+'>'
+            +'<span class="work-card-overlay"><span class="work-card-title" data-i18n="proj.'+p.id+'.title">'+tr('proj.'+p.id+'.title')+'</span></span>'
+          +'</span>'
+          +'<span class="work-card-meta">'+(p.meta||'')+'</span>'
           +'</button>';
       }).join('');
-      wrap.querySelectorAll('.n-work-card').forEach(function(card){
+      wrap.querySelectorAll('.work-card').forEach(function(card){
         card.addEventListener('click',function(){
           const id=parseInt(card.dataset.id,10);
           if(id===1)return; // "On Progress" placeholder project is not clickable
@@ -1653,23 +1645,39 @@
       if(window.observeReveals)window.observeReveals();
     }
 
-    const homeFilterList=document.getElementById('homeFilterList');
-    if(homeFilterList){
-      homeFilterList.querySelectorAll('button').forEach(function(btn){
-        btn.addEventListener('click',function(){
-          homeFilterList.querySelectorAll('button').forEach(function(b){b.classList.remove('active');});
-          btn.classList.add('active');
-          renderHomeWork(btn.dataset.cat);
+    /* "My Other Work" slider beneath the Home tab's project grid — mirrors
+       the standalone Work page's slider, pulling any project flagged
+       `slider:true` in PROJECTS, independent of the active filter. */
+    function renderHomeWorkSlider(){
+      const wrap=document.getElementById('homeWorkSliderCards');
+      if(!wrap)return;
+      const projectsToShow=PROJECTS.filter(function(p){return p.slider===true;});
+      wrap.innerHTML=projectsToShow.map(function(p){
+        const fitStyle=p.imgFit?(' style="object-fit:'+p.imgFit+';background:#e8ecf5;"'):'';
+        return '<button type="button" class="work-slider-card reveal" data-id="'+p.id+'">'
+          +'<img class="work-slider-img" src="'+p.img+'" alt="'+p.imgAlt+'"'+fitStyle+'>'
+          +'<span class="work-slider-overlay"><span class="work-slider-title" data-i18n="proj.'+p.id+'.title">'+tr('proj.'+p.id+'.title')+'</span></span>'
+          +'</button>';
+      }).join('');
+      wrap.querySelectorAll('.work-slider-card').forEach(function(card){
+        card.addEventListener('click',function(){
+          goToProject(parseInt(card.dataset.id,10));
         });
       });
+      const prevBtn=document.getElementById('homeWorkSliderPrev'),nextBtn=document.getElementById('homeWorkSliderNext');
+      const scrollStep=function(){const card=wrap.querySelector('.work-slider-card');const gap=16;return card?card.getBoundingClientRect().width+gap:280;};
+      if(prevBtn)prevBtn.onclick=function(){wrap.scrollBy({left:-scrollStep(),behavior:'smooth'});};
+      if(nextBtn)nextBtn.onclick=function(){wrap.scrollBy({left:scrollStep(),behavior:'smooth'});};
+      if(window.observeReveals)window.observeReveals();
     }
+
     document.querySelectorAll('.n-tab-btn').forEach(function(btn){
       btn.addEventListener('click',function(){
         document.querySelectorAll('.n-tab-btn').forEach(function(b){b.classList.remove('active');});
         btn.classList.add('active');
         const isWork=btn.dataset.tab==='work';
         const workPane=document.getElementById('homeWorkPane'), interestsPane=document.getElementById('homeInterestsPane');
-        if(workPane)workPane.style.display=isWork?'grid':'none';
+        if(workPane)workPane.style.display=isWork?'block':'none';
         if(interestsPane)interestsPane.style.display=isWork?'none':'grid';
       });
     });
@@ -1707,7 +1715,8 @@
           +'</a>';
       }).join('');
     }
-    renderHomeWork('all');
+    renderHomeWork();
+    renderHomeWorkSlider();
     renderHomeGallery();
     renderHomeBooks();
 
@@ -1926,12 +1935,23 @@ const PLACES=[
       sun._sunTimers.push(setTimeout(function(){
         mouth.classList.add('smile');
       }, 400));
-      // Fade-out transition itself is 1.2s (see .jvp-sun-face), started at 3.8s so it
-      // finishes fully faded at 5s total.
-      sun._sunTimers.push(setTimeout(function(){ face.classList.remove('active'); }, 3800));
+      // The smile holds until 3s from the click, then fades out — unless
+      // cancelSunReaction() fires first (see below), which happens the
+      // instant the island card is closed by clicking outside it.
+      sun._sunTimers.push(setTimeout(function(){ face.classList.remove('active'); }, 3000));
+    }
+    // Immediately hides the sun's reaction, called whenever the island
+    // detail card is closed (e.g. clicking outside it) — so the smile
+    // never outlives the card it belongs to, even if under 3s have passed.
+    function cancelSunReaction(){
+      const sun=shell.querySelector('.jvp-sun');
+      if(!sun)return;
+      if(sun._sunTimers){ sun._sunTimers.forEach(t=>clearTimeout(t)); sun._sunTimers=[]; }
+      const face=sun.querySelector('.jvp-sun-face');
+      if(face)face.classList.remove('active');
     }
     function selectPlace(i){suppressClose=true;selectedIdx=i;const p=islands[i];islands.forEach((is,j)=>is.el.classList.toggle('sel',j===i));dtitle.textContent=p.city;dsub.textContent='';dcards.innerHTML=(p.groups||[]).map(g=>`<div class="jcard"><div class="jcard-head"><div class="jlogo"><img src="${g.logo||''}" alt="${g.alt||g.org||p.city}" onerror="var p=this.parentElement;p.innerHTML='🏛️';p.style.fontSize='1.25rem';"></div><div class="jorg-wrap"><div class="jorg">${g.org||p.city}</div></div></div><div class="jroles">${(g.experiences||[]).map(e=>{const tt=e['title_'+currentLang]||e.title;const nn=e['note_'+currentLang]||e.note;return `<div class="jrole"><div class="jct">${tt}</div><div class="jcy">${e.year}</div><div class="jcn">${nn}</div><div class="jtags">${(e.tags||[]).map(t=>`<span class="jtag">${t}</span>`).join('')}</div></div>`;}).join('')}</div></div>`).join('');const wasOpen=detail.classList.contains('open');if(wasOpen){saveCardState();detail.style.transition='none';applyCardState();requestAnimationFrame(()=>{detail.style.transition='';});}else{detail.classList.add('open');if(cardState.left!==null)applyCardState();else positionDetail();}focusOn(p.x,p.y,1.1);setTimeout(()=>{suppressClose=false;},50);playSunReaction();}
-    function closeDetail(){if(detail.classList.contains('open'))saveCardState();detail.classList.remove('open');islands.forEach(is=>is.el.classList.remove('sel'));selectedIdx=-1;}
+    function closeDetail(){if(detail.classList.contains('open'))saveCardState();detail.classList.remove('open');islands.forEach(is=>is.el.classList.remove('sel'));selectedIdx=-1;cancelSunReaction();}
     function focusOn(wx,wy,zoom){const vw=vp.clientWidth,vh=vp.clientHeight;S.ts=Math.max(S.minS,Math.min(S.maxS,zoom));S.tx=vw*.5-wx*S.ts;S.ty=vh*.5-wy*S.ts;}
     function fitAll(){const vw=vp.clientWidth||680,vh=vp.clientHeight||620;let minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity;islands.forEach(p=>{minX=Math.min(minX,p.x-300);maxX=Math.max(maxX,p.x+300);minY=Math.min(minY,p.y-380);maxY=Math.max(maxY,p.y+720);});const cW=maxX-minX,cH=maxY-minY,s=Math.min(vw/cW,vh/cH);S.ts=Math.max(S.minS,Math.min(S.maxS,s));S.tx=(vw-cW*S.ts)*.5-minX*S.ts;S.ty=(vh-cH*S.ts)*.5-minY*S.ts+100;}
     function resetView(){fitAll();closeDetail();}
