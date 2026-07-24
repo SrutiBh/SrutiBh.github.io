@@ -222,30 +222,12 @@
 
     .work-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
     @media(max-width:640px){.work-grid{grid-template-columns:1fr;}}
-    /* ============================================================
-       WORK SLIDER — a smaller, horizontally-scrolling row of extra
-       project tiles beneath the main Work grid. Cards are rectangular
-       (wider than tall) and snap into place as you scroll/swipe.
-       Add or remove items by toggling `slider:true` on entries in
-       the PROJECTS array further down.
-       ============================================================ */
-    .work-slider-label{font-family:var(--font-serif);font-size:1rem;font-weight:700;color:var(--color-navy-dark);margin:2.5rem 0 1rem;}
-    .work-slider-wrap{display:flex;align-items:center;gap:.75rem;margin-top:0;}
-    .work-slider{flex:1;min-width:0;display:flex;gap:1rem;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding:.25rem 0 .5rem;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none;}
-    .work-slider::-webkit-scrollbar{display:none;}
-    .work-slider-arrow{flex:0 0 auto;width:2.4rem;height:2.4rem;border-radius:999px;border:1.5px solid var(--color-border-light);background:#fff;color:var(--color-navy);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .18s ease,border-color .18s ease,color .18s ease;padding:0;}
-    .work-slider-arrow:hover{background:var(--color-navy);border-color:var(--color-navy);color:#fff;}
-    .work-slider-card{position:relative;flex:0 0 auto;width:260px;aspect-ratio:16/9;border:none;border-radius:.75rem;overflow:hidden;cursor:pointer;padding:0;scroll-snap-align:start;background:linear-gradient(135deg,#e8ecf5 0%,#c0cbea 100%);}
-    .work-slider-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease;}
-    .work-slider-card:hover .work-slider-img{transform:scale(1.06);}
-    .work-slider-overlay{position:absolute;inset:0;display:flex;align-items:flex-end;padding:.9rem;background:linear-gradient(0deg,rgba(15,23,42,.78) 0%,rgba(15,23,42,0) 60%);opacity:0;transition:opacity .25s ease;}
-    .work-slider-card:hover .work-slider-overlay,
-    .work-slider-card:focus-visible .work-slider-overlay{opacity:1;}
-    .work-slider-title{font-family:var(--font-serif);font-size:.95rem;font-weight:700;color:#fff;line-height:1.25;text-align:left;}
-    @media(max-width:640px){.work-slider-card{width:210px;}.work-slider-arrow{width:2rem;height:2rem;}}
+    .work-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;}
+    @media(max-width:760px){.work-grid-3{grid-template-columns:1fr 1fr;}}
+    @media(max-width:480px){.work-grid-3{grid-template-columns:1fr;}}
     .work-card{position:relative;display:flex;flex-direction:column;width:100%;border:none;border-radius:.5rem;cursor:pointer;padding:.65rem .65rem 0;background:#fff;text-align:center;font-family:inherit;box-shadow:0 12px 26px rgba(15,23,42,.16),0 2px 6px rgba(15,23,42,.08);}
     .work-card::before{content:'';position:absolute;top:-9px;left:50%;width:17px;height:17px;border-radius:50%;transform:translateX(-50%);background:radial-gradient(circle at 32% 28%, #dcffa8, var(--n-green) 55%, #7fbf2e 100%);box-shadow:0 3px 5px rgba(15,23,42,.35),inset -2px -2px 3px rgba(0,0,0,.15);z-index:2;}
-    .work-card.is-disabled{cursor:default;opacity:.55;}
+    .work-card.is-disabled{cursor:default;}
     .work-card.is-disabled:hover .work-card-img{transform:none;}
     .work-card.is-disabled:hover .work-card-overlay{opacity:0;}
     .work-card-thumb{position:relative;width:100%;aspect-ratio:4/3.2;border-radius:.15rem;overflow:hidden;background:linear-gradient(135deg,#e8ecf5 0%,#c0cbea 100%);}
@@ -709,15 +691,7 @@
         <div id="homeWorkPane">
           <div class="work-grid reveal" id="homeWorkGrid"></div>
           <h3 class="gallery-subhead reveal">My Other Work</h3>
-          <div class="work-slider-wrap reveal">
-            <button type="button" class="work-slider-arrow" id="homeWorkSliderPrev" aria-label="Scroll projects left">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-            </button>
-            <div class="work-slider" id="homeWorkSliderCards"></div>
-            <button type="button" class="work-slider-arrow" id="homeWorkSliderNext" aria-label="Scroll projects right">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-            </button>
-          </div>
+          <div class="work-grid-3 reveal" id="homeWorkSliderCards"></div>
         </div>
 
         <div class="n-layout" id="homeInterestsPane" style="display:none;">
@@ -945,15 +919,7 @@
       <div class="work-sub active" id="workGrid">
         <div class="work-grid reveal" id="workGridCards"></div>
         <h3 class="gallery-subhead reveal">My Other Work</h3>
-        <div class="work-slider-wrap reveal">
-          <button type="button" class="work-slider-arrow" id="workSliderPrev" aria-label="Scroll projects left">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-          </button>
-          <div class="work-slider" id="workSliderCards"></div>
-          <button type="button" class="work-slider-arrow" id="workSliderNext" aria-label="Scroll projects right">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-        </div>
+        <div class="work-grid-3 reveal" id="workSliderCards"></div>
       </div>
       <div class="work-sub" id="workDetail"></div>
     </section>
@@ -1028,9 +994,9 @@
         'proj.5.desc':'Implemented and analysed the impact of latency and jitter on haptic stiffness perception in haptic teleoperation systems.',
         'proj.6.title':'Re-Designing Video Call for Remote Learning',
         'proj.6.desc':"Examined the impact of Zoom and other video-based applications on teachers' experience and redesigned a new interface for improved usability.",
-        'proj.7.title':'Facial Expression Recognition in Virtual Reality using Machine Learning',
+        'proj.7.title':'Facial Expression Recognition in Virtual Reality',
         'proj.7.desc':'Built a VR avatar emotion recognition pipeline',
-        'proj.8.title':'Venice Time Machine: 2020 Building Heights Detection',
+        'proj.8.title':'Venice Time Machine Project',
         'proj.8.desc':'Developed a 3D model of Venice to preserve current building height and geographical location based on Google Earth data.',
         'proj.9.title':'Rogue-Mike Game',
         'proj.9.desc':'Developed a Windows OS-based video game using C# and Unreal Engine.',
@@ -1256,14 +1222,14 @@
     const WORK_CATEGORY='ux';
     const PROJECTS=[
       {id:3,cat:'ux',meta:'Multimodal Telecommunication · Sweden',img:'images/projects/VRvsRobovsZoomfinal.png',imgAlt:'Preview image of remote communication project',imgFit:'contain',links:[]},
-      {id:1,cat:'ux',meta:'KTH · EPFL',img:'images/projects/vrle_classroom.jpeg',imgAlt:'Preview image of VR learning environment project',links:[]},
+      {id:1,cat:'ux',meta:'Coming Soon',img:'images/projects/vrle_classroom.jpeg',imgAlt:'Preview image of VR learning environment project',links:[]},
       {id:2,cat:'ux',meta:'Education Technology · Switzerland',img:'images/projects/unil.jpg',imgAlt:'Preview image of hybrid class research project',links:[]},
       {id:10,cat:'ux',meta:'Gerontechnology · India',img:'images/projects/sweet_api.png',imgAlt:'Preview image of Sweet API project',links:[]},
-      {id:4,cat:'interaction',slider:true,meta:'EPFL',img:'images/projects/protest_project.png',imgAlt:'Augmented City interaction design',links:[]},
-      {id:5,cat:'interaction',slider:true,meta:'Ericsson',img:'images/projects/haptic_ericsson.png',imgAlt:'Preview image of haptic systems project',links:[{key:'lbl.code',href:'#'}]},
-      {id:6,cat:'interaction',slider:true,meta:'KTH',img:'images/projects/teach_figma.png',imgAlt:'Preview image of remote learning UX project',links:[]},
-      {id:7,cat:'visual',meta:'EPFL',img:'images/projects/iig_project.png',imgAlt:'Preview image of IIG EPFL project',links:[{key:'lbl.code',href:'#'}]},
-      {id:8,cat:'visual',meta:'EPFL',img:'images/projects/venice1.png',imgAlt:'Preview image of 3D city modelling project',links:[{key:'lbl.code',href:'#'}]},
+      {id:4,cat:'interaction',meta:'EPFL',img:'images/projects/protest_project.png',imgAlt:'Augmented City interaction design',links:[]},
+      {id:5,cat:'interaction',slider:true,meta:'Robotics · Ericsson · Sweden',img:'images/projects/haptic_ericsson.png',imgAlt:'Preview image of haptic systems project',links:[{key:'lbl.code',href:'#'}]},
+      {id:6,cat:'interaction',meta:'KTH',img:'images/projects/teach_figma.png',imgAlt:'Preview image of remote learning UX project',links:[]},
+      {id:7,cat:'visual',slider:true,meta:'Machine Learning · Switzerland',img:'images/projects/iig_project.png',imgAlt:'Preview image of IIG EPFL project',links:[{key:'lbl.code',href:'#'}]},
+      {id:8,cat:'visual',slider:true,meta:'2D to 3D Reconstruction · Switzerland',img:'images/projects/venice1.png',imgAlt:'Preview image of 3D city modelling project',links:[{key:'lbl.code',href:'#'}]},
       {id:9,cat:'visual',meta:'KTH',img:'images/projects/r_mike.gif',imgAlt:'Preview image of game development project',links:[{key:'lbl.code',href:'#'}]}
     ];
 
@@ -1309,20 +1275,19 @@
       const projectsToShow=PROJECTS.filter(function(p){return p.slider===true;});
       wrap.innerHTML=projectsToShow.map(function(p){
         const fitStyle=p.imgFit?(' style="object-fit:'+p.imgFit+';background:#e8ecf5;"'):'';
-        return '<button type="button" class="work-slider-card reveal" data-id="'+p.id+'">'
-          +'<img class="work-slider-img" src="'+p.img+'" alt="'+p.imgAlt+'"'+fitStyle+'>'
-          +'<span class="work-slider-overlay"><span class="work-slider-title" data-i18n="proj.'+p.id+'.title">'+tr('proj.'+p.id+'.title')+'</span></span>'
+        return '<button type="button" class="work-card reveal" data-id="'+p.id+'">'
+          +'<span class="work-card-thumb">'
+            +'<img class="work-card-img" src="'+p.img+'" alt="'+p.imgAlt+'"'+fitStyle+'>'
+            +'<span class="work-card-overlay"><span class="work-card-title" data-i18n="proj.'+p.id+'.title">'+tr('proj.'+p.id+'.title')+'</span></span>'
+          +'</span>'
+          +'<span class="work-card-meta">'+(p.meta||'')+'</span>'
           +'</button>';
       }).join('');
-      wrap.querySelectorAll('.work-slider-card').forEach(function(card){
+      wrap.querySelectorAll('.work-card').forEach(function(card){
         card.addEventListener('click',function(){
           goToProject(parseInt(card.dataset.id,10));
         });
       });
-      const prevBtn=document.getElementById('workSliderPrev'),nextBtn=document.getElementById('workSliderNext');
-      const scrollStep=function(){const card=wrap.querySelector('.work-slider-card');const gap=16;return card?card.getBoundingClientRect().width+gap:280;};
-      if(prevBtn)prevBtn.onclick=function(){wrap.scrollBy({left:-scrollStep(),behavior:'smooth'});};
-      if(nextBtn)nextBtn.onclick=function(){wrap.scrollBy({left:scrollStep(),behavior:'smooth'});};
       if(window.observeReveals)window.observeReveals();
     }
 
@@ -1645,29 +1610,29 @@
       if(window.observeReveals)window.observeReveals();
     }
 
-    /* "My Other Work" slider beneath the Home tab's project grid — mirrors
-       the standalone Work page's slider, pulling any project flagged
-       `slider:true` in PROJECTS, independent of the active filter. */
+    /* "My Other Work" — same polaroid card style as the main grid above
+       (pin, hover-reveal title, always-visible meta caption), just laid
+       out as a fixed 3-across row instead of a scrolling slider. Pulls
+       any project flagged `slider:true` in PROJECTS. */
     function renderHomeWorkSlider(){
       const wrap=document.getElementById('homeWorkSliderCards');
       if(!wrap)return;
       const projectsToShow=PROJECTS.filter(function(p){return p.slider===true;});
       wrap.innerHTML=projectsToShow.map(function(p){
         const fitStyle=p.imgFit?(' style="object-fit:'+p.imgFit+';background:#e8ecf5;"'):'';
-        return '<button type="button" class="work-slider-card reveal" data-id="'+p.id+'">'
-          +'<img class="work-slider-img" src="'+p.img+'" alt="'+p.imgAlt+'"'+fitStyle+'>'
-          +'<span class="work-slider-overlay"><span class="work-slider-title" data-i18n="proj.'+p.id+'.title">'+tr('proj.'+p.id+'.title')+'</span></span>'
+        return '<button type="button" class="work-card reveal" data-id="'+p.id+'">'
+          +'<span class="work-card-thumb">'
+            +'<img class="work-card-img" src="'+p.img+'" alt="'+p.imgAlt+'"'+fitStyle+'>'
+            +'<span class="work-card-overlay"><span class="work-card-title" data-i18n="proj.'+p.id+'.title">'+tr('proj.'+p.id+'.title')+'</span></span>'
+          +'</span>'
+          +'<span class="work-card-meta">'+(p.meta||'')+'</span>'
           +'</button>';
       }).join('');
-      wrap.querySelectorAll('.work-slider-card').forEach(function(card){
+      wrap.querySelectorAll('.work-card').forEach(function(card){
         card.addEventListener('click',function(){
           goToProject(parseInt(card.dataset.id,10));
         });
       });
-      const prevBtn=document.getElementById('homeWorkSliderPrev'),nextBtn=document.getElementById('homeWorkSliderNext');
-      const scrollStep=function(){const card=wrap.querySelector('.work-slider-card');const gap=16;return card?card.getBoundingClientRect().width+gap:280;};
-      if(prevBtn)prevBtn.onclick=function(){wrap.scrollBy({left:-scrollStep(),behavior:'smooth'});};
-      if(nextBtn)nextBtn.onclick=function(){wrap.scrollBy({left:scrollStep(),behavior:'smooth'});};
       if(window.observeReveals)window.observeReveals();
     }
 
