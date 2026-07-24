@@ -484,18 +484,18 @@
     .jvp{position:relative;height:620px;overflow:hidden;touch-action:pan-y;overscroll-behavior:contain;cursor:default;background:linear-gradient(180deg, #FDECC8 0%, #FFC9A8 22%, #BFE3E0 48%, #7FBFD6 75%, #4E8FBF 100%);transition:height .28s ease;}
     .jvp.dragging{cursor:default}
     .jvp-sun{position:absolute;top:26px;right:48px;width:74px;height:74px;border-radius:50%;background:radial-gradient(circle at 35% 35%, #FFF6DD, #E8A94C 70%);opacity:0.9;z-index:0;pointer-events:none;}
-    .jvp-clouds{position:absolute;inset:0;overflow:hidden;z-index:0;pointer-events:none;}
-    .jvp-cloud{position:absolute;opacity:0.95;animation:jvpdrift linear infinite;}
-    @keyframes jvpdrift{from{transform:translateX(-160px);}to{transform:translateX(calc(100% + 160px));}}
+    #jvpCloudCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;}
     .jworld{position:absolute;left:0;top:0;width:3600px;height:1800px;transform-origin:0 0;will-change:transform;z-index:1;}
     .jisland{position:absolute;width:380px;height:370px;transform:translate(-50%,-50%);cursor:pointer;user-select:none;}
     .jisland:focus-visible{outline:3px solid #fff;outline-offset:6px;border-radius:999px;}
-    .jinner{position:absolute;inset:0;transition:transform .22s ease,filter .22s ease}
-    .jisland:hover .jinner{transform:translateY(-12px) scale(1.28);filter:drop-shadow(0 14px 18px rgba(0,0,0,.35))}
+    .jinner{position:absolute;inset:0;transition:transform .22s ease}
+    .jisland:hover .jinner{transform:translateY(-12px) scale(1.28)}
+    .jbody{position:absolute;inset:0;transition:filter .22s ease}
+    .jisland:hover .jbody{filter:drop-shadow(0 14px 18px rgba(0,0,0,.35))}
     .jisland.sel .jinner{transform:scale(1.07)}
 
     .jlabel{position:absolute;left:50%;top:-72px;transform:translateX(-50%);text-align:center;pointer-events:none;white-space:nowrap;}
-    .jcity{font-family:'Comic Sans MS','Comic Sans',cursive;font-size:3.6rem;font-weight:400;letter-spacing:.14em;color:#fff;text-shadow:0 2px 0 rgba(0,0,0,1),0 4px 20px rgba(0,0,0,.85);-webkit-font-smoothing:antialiased;}
+    .jcity{font-family:'Comic Sans MS','Comic Sans',cursive;font-size:3.6rem;font-weight:400;letter-spacing:.14em;color:#000;-webkit-font-smoothing:antialiased;}
     .jtop{position:absolute;left:50%;top:28px;width:248px;height:148px;transform:translateX(-50%);clip-path:polygon(10% 24%,25% 10%,67% 6%,88% 20%,94% 48%,81% 76%,40% 91%,13% 77%,5% 48%);}
     .jrim{position:absolute;left:50%;top:155px;width:268px;height:22px;transform:translateX(-50%);clip-path:polygon(6% 24%,23% 2%,68% 0%,91% 18%,96% 54%,79% 100%,34% 100%,10% 82%,4% 52%);}
     .jbot{position:absolute;left:50%;top:164px;width:172px;height:130px;transform:translateX(-50%);background:linear-gradient(180deg,#a0714f 0%,#7a5235 50%,#5c3d22 100%);clip-path:polygon(26% 0,77% 0,100% 19%,84% 55%,63% 100%,40% 92%,17% 58%,0 18%);}
@@ -503,7 +503,7 @@
     .jtree::before{content:"";position:absolute;left:7px;bottom:0;width:5px;height:15px;background:#6b4423;border-radius:2px}
     .jtree::after{content:"";position:absolute;left:0;top:0;width:18px;height:28px;background:#22a855;clip-path:polygon(50% 0,100% 44%,76% 44%,100% 100%,0 100%,24% 44%,0 44%)}
     .jstone{position:absolute;width:10px;height:8px;background:#c8d6e0;border-radius:4px;opacity:.6}
-    .jyears{position:absolute;left:50%;top:314px;transform:translateX(-50%);width:340px;font-family:'Comic Sans MS','Comic Sans',cursive;font-size:2.1rem;font-weight:400;letter-spacing:.12em;color:#fff;text-shadow:0 2px 0 rgba(0,0,0,1),0 4px 14px rgba(0,0,0,.9);-webkit-text-stroke:.5px rgba(255,255,255,.6);white-space:normal;pointer-events:none;text-align:center;line-height:1.3;-webkit-font-smoothing:antialiased;}
+    .jyears{position:absolute;left:50%;top:314px;transform:translateX(-50%);width:340px;font-family:'Comic Sans MS','Comic Sans',cursive;font-size:2.1rem;font-weight:400;letter-spacing:.12em;color:#000;white-space:normal;pointer-events:none;text-align:center;line-height:1.3;-webkit-font-smoothing:antialiased;}
     .jmark-spire{position:absolute;left:50%;top:42px;transform:translateX(-50%);width:8px;height:38px}
     .jmark-spire::before{content:"";position:absolute;left:3px;bottom:0;width:2px;height:28px;background:rgba(240,246,255,.85)}
     .jmark-spire::after{content:"";position:absolute;left:50%;top:0;width:10px;height:10px;transform:translateX(-50%);border-radius:999px;background:rgba(225,238,255,.92)}
@@ -787,7 +787,7 @@
         <div class="jshell reveal" id="jshell">
           <div class="jvp" id="jvp">
             <div class="jvp-sun"></div>
-            <div class="jvp-clouds" id="jvpClouds"></div>
+            <canvas id="jvpCloudCanvas"></canvas>
             <div class="jworld" id="jworld"></div>
             <div class="jdetail" id="jdetail">
               <div class="jdetail-header" id="jdetailHeader">
@@ -1727,7 +1727,7 @@ const PLACES=[
     const islands=PLACES.map((p,i)=>({...p,...POSITIONS[i],el:null}));
     function markHTML(t){return t==='spire'?'<div class="jmark-spire"></div>':t==='arch'?'<div class="jmark-arch"></div>':'<div class="jmark-pavilion"></div>';}
     function yearsLabel(p){if(!p.years||!p.years.length)return'';const l=[];for(let i=0;i<p.years.length;i+=2)l.push(p.years.slice(i,i+2).join(', '));return l.join('<br>');}
-    function buildIslands(){islands.forEach((p,i)=>{const el=document.createElement('div');el.className='jisland';el.style.cssText=`left:${p.x}px;top:${p.y}px`;el.setAttribute('role','button');el.setAttribute('tabindex','0');el.setAttribute('aria-label',p.city);el.innerHTML=`<div class="jinner"><div class="jlabel"><div class="jcity">${p.city}</div></div><div class="jtop" style="background:${p.top}"></div><div class="jrim" style="background:${p.rim}"></div><div class="jbot"></div>${markHTML(p.mark)}<div class="jtree" style="left:114px;top:108px"></div><div class="jtree" style="left:168px;top:88px;transform:scale(1.15)"></div><div class="jtree" style="left:82px;top:96px;transform:scale(0.85)"></div><div class="jstone" style="left:158px;top:162px"></div><div class="jstone" style="left:178px;top:170px"></div></div><div class="jyears">${yearsLabel(p)}</div>`;el.addEventListener('click',e=>{e.stopPropagation();selectPlace(i);});el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();e.stopPropagation();selectPlace(i);}});world.appendChild(el);p.el=el;});}
+    function buildIslands(){islands.forEach((p,i)=>{const el=document.createElement('div');el.className='jisland';el.style.cssText=`left:${p.x}px;top:${p.y}px`;el.setAttribute('role','button');el.setAttribute('tabindex','0');el.setAttribute('aria-label',p.city);el.innerHTML=`<div class="jinner"><div class="jlabel"><div class="jcity">${p.city}</div></div><div class="jbody"><div class="jtop" style="background:${p.top}"></div><div class="jrim" style="background:${p.rim}"></div><div class="jbot"></div>${markHTML(p.mark)}<div class="jtree" style="left:114px;top:108px"></div><div class="jtree" style="left:168px;top:88px;transform:scale(1.15)"></div><div class="jtree" style="left:82px;top:96px;transform:scale(0.85)"></div><div class="jstone" style="left:158px;top:162px"></div><div class="jstone" style="left:178px;top:170px"></div></div></div><div class="jyears">${yearsLabel(p)}</div>`;el.addEventListener('click',e=>{e.stopPropagation();selectPlace(i);});el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();e.stopPropagation();selectPlace(i);}});world.appendChild(el);p.el=el;});}
     let selectedIdx=-1,suppressClose=false;
     const cardState={left:null,top:null,width:null,height:null};
     function saveCardState(){if(!detail.classList.contains('open'))return;cardState.left=detail.style.left;cardState.top=detail.style.top;cardState.width=detail.style.width;cardState.height=detail.style.height;}
@@ -1763,28 +1763,69 @@ const PLACES=[
     function tick(){const e=.13;S.s+=(S.ts-S.s)*e;S.x+=(S.tx-S.x)*e;S.y+=(S.ty-S.y)*e;world.style.transform=`translate(${S.x}px,${S.y}px) scale(${S.s})`;requestAnimationFrame(tick);}
     buildIslands();
     (function buildJvpClouds(){
-      const cloudLayer=document.getElementById('jvpClouds');
-      if(!cloudLayer)return;
-      const defs=[
-        {top:'6%', scale:1, dur:55, delay:0},
-        {top:'16%', scale:0.7, dur:75, delay:-18},
-        {top:'34%', scale:1.2, dur:65, delay:-38},
-        {top:'50%', scale:0.8, dur:85, delay:-8},
-        {top:'10%', scale:0.6, dur:95, delay:-50}
+      const canvas=document.getElementById('jvpCloudCanvas');
+      if(!canvas)return;
+      const ctx=canvas.getContext('2d');
+
+      function drawCloud(x, y, scale){
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.scale(scale, scale);
+        ctx.fillStyle='rgba(255,255,255,0.95)';
+        ctx.beginPath();
+        ctx.ellipse(30, 38, 28, 18, 0, 0, Math.PI*2);
+        ctx.ellipse(60, 26, 34, 24, 0, 0, Math.PI*2);
+        ctx.ellipse(92, 38, 24, 16, 0, 0, Math.PI*2);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      const cloudDefs=[
+        {topRatio:0.08, scale:1,   speed:14, startOffset:0},
+        {topRatio:0.20, scale:0.7, speed:9,  startOffset:0.35},
+        {topRatio:0.40, scale:1.2, speed:18, startOffset:0.65},
+        {topRatio:0.58, scale:0.8, speed:11, startOffset:0.15},
+        {topRatio:0.14, scale:0.6, speed:7,  startOffset:0.8}
       ];
-      defs.forEach(c=>{
-        const cl=document.createElement('div');
-        cl.className='jvp-cloud';
-        cl.style.top=c.top;
-        cl.style.animationDuration=c.dur+'s';
-        cl.style.animationDelay=c.delay+'s';
-        cl.innerHTML=`<svg width="${120*c.scale}" height="${60*c.scale}" viewBox="0 0 120 60">
-          <ellipse cx="30" cy="38" rx="28" ry="18" fill="#fff" opacity="0.95"></ellipse>
-          <ellipse cx="60" cy="26" rx="34" ry="24" fill="#fff" opacity="0.95"></ellipse>
-          <ellipse cx="92" cy="38" rx="24" ry="16" fill="#fff" opacity="0.95"></ellipse>
-        </svg>`;
-        cloudLayer.appendChild(cl);
-      });
+      const cloudWidth=120;
+      const clouds=cloudDefs.map(c=>({...c, x:0}));
+
+      function spreadClouds(){
+        clouds.forEach(c=>{
+          const span=canvas.width + cloudWidth*c.scale*2;
+          c.x = -cloudWidth*c.scale + c.startOffset*span;
+        });
+      }
+
+      // The About section starts hidden (display:none), so on first load the
+      // canvas measures 0×0. Rather than only resizing on window 'resize'
+      // (which never fires just from switching tabs), check every frame
+      // whether the container's real size has changed — the moment the
+      // About tab is opened, this picks up the true width immediately and
+      // spreads the clouds across the full sky right away.
+      let lastW=-1, lastH=-1;
+      function tickClouds(){
+        const w=vp.clientWidth, h=vp.clientHeight;
+        if(w!==lastW || h!==lastH){
+          canvas.width=w;
+          canvas.height=h;
+          lastW=w; lastH=h;
+          if(w>0) spreadClouds();
+        }
+        if(canvas.width>0){
+          ctx.clearRect(0,0,canvas.width,canvas.height);
+          clouds.forEach(c=>{
+            c.x += c.speed/60;
+            const cw=cloudWidth*c.scale;
+            if(c.x > canvas.width + cw){
+              c.x = -cw;
+            }
+            drawCloud(c.x, canvas.height*c.topRatio, c.scale);
+          });
+        }
+        requestAnimationFrame(tickClouds);
+      }
+      requestAnimationFrame(tickClouds);
     })();
     function initMap(){fitAll();S.s=S.ts;S.x=S.tx;S.y=S.ty;tick();}
     requestAnimationFrame(()=>requestAnimationFrame(initMap));
