@@ -1556,6 +1556,9 @@
       if(mainEl)mainEl.classList.toggle('center-page',view==='contact');
       if(view==='work')showWorkSub(opts.projectId||null);
       else document.body.classList.remove('project-page-active');
+      if(view==='home'&&typeof window.__resetHeroPaint==='function'){
+        window.__resetHeroPaint();
+      }
       if(view==='about'&&typeof fitAll==='function'){
         requestAnimationFrame(function(){requestAnimationFrame(function(){
           if(!detail.classList.contains('open'))fitAll();
@@ -1843,6 +1846,7 @@ const PLACES=[
     if(!canvas || !heroSection) return;
     const ctx = canvas.getContext('2d');
     let points = [];
+    window.__resetHeroPaint = function(){ points = []; };
 
     const COLOR_PALETTE = [
       [252, 216, 228], // FCD8E4 — soft pink
