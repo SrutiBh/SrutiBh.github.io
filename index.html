@@ -180,12 +180,6 @@
     .topbar-word-last{font-size:1.4rem;font-weight:700;letter-spacing:.02em;color:#000;}
     .topbar-right{display:flex;align-items:center;gap:1.75rem;flex-wrap:wrap;}
     .topbar-links{display:flex;align-items:center;gap:2.25rem;flex-wrap:wrap;}
-    .topbar-links .nav-item{display:inline-block;background:none;border:none;padding:.2rem 0;font-size:1.3rem;font-weight:400;letter-spacing:.02em;color:var(--color-text-body);cursor:pointer;font-family:var(--font-serif);position:relative;text-decoration:none;white-space:nowrap;transition:color .18s ease;}
-    .topbar-links .nav-item::after{content:'';position:absolute;left:0;right:0;bottom:-6px;height:1.5px;background:var(--color-navy);transform:scaleX(0);transform-origin:left;transition:transform .22s ease;}
-    .topbar-links .nav-item:hover{color:var(--color-navy);}
-    .topbar-links .nav-item:hover::after{transform:scaleX(1);}
-    .topbar-links .nav-item.active{color:var(--color-navy);font-weight:700;}
-    .topbar-links .nav-item.active::after{transform:scaleX(1);}
     .topbar .lang-menu{border:1px solid var(--color-border);}
     .topbar .lang-opt{color:var(--color-navy-dark);}
     .topbar .lang-opt:hover{background:rgba(2,0,252,.08);}
@@ -193,7 +187,6 @@
       .topbar{padding:.85rem 1.1rem;gap:.9rem;}
       .topbar-right{gap:1rem;}
       .topbar-links{gap:1rem;}
-      .topbar-links .nav-item .label{display:none;}
       .topbar-word{flex-direction:column;align-items:flex-start;gap:0;}
       .topbar-word-first{font-size:1.15rem;line-height:1.25;}
       .topbar-word-last{font-size:1.05rem;line-height:1.25;}
@@ -237,7 +230,7 @@
     .work-card:hover .work-card-overlay,
     .work-card:focus-visible .work-card-overlay{opacity:1;}
     .work-card-title{font-family:var(--font-serif);font-size:1.4rem;font-weight:700;color:#fff;line-height:1.25;text-align:left;}
-    .work-card-meta{font-family:var(--font-serif);font-size:1.1rem;font-weight:700;letter-spacing:.02em;color:var(--color-navy);padding:1rem .3rem 1.15rem;}
+    .work-card-meta{font-family:var(--font-serif);font-size:1.1rem;font-weight:700;letter-spacing:.02em;color:#000;padding:1rem .3rem 1.15rem;}
  
     /* Matches .about-desc-title exactly (same style used for "About Me" /
        "Education" / "Career Journey" on the Home page) so section names
@@ -245,36 +238,6 @@
     .gallery-subhead{font-family:var(--font-serif);font-size:2rem;font-weight:700;color:#0200FC;margin:2.5rem 0 1.1rem;}
     .my-other-work-heading{color:#0200FC;}
     .about-block:first-of-type .gallery-subhead{margin-top:0;}
-    .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;}
-    @media(max-width:760px){.gallery-grid{grid-template-columns:repeat(2,1fr);}}
-    @media(max-width:480px){.gallery-grid{grid-template-columns:1fr;}}
-    .gallery-item{background:#fff;border-radius:.5rem;padding:.75rem .75rem 1rem;box-shadow:0 1px 3px rgba(15,23,42,.06),0 6px 18px rgba(15,23,42,.08);transition:box-shadow .22s ease,transform .22s ease;}
-    .gallery-item:hover{box-shadow:0 4px 10px rgba(15,23,42,.10),0 14px 30px rgba(15,23,42,.14);transform:translateY(-2px);}
-    .gallery-item img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;border-radius:.3rem;}
-    /* Caption font matches .jcity (the island name labels on the Career
-       Journey map) — same family/weight/letter-spacing. Scaled down from
-       the map's 3.6rem (sized for a big label on a large dark map) to a
-       size that fits under a small gallery thumbnail, and recolored to
-       navy since the map's white-with-black-outline treatment was built
-       for legibility over a dark background, not a white card. */
-    .gallery-caption{font-family:var(--font-serif);font-size:1.55rem;font-weight:400;color:#000;margin:.6rem 0 0;}
-    .gallery-placeholder{grid-column:1/-1;border:1.5px dashed var(--color-border-light);border-radius:1rem;padding:3rem 1.5rem;text-align:center;color:var(--color-text-faint-onlight);font-family:var(--font-serif);font-size:.95rem;}
- 
-    /* ============================================================
-       BOOKS LIST — "Some Books From My Shelf". Each row is a single
-       clickable link (cover + title + author) opening the book's
-       Goodreads page in a new tab. Cover images are expected at
-       images/others/book/b1.jpg ... b7.jpg — falls back to a plain book
-       icon if the file is missing.
-       ============================================================ */
-    .book-list{display:flex;flex-direction:column;gap:1rem;}
-    .book-row{display:flex;align-items:center;gap:1.25rem;background:#fff;padding:1rem 1.25rem;border-radius:.75rem;text-decoration:none;box-shadow:0 1px 3px rgba(15,23,42,.06),0 6px 18px rgba(15,23,42,.08);transition:box-shadow .22s ease,transform .22s ease;}
-    .book-row:hover{box-shadow:0 4px 10px rgba(15,23,42,.10),0 14px 30px rgba(15,23,42,.14);transform:translateY(-2px);}
-    .book-cover{flex-shrink:0;width:52px;height:76px;border-radius:.25rem;overflow:hidden;background:var(--color-bg-hover);display:flex;align-items:center;justify-content:center;color:var(--color-navy);font-size:1.4rem;}
-    .book-cover img{width:100%;height:100%;object-fit:cover;display:block;}
-    .book-text{min-width:0;}
-    .book-title{font-family:var(--font-serif);font-size:1.55rem;font-weight:400;color:#000;line-height:1.6;margin:0 0 .25rem;}
-    .book-author{font-family:var(--font-serif);font-size:1.55rem;font-weight:400;color:#000;line-height:1.6;margin:0;}
  
     /* ============================================================
        CONTACT PAGE — photo on the left, "LET'S WORK TOGETHER" heading
@@ -640,14 +603,6 @@
     }
     .n-tab-btn.active{ color:#0200FC; }
     .n-tab-btn.active::after{ content:''; position:absolute; left:0; right:0; bottom:-1px; height:3px; background:var(--n-green); }
- 
-    .n-layout{ display:grid; grid-template-columns:200px 1fr; gap:2.5rem; align-items:start; }
-    @media(max-width:820px){ .n-layout{ grid-template-columns:1fr; } }
-    .n-filter-label{ font-family:var(--n-font-mono); font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--n-ink-muted); margin-bottom:1.1rem; }
-    .n-filter-list{ display:flex; flex-direction:column; gap:0.85rem; }
-    .n-filter-list button{ background:none; border:none; cursor:pointer; text-align:left; padding:0; font-family:var(--n-font-body); font-size:0.98rem; color:var(--n-ink-muted); }
-    .n-filter-list button.active{ color:var(--n-navy); font-weight:600; }
-    @media(max-width:820px){ .n-filter-list{ flex-direction:row; flex-wrap:wrap; gap:1.1rem; margin-bottom:1.5rem; } }
   </style>
 </head>
  
@@ -814,31 +769,6 @@
  
  
   <main id="main-content" class="container mx-auto max-w-4xl px-4 py-16">
- 
-    <section id="interests" class="view" data-view="interests">
- 
-      <div class="about-block">
-        <h3 class="gallery-subhead reveal" data-i18n="gallery.travel">Travel Photography</h3>
-        <div class="gallery-grid reveal" id="sunsetGrid"></div>
-      </div>
- 
-      <!-- PAINTINGS SECTION — currently turned OFF (commented out).
-           To turn it back ON: remove the opening and closing HTML
-           comment markers surrounding this block, so the section
-           becomes active again.
-      <div class="about-block">
-        <h3 class="gallery-subhead reveal" data-i18n="gallery.paintings">Paintings</h3>
-        <div class="gallery-grid reveal">
-          <div class="gallery-placeholder" data-i18n="gallery.paintings.placeholder">Paintings go here</div>
-        </div>
-      </div>
-      -->
- 
-      <div class="about-block">
-        <h3 class="gallery-subhead reveal" data-i18n="gallery.books">Some Books From My Shelf</h3>
-        <div class="book-list reveal" id="bookList"></div>
-      </div>
-    </section>
  
     <section id="contact" class="view" data-view="contact">
       <div class="contact-hero">
@@ -1192,51 +1122,6 @@
       return (dict&&dict[key]!==undefined)?dict[key]:(TRANSLATIONS.en[key]!==undefined?TRANSLATIONS.en[key]:key);
     }
  
-    /* ============================================================
-       INTERESTS PAGE DATA — built the same way as PROJECTS/renderWorkGrid
-       above: a plain data array plus a render function that injects
-       markup into an empty container. Re-run on language switch (see
-       setLanguage()) so captions/titles stay translated.
-       ============================================================ */
-    const SUNSETS=[
-      {img:'images/others/sunset/India.jpg',captionKey:'country.india'},
-      {img:'images/others/sunset/Sweden.jpg',captionKey:'country.sweden'},
-      {img:'images/others/sunset/Switzerland.jpg',captionKey:'country.switzerland'}
-    ];
-    const BOOKS=[
-      {title:'Love Letters of the Great War',author:'edited by Mandy Kirkby',cover:'images/others/book/b1.jpg',href:'https://www.goodreads.com/book/show/20564827-love-letters-of-the-great-war'},
-      {title:'Beautiful World, Where Are You',author:'by Sally Rooney',cover:'images/others/book/b2.jpg',href:'https://www.goodreads.com/book/show/75555793-beautiful-world-where-are-you'},
-      {title:'Mixing Work with Pleasure: My Life at Studio Ghibli',author:'by Toshio Suzuki',cover:'images/others/book/b3.jpg',href:'https://www.goodreads.com/book/show/40167204-mixing-work-with-pleasure'},
-      {title:'Problem Solving 101: A Simple Book for Smart People',author:'by Ken Watanabe',cover:'images/others/book/b4.jpg',href:'https://www.goodreads.com/book/show/6271219-problem-solving-101'},
-      {title:'Your Head is a Houseboat: A Chaotic Guide to Mental Clarity',author:'by Campbell Walker',cover:'images/others/book/b5.jpg',href:'https://www.goodreads.com/book/show/57008042-your-head-is-a-houseboat'},
-      {title:'Almond',author:'by Sohn Won-Pyung',cover:'images/others/book/b6.jpg',href:'https://www.goodreads.com/book/show/52219386-almond'},
-      {title:'Bacteria to AI: Human Futures with Our Nonhuman Symbionts',author:'by N. Katherine Hayles',cover:'images/others/book/b7.jpg',href:'https://www.goodreads.com/book/show/209050254-bacteria-to-ai'}
-    ];
- 
-    function renderSunsets(){
-      const wrap=document.getElementById('sunsetGrid');
-      if(!wrap)return;
-      wrap.innerHTML=SUNSETS.map(function(s){
-        return '<div class="gallery-item reveal">'
-          +'<img src="'+s.img+'" alt="Sunset">'
-          +'<p class="gallery-caption" data-i18n="'+s.captionKey+'">'+tr(s.captionKey)+'</p>'
-          +'</div>';
-      }).join('');
-      if(window.observeReveals)window.observeReveals();
-    }
- 
-    function renderBooks(){
-      const wrap=document.getElementById('bookList');
-      if(!wrap)return;
-      wrap.innerHTML=BOOKS.map(function(b){
-        return '<a class="book-row" href="'+b.href+'" target="_blank" rel="noopener noreferrer">'
-          +'<span class="book-cover"><img src="'+b.cover+'" alt="" onerror="this.style.display=\'none\';this.parentElement.textContent=\'📖\';"></span>'
-          +'<span class="book-text"><p class="book-title">'+b.title+'</p><p class="book-author">'+b.author+'</p></span>'
-          +'</a>';
-      }).join('');
-      if(window.observeReveals)window.observeReveals();
-    }
- 
     function renderWorkGrid(){
       const wrap=document.getElementById('workGridCards');
       const projectsToShow=PROJECTS.filter(function(p){return p.cat===WORK_CATEGORY;});
@@ -1577,8 +1462,6 @@
     document.getElementById('topbarLinks').innerHTML=topbarLinksHTML();
     renderWorkGrid();
     renderWorkSlider();
-    renderSunsets();
-    renderBooks();
  
     /* ============================================================
        NEW HOME SECTIONS — Work + Interests embedded directly in the
@@ -1686,7 +1569,7 @@
     renderHomeGallery();
     renderHomeBooks();
  
-    const VALID_VIEWS=['home','about','work','interests','contact'];
+    const VALID_VIEWS=['home','about','work','contact'];
     function parseHash(){
       const h=(location.hash||'#home').replace('#','');
       const m=h.match(/^project-(\d+)$/);
@@ -1699,7 +1582,7 @@
       document.querySelectorAll('.view').forEach(function(sec){sec.classList.toggle('active',sec.dataset.view===view);});
       document.querySelectorAll('#topbar [data-view]').forEach(function(btn){btn.classList.toggle('active',btn.dataset.view===view);});
       const mainEl=document.getElementById('main-content');
-      if(mainEl)mainEl.style.display=(view==='work'||view==='interests'||view==='contact')?'':'none';
+      if(mainEl)mainEl.style.display=(view==='work'||view==='contact')?'':'none';
       if(mainEl)mainEl.classList.toggle('center-page',view==='contact');
       if(view==='work')showWorkSub(opts.projectId||null);
       else document.body.classList.remove('project-page-active');
@@ -1770,7 +1653,6 @@
       applyStaticTranslations(lang);
       if(typeof selectedIdx!=='undefined'&&selectedIdx>-1)selectPlace(selectedIdx);
       if(currentProjectId)renderProjectDetail(currentProjectId);
-      renderSunsets();
       document.querySelectorAll('.lang-dd.open').forEach(function(dd){setDropdownOpen(dd,false);});
       if(typeof window.__syncHeroHeightToBioEnd==='function'){
         requestAnimationFrame(()=>requestAnimationFrame(window.__syncHeroHeightToBioEnd));
