@@ -819,20 +819,7 @@
 
       <div class="about-block">
         <h3 class="gallery-subhead reveal" data-i18n="gallery.travel">Travel Photography</h3>
-        <div class="gallery-grid reveal">
-          <div class="gallery-item reveal">
-            <img src="images/others/sunset/India.jpg" alt="Sunset in India"/>
-            <p class="gallery-caption" data-i18n="country.india">India</p>
-          </div>
-          <div class="gallery-item reveal">
-            <img src="images/others/sunset/Sweden.jpg" alt="Sunset in Sweden"/>
-            <p class="gallery-caption" data-i18n="country.sweden">Sweden</p>
-          </div>
-          <div class="gallery-item reveal">
-            <img src="images/others/sunset/Switzerland.jpg" alt="Sunset in Switzerland"/>
-            <p class="gallery-caption" data-i18n="country.switzerland">Switzerland</p>
-          </div>
-        </div>
+        <div class="gallery-grid reveal" id="sunsetGrid"></div>
       </div>
 
       <!-- PAINTINGS SECTION — currently turned OFF (commented out).
@@ -849,57 +836,7 @@
 
       <div class="about-block">
         <h3 class="gallery-subhead reveal" data-i18n="gallery.books">Some Books From My Shelf</h3>
-        <div class="book-list reveal">
-          <a class="book-row" href="https://www.goodreads.com/book/show/20564827-love-letters-of-the-great-war" target="_blank" rel="noopener noreferrer">
-            <span class="book-cover"><img src="images/others/book/b1.jpg" alt="" onerror="this.style.display='none';this.parentElement.textContent='📖'"/></span>
-            <span class="book-text">
-              <p class="book-title">Love Letters of the Great War</p>
-              <p class="book-author">edited by Mandy Kirkby</p>
-            </span>
-          </a>
-          <a class="book-row" href="https://www.goodreads.com/book/show/75555793-beautiful-world-where-are-you" target="_blank" rel="noopener noreferrer">
-            <span class="book-cover"><img src="images/others/book/b2.jpg" alt="" onerror="this.style.display='none';this.parentElement.textContent='📖'"/></span>
-            <span class="book-text">
-              <p class="book-title">Beautiful World, Where Are You</p>
-              <p class="book-author">by Sally Rooney</p>
-            </span>
-          </a>
-          <a class="book-row" href="https://www.goodreads.com/book/show/40167204-mixing-work-with-pleasure" target="_blank" rel="noopener noreferrer">
-            <span class="book-cover"><img src="images/others/book/b3.jpg" alt="" onerror="this.style.display='none';this.parentElement.textContent='📖'"/></span>
-            <span class="book-text">
-              <p class="book-title">Mixing Work with Pleasure: My Life at Studio Ghibli</p>
-              <p class="book-author">by Toshio Suzuki</p>
-            </span>
-          </a>
-          <a class="book-row" href="https://www.goodreads.com/book/show/6271219-problem-solving-101" target="_blank" rel="noopener noreferrer">
-            <span class="book-cover"><img src="images/others/book/b4.jpg" alt="" onerror="this.style.display='none';this.parentElement.textContent='📖'"/></span>
-            <span class="book-text">
-              <p class="book-title">Problem Solving 101: A Simple Book for Smart People</p>
-              <p class="book-author">by Ken Watanabe</p>
-            </span>
-          </a>
-          <a class="book-row" href="https://www.goodreads.com/book/show/57008042-your-head-is-a-houseboat" target="_blank" rel="noopener noreferrer">
-            <span class="book-cover"><img src="images/others/book/b5.jpg" alt="" onerror="this.style.display='none';this.parentElement.textContent='📖'"/></span>
-            <span class="book-text">
-              <p class="book-title">Your Head is a Houseboat: A Chaotic Guide to Mental Clarity</p>
-              <p class="book-author">by Campbell Walker</p>
-            </span>
-          </a>
-          <a class="book-row" href="https://www.goodreads.com/book/show/52219386-almond" target="_blank" rel="noopener noreferrer">
-            <span class="book-cover"><img src="images/others/book/b6.jpg" alt="" onerror="this.style.display='none';this.parentElement.textContent='📖'"/></span>
-            <span class="book-text">
-              <p class="book-title">Almond</p>
-              <p class="book-author">by Sohn Won-Pyung</p>
-            </span>
-          </a>
-          <a class="book-row" href="https://www.goodreads.com/book/show/209050254-bacteria-to-ai" target="_blank" rel="noopener noreferrer">
-            <span class="book-cover"><img src="images/others/book/b7.jpg" alt="" onerror="this.style.display='none';this.parentElement.textContent='📖'"/></span>
-            <span class="book-text">
-              <p class="book-title">Bacteria to AI: Human Futures with Our Nonhuman Symbionts</p>
-              <p class="book-author">by N. Katherine Hayles</p>
-            </span>
-          </a>
-        </div>
+        <div class="book-list reveal" id="bookList"></div>
       </div>
     </section>
 
@@ -1255,6 +1192,51 @@
       return (dict&&dict[key]!==undefined)?dict[key]:(TRANSLATIONS.en[key]!==undefined?TRANSLATIONS.en[key]:key);
     }
 
+    /* ============================================================
+       INTERESTS PAGE DATA — built the same way as PROJECTS/renderWorkGrid
+       above: a plain data array plus a render function that injects
+       markup into an empty container. Re-run on language switch (see
+       setLanguage()) so captions/titles stay translated.
+       ============================================================ */
+    const SUNSETS=[
+      {img:'images/others/sunset/India.jpg',captionKey:'country.india'},
+      {img:'images/others/sunset/Sweden.jpg',captionKey:'country.sweden'},
+      {img:'images/others/sunset/Switzerland.jpg',captionKey:'country.switzerland'}
+    ];
+    const BOOKS=[
+      {title:'Love Letters of the Great War',author:'edited by Mandy Kirkby',cover:'images/others/book/b1.jpg',href:'https://www.goodreads.com/book/show/20564827-love-letters-of-the-great-war'},
+      {title:'Beautiful World, Where Are You',author:'by Sally Rooney',cover:'images/others/book/b2.jpg',href:'https://www.goodreads.com/book/show/75555793-beautiful-world-where-are-you'},
+      {title:'Mixing Work with Pleasure: My Life at Studio Ghibli',author:'by Toshio Suzuki',cover:'images/others/book/b3.jpg',href:'https://www.goodreads.com/book/show/40167204-mixing-work-with-pleasure'},
+      {title:'Problem Solving 101: A Simple Book for Smart People',author:'by Ken Watanabe',cover:'images/others/book/b4.jpg',href:'https://www.goodreads.com/book/show/6271219-problem-solving-101'},
+      {title:'Your Head is a Houseboat: A Chaotic Guide to Mental Clarity',author:'by Campbell Walker',cover:'images/others/book/b5.jpg',href:'https://www.goodreads.com/book/show/57008042-your-head-is-a-houseboat'},
+      {title:'Almond',author:'by Sohn Won-Pyung',cover:'images/others/book/b6.jpg',href:'https://www.goodreads.com/book/show/52219386-almond'},
+      {title:'Bacteria to AI: Human Futures with Our Nonhuman Symbionts',author:'by N. Katherine Hayles',cover:'images/others/book/b7.jpg',href:'https://www.goodreads.com/book/show/209050254-bacteria-to-ai'}
+    ];
+
+    function renderSunsets(){
+      const wrap=document.getElementById('sunsetGrid');
+      if(!wrap)return;
+      wrap.innerHTML=SUNSETS.map(function(s){
+        return '<div class="gallery-item reveal">'
+          +'<img src="'+s.img+'" alt="Sunset">'
+          +'<p class="gallery-caption" data-i18n="'+s.captionKey+'">'+tr(s.captionKey)+'</p>'
+          +'</div>';
+      }).join('');
+      if(window.observeReveals)window.observeReveals();
+    }
+
+    function renderBooks(){
+      const wrap=document.getElementById('bookList');
+      if(!wrap)return;
+      wrap.innerHTML=BOOKS.map(function(b){
+        return '<a class="book-row" href="'+b.href+'" target="_blank" rel="noopener noreferrer">'
+          +'<span class="book-cover"><img src="'+b.cover+'" alt="" onerror="this.style.display=\'none\';this.parentElement.textContent=\'📖\';"></span>'
+          +'<span class="book-text"><p class="book-title">'+b.title+'</p><p class="book-author">'+b.author+'</p></span>'
+          +'</a>';
+      }).join('');
+      if(window.observeReveals)window.observeReveals();
+    }
+
     function renderWorkGrid(){
       const wrap=document.getElementById('workGridCards');
       const projectsToShow=PROJECTS.filter(function(p){return p.cat===WORK_CATEGORY;});
@@ -1595,6 +1577,8 @@
     document.getElementById('topbarLinks').innerHTML=topbarLinksHTML();
     renderWorkGrid();
     renderWorkSlider();
+    renderSunsets();
+    renderBooks();
 
     /* ============================================================
        NEW HOME SECTIONS — Work + Interests embedded directly in the
@@ -1786,6 +1770,7 @@
       applyStaticTranslations(lang);
       if(typeof selectedIdx!=='undefined'&&selectedIdx>-1)selectPlace(selectedIdx);
       if(currentProjectId)renderProjectDetail(currentProjectId);
+      renderSunsets();
       document.querySelectorAll('.lang-dd.open').forEach(function(dd){setDropdownOpen(dd,false);});
       if(typeof window.__syncHeroHeightToBioEnd==='function'){
         requestAnimationFrame(()=>requestAnimationFrame(window.__syncHeroHeightToBioEnd));
