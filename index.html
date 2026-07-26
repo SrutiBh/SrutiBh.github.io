@@ -394,7 +394,7 @@
     }
     .about-bio{font-family:var(--font-serif);font-size:1.1rem;line-height:1.65;color:var(--color-text-muted);font-weight:400;}
  
-    .about-desc-title{font-family:var(--font-serif);font-size:2rem;font-weight:700;color:#0200FC;margin-bottom:1.1rem;}
+    .about-desc-title{font-family:var(--font-serif);font-size:2rem;font-weight:700;color:#0200FC;margin:0 0 1.1rem 0;}
     .about-desc-text{font-family:var(--font-serif);font-size:1.55rem;line-height:1.6;font-weight:400;color:#000;margin:0;text-align:justify;text-justify:inter-word;}
     .edu-transcript{display:flex;flex-direction:column;gap:1.25rem;}
     .edu-row{display:flex;align-items:flex-start;gap:1.5rem;min-height:180px;background:#fff;padding:1.5rem 1.75rem;border:1.5px solid #dce2f0;border-left:10px solid var(--n-green);border-right:10px solid var(--n-green);border-radius:1.5rem;box-shadow:0 1px 4px rgba(21,32,61,.05);transition:box-shadow .22s,border-color .22s,transform .22s;}
@@ -658,18 +658,18 @@
     <div class="new-section">
       <div class="new-section-inner">
  
-        <div class="n-tabs">
-          <button type="button" class="n-tab-btn active" data-tab="work" data-i18n="section.portfolio">Work</button>
-          <button type="button" class="n-tab-btn" data-tab="interests" data-i18n="section.interests">Interests</button>
+        <div class="n-tabs" role="tablist">
+          <button type="button" id="tabWork" class="n-tab-btn active" data-tab="work" data-i18n="section.portfolio" role="tab" aria-selected="true" aria-controls="homeWorkPane">Work</button>
+          <button type="button" id="tabInterests" class="n-tab-btn" data-tab="interests" data-i18n="section.interests" role="tab" aria-selected="false" aria-controls="homeInterestsPane">Interests</button>
         </div>
  
-        <div id="homeWorkPane">
+        <div id="homeWorkPane" role="tabpanel" aria-labelledby="tabWork">
           <div class="work-grid reveal" id="homeWorkGrid"></div>
           <h3 class="gallery-subhead my-other-work-heading reveal" data-i18n="gallery.otherWork">My Other Work</h3>
           <div class="work-grid-3 reveal" id="homeWorkSliderCards"></div>
         </div>
  
-        <div id="homeInterestsPane" style="display:none;">
+        <div id="homeInterestsPane" role="tabpanel" aria-labelledby="tabInterests" style="display:none;">
           <h3 class="new-section-heading" data-i18n="gallery.travel">Travel Photography</h3>
           <div class="n-gallery-grid reveal" id="homeGalleryGrid"></div>
  
@@ -684,7 +684,7 @@
  
   <section class="view about-section" data-view="about" id="aboutView">
     <div class="about-inner">
-      <div class="about-desc-title reveal" data-i18n="section.about">About Me</div>
+      <h1 class="about-desc-title reveal" data-i18n="section.about">About Me</h1>
       <div class="about-me-row reveal">
         <div class="about-me-photo">
           <img src="images/others/me.jpg" alt="Sruti Bhattacharjee" onerror="this.style.display='none';this.parentElement.style.display='flex';this.parentElement.style.alignItems='center';this.parentElement.style.justifyContent='center';this.parentElement.innerHTML='<span style=&quot;font-size:3rem&quot;>👩‍💻</span>'"/>
@@ -1447,8 +1447,7 @@
       }).join('');
       const cs=CASE_STUDIES[id];
       document.getElementById('workDetail').innerHTML=
-        (p.meta?'<p class="view-kicker">'+p.meta+'</p>':'')
-        +'<h1 class="view-headline">'+tr('proj.'+id+'.title')+'</h1>'
+        '<h1 class="view-headline">'+tr('proj.'+id+'.title')+'</h1>'
         +'<div class="project-detail-img reveal"><img src="'+p.img+'" alt="'+p.imgAlt+'"></div>'
         +(cs?caseStudyHTML(cs):'<p class="cs-p reveal">'+tr('proj.'+id+'.desc')+'</p>')
         +'<div class="proj-card-links">'+linksHtml+'</div>';
@@ -1536,8 +1535,9 @@
  
     document.querySelectorAll('.n-tab-btn').forEach(function(btn){
       btn.addEventListener('click',function(){
-        document.querySelectorAll('.n-tab-btn').forEach(function(b){b.classList.remove('active');});
+        document.querySelectorAll('.n-tab-btn').forEach(function(b){b.classList.remove('active');b.setAttribute('aria-selected','false');});
         btn.classList.add('active');
+        btn.setAttribute('aria-selected','true');
         const isWork=btn.dataset.tab==='work';
         const workPane=document.getElementById('homeWorkPane'), interestsPane=document.getElementById('homeInterestsPane');
         if(workPane)workPane.style.display=isWork?'block':'none';
@@ -2137,5 +2137,3 @@ const PLACES=[
   </script>
 </body>
 </html>
- 
- 
