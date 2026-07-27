@@ -624,14 +624,20 @@
     body.landing-active .footer-pre,
     body.landing-active .footer-bar{ display:none; }
     /* Row is truly centered (not pinned to bottom) so content sits
-       balanced on the page instead of leaving a large empty gap above. */
-    .landing-view.active{ display:flex; align-items:center; background:#fff; min-height:100dvh; }
+       balanced on the page instead of leaving a large empty gap above.
+       max-width keeps the two columns from spreading too far apart on
+       wide screens. */
+    .landing-view.active{
+      display:flex; align-items:center; justify-content:center;
+      background:#fff; min-height:100dvh;
+    }
+    .landing-view.active .landing-col{ flex:0 1 620px; }
     .landing-photo-wrap{ position:relative; display:inline-block; }
     /* speech bubble, positioned poking out of the selfie's top-right corner */
     .landing-bubble{
       position:absolute;
-      top:-14%; right:-58%;
-      width:62%;
+      top:-16%; right:-64%;
+      width:68%;
       pointer-events:none;
     }
     .landing-bubble svg{ width:100%; height:auto; display:block; overflow:visible; filter:drop-shadow(0 6px 14px rgba(0,0,0,.15)); }
@@ -639,24 +645,27 @@
     .landing-bubble-text .accent{ fill:#0200FC; }
     .landing-bubble-text .plain{ fill:#0f172a; }
     .landing-col{
-      flex:1; display:flex; flex-direction:column; align-items:center;
-      padding:0 2rem;
+      display:flex; flex-direction:column; align-items:center;
+      padding:0 1rem;
     }
-    #landingSelfie{ display:block; max-width:85%; max-height:52vh; width:auto; height:auto; }
+    #landingSelfie{ display:block; max-width:95%; max-height:68vh; width:auto; height:auto; }
     .landing-enter-inner{ display:flex; flex-direction:column; align-items:center; }
     #landingEnterBtn{ display:block; cursor:pointer; border:none; background:none; padding:0; }
-    #landingEnterImg{ display:block; max-width:65%; max-height:40vh; width:auto; height:auto; }
+    #landingEnterImg{ display:block; max-width:95%; max-height:52vh; width:auto; height:auto; }
     .landing-caption{
-      margin-top:1.1rem; /* same gap as .about-desc-title -> description elsewhere on the site */
-      font-family:var(--font-serif); font-weight:700; font-size:1.5rem;
-      color:#0f172a; text-align:center;
+      margin:1.1rem auto 0; /* same gap as .about-desc-title -> description elsewhere on the site */
+      width:fit-content; /* guarantees this shrink-wraps and centers exactly under the button, not the column */
+      font-family:var(--font-serif); font-weight:700; font-size:1.9rem;
+      color:#0f172a; text-align:center; white-space:nowrap;
     }
     @media(max-width:760px){
       .landing-view.active{ flex-direction:column; align-items:center; padding:4vh 0; }
+      .landing-view.active .landing-col{ flex:0 1 auto; }
       .landing-col{ padding:1.25rem; }
-      #landingSelfie{ max-height:32vh; }
-      #landingEnterImg{ max-height:22vh; }
+      #landingSelfie{ max-height:36vh; }
+      #landingEnterImg{ max-height:26vh; }
       .landing-bubble{ top:-10%; right:-40%; width:52%; }
+      .landing-caption{ font-size:1.3rem; white-space:normal; }
     }
   </style>
 </head>
