@@ -1716,6 +1716,9 @@
       if(view==='home'&&typeof window.__resizeHeroCanvas==='function'){
         requestAnimationFrame(window.__resizeHeroCanvas);
       }
+      if(view==='home'&&typeof window.__spawnImmediateIfCursorInside==='function'){
+        requestAnimationFrame(()=>requestAnimationFrame(window.__spawnImmediateIfCursorInside));
+      }
       if(view==='home'&&typeof window.__syncHeroAvatarHeight==='function'){
         requestAnimationFrame(()=>requestAnimationFrame(window.__syncHeroAvatarHeight));
       }
@@ -2105,11 +2108,29 @@ const PLACES=[
        flex-stretch (which doesn't work here — see the CSS comment on
        .hero-side-avatar for why). Re-run on load, resize, and language
        change, since text reflow/line-wrapping changes the target height. */
+    /* Sets the side avatar's height so its bottom edge lands exactly on
+       the real VISIBLE bottom of "Sruti is here" — not just the
+       container div's box-bottom. Those two aren't the same thing: with
+       line-height:1.6, the div's box extends a few px below where the
+       text's glyphs actually stop (confirmed by measurement: ~8px gap),
+       so matching box-height alone left the image sitting visibly lower
+       than the text. Using a Range over the last text node gets the
+       true glyph-level bottom instead. */
     function syncHeroAvatarHeight(){
       const linesEl=document.querySelector('.hero-greeting-lines');
       const avatarEl=document.querySelector('.hero-side-avatar');
       if(!linesEl||!avatarEl)return;
-      const h=linesEl.getBoundingClientRect().height;
+      const containerTop=linesEl.getBoundingClientRect().top;
+      const walker=document.createTreeWalker(linesEl,NodeFilter.SHOW_TEXT);
+      let lastTextNode=null,n;
+      while(n=walker.nextNode()){ if(n.textContent.trim())lastTextNode=n; }
+      let visualBottom=null;
+      if(lastTextNode){
+        const range=document.createRange();
+        range.selectNodeContents(lastTextNode);
+        visualBottom=range.getBoundingClientRect().bottom;
+      }
+      const h=visualBottom!==null?(visualBottom-containerTop):linesEl.getBoundingClientRect().height;
       if(h>0)avatarEl.style.height=h+'px';
     }
     requestAnimationFrame(()=>requestAnimationFrame(syncHeroAvatarHeight));
@@ -2164,6 +2185,7 @@ const PLACES=[
     window.__resizeHeroCanvas = resizeCanvas;
  
     let lastX = null, lastY = null;
+    let rawPointerX = null, rawPointerY = null; // tracked at all times, regardless of hero active state
  
     function spawnDrop(x, y, dirX, dirY, speed){
       const color = COLOR_PALETTE[Math.floor(Math.random() * COLOR_PALETTE.length)];
@@ -2187,6 +2209,7 @@ const PLACES=[
     let distSinceSpawn = 0;
  
     function handleMove(clientX, clientY){
+      rawPointerX = clientX; rawPointerY = clientY;
       if(!heroSection.classList.contains('active')){
         lastX = null; lastY = null;
         return;
@@ -2213,6 +2236,25 @@ const PLACES=[
       }
       lastX = x; lastY = y;
     }
+
+    /* Called right when the Home view becomes active. mousemove/pointermove
+       events only fire on actual movement — if the cursor is already
+       resting over the interactive area from before (e.g. right after the
+       landing-page zoom transition lands), nothing would spawn until the
+       user physically moved the mouse, which feels like a dead/broken
+       area for a beat. This uses the continuously-tracked raw pointer
+       position to spawn a bubble immediately, if the cursor already
+       happens to be inside the hero bounds the moment it appears. */
+    function spawnImmediateIfCursorInside(){
+      if(rawPointerX===null||rawPointerY===null)return;
+      const rect=heroSection.getBoundingClientRect();
+      if(rawPointerX<rect.left||rawPointerX>rect.right||rawPointerY<rect.top||rawPointerY>rect.bottom)return;
+      const x=rawPointerX-rect.left, y=rawPointerY-rect.top;
+      spawnDrop(x, y, 0, 0, 0);
+      distSinceSpawn=0;
+      lastX=x; lastY=y;
+    }
+    window.__spawnImmediateIfCursorInside=spawnImmediateIfCursorInside;
  
     window.addEventListener('pointermove', (e) => handleMove(e.clientX, e.clientY));
     window.addEventListener('mousemove', (e) => handleMove(e.clientX, e.clientY));
