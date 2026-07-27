@@ -613,7 +613,9 @@
        bck.png is the watercolor background; main.png (with the
        greeting text, gate, clover, and illustration already baked
        in) sits on top of it, both covering the entire viewport.
-       Only the clover itself is a clickable hotspot -> Home view.
+       The clover is a glowing clickable hotspot; clicking it zooms
+       into that point (same mechanic/timing as the earlier archway
+       concept) and reveals the Home view.
        ============================================================ */
     body.landing-active #topbar{ display:none; }
     body.landing-active .footer-pre,
@@ -626,15 +628,30 @@
       display:block;
     }
     #landingBck{ z-index:1; }
-    #landingMain{ z-index:2; }
+    #landingMain{
+      z-index:2;
+      transform-origin:63.6% 46.8%; /* the clover's detected center */
+      transition:transform 1.6s cubic-bezier(.65,0,.35,1);
+    }
+    .landing-view.zooming #landingMain{ transform:scale(20); }
+    .landing-view.zooming #landingBck,
+    .landing-view.zooming .landing-hotspot{
+      opacity:0;
+      transition:opacity 1.1s ease .3s;
+    }
     .landing-hotspot{
       position:absolute; z-index:3;
-      left:54%; top:34%; width:19%; height:31%;
+      left:58.6%; top:38.8%; width:10%; height:16%;
       border-radius:50%;
       cursor:pointer;
-      background:transparent;
+      background:radial-gradient(circle, rgba(255,255,255,.6) 0%, rgba(255,255,255,0) 72%);
       border:none;
       padding:0;
+      animation:landingHotspotGlow 2.4s ease-in-out infinite;
+    }
+    @keyframes landingHotspotGlow{
+      0%,100%{ opacity:.55; }
+      50%{ opacity:1; }
     }
   </style>
 </head>
@@ -671,8 +688,8 @@
   </nav>
  
   <section class="view landing-view" data-view="landing" id="landingView">
-    <img id="landingBck" class="landing-layer" src="images/others/landing_bck.png" alt=""/>
-    <img id="landingMain" class="landing-layer" src="images/others/landing_main.png" alt="Hello World, I'm Sruti — Welcome to My Portfolio"/>
+    <img id="landingBck" class="landing-layer" src="images/others/bck.png" alt="" onerror="this.style.display='none';"/>
+    <img id="landingMain" class="landing-layer" src="images/others/main.png" alt="" onerror="this.style.display='none';"/>
     <button type="button" id="landingEnterBtn" class="landing-hotspot" title="Enter"></button>
   </section>
  
@@ -1683,9 +1700,14 @@
     const aboutCtaBtn=document.getElementById('aboutCtaBtn');
     if(aboutCtaBtn)aboutCtaBtn.addEventListener('click',function(){goToWork();});
     const landingEnterBtn=document.getElementById('landingEnterBtn');
+    const landingViewEl=document.getElementById('landingView');
     if(landingEnterBtn)landingEnterBtn.addEventListener('click',function(){
-      setHash('home');
-      showView('home',{projectId:null});
+      if(landingViewEl.classList.contains('zooming'))return;
+      landingViewEl.classList.add('zooming');
+      setTimeout(function(){
+        setHash('home');
+        showView('home',{projectId:null});
+      }, 1650);
     });
     window.addEventListener('hashchange',function(){
       const route=parseHash();
