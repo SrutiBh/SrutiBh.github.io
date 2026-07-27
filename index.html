@@ -623,11 +623,21 @@
     body.landing-active #topbar{ display:none; }
     body.landing-active .footer-pre,
     body.landing-active .footer-bar{ display:none; }
-    /* align-items:flex-end bottom-aligns both columns' content to the
-       same line automatically — no JS math needed, and it can't blow
-       up regardless of how different the two images' aspect ratios
-       are (which is what broke the old height-matching approach). */
-    .landing-view.active{ display:flex; align-items:flex-end; background:#fff; min-height:100dvh; padding-bottom:12vh; }
+    /* Row is truly centered (not pinned to bottom) so content sits
+       balanced on the page instead of leaving a large empty gap above. */
+    .landing-view.active{ display:flex; align-items:center; background:#fff; min-height:100dvh; }
+    .landing-photo-wrap{ position:relative; display:inline-block; }
+    /* speech bubble, positioned poking out of the selfie's top-right corner */
+    .landing-bubble{
+      position:absolute;
+      top:-14%; right:-58%;
+      width:62%;
+      pointer-events:none;
+    }
+    .landing-bubble svg{ width:100%; height:auto; display:block; overflow:visible; filter:drop-shadow(0 6px 14px rgba(0,0,0,.15)); }
+    .landing-bubble-text{ font-family:var(--font-serif); font-weight:700; }
+    .landing-bubble-text .accent{ fill:#0200FC; }
+    .landing-bubble-text .plain{ fill:#0f172a; }
     .landing-col{
       flex:1; display:flex; flex-direction:column; align-items:center;
       padding:0 2rem;
@@ -642,10 +652,11 @@
       color:#0f172a; text-align:center;
     }
     @media(max-width:760px){
-      .landing-view.active{ flex-direction:column; align-items:center; padding-bottom:4vh; }
+      .landing-view.active{ flex-direction:column; align-items:center; padding:4vh 0; }
       .landing-col{ padding:1.25rem; }
-      #landingSelfie{ max-height:38vh; }
-      #landingEnterImg{ max-height:26vh; }
+      #landingSelfie{ max-height:32vh; }
+      #landingEnterImg{ max-height:22vh; }
+      .landing-bubble{ top:-10%; right:-40%; width:52%; }
     }
   </style>
 </head>
@@ -683,7 +694,19 @@
  
   <section class="view landing-view" data-view="landing" id="landingView">
     <div class="landing-col">
-      <img id="landingSelfie" src="images/others/selfie.png" alt="Sruti Bhattacharjee"/>
+      <div class="landing-photo-wrap">
+        <img id="landingSelfie" src="images/others/selfie.png" alt="Sruti Bhattacharjee"/>
+        <div class="landing-bubble" aria-hidden="true">
+          <svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
+            <path d="M40,20 h280 a26,26 0 0 1 26,26 v120 a26,26 0 0 1 -26,26 h-190 l-70,60 12,-60 h-32 a26,26 0 0 1 -26,-26 v-120 a26,26 0 0 1 26,-26 z"
+              fill="#FFFFDE" stroke="#161311" stroke-width="6" stroke-linejoin="round"/>
+            <text x="55" y="100" class="landing-bubble-text" font-size="36">
+              <tspan class="plain">Hello </tspan><tspan class="accent">World,</tspan>
+            </text>
+            <text x="55" y="148" class="landing-bubble-text plain" font-size="36">I'm Sruti</text>
+          </svg>
+        </div>
+      </div>
     </div>
     <div class="landing-col">
       <div class="landing-enter-inner">
