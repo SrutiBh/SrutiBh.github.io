@@ -653,6 +653,19 @@
       0%,100%{ opacity:.55; }
       50%{ opacity:1; }
     }
+    /* Fixed and independent of the .view system (not a child of
+       landing-view), so it stays on screen and keeps masking the swap
+       even after showView('home') hides the landing section. Fades to
+       full white right as navigation happens, then fades back out to
+       reveal Home cleanly underneath. */
+    .landing-whiteout{
+      position:fixed; inset:0; z-index:99;
+      background:#fff;
+      opacity:0;
+      pointer-events:none;
+      transition:opacity .5s ease;
+    }
+    .landing-whiteout.active{ opacity:1; }
   </style>
 </head>
  
@@ -692,6 +705,7 @@
     <img id="landingMain" class="landing-layer" src="images/others/main.png" alt="" onerror="this.style.display='none';"/>
     <button type="button" id="landingEnterBtn" class="landing-hotspot" title="Enter"></button>
   </section>
+  <div class="landing-whiteout" id="landingWhiteout" aria-hidden="true"></div>
  
   <header class="hero-new min-h-[100dvh] relative view" id="heroSection" data-view="home">
     <canvas id="heroTrailCanvas"></canvas>
@@ -1661,6 +1675,9 @@
       if(view==='home'&&typeof window.__resetHeroPaint==='function'){
         window.__resetHeroPaint();
       }
+      if(view==='home'&&typeof window.__resizeHeroCanvas==='function'){
+        requestAnimationFrame(window.__resizeHeroCanvas);
+      }
       if(view==='about'&&typeof fitAll==='function'){
         requestAnimationFrame(function(){requestAnimationFrame(function(){
           if(!detail.classList.contains('open'))fitAll();
@@ -1701,13 +1718,23 @@
     if(aboutCtaBtn)aboutCtaBtn.addEventListener('click',function(){goToWork();});
     const landingEnterBtn=document.getElementById('landingEnterBtn');
     const landingViewEl=document.getElementById('landingView');
+    const landingWhiteout=document.getElementById('landingWhiteout');
     if(landingEnterBtn)landingEnterBtn.addEventListener('click',function(){
       if(landingViewEl.classList.contains('zooming'))return;
       landingViewEl.classList.add('zooming');
+      // right as the 1.6s zoom finishes, start fading the screen to
+      // white over .5s, so it's fully white exactly when Home appears
+      setTimeout(function(){
+        if(landingWhiteout)landingWhiteout.classList.add('active');
+      }, 1600);
       setTimeout(function(){
         setHash('home');
         showView('home',{projectId:null});
-      }, 1650);
+        // fade the white back out to reveal Home underneath
+        setTimeout(function(){
+          if(landingWhiteout)landingWhiteout.classList.remove('active');
+        }, 60);
+      }, 2100);
     });
     window.addEventListener('hashchange',function(){
       const route=parseHash();
@@ -2073,6 +2100,7 @@ const PLACES=[
     }
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
+    window.__resizeHeroCanvas = resizeCanvas;
  
     let lastX = null, lastY = null;
  
