@@ -167,7 +167,7 @@
     }
  
     html{min-height:100%;overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%;}
-    body{font-family:var(--font-serif);background-color:#FFFFDE;display:flex;flex-direction:column;min-height:100vh;overflow-x:clip;}
+    body{font-family:var(--font-serif);background-color:#FFFFDE;display:flex;flex-direction:column;min-height:100vh;overflow-x:clip;margin:0;}
     body.project-page-active{background-color:var(--color-white);} /* project case study pages use a pure white background throughout, not the site's usual off-white */
     /* STICKY FOOTER — on short pages (e.g. Contact), pushes the footer block
        down to the bottom of the viewport instead of leaving a blank gap
@@ -608,6 +608,39 @@
     }
     .n-tab-btn.active{ color:#0200FC; }
     .n-tab-btn.active::after{ content:''; position:absolute; left:0; right:0; bottom:-1px; height:3px; background:var(--n-green); }
+    /* ============================================================
+       LANDING VIEW — simple entry screen shown before the main site.
+       White background, no header/footer. Selfie on the left,
+       Enter button + caption on the right, both vertically centered
+       in their own half. The gap between the Enter image and the
+       caption matches .about-desc-title's margin-bottom (1.1rem)
+       exactly, for visual consistency with the rest of the site.
+       Bottom edges of the selfie and the caption are aligned at
+       runtime via JS (see alignLandingColumns() below), since that
+       can't be guaranteed by CSS alone when the two content blocks
+       have different natural heights.
+       ============================================================ */
+    body.landing-active #topbar{ display:none; }
+    body.landing-active .footer-pre,
+    body.landing-active .footer-bar{ display:none; }
+    .landing-view.active{ display:flex; background:#fff; min-height:100dvh; }
+    .landing-col{
+      flex:1; display:flex; align-items:center; justify-content:center;
+      padding:2rem;
+    }
+    #landingSelfie{ display:block; max-width:90%; height:auto; }
+    .landing-enter-inner{ display:flex; flex-direction:column; align-items:center; }
+    #landingEnterBtn{ display:block; cursor:pointer; border:none; background:none; padding:0; }
+    #landingEnterImg{ display:block; width:auto; height:300px; }
+    .landing-caption{
+      margin-top:1.1rem; /* same gap as .about-desc-title -> description elsewhere on the site */
+      font-family:var(--font-serif); font-weight:700; font-size:1.5rem;
+      color:#0f172a; text-align:center;
+    }
+    @media(max-width:760px){
+      .landing-view.active{ flex-direction:column; }
+      .landing-col{ padding:1.25rem; }
+    }
   </style>
 </head>
  
@@ -641,6 +674,20 @@
       </div>
     </div>
   </nav>
+ 
+  <section class="view landing-view" data-view="landing" id="landingView">
+    <div class="landing-col">
+      <img id="landingSelfie" src="images/others/selfie.png" alt="Sruti Bhattacharjee"/>
+    </div>
+    <div class="landing-col">
+      <div class="landing-enter-inner">
+        <button type="button" id="landingEnterBtn" title="Enter">
+          <img id="landingEnterImg" src="images/others/enter_button.png" alt="Enter"/>
+        </button>
+        <p class="landing-caption" data-i18n="landing.caption">Welcome to My Portfolio</p>
+      </div>
+    </div>
+  </section>
  
   <header class="hero-new min-h-[100dvh] relative view" id="heroSection" data-view="home">
     <canvas id="heroTrailCanvas"></canvas>
@@ -907,7 +954,8 @@
         'footer.nav.contact':'Contact','footer.nav.work':'Work','footer.nav.about':'About','footer.nav.portfolio':'Portfolio',
         'about.nav.contact':'Contact Me','about.nav.work':'My Work','about.nav.portfolio':'My Portfolio',
         'menu.about':'About','menu.contact':'Contact','menu.portfolio':'Portfolio',
-        'a11y.skiplink':'Skip to main content','aria.menu':'Menu','gallery.otherWork':'My Other Work'
+        'a11y.skiplink':'Skip to main content','aria.menu':'Menu','gallery.otherWork':'My Other Work',
+        'landing.caption':'Welcome to My Portfolio'
       },
       fr:{
         'nav.work':'Travaux','nav.journey':'Parcours','nav.education':'Formation','nav.cv':'CV','nav.contact':'Me Contacter',
@@ -957,6 +1005,7 @@
         'about.nav.contact':'Me Contacter','about.nav.work':'Mes Travaux','about.nav.portfolio':'Mon Portfolio',
         'menu.about':'\u00c0 Propos','menu.contact':'Contact','menu.portfolio':'Portfolio',
         'a11y.skiplink':'Passer au contenu principal','aria.menu':'Menu','gallery.otherWork':'Mes Autres Travaux',
+        'landing.caption':'Bienvenue Sur Mon Portfolio',
         'proj.10.title':'Ressentir la Vision pour la Navigation en Graphes',
         'proj.10.desc':'Description provisoire \u2014 \u00e0 remplacer par le r\u00e9sum\u00e9 r\u00e9el du projet.'
       },
@@ -1008,6 +1057,7 @@
         'about.nav.contact':'Kontakta Mig','about.nav.work':'Mitt Arbete','about.nav.portfolio':'Min Portfolio',
         'menu.about':'Om Mig','menu.contact':'Kontakt','menu.portfolio':'Portfolio',
         'a11y.skiplink':'Hoppa till huvudinneh\u00e5llet','aria.menu':'Meny','gallery.otherWork':'Mitt \u00d6vriga Arbete',
+        'landing.caption':'V\u00e4lkommen Till Min Portfolio',
         'proj.10.title':'Kännbar Syn för Grafnavigering',
         'proj.10.desc':'Platsh\u00e5llartext \u2014 ers\u00e4tt med den riktiga projektsammanfattningen.'
       },
@@ -1059,6 +1109,7 @@
         'about.nav.contact':'Kontakt','about.nav.work':'Meine Arbeit','about.nav.portfolio':'Mein Portfolio',
         'menu.about':'\u00dcber','menu.contact':'Kontakt','menu.portfolio':'Portfolio',
         'a11y.skiplink':'Zum Hauptinhalt springen','aria.menu':'Men\u00fc','gallery.otherWork':'Weitere Arbeiten',
+        'landing.caption':'Willkommen Auf Meinem Portfolio',
         'proj.10.title':'Fühlbares Sehen für Graphnavigation',
         'proj.10.desc':'Platzhaltertext \u2014 durch die echte Projektzusammenfassung ersetzen.'
       },
@@ -1110,6 +1161,7 @@
         'about.nav.contact':'Kontakt Meg','about.nav.work':'Mitt Arbeid','about.nav.portfolio':'Min Portef\u00f8lje',
         'menu.about':'Om','menu.contact':'Kontakt','menu.portfolio':'Portef\u00f8lje',
         'a11y.skiplink':'Hopp til hovedinnhold','aria.menu':'Meny','gallery.otherWork':'Mitt \u00d8vrige Arbeid',
+        'landing.caption':'Velkommen Til Min Portef\u00f8lje',
         'proj.10.title':'Følbar Syn for Grafnavigering',
         'proj.10.desc':'Plassholdertekst \u2014 erstatt med den faktiske prosjektsammendraget.'
       }
@@ -1584,16 +1636,17 @@
     renderHomeGallery();
     renderHomeBooks();
  
-    const VALID_VIEWS=['home','about','work','contact'];
+    const VALID_VIEWS=['landing','home','about','work','contact'];
     function parseHash(){
-      const h=(location.hash||'#home').replace('#','');
+      const h=(location.hash||'#landing').replace('#','');
       const m=h.match(/^project-(\d+)$/);
       if(m)return{view:'work',projectId:parseInt(m[1],10)};
-      return{view:VALID_VIEWS.indexOf(h)!==-1?h:'home',projectId:null};
+      return{view:VALID_VIEWS.indexOf(h)!==-1?h:'landing',projectId:null};
     }
     function showView(view,opts){
       opts=opts||{};
-      if(VALID_VIEWS.indexOf(view)===-1)view='home';
+      if(VALID_VIEWS.indexOf(view)===-1)view='landing';
+      document.body.classList.toggle('landing-active',view==='landing');
       document.querySelectorAll('.view').forEach(function(sec){sec.classList.toggle('active',sec.dataset.view===view);});
       document.querySelectorAll('#topbar [data-view]').forEach(function(btn){btn.classList.toggle('active',btn.dataset.view===view);});
       const mainEl=document.getElementById('main-content');
@@ -1642,6 +1695,41 @@
     });
     const aboutCtaBtn=document.getElementById('aboutCtaBtn');
     if(aboutCtaBtn)aboutCtaBtn.addEventListener('click',function(){goToWork();});
+    const landingEnterBtn=document.getElementById('landingEnterBtn');
+    if(landingEnterBtn)landingEnterBtn.addEventListener('click',function(){
+      setHash('home');
+      showView('home',{projectId:null});
+    });
+    /* Bottom-align the selfie and the enter-button block on the landing
+       page precisely: measure the selfie's real rendered height, then
+       size the enter image so (enterImg + gap + caption) equals that
+       height. Both columns center their content independently, so
+       matching total heights is what makes their bottom edges land on
+       the same line regardless of screen size. */
+    (function(){
+      const selfieImg=document.getElementById('landingSelfie');
+      const enterImg=document.getElementById('landingEnterImg');
+      const caption=document.querySelector('.landing-caption');
+      if(!selfieImg||!enterImg||!caption)return;
+      function alignLandingColumns(){
+        const selfieH=selfieImg.offsetHeight;
+        const gapPx=1.1*16; // 1.1rem
+        const captionH=caption.offsetHeight;
+        let targetEnterH=selfieH-gapPx-captionH;
+        targetEnterH=Math.max(80,targetEnterH);
+        enterImg.style.height=targetEnterH+'px';
+      }
+      function whenImagesReady(cb){
+        const imgs=[selfieImg,enterImg];
+        let remaining=imgs.length;
+        imgs.forEach(function(img){
+          if(img.complete){ remaining--; if(remaining===0)cb(); }
+          else img.addEventListener('load',function(){ remaining--; if(remaining===0)cb(); });
+        });
+      }
+      whenImagesReady(alignLandingColumns);
+      window.addEventListener('resize',alignLandingColumns);
+    })();
     window.addEventListener('hashchange',function(){
       const route=parseHash();
       showView(route.view,{silent:true,projectId:route.projectId});
