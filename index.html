@@ -632,27 +632,31 @@
       background:#fff; min-height:100dvh;
     }
     .landing-view.active .landing-col{ flex:0 1 620px; }
-    /* Reserves visual space to the right for the bubble, so the
-       photo+bubble cluster centers as one balanced unit in the column
-       instead of just the photo alone (which would visually skew left
-       once the bubble juts out to the right). */
+    /* Reserves visual space around the bubble (right + above) so the
+       photo+bubble cluster centers as one balanced unit in the column,
+       instead of just the photo alone (which would visually skew
+       off-center once the bubble juts out to the side/above it). */
     .landing-photo-cluster{
       position:relative;
       display:flex; align-items:flex-start;
-      padding-right:60%;
+      padding-right:55%;
+      padding-top:42%;
     }
     .landing-photo-wrap{ position:relative; flex-shrink:0; }
-    /* speech bubble, positioned poking out of the selfie's top-right corner.
-       Real HTML bubble (not SVG) so its text can use the exact same
-       font-size as project titles (.view-headline). */
+    /* speech bubble, positioned poking out above/beside the selfie's
+       head — large, extending roughly to the top of the photo, like a
+       thought bubble hovering just off her shoulder. Real HTML bubble
+       (not SVG) so its text can use the exact same font-size as project
+       titles (.view-headline). */
     .landing-bubble{
       position:absolute;
-      top:-6%; left:82%;
-      width:340px;
+      top:-42%; left:70%;
+      width:fit-content;
+      max-width:min(560px,60vw);
       background:#FFFFDE;
       border:6px solid #161311;
       border-radius:1.8rem;
-      padding:1.4rem 1.7rem;
+      padding:1.4rem 1.9rem;
       filter:drop-shadow(0 6px 14px rgba(0,0,0,.15));
     }
     .landing-bubble::before{
@@ -679,6 +683,7 @@
       font-family:var(--font-serif); font-weight:700; letter-spacing:-.01em;
       font-size:clamp(2.6rem,5vw,4rem); line-height:1.04;
       color:var(--color-navy-dark); margin:0;
+      white-space:nowrap; text-align:center;
     }
     .landing-bubble-text .accent{ color:#0200FC; }
     .landing-col{
@@ -699,10 +704,10 @@
       .landing-view.active{ flex-direction:column; align-items:center; padding:4vh 0; }
       .landing-view.active .landing-col{ flex:0 1 auto; }
       .landing-col{ padding:1.25rem; }
-      .landing-photo-cluster{ padding-right:0; padding-bottom:8rem; }
+      .landing-photo-cluster{ padding-right:0; padding-top:0; padding-bottom:8rem; }
       #landingSelfie{ max-height:36vh; }
       #landingEnterImg{ max-height:26vh; }
-      .landing-bubble{ top:auto; bottom:-7rem; left:8%; width:min(260px,84vw); }
+      .landing-bubble{ top:auto; bottom:-7rem; left:8%; width:fit-content; max-width:80vw; }
       .landing-bubble-text{ font-size:clamp(1.6rem,7vw,2rem); }
       .landing-caption{ font-size:1.3rem; white-space:normal; }
     }
