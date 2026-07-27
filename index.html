@@ -632,18 +632,55 @@
       background:#fff; min-height:100dvh;
     }
     .landing-view.active .landing-col{ flex:0 1 620px; }
-    .landing-photo-wrap{ position:relative; display:inline-block; }
-    /* speech bubble, positioned poking out of the selfie's top-right corner */
+    /* Reserves visual space to the right for the bubble, so the
+       photo+bubble cluster centers as one balanced unit in the column
+       instead of just the photo alone (which would visually skew left
+       once the bubble juts out to the right). */
+    .landing-photo-cluster{
+      position:relative;
+      display:flex; align-items:flex-start;
+      padding-right:60%;
+    }
+    .landing-photo-wrap{ position:relative; flex-shrink:0; }
+    /* speech bubble, positioned poking out of the selfie's top-right corner.
+       Real HTML bubble (not SVG) so its text can use the exact same
+       font-size as project titles (.view-headline). */
     .landing-bubble{
       position:absolute;
-      top:-16%; right:-38%;
-      width:68%;
-      pointer-events:none;
+      top:-6%; left:82%;
+      width:340px;
+      background:#FFFFDE;
+      border:6px solid #161311;
+      border-radius:1.8rem;
+      padding:1.4rem 1.7rem;
+      filter:drop-shadow(0 6px 14px rgba(0,0,0,.15));
     }
-    .landing-bubble svg{ width:100%; height:auto; display:block; overflow:visible; filter:drop-shadow(0 6px 14px rgba(0,0,0,.15)); }
-    .landing-bubble-text{ font-family:var(--font-serif); font-weight:700; }
-    .landing-bubble-text .accent{ fill:#0200FC; }
-    .landing-bubble-text .plain{ fill:#0f172a; }
+    .landing-bubble::before{
+      content:'';
+      position:absolute;
+      bottom:-34px; left:16%;
+      width:0; height:0;
+      border-left:12px solid transparent;
+      border-right:30px solid transparent;
+      border-top:34px solid #161311;
+    }
+    .landing-bubble::after{
+      content:'';
+      position:absolute;
+      bottom:-24px; left:calc(16% + 7px);
+      width:0; height:0;
+      border-left:8px solid transparent;
+      border-right:21px solid transparent;
+      border-top:24px solid #FFFFDE;
+    }
+    /* Matches .view-headline exactly (project title styling on project
+       detail pages), so the greeting reads at the same weight/size. */
+    .landing-bubble-text{
+      font-family:var(--font-serif); font-weight:700; letter-spacing:-.01em;
+      font-size:clamp(2.6rem,5vw,4rem); line-height:1.04;
+      color:var(--color-navy-dark); margin:0;
+    }
+    .landing-bubble-text .accent{ color:#0200FC; }
     .landing-col{
       display:flex; flex-direction:column; align-items:center;
       padding:0 1rem;
@@ -662,9 +699,11 @@
       .landing-view.active{ flex-direction:column; align-items:center; padding:4vh 0; }
       .landing-view.active .landing-col{ flex:0 1 auto; }
       .landing-col{ padding:1.25rem; }
+      .landing-photo-cluster{ padding-right:0; padding-bottom:8rem; }
       #landingSelfie{ max-height:36vh; }
       #landingEnterImg{ max-height:26vh; }
-      .landing-bubble{ top:-10%; right:-24%; width:52%; }
+      .landing-bubble{ top:auto; bottom:-7rem; left:8%; width:min(260px,84vw); }
+      .landing-bubble-text{ font-size:clamp(1.6rem,7vw,2rem); }
       .landing-caption{ font-size:1.3rem; white-space:normal; }
     }
   </style>
@@ -703,17 +742,13 @@
  
   <section class="view landing-view" data-view="landing" id="landingView">
     <div class="landing-col">
-      <div class="landing-photo-wrap">
-        <img id="landingSelfie" src="images/others/selfie.png" alt="Sruti Bhattacharjee"/>
+      <div class="landing-photo-cluster">
+        <div class="landing-photo-wrap">
+          <img id="landingSelfie" src="images/others/selfie.png" alt="Sruti Bhattacharjee"/>
+        </div>
         <div class="landing-bubble" aria-hidden="true">
-          <svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
-            <path d="M40,20 h280 a26,26 0 0 1 26,26 v120 a26,26 0 0 1 -26,26 h-190 l-70,60 12,-60 h-32 a26,26 0 0 1 -26,-26 v-120 a26,26 0 0 1 26,-26 z"
-              fill="#FFFFDE" stroke="#161311" stroke-width="6" stroke-linejoin="round"/>
-            <text x="55" y="100" class="landing-bubble-text" font-size="36">
-              <tspan class="plain">Hello </tspan><tspan class="accent">World,</tspan>
-            </text>
-            <text x="55" y="148" class="landing-bubble-text plain" font-size="36">I'm Sruti</text>
-          </svg>
+          <p class="landing-bubble-text">Hello <span class="accent">World,</span></p>
+          <p class="landing-bubble-text">I'm Sruti</p>
         </div>
       </div>
     </div>
