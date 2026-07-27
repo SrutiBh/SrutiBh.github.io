@@ -623,23 +623,29 @@
     body.landing-active #topbar{ display:none; }
     body.landing-active .footer-pre,
     body.landing-active .footer-bar{ display:none; }
-    .landing-view.active{ display:flex; background:#fff; min-height:100dvh; }
+    /* align-items:flex-end bottom-aligns both columns' content to the
+       same line automatically — no JS math needed, and it can't blow
+       up regardless of how different the two images' aspect ratios
+       are (which is what broke the old height-matching approach). */
+    .landing-view.active{ display:flex; align-items:flex-end; background:#fff; min-height:100dvh; padding-bottom:12vh; }
     .landing-col{
-      flex:1; display:flex; align-items:center; justify-content:center;
-      padding:2rem;
+      flex:1; display:flex; flex-direction:column; align-items:center;
+      padding:0 2rem;
     }
-    #landingSelfie{ display:block; max-width:90%; height:auto; }
+    #landingSelfie{ display:block; max-width:85%; max-height:52vh; width:auto; height:auto; }
     .landing-enter-inner{ display:flex; flex-direction:column; align-items:center; }
     #landingEnterBtn{ display:block; cursor:pointer; border:none; background:none; padding:0; }
-    #landingEnterImg{ display:block; width:auto; height:300px; }
+    #landingEnterImg{ display:block; max-width:65%; max-height:40vh; width:auto; height:auto; }
     .landing-caption{
       margin-top:1.1rem; /* same gap as .about-desc-title -> description elsewhere on the site */
       font-family:var(--font-serif); font-weight:700; font-size:1.5rem;
       color:#0f172a; text-align:center;
     }
     @media(max-width:760px){
-      .landing-view.active{ flex-direction:column; }
+      .landing-view.active{ flex-direction:column; align-items:center; padding-bottom:4vh; }
       .landing-col{ padding:1.25rem; }
+      #landingSelfie{ max-height:38vh; }
+      #landingEnterImg{ max-height:26vh; }
     }
   </style>
 </head>
@@ -1700,36 +1706,6 @@
       setHash('home');
       showView('home',{projectId:null});
     });
-    /* Bottom-align the selfie and the enter-button block on the landing
-       page precisely: measure the selfie's real rendered height, then
-       size the enter image so (enterImg + gap + caption) equals that
-       height. Both columns center their content independently, so
-       matching total heights is what makes their bottom edges land on
-       the same line regardless of screen size. */
-    (function(){
-      const selfieImg=document.getElementById('landingSelfie');
-      const enterImg=document.getElementById('landingEnterImg');
-      const caption=document.querySelector('.landing-caption');
-      if(!selfieImg||!enterImg||!caption)return;
-      function alignLandingColumns(){
-        const selfieH=selfieImg.offsetHeight;
-        const gapPx=1.1*16; // 1.1rem
-        const captionH=caption.offsetHeight;
-        let targetEnterH=selfieH-gapPx-captionH;
-        targetEnterH=Math.max(80,targetEnterH);
-        enterImg.style.height=targetEnterH+'px';
-      }
-      function whenImagesReady(cb){
-        const imgs=[selfieImg,enterImg];
-        let remaining=imgs.length;
-        imgs.forEach(function(img){
-          if(img.complete){ remaining--; if(remaining===0)cb(); }
-          else img.addEventListener('load',function(){ remaining--; if(remaining===0)cb(); });
-        });
-      }
-      whenImagesReady(alignLandingColumns);
-      window.addEventListener('resize',alignLandingColumns);
-    })();
     window.addEventListener('hashchange',function(){
       const route=parseHash();
       showView(route.view,{silent:true,projectId:route.projectId});
