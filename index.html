@@ -175,7 +175,7 @@
        down to the bottom of the viewport instead of leaving a blank gap
        below it; on tall pages, has no effect since content already fills
        the space. */
-    .footer-pre{margin-top:auto;}
+    body.contact-active .footer-pre{margin-top:auto;}
     .hero-bg{background-color:var(--color-navy);background-image:none;position:relative;}
     .topbar{position:sticky;top:0;z-index:90;display:flex;align-items:center;justify-content:space-between;background:#fff;padding:1rem 2rem;border-bottom:3px solid var(--n-green);gap:1.5rem;flex-wrap:wrap;}
     .topbar-word{font-family:var(--font-serif);font-weight:700;color:#0200FC;text-decoration:none;white-space:nowrap;background:none;border:none;padding:0;cursor:pointer;display:inline-flex;align-items:baseline;gap:.45rem;}
@@ -397,7 +397,7 @@
     .about-bio{font-family:var(--font-serif);font-size:1.1rem;line-height:1.65;color:var(--color-text-muted);font-weight:400;}
  
     .about-desc-title{font-family:var(--font-serif);font-size:2.5rem;font-weight:700;color:#0200FC;margin:0 0 1.1rem 0;}
-    .about-desc-text{font-family:var(--font-serif);font-size:1.55rem;line-height:1.6;font-weight:400;color:#000;margin:0;text-align:justify;text-justify:inter-word;}
+    .about-desc-text{font-family:var(--font-serif);font-size:2rem;line-height:1.6;font-weight:400;color:#000;margin:0;text-align:justify;text-justify:inter-word;}
     .edu-transcript{display:flex;flex-direction:column;gap:1.25rem;}
     .edu-row{display:flex;align-items:flex-start;gap:1.5rem;min-height:180px;background:#fff;padding:1.5rem 1.75rem;border:1.5px solid #dce2f0;border-left:10px solid var(--n-green);border-right:10px solid var(--n-green);border-radius:1.5rem;box-shadow:0 1px 4px rgba(21,32,61,.05);transition:box-shadow .22s,border-color .22s,transform .22s;}
     /* Fixed-size box wrapping every logo, sized to the largest logo (WBUT,
@@ -606,7 +606,7 @@
       .hero-greeting-flex{ gap:.75rem; }
     }
  
-    .new-section{ background:#FFFFDE; padding:5rem 1rem; }
+    .new-section{ background:#FFFFDE; padding:5rem 1rem 4rem; }
     .new-section-inner{ max-width:70rem; margin:0 auto; }
     .new-section-heading{
       font-family:var(--font-serif); font-weight:700; font-size:2.5rem;
@@ -1709,6 +1709,7 @@
       opts=opts||{};
       if(VALID_VIEWS.indexOf(view)===-1)view='landing';
       document.body.classList.toggle('landing-active',view==='landing');
+      document.body.classList.toggle('contact-active',view==='contact');
       document.querySelectorAll('.view').forEach(function(sec){sec.classList.toggle('active',sec.dataset.view===view);});
       document.querySelectorAll('#topbar [data-view]').forEach(function(btn){btn.classList.toggle('active',btn.dataset.view===view);});
       const mainEl=document.getElementById('main-content');
