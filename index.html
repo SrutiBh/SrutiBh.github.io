@@ -557,7 +557,7 @@
  
     .hero-new{
       background:#fff; position:relative; overflow:hidden;
-      padding:6vh 1rem 8vh 1rem;
+      padding:1rem;
       flex-direction:column; justify-content:center;
     }
     header.hero-new.view.active{display:flex;}
@@ -725,6 +725,7 @@
         <div class="menu-panel">
           <button type="button" class="menu-opt" data-view="home" data-i18n="menu.portfolio">Portfolio</button>
           <button type="button" class="menu-opt" data-view="about" data-i18n="menu.about">About</button>
+          <button type="button" class="menu-opt" data-view="career" data-i18n="menu.career">Career</button>
           <a class="menu-opt" href="papers/cv_1page.pdf" target="_blank" rel="noopener noreferrer" data-i18n="nav.cv">CV</a>
         </div>
       </div>
@@ -792,14 +793,20 @@
         </div>
         <div class="about-me-text">
           <p class="about-desc-text" data-i18n="home.bio">I'm a mixed-method UX Research practitioner with a background in Multimodal Perception Analysis and Visual Computing. My interdisciplinary experience in AI and Human&ndash;Computer Interaction helps me uncover user needs and challenges to shape interactive, accessible, and immersive experiences. I aspire to advance ethical human&ndash;AI symbiosis through evidence-based product decisions.</p>
-          <nav class="about-links">
-            <a href="mailto:srutib2636@gmail.com" class="footer-link"><span class="footer-icon-chip"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span data-i18n="about.nav.contact">Contact Me</span></a>
-            <a href="#" class="footer-link" data-view="home"><span class="footer-icon-chip"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span><span data-i18n="about.nav.portfolio">My Portfolio</span></a>
-          </nav>
-        </div>
+          </div>
       </div>
- 
-      <div class="about-block">
+
+      <nav class="about-links about-links-standalone reveal">
+        <a href="mailto:srutib2636@gmail.com" class="footer-link"><span class="footer-icon-chip"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span data-i18n="about.nav.contact">Contact Me</span></a>
+        <a href="#" class="footer-link" data-view="home"><span class="footer-icon-chip"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span><span data-i18n="about.nav.work">My Work</span></a>
+        <a href="#" class="footer-link" data-view="career"><span class="footer-icon-chip"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 7h-9m9 5H4m16 5H4"/><circle cx="16" cy="7" r="1.5"/><circle cx="8" cy="12" r="1.5"/><circle cx="16" cy="17" r="1.5"/></svg></span><span data-i18n="about.nav.career">My Career</span></a>
+      </nav>
+    </div>
+  </section>
+
+  <section class="view about-section" data-view="career" id="careerView">
+    <div class="about-inner">
+      <div class="about-block" style="margin-top:0;">
         <h2 class="about-desc-title reveal" data-i18n="section.education">Education</h2>
         <div class="edu-transcript">
  
@@ -842,7 +849,7 @@
       </div>
  
       <div class="about-block">
-        <h2 class="about-desc-title reveal" data-i18n="section.experience">Career Journey</h2>
+        <h2 class="about-desc-title reveal" data-i18n="nav.journey">Journey</h2>
  
         <div class="jshell reveal" id="jshell">
           <div class="jvp" id="jvp">
@@ -1006,8 +1013,8 @@
         'gallery.paintings.placeholder':'Paintings go here','gallery.other.placeholder':'Anything else goes here',
         'country.india':'India','country.sweden':'Sweden','country.switzerland':'Switzerland',
         'footer.nav.contact':'Contact','footer.nav.work':'Work','footer.nav.about':'About','footer.nav.portfolio':'Portfolio',
-        'about.nav.contact':'Contact Me','about.nav.work':'My Work','about.nav.portfolio':'My Portfolio',
-        'menu.about':'About','menu.contact':'Contact','menu.portfolio':'Portfolio',
+        'about.nav.contact':'Contact Me','about.nav.work':'My Work','about.nav.portfolio':'My Portfolio','about.nav.career':'My Career',
+        'menu.about':'About','menu.contact':'Contact','menu.portfolio':'Portfolio','menu.career':'Career',
         'a11y.skiplink':'Skip to main content','aria.menu':'Menu','gallery.otherWork':'My Other Work',
         'landing.caption':'Welcome to My Portfolio'
       },
@@ -1057,8 +1064,8 @@
         'gallery.paintings.placeholder':'Les peintures seront ici','gallery.other.placeholder':'Tout le reste sera ici',
         'country.india':'Inde','country.sweden':'Su\u00e8de','country.switzerland':'Suisse',
         'footer.nav.contact':'Contact','footer.nav.work':'Travaux','footer.nav.about':'\u00c0 Propos','footer.nav.portfolio':'Portfolio',
-        'about.nav.contact':'Me Contacter','about.nav.work':'Mes Travaux','about.nav.portfolio':'Mon Portfolio',
-        'menu.about':'\u00c0 Propos','menu.contact':'Contact','menu.portfolio':'Portfolio',
+        'about.nav.contact':'Me Contacter','about.nav.work':'Mes Travaux','about.nav.portfolio':'Mon Portfolio','about.nav.career':'Mon Parcours',
+        'menu.about':'\u00c0 Propos','menu.contact':'Contact','menu.portfolio':'Portfolio','menu.career':'Carri\u00e8re',
         'a11y.skiplink':'Passer au contenu principal','aria.menu':'Menu','gallery.otherWork':'Mes Autres Travaux',
         'landing.caption':'Bienvenue Sur Mon Portfolio',
         'proj.10.title':'Ressentir la Vision pour la Navigation en Graphes',
@@ -1110,8 +1117,8 @@
         'gallery.paintings.placeholder':'M\u00e5lningar visas h\u00e4r','gallery.other.placeholder':'Allt annat visas h\u00e4r',
         'country.india':'Indien','country.sweden':'Sverige','country.switzerland':'Schweiz',
         'footer.nav.contact':'Kontakt','footer.nav.work':'Arbete','footer.nav.about':'Om','footer.nav.portfolio':'Portfolio',
-        'about.nav.contact':'Kontakta Mig','about.nav.work':'Mitt Arbete','about.nav.portfolio':'Min Portfolio',
-        'menu.about':'Om Mig','menu.contact':'Kontakt','menu.portfolio':'Portfolio',
+        'about.nav.contact':'Kontakta Mig','about.nav.work':'Mitt Arbete','about.nav.portfolio':'Min Portfolio','about.nav.career':'Min Karri\u00e4r',
+        'menu.about':'Om Mig','menu.contact':'Kontakt','menu.portfolio':'Portfolio','menu.career':'Karri\u00e4r',
         'a11y.skiplink':'Hoppa till huvudinneh\u00e5llet','aria.menu':'Meny','gallery.otherWork':'Mitt \u00d6vriga Arbete',
         'landing.caption':'V\u00e4lkommen Till Min Portfolio',
         'proj.10.title':'Kännbar Syn för Grafnavigering',
@@ -1163,8 +1170,8 @@
         'gallery.paintings.placeholder':'Gem\u00e4lde erscheinen hier','gallery.other.placeholder':'Alles andere erscheint hier',
         'country.india':'Indien','country.sweden':'Schweden','country.switzerland':'Schweiz',
         'footer.nav.contact':'Kontakt','footer.nav.work':'Arbeiten','footer.nav.about':'\u00dcber','footer.nav.portfolio':'Portfolio',
-        'about.nav.contact':'Kontakt','about.nav.work':'Meine Arbeit','about.nav.portfolio':'Mein Portfolio',
-        'menu.about':'\u00dcber','menu.contact':'Kontakt','menu.portfolio':'Portfolio',
+        'about.nav.contact':'Kontakt','about.nav.work':'Meine Arbeit','about.nav.portfolio':'Mein Portfolio','about.nav.career':'Meine Karriere',
+        'menu.about':'\u00dcber','menu.contact':'Kontakt','menu.portfolio':'Portfolio','menu.career':'Karriere',
         'a11y.skiplink':'Zum Hauptinhalt springen','aria.menu':'Men\u00fc','gallery.otherWork':'Weitere Arbeiten',
         'landing.caption':'Willkommen Auf Meinem Portfolio',
         'proj.10.title':'Fühlbares Sehen für Graphnavigation',
@@ -1216,8 +1223,8 @@
         'gallery.paintings.placeholder':'Malerier vises her','gallery.other.placeholder':'Alt annet vises her',
         'country.india':'India','country.sweden':'Sverige','country.switzerland':'Sveits',
         'footer.nav.contact':'Kontakt','footer.nav.work':'Arbeid','footer.nav.about':'Om','footer.nav.portfolio':'Portef\u00f8lje',
-        'about.nav.contact':'Kontakt Meg','about.nav.work':'Mitt Arbeid','about.nav.portfolio':'Min Portef\u00f8lje',
-        'menu.about':'Om','menu.contact':'Kontakt','menu.portfolio':'Portef\u00f8lje',
+        'about.nav.contact':'Kontakt Meg','about.nav.work':'Mitt Arbeid','about.nav.portfolio':'Min Portef\u00f8lje','about.nav.career':'Min Karriere',
+        'menu.about':'Om','menu.contact':'Kontakt','menu.portfolio':'Portef\u00f8lje','menu.career':'Karriere',
         'a11y.skiplink':'Hopp til hovedinnhold','aria.menu':'Meny','gallery.otherWork':'Mitt \u00d8vrige Arbeid',
         'landing.caption':'Velkommen Til Min Portef\u00f8lje',
         'proj.10.title':'Følbar Syn for Grafnavigering',
@@ -1694,7 +1701,7 @@
     renderHomeGallery();
     renderHomeBooks();
  
-    const VALID_VIEWS=['landing','home','about','work','contact'];
+    const VALID_VIEWS=['landing','home','about','career','work','contact'];
     function parseHash(){
       const h=(location.hash||'#landing').replace('#','');
       const m=h.match(/^project-(\d+)$/);
@@ -1724,7 +1731,7 @@
       if(view==='home'&&typeof window.__syncHeroAvatarHeight==='function'){
         requestAnimationFrame(()=>requestAnimationFrame(window.__syncHeroAvatarHeight));
       }
-      if(view==='about'&&typeof fitAll==='function'){
+      if(view==='career'&&typeof fitAll==='function'){
         requestAnimationFrame(function(){requestAnimationFrame(function(){
           if(!detail.classList.contains('open'))fitAll();
           S.s=S.ts;S.x=S.tx;S.y=S.ty;
@@ -2096,7 +2103,7 @@ const PLACES=[
         else aboutSection.removeAttribute('style');
       }
       if(targetHeight>0){
-        const heroExtraHeight=80; // makes the interactive coloring area a bit taller than the exact bio-alignment point
+        const heroExtraHeight=280; // makes the interactive coloring area noticeably taller than the exact bio-alignment point, giving the centered content real room to breathe
         heroSection.style.minHeight=(targetHeight+heroExtraHeight)+'px';
         heroSection.style.height=(targetHeight+heroExtraHeight)+'px';
       }
