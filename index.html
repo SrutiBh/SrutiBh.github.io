@@ -180,8 +180,9 @@
     .topbar{position:sticky;top:0;z-index:90;display:flex;align-items:center;justify-content:space-between;background:#fff;padding:1rem 2rem;border-bottom:3px solid var(--n-green);gap:1.5rem;flex-wrap:wrap;}
     .topbar-word{font-family:var(--font-serif);font-weight:700;color:#0200FC;text-decoration:none;white-space:nowrap;background:none;border:none;padding:0;cursor:pointer;display:inline-flex;align-items:baseline;gap:.45rem;}
     .topbar-word:hover .topbar-word-first{color:#0200FC;}
+    .topbar-logo-badge{display:inline-flex;align-items:center;gap:.6rem;background:#FFFFDE;border-radius:.6rem;padding:.35rem .9rem .35rem .35rem;}
+    .topbar-logo-img{width:2.6rem;height:2.6rem;border-radius:.4rem;object-fit:cover;display:block;}
     .topbar-word-first{font-size:2.9rem;letter-spacing:-.015em;}
-    .topbar-word-last{font-size:2.6rem;font-weight:700;letter-spacing:.02em;color:#0200FC;}
     .topbar-right{display:flex;align-items:center;gap:1.75rem;flex-wrap:wrap;}
     .topbar-links{display:flex;align-items:center;gap:2.25rem;flex-wrap:wrap;}
     .topbar .lang-menu{border:1px solid var(--color-border);}
@@ -191,9 +192,10 @@
       .topbar{padding:.85rem 1.1rem;gap:.9rem;}
       .topbar-right{gap:1rem;}
       .topbar-links{gap:1rem;}
-      .topbar-word{flex-direction:column;align-items:flex-start;gap:0;}
+      .topbar-word{gap:0;}
+      .topbar-logo-badge{padding:.25rem .6rem .25rem .25rem;gap:.4rem;}
+      .topbar-logo-img{width:1.7rem;height:1.7rem;}
       .topbar-word-first{font-size:1.45rem;line-height:1.25;}
-      .topbar-word-last{font-size:1.3rem;line-height:1.25;}
     }
     .hero-name{font-family:var(--font-serif);font-weight:700;letter-spacing:-.02em;}
     .section-title{font-family:var(--font-serif);font-weight:600;letter-spacing:-.01em;}
@@ -530,7 +532,7 @@
     .menu-dd.open .menu-btn{background:#0200FC;color:#fff;}
     .menu-panel{position:absolute;top:calc(100% + 10px);right:0;background:#fff;border-radius:.75rem;box-shadow:0 14px 34px rgba(21,32,61,.20);padding:.4rem;display:none;min-width:160px;z-index:70;}
     .menu-dd.open .menu-panel{display:block;}
-    .menu-opt{display:block;width:100%;padding:.55rem .7rem;border-radius:.5rem;border:none;background:transparent;font-size:1.3rem;font-weight:400;color:var(--color-text-body);cursor:pointer;text-align:left;font-family:var(--font-serif);text-decoration:none;}
+    .menu-opt{display:block;width:100%;padding:.55rem .7rem;border-radius:.5rem;border:none;background:transparent;font-size:1.05rem;font-weight:400;color:#0200FC;cursor:pointer;text-align:left;font-family:var(--font-serif);text-decoration:none;}
     .menu-opt:hover{background:#FFFFDE;}
  
     .reveal{opacity:0;transform:translateY(26px);transition:opacity .65s ease,transform .65s ease;}
@@ -707,7 +709,12 @@
   <a href="#" class="skip-link" id="skipLink" data-i18n="a11y.skiplink">Skip to main content</a>
  
   <nav class="topbar" id="topbar">
-    <button type="button" class="topbar-word" data-view="home"><span class="topbar-word-first">Sruti</span><span class="topbar-word-last">Bhattacharjee</span></button>
+    <button type="button" class="topbar-word" data-view="home">
+      <span class="topbar-logo-badge">
+        <img src="images/others/site_logo.png" alt="" class="topbar-logo-img"/>
+        <span class="topbar-word-first">Sruti</span>
+      </span>
+    </button>
     <div class="topbar-right">
       <div class="topbar-links" id="topbarLinks"></div>
       <div class="lang-dd">
