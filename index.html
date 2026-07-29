@@ -655,6 +655,20 @@
       font-weight:400; color:#000; max-width:100%; margin:0; text-align:justify; text-justify:inter-word;
     }
     .hero-tagline-big{ font-size:33px; }
+    .hero-new-inner p.hero-kicker{
+      font-family:var(--font-serif); font-size:1rem; font-weight:700;
+      text-transform:uppercase; letter-spacing:.18em; color:#0200FC;
+      margin:0 0 1.25rem 0; text-align:left;
+    }
+    .hero-new-inner p.hero-quote{
+      font-family:var(--font-serif); font-style:italic; font-size:1.35rem;
+      font-weight:400; color:#0200FC; margin:1rem 0 0 0; text-align:left;
+    }
+    .hero-content-divider{
+      max-width:996px; margin:3rem auto 0; padding:0 1rem;
+      height:1px;
+      background:linear-gradient(90deg, rgba(15,23,42,.85) 0%, rgba(15,23,42,.85) 75%, rgba(15,23,42,0) 100%);
+    }
     @media(max-width:640px){
       .hero-greeting-lines{ white-space:normal; }
       .hero-greeting-flex{ gap:.75rem; }
@@ -707,14 +721,8 @@
     body.landing-active #topbar{ display:none; }
     body.landing-active .footer-pre,
     body.landing-active .footer-bar{ display:none; }
-    body:not(.landing-active) > .view:not(.landing-view){ margin-left:280px; }
-    body:not(.landing-active) #main-content{ margin-left:280px; }
-    body:not(.landing-active) .footer-pre,
     body:not(.landing-active) .footer-bar{ margin-left:280px; }
     @media(max-width:900px){
-      body:not(.landing-active) > .view:not(.landing-view){ margin-left:0; }
-      body:not(.landing-active) #main-content{ margin-left:0; }
-      body:not(.landing-active) .footer-pre,
       body:not(.landing-active) .footer-bar{ margin-left:0; }
     }
     .landing-view.active{ position:relative; min-height:100dvh; overflow:hidden; }
@@ -820,17 +828,21 @@
     <div class="hero-new-inner">
       <!-- <h1>Sruti Bhattacharjee</h1> -->
       <h1 class="sr-only-hero-title" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;">Sruti Bhattacharjee</h1>
+      <p class="hero-kicker" data-i18n="home.kicker">UX Researcher &amp; Sensemaker</p>
       <div class="hero-greeting-flex">
-        <div class="hero-greeting-lines" data-i18n="home.greeting">Hello there,<br>Sruti is here</div>
+        <div class="hero-greeting-lines" data-i18n="home.greeting">Hello there,<br>Sruti is here.</div>
         <img class="hero-side-avatar" src="images/others/selfi_anim2.png" alt="" onerror="this.style.display='none';"/>
       </div>
-      <p class="hero-tagline" data-i18n="home.tagline">UX Researcher and Sensemaker<br>I advocate for humans in human&ndash;machine interactions.</p>
+      <p class="hero-tagline" data-i18n="home.tagline">I advocate for the human in human&ndash;AI interaction.</p>
+      <p class="hero-quote" data-i18n="home.quote">Come in, get comfortable, stay a while.</p>
       <nav class="about-links">
         <a href="mailto:srutib2636@gmail.com" class="footer-link"><span class="footer-icon-chip"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span data-i18n="about.nav.contact">Contact Me</span></a>
         <a href="#" class="footer-link" data-view="about"><span class="footer-icon-chip"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span><span data-i18n="section.about">About Me</span></a>
       </nav>
     </div>
   </header>
+ 
+  <div class="hero-content-divider view" data-view="home" id="heroContentDivider"></div>
  
   <section class="view" data-view="home" id="homeAbout">
     <div class="new-section">
@@ -1071,7 +1083,9 @@
         'lbl.backToWork':'Back to Work',
         'home.bio':"I'm a mixed-method UX Research practitioner with a background in Multimodal Perception Analysis and Visual Computing. My interdisciplinary experience in AI and Human\u2013Computer Interaction helps me uncover user needs and challenges to shape interactive, accessible, and immersive experiences. I aspire to advance ethical human\u2013AI symbiosis through evidence-based product decisions.",
         'home.greeting':"Hello there,<br>Sruti is here",
-        'home.tagline':"UX Researcher and Sensemaker<br><span class=\"hero-tagline-big\">I advocate for humans in human\u2013machine interactions.</span>",
+        'home.kicker':"UX Researcher &amp; Sensemaker",
+        'home.tagline':"I advocate for the human in human\u2013AI interaction.",
+        'home.quote':"Come in, get comfortable, stay a while.",
         'contact.heading':"Let's Work Together",
         'gallery.travel':'Some Sunsets I Enjoyed','gallery.paintings':'Paintings','gallery.other':'Other','gallery.books':'Some Books From My Shelf',
         'gallery.paintings.placeholder':'Paintings go here','gallery.other.placeholder':'Anything else goes here',
@@ -1122,7 +1136,9 @@
         'lbl.backToWork':'Retour aux Travaux',
         'home.bio':"Je suis une praticienne en recherche UX \u00e0 m\u00e9thodes mixtes, avec une formation en analyse de la perception multimodale et en informatique visuelle. Mon exp\u00e9rience interdisciplinaire en IA et en interaction homme-machine m'aide \u00e0 cerner les besoins et les difficult\u00e9s des utilisateurs afin de fa\u00e7onner des exp\u00e9riences interactives, accessibles et immersives. J'aspire \u00e0 faire progresser une symbiose \u00e9thique entre l'humain et l'IA \u00e0 travers des d\u00e9cisions produit fond\u00e9es sur des donn\u00e9es probantes.",
         'home.greeting':"Bonjour<br>Je suis Sruti",
-        'home.tagline':"Chercheuse UX et Sensemaker<br><span class=\"hero-tagline-big\">Je d\u00e9fends les humains dans les interactions humain-machine.</span>",
+        'home.kicker':"Chercheuse UX &amp; Sensemaker",
+        'home.tagline':"Je d\u00e9fends l'humain dans l'interaction humain\u2013IA.",
+        'home.quote':"Entrez, installez-vous, restez un moment.",
         'contact.heading':'Travaillons Ensemble',
         'gallery.travel':'Quelques Couchers De Soleil Que J\u2019ai Aim\u00e9s','gallery.paintings':'Peintures','gallery.other':'Autre','gallery.books':'Quelques Livres De Ma Biblioth\u00e8que',
         'gallery.paintings.placeholder':'Les peintures seront ici','gallery.other.placeholder':'Tout le reste sera ici',
@@ -1175,7 +1191,9 @@
         'lbl.backToWork':'Tillbaka till Arbete',
         'home.bio':'Jag \u00e4r en UX-forskare med blandade metoder och en bakgrund inom multimodal perceptionsanalys och visuell databehandling. Min tv\u00e4rvetenskapliga erfarenhet inom AI och m\u00e4nniska-datorinteraktion hj\u00e4lper mig att f\u00f6rst\u00e5 anv\u00e4ndares behov och utmaningar f\u00f6r att forma interaktiva, tillg\u00e4ngliga och uppslukande upplevelser. Jag str\u00e4var efter att fr\u00e4mja en etisk symbios mellan m\u00e4nniska och AI genom evidensbaserade produktbeslut.',
         'home.greeting':'Hej Hej<br>Jag \u00e4r Sruti',
-        'home.tagline':'UX-forskare och Sensemaker<br><span class="hero-tagline-big">Jag talar f\u00f6r m\u00e4nniskor i m\u00e4nniska\u2013maskin-interaktioner.</span>',
+        'home.kicker':'UX-forskare &amp; Sensemaker',
+        'home.tagline':'Jag talar f\u00f6r m\u00e4nniskan i m\u00e4nniska\u2013AI-interaktion.',
+        'home.quote':'Kom in, g\u00f6r dig hemmastadd, stanna ett tag.',
         'contact.heading':'L\u00e5t Oss Samarbeta',
         'gallery.travel':'N\u00e5gra Solnedg\u00e5ngar Jag Gillade','gallery.paintings':'M\u00e5lningar','gallery.other':'\u00d6vrigt','gallery.books':'N\u00e5gra B\u00f6cker Fr\u00e5n Min Hylla',
         'gallery.paintings.placeholder':'M\u00e5lningar visas h\u00e4r','gallery.other.placeholder':'Allt annat visas h\u00e4r',
@@ -1228,7 +1246,9 @@
         'lbl.backToWork':'Zur\u00fcck zu Arbeiten',
         'home.bio':'Ich bin eine UX-Researcherin mit gemischten Methoden und einem Hintergrund in multimodaler Wahrnehmungsanalyse und visuellem Computing. Meine interdisziplin\u00e4re Erfahrung in KI und Mensch-Computer-Interaktion hilft mir, Nutzerbed\u00fcrfnisse und Herausforderungen zu erkennen, um interaktive, barrierefreie und immersive Erlebnisse zu gestalten. Ich strebe danach, eine ethische Mensch-KI-Symbiose durch evidenzbasierte Produktentscheidungen voranzutreiben.',
         'home.greeting':'Gr\u00fcezi,<br>Ich bin Sruti',
-        'home.tagline':'UX-Researcherin und Sensemaker<br><span class="hero-tagline-big">Ich setze mich f\u00fcr Menschen in Mensch-Maschine-Interaktionen ein.</span>',
+        'home.kicker':'UX-Researcherin &amp; Sensemaker',
+        'home.tagline':'Ich setze mich f\u00fcr den Menschen in der Mensch\u2013KI-Interaktion ein.',
+        'home.quote':'Komm rein, mach es dir bequem, bleib eine Weile.',
         'contact.heading':'Lass Uns Zusammenarbeiten',
         'gallery.travel':'Ein Paar Sonnenunterg\u00e4nge, Die Mir Gefallen Haben','gallery.paintings':'Gem\u00e4lde','gallery.other':'Sonstiges','gallery.books':'Ein Paar B\u00fccher Aus Meinem Regal',
         'gallery.paintings.placeholder':'Gem\u00e4lde erscheinen hier','gallery.other.placeholder':'Alles andere erscheint hier',
@@ -1281,7 +1301,9 @@
         'lbl.backToWork':'Tilbake til Arbeid',
         'home.bio':'Jeg er en UX-forsker med blandede metoder og bakgrunn innen multimodal persepsjonsanalyse og visuell databehandling. Min tverrfaglige erfaring innen AI og menneske-maskin-interaksjon hjelper meg med \u00e5 avdekke brukerbehov og utfordringer for \u00e5 forme interaktive, tilgjengelige og oppslukende opplevelser. Jeg \u00f8nsker \u00e5 fremme en etisk symbiose mellom menneske og AI gjennom evidensbaserte produktbeslutninger.',
         'home.greeting':'Hei Hei<br>Jeg er Sruti',
-        'home.tagline':'UX-forsker og Sensemaker<br><span class="hero-tagline-big">Jeg taler menneskers sak i menneske\u2013maskin-interaksjoner.</span>',
+        'home.kicker':'UX-forsker &amp; Sensemaker',
+        'home.tagline':'Jeg taler menneskets sak i menneske\u2013AI-interaksjon.',
+        'home.quote':'Kom inn, gj\u00f8r deg hjemme, bli en stund.',
         'contact.heading':'La Oss Samarbeide',
         'gallery.travel':'Noen Solnedganger Jeg Likte','gallery.paintings':'Malerier','gallery.other':'Annet','gallery.books':'Noen B\u00f8ker Fra Hylla Mi',
         'gallery.paintings.placeholder':'Malerier vises her','gallery.other.placeholder':'Alt annet vises her',
