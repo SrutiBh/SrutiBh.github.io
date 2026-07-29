@@ -2117,7 +2117,7 @@ const PLACES=[
       heroSection.style.height='auto';
       const contentHeight=inner.getBoundingClientRect().height;
       heroSection.style.height=wasHeightStyle;
-      const heroExtraHeight=48; // small breathing-room buffer around the content
+      const heroExtraHeight=160; // breathing-room buffer around the content, split evenly top/bottom via justify-content:center
       const target=Math.round(contentHeight+heroExtraHeight);
       if(target>0){
         heroSection.style.minHeight=target+'px';
