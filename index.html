@@ -1746,6 +1746,9 @@
       if(view==='home'&&typeof window.__syncHeroAvatarHeight==='function'){
         requestAnimationFrame(()=>requestAnimationFrame(window.__syncHeroAvatarHeight));
       }
+      if(view==='home'&&typeof window.__syncHeroHeightToBioEnd==='function'){
+        requestAnimationFrame(()=>requestAnimationFrame(window.__syncHeroHeightToBioEnd));
+      }
       if(view==='career'&&typeof fitAll==='function'){
         requestAnimationFrame(function(){requestAnimationFrame(function(){
           if(!detail.classList.contains('open'))fitAll();
@@ -1835,7 +1838,10 @@
       if(currentProjectId)renderProjectDetail(currentProjectId);
       document.querySelectorAll('.lang-dd.open').forEach(function(dd){setDropdownOpen(dd,false);});
       if(typeof window.__syncHeroHeightToBioEnd==='function'){
-        requestAnimationFrame(()=>requestAnimationFrame(window.__syncHeroHeightToBioEnd));
+        const heroEl=document.getElementById('heroSection');
+        if(heroEl&&heroEl.classList.contains('active')){
+          requestAnimationFrame(()=>requestAnimationFrame(window.__syncHeroHeightToBioEnd));
+        }
       }
       if(typeof window.__syncHeroAvatarHeight==='function'){
         requestAnimationFrame(()=>requestAnimationFrame(window.__syncHeroAvatarHeight));
@@ -2090,43 +2096,49 @@ const PLACES=[
     (function(){ const route=parseHash(); showView(route.view,{silent:true,projectId:route.projectId}); })();
  
     /* ============================================================
-       HERO HEIGHT SYNC — the About page's bio paragraph ends with
-       "...ethical human–AI symbiosis through evidence-based product
-       decisions." This measures the exact vertical position where
-       that line ends on the About page, then sets the Home page's
-       hero section (the white area with the interactive paint-trail
-       canvas) to that same height, so the hero's bottom edge lines up
-       on the same horizontal line as the end of that bio text.
+       HERO HEIGHT — sizes the Home hero section to its own content's
+       natural height (greeting + avatar + tagline + buttons) plus a
+       small buffer. Previously this synced to where the About page's
+       bio text ended instead, but that coupling stopped making sense
+       once both pages' font sizes/content grew independently — it was
+       producing a hero area far taller than its own content needed.
        Re-measured on load, on resize, and after a language switch,
-       since text reflow changes how many lines the paragraph wraps to.
+       since text reflow changes how many lines wrap.
        ============================================================ */
     function syncHeroHeightToBioEnd(){
-      const aboutSection=document.getElementById('aboutView');
       const heroSection=document.getElementById('heroSection');
-      if(!aboutSection||!heroSection)return;
-      const textEl=aboutSection.querySelector('.about-desc-text');
-      if(!textEl)return;
-      const wasActive=aboutSection.classList.contains('active');
-      const prevStyle=aboutSection.getAttribute('style');
-      if(!wasActive){
-        aboutSection.style.cssText='display:block !important;position:absolute;visibility:hidden;top:0;left:0;width:100%;pointer-events:none;z-index:-1;';
-      }
-      const sectionRect=aboutSection.getBoundingClientRect();
-      const textRect=textEl.getBoundingClientRect();
-      const targetHeight=Math.round(textRect.bottom-sectionRect.top);
-      if(!wasActive){
-        if(prevStyle!==null)aboutSection.setAttribute('style',prevStyle);
-        else aboutSection.removeAttribute('style');
-      }
-      if(targetHeight>0){
-        const heroExtraHeight=120; // interactive coloring area's extra height beyond the exact bio-alignment point
-        heroSection.style.minHeight=(targetHeight+heroExtraHeight)+'px';
-        heroSection.style.height=(targetHeight+heroExtraHeight)+'px';
+      const inner=document.querySelector('.hero-new-inner');
+      if(!heroSection||!inner)return;
+      // Must run after the avatar's own height sync, or this measures the
+      // avatar at its huge natural/unstyled size (940x1136) instead of its
+      // final synced size, wildly inflating the result.
+      if(typeof window.__syncHeroAvatarHeight==='function')window.__syncHeroAvatarHeight();
+      const wasHeightStyle=heroSection.style.height;
+      heroSection.style.height='auto';
+      const contentHeight=inner.getBoundingClientRect().height;
+      heroSection.style.height=wasHeightStyle;
+      const heroExtraHeight=48; // small breathing-room buffer around the content
+      const target=Math.round(contentHeight+heroExtraHeight);
+      if(target>0){
+        heroSection.style.minHeight=target+'px';
+        heroSection.style.height=target+'px';
       }
     }
-    requestAnimationFrame(()=>requestAnimationFrame(syncHeroHeightToBioEnd));
-    window.addEventListener('resize',syncHeroHeightToBioEnd);
+    window.addEventListener('resize',function(){
+      const hero=document.getElementById('heroSection');
+      if(hero&&hero.classList.contains('active'))syncHeroHeightToBioEnd();
+    });
     window.__syncHeroHeightToBioEnd=syncHeroHeightToBioEnd;
+    // Safety net: if Home was already the active view on first load (e.g.
+    // #home was in the URL), the showView()-triggered call in the other
+    // script block ran before this function existed yet (script tags run
+    // in order, and this one is defined later). Catch that case here.
+    (function(){
+      const heroEl=document.getElementById('heroSection');
+      if(heroEl&&heroEl.classList.contains('active')){
+        requestAnimationFrame(()=>requestAnimationFrame(syncHeroHeightToBioEnd));
+      }
+    })();
 
     /* Sets the side avatar's height to exactly match the two greeting
        lines beside it, measured directly rather than relying on CSS
