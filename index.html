@@ -160,7 +160,7 @@
     @media(min-width:1024px){.container{max-width:1024px}}
     @media(min-width:1280px){.container{max-width:1280px}}
     @media(min-width:1536px){.container{max-width:1536px}}
-    .max-w-4xl{max-width:56rem}
+    .max-w-4xl{max-width:996px}
     @media(min-width:768px){
       .md\:w-40{width:10rem}
       .md\:h-40{height:10rem}
@@ -385,7 +385,7 @@
     @media(max-width:640px){.ptabs{gap:1.1rem}}
  
     .about-section{background:#FFFFDE;padding:5rem 1rem 0;}
-    .about-inner{max-width:70rem;margin:0 auto;padding-bottom:4rem;}
+    .about-inner{max-width:996px;margin:0 auto;padding-bottom:4rem;}
     .about-block{margin-top:4rem;}
     .about-me-row{display:flex;gap:2.5rem;align-items:flex-start;}
     .about-me-photo{flex-shrink:0;max-width:320px;}
@@ -400,6 +400,14 @@
     .about-desc-title{font-family:'Lora',serif;font-size:33px;font-weight:500;color:#0200FC;margin:0 0 1.1rem 0;}
     .about-desc-text{font-family:var(--font-serif);font-size:2rem;line-height:1.6;font-weight:400;color:#000;margin:0;text-align:justify;text-justify:inter-word;}
     .edu-transcript{display:flex;flex-direction:column;gap:1.25rem;}
+    /* Career page specifically: title, map, and boxes all share the same
+       fixed width and centering as the education boxes, so everything
+       starts at the same left edge instead of the titles/map spanning
+       the full container while the boxes sit narrower and centered. */
+    #careerView .about-desc-title,
+    #careerView .jshell{
+      width:996px; max-width:100%; margin-left:auto; margin-right:auto;
+    }
     /* Collapsed by default: each row is sized (via JS, see
        initEduRowUnfold) to fit exactly the logo plus equal left/right
        padding — so the logo sits truly centered. On hover it widens to
@@ -572,7 +580,7 @@
     }
     header.hero-new.view.active{display:flex;}
     #heroTrailCanvas{ position:absolute; inset:0; z-index:0; pointer-events:none; }
-    .hero-new-inner{ position:relative; z-index:1; max-width:70rem; width:100%; margin:0 auto; }
+    .hero-new-inner{ position:relative; z-index:1; max-width:996px; width:100%; margin:0 auto; }
     .hero-new-inner h1{
       font-family:var(--font-serif); font-weight:700; letter-spacing:normal;
       text-transform:none; font-size:clamp(1.5rem,5.5vw,3rem); line-height:1.05;
@@ -615,7 +623,7 @@
     }
  
     .new-section{ background:#FFFFDE; padding:5rem 1rem 4rem; }
-    .new-section-inner{ max-width:70rem; margin:0 auto; }
+    .new-section-inner{ max-width:996px; margin:0 auto; }
     .new-section-heading{
       font-family:'Lora',serif; font-weight:500; font-size:33px;
       text-transform:none; letter-spacing:normal; color:#0200FC;
@@ -1019,7 +1027,7 @@
         'country.india':'India','country.sweden':'Sweden','country.switzerland':'Switzerland',
         'footer.nav.contact':'Contact','footer.nav.work':'Work','footer.nav.about':'About','footer.nav.portfolio':'Portfolio',
         'about.nav.contact':'Contact Me','about.nav.work':'My Work','about.nav.portfolio':'My Portfolio','about.nav.career':'My Career',
-        'menu.about':'About','menu.contact':'Contact','menu.portfolio':'Portfolio','menu.career':'Career',
+        'menu.about':'About','menu.contact':'Contact','menu.portfolio':'Work','menu.career':'Career',
         'a11y.skiplink':'Skip to main content','aria.menu':'Menu','gallery.otherWork':'My Other Work',
         'landing.caption':'Welcome to My Portfolio'
       },
@@ -1070,7 +1078,7 @@
         'country.india':'Inde','country.sweden':'Su\u00e8de','country.switzerland':'Suisse',
         'footer.nav.contact':'Contact','footer.nav.work':'Travaux','footer.nav.about':'\u00c0 Propos','footer.nav.portfolio':'Portfolio',
         'about.nav.contact':'Me Contacter','about.nav.work':'Mes Travaux','about.nav.portfolio':'Mon Portfolio','about.nav.career':'Mon Parcours',
-        'menu.about':'\u00c0 Propos','menu.contact':'Contact','menu.portfolio':'Portfolio','menu.career':'Carri\u00e8re',
+        'menu.about':'\u00c0 Propos','menu.contact':'Contact','menu.portfolio':'Travaux','menu.career':'Carri\u00e8re',
         'a11y.skiplink':'Passer au contenu principal','aria.menu':'Menu','gallery.otherWork':'Mes Autres Travaux',
         'landing.caption':'Bienvenue Sur Mon Portfolio',
         'proj.10.title':'Ressentir la Vision pour la Navigation en Graphes',
@@ -1123,7 +1131,7 @@
         'country.india':'Indien','country.sweden':'Sverige','country.switzerland':'Schweiz',
         'footer.nav.contact':'Kontakt','footer.nav.work':'Arbete','footer.nav.about':'Om','footer.nav.portfolio':'Portfolio',
         'about.nav.contact':'Kontakta Mig','about.nav.work':'Mitt Arbete','about.nav.portfolio':'Min Portfolio','about.nav.career':'Min Karri\u00e4r',
-        'menu.about':'Om Mig','menu.contact':'Kontakt','menu.portfolio':'Portfolio','menu.career':'Karri\u00e4r',
+        'menu.about':'Om Mig','menu.contact':'Kontakt','menu.portfolio':'Arbete','menu.career':'Karri\u00e4r',
         'a11y.skiplink':'Hoppa till huvudinneh\u00e5llet','aria.menu':'Meny','gallery.otherWork':'Mitt \u00d6vriga Arbete',
         'landing.caption':'V\u00e4lkommen Till Min Portfolio',
         'proj.10.title':'Kännbar Syn för Grafnavigering',
@@ -1176,7 +1184,7 @@
         'country.india':'Indien','country.sweden':'Schweden','country.switzerland':'Schweiz',
         'footer.nav.contact':'Kontakt','footer.nav.work':'Arbeiten','footer.nav.about':'\u00dcber','footer.nav.portfolio':'Portfolio',
         'about.nav.contact':'Kontakt','about.nav.work':'Meine Arbeit','about.nav.portfolio':'Mein Portfolio','about.nav.career':'Meine Karriere',
-        'menu.about':'\u00dcber','menu.contact':'Kontakt','menu.portfolio':'Portfolio','menu.career':'Karriere',
+        'menu.about':'\u00dcber','menu.contact':'Kontakt','menu.portfolio':'Arbeiten','menu.career':'Karriere',
         'a11y.skiplink':'Zum Hauptinhalt springen','aria.menu':'Men\u00fc','gallery.otherWork':'Weitere Arbeiten',
         'landing.caption':'Willkommen Auf Meinem Portfolio',
         'proj.10.title':'Fühlbares Sehen für Graphnavigation',
@@ -1229,7 +1237,7 @@
         'country.india':'India','country.sweden':'Sverige','country.switzerland':'Sveits',
         'footer.nav.contact':'Kontakt','footer.nav.work':'Arbeid','footer.nav.about':'Om','footer.nav.portfolio':'Portef\u00f8lje',
         'about.nav.contact':'Kontakt Meg','about.nav.work':'Mitt Arbeid','about.nav.portfolio':'Min Portef\u00f8lje','about.nav.career':'Min Karriere',
-        'menu.about':'Om','menu.contact':'Kontakt','menu.portfolio':'Portef\u00f8lje','menu.career':'Karriere',
+        'menu.about':'Om','menu.contact':'Kontakt','menu.portfolio':'Arbeid','menu.career':'Karriere',
         'a11y.skiplink':'Hopp til hovedinnhold','aria.menu':'Meny','gallery.otherWork':'Mitt \u00d8vrige Arbeid',
         'landing.caption':'Velkommen Til Min Portef\u00f8lje',
         'proj.10.title':'Følbar Syn for Grafnavigering',
