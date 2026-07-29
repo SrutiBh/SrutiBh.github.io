@@ -400,6 +400,14 @@
     .about-desc-title{font-family:'Lora',serif;font-size:33px;font-weight:500;color:#0200FC;margin:0 0 1.1rem 0;}
     .about-desc-text{font-family:var(--font-serif);font-size:2rem;line-height:1.6;font-weight:400;color:#000;margin:0;text-align:justify;text-justify:inter-word;}
     .edu-transcript{display:flex;flex-direction:column;gap:1.25rem;}
+    /* EPFL row specifically: shrink-wraps to its own content (instead of
+       stretching to the full container width like the other rows) so the
+       gap after its title text matches the gap before its logo — those
+       two gaps only end up equal when the box hugs its content rather
+       than stretching past it. Logo size/position and the row's own
+       left padding are untouched. */
+    #careerView .edu-transcript .edu-row:nth-child(2){ align-self:flex-start; }
+    #careerView .edu-transcript .edu-row:nth-child(2) .edu-row-text h3{ white-space:nowrap; }
     .edu-row{display:flex;align-items:flex-start;gap:1.5rem;min-height:180px;background:#fff;padding:1.5rem 1.75rem;border:1.5px solid #dce2f0;border-left:10px solid var(--n-green);border-right:10px solid var(--n-green);border-radius:1.5rem;box-shadow:0 1px 4px rgba(21,32,61,.05);transition:box-shadow .22s,border-color .22s,transform .22s;}
     /* Fixed-size box wrapping every logo, sized to the largest logo (WBUT,
        132px). Since this box — not the image itself — is what the flex
