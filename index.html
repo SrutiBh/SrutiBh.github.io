@@ -216,6 +216,12 @@
     .sidebar-nav-opt.active{ color:#000; font-weight:600; }
     .sidebar-nav-opt.active:hover{ font-weight:600; }
     .sidebar-social{ display:flex; gap:1.1rem; color:#000; }
+    .sidebar-plants-deco{
+      position:absolute; top:0; left:1.25rem; width:150px; height:auto;
+      pointer-events:none; user-select:none; display:block;
+    }
+    .sidebar-top{ padding-top:400px; }
+    @media(max-height:750px){ .sidebar-plants-deco{ display:none; } .sidebar-top{ padding-top:0; } }
     .sidebar-social a{ color:inherit; display:flex; transition:transform .18s ease; }
     .sidebar-social a:hover{ color:#000; transform:scale(1.12); }
     .sidebar-social a:hover svg{ stroke-width:2.6; }
@@ -808,6 +814,7 @@
   </div>
 
   <aside class="site-sidebar" id="siteSidebar">
+    <img class="sidebar-plants-deco" src="images/others/sidebar_plants.png" alt="" aria-hidden="true"/>
     <div class="sidebar-top">
       <span class="sidebar-name">
         <span class="sidebar-name-text">Sruti<br>Bhattacharjee</span>
