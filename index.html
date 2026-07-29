@@ -190,7 +190,7 @@
        the sidebar instead of underneath it.
        ============================================================ */
     .site-sidebar{
-      position:fixed; top:0; left:0; width:230px; height:100vh;
+      position:fixed; top:0; left:0; width:300px; height:100vh;
       background:#fff; border-right:none;
       display:none; flex-direction:column; justify-content:space-between;
       padding:2.5rem 1.25rem; z-index:80; overflow-y:auto;
@@ -203,15 +203,16 @@
     body:not(.landing-active) .site-sidebar{ display:flex; }
     .sidebar-top{ display:flex; flex-direction:column; gap:4rem; }
     .sidebar-name{ position:relative; display:inline-block; text-align:left; }
-    .sidebar-name-text{ font-family:var(--font-serif); font-weight:700; font-size:1.7rem; line-height:1.25; color:#000; }
+    .sidebar-name-text{ font-family:'Lora',serif; font-weight:500; font-size:36px; line-height:1.25; color:#000; }
     .sidebar-nav{ display:flex; flex-direction:column; gap:32px; }
     .sidebar-nav-opt{
-      font-family:var(--font-serif); font-size:1.15rem; font-weight:400;
+      font-family:var(--font-serif); font-size:1.3rem; font-weight:400;
       color:#000; background:none; border:none; padding:0; text-align:left;
       cursor:pointer; text-decoration:none; width:fit-content;
-      transition:font-weight .18s ease;
+      transition:font-weight .18s ease, transform .18s ease;
+      transform-origin:left center;
     }
-    .sidebar-nav-opt:hover{ font-weight:500; }
+    .sidebar-nav-opt:hover{ font-weight:500; transform:scale(1.12); }
     .sidebar-nav-opt.active{ color:#000; font-weight:600; }
     .sidebar-nav-opt.active:hover{ font-weight:600; }
     .sidebar-social{ display:flex; gap:1.1rem; color:#000; }
@@ -257,7 +258,7 @@
     .view.active{display:block;animation:pfadeUp .35s ease both;}
     header.hero-bg.view.active{display:flex;}
     .view-kicker{font-size:1.55rem;font-weight:700;letter-spacing:.03em;color:var(--color-navy);margin:0 0 .85rem;}
-    .view-headline{font-family:'Lora',serif;font-weight:500;letter-spacing:-.01em;font-size:33px;line-height:1.04;color:var(--color-navy-dark);margin:0 0 1.4rem;}
+    .view-headline{font-family:'Lora',serif;font-weight:400;letter-spacing:-.01em;font-size:33px;line-height:1.04;color:var(--color-navy-dark);margin:0 0 1.4rem;}
     .view-sub{font-family:var(--font-serif);font-size:1.02rem;line-height:1.65;color:var(--color-text-muted);max-width:640px;margin:0 0 2.5rem;font-weight:400;}
  
     @keyframes pfadeUp{from{opacity:0}to{opacity:1}}
@@ -284,7 +285,7 @@
     /* Matches .about-desc-title exactly (same style used for "About Me" /
        "Education" / "Career Journey" on the Home page) so section names
        here read consistently with the rest of the site. */
-    .gallery-subhead{font-family:'Lora',serif;font-size:33px;font-weight:500;color:#0200FC;margin:2.5rem 0 1.1rem;}
+    .gallery-subhead{font-family:'Lora',serif;font-size:33px;font-weight:400;color:#0200FC;margin:2.5rem 0 1.1rem;}
     .my-other-work-heading{color:#0200FC;}
     .about-block:first-of-type .gallery-subhead{margin-top:0;}
  
@@ -317,7 +318,7 @@
     .contact-heading{
       font-family:'Lora',serif;
       font-size:33px;
-      font-weight:500;
+      font-weight:400;
       color:#0200FC;
       margin:0;
       white-space:nowrap;
@@ -441,7 +442,7 @@
     }
     .about-bio{font-family:var(--font-serif);font-size:1.1rem;line-height:1.65;color:var(--color-text-muted);font-weight:400;}
  
-    .about-desc-title{font-family:'Lora',serif;font-size:33px;font-weight:500;color:#0200FC;margin:0 0 1.1rem 0;}
+    .about-desc-title{font-family:'Lora',serif;font-size:33px;font-weight:400;color:#0200FC;margin:0 0 1.1rem 0;}
     .about-desc-text{font-family:var(--font-serif);font-size:1.6rem;line-height:1.6;font-weight:400;color:#000;margin:0;text-align:justify;text-justify:inter-word;}
     .edu-transcript{display:flex;flex-direction:column;gap:1.25rem;}
     /* Career page specifically: title, map, and boxes all share the same
@@ -575,6 +576,7 @@
     .lang-dd{position:relative;}
     .lang-btn{display:flex;align-items:center;justify-content:center;gap:.2rem;padding:0;border-radius:0;border:none;font-family:var(--font-serif);font-size:1.15rem;font-weight:400;color:#000;letter-spacing:.01em;background:none;cursor:pointer;transition:font-weight .18s ease;}
     .lang-btn:hover{ font-weight:700; }
+    .lang-current{ font-size:1.3rem; }
     .site-lang-topright{ position:fixed; top:1.5rem; right:1.5rem; z-index:85; display:none; }
     body:not(.landing-active) .site-lang-topright{ display:block; }
     .site-lang-topright .lang-btn{ font-size:1.15rem; }
@@ -584,7 +586,7 @@
     .lang-dd.open .lang-btn svg.chev{transform:rotate(180deg);}
     .lang-menu{position:absolute;top:calc(100% + 10px);right:0;background:#fff;border-radius:.75rem;box-shadow:0 14px 34px rgba(21,32,61,.20);padding:.5rem;display:none;min-width:280px;z-index:70;}
     .lang-dd.open .lang-menu{display:block;}
-    .lang-opt{display:flex;align-items:center;justify-content:space-between;width:100%;padding:.5rem .7rem;border-radius:.5rem;border:none;background:transparent;font-size:1.15rem;font-weight:400;color:#000;cursor:pointer;text-align:left;font-family:var(--font-serif);transition:color .18s ease,background-color .18s ease,font-weight .18s ease;}
+    .lang-opt{display:flex;align-items:center;justify-content:space-between;width:100%;padding:.5rem .7rem;border-radius:.5rem;border:none;background:transparent;font-size:1.3rem;font-weight:400;color:#000;cursor:pointer;text-align:left;font-family:var(--font-serif);transition:color .18s ease,background-color .18s ease,font-weight .18s ease;}
     .lang-opt:hover{ font-weight:700; }
     .lang-opt.active{ font-weight:700; }
  
@@ -687,7 +689,7 @@
     .new-section{ background:#FFFFDE; padding:5rem 1rem 4rem; }
     .new-section-inner{ max-width:996px; margin:0 auto; }
     .new-section-heading{
-      font-family:'Lora',serif; font-weight:500; font-size:33px;
+      font-family:'Lora',serif; font-weight:400; font-size:33px;
       text-transform:none; letter-spacing:normal; color:#0200FC;
       margin:0 0 1.1rem 0;
     }
@@ -713,7 +715,7 @@
     .n-book-author{ font-family:var(--font-serif); font-weight:400; font-size:1.1rem; color:var(--color-text-faint-onlight); line-height:1.6; margin:0; }
     .n-tabs{ display:flex; gap:2.2rem; margin-bottom:2.5rem; border-bottom:1px solid var(--n-border); }
     .n-tab-btn{
-      font-family:'Lora',serif; font-weight:400; font-size:2.5rem; letter-spacing:normal;
+      font-family:'Lora',serif; font-weight:500; font-size:34px; letter-spacing:normal;
       text-transform:none; background:none; border:none; cursor:pointer; color:#000;
       padding:0 0 1rem 0; position:relative;
     }
@@ -731,9 +733,9 @@
     body.landing-active #topbar{ display:none; }
     body.landing-active .footer-pre,
     body.landing-active .footer-bar{ display:none; }
-    body:not(.landing-active) > .view:not(.landing-view){ margin-left:230px; width:calc(100% - 230px); }
-    body:not(.landing-active) #main-content{ margin-left:calc(230px + (100% - 230px - 996px)/2); margin-right:auto; width:996px; }
-    body:not(.landing-active) .footer-bar{ margin-left:230px; }
+    body:not(.landing-active) > .view:not(.landing-view){ margin-left:300px; width:calc(100% - 300px); }
+    body:not(.landing-active) #main-content{ margin-left:calc(300px + (100% - 300px - 996px)/2); margin-right:auto; width:996px; }
+    body:not(.landing-active) .footer-bar{ margin-left:300px; }
     @media(max-width:900px){
       body:not(.landing-active) > .view:not(.landing-view){ margin-left:0; width:100%; }
       body:not(.landing-active) #main-content{ margin-left:0; width:100%; }
