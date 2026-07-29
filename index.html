@@ -190,17 +190,16 @@
        the sidebar instead of underneath it.
        ============================================================ */
     .site-sidebar{
-      position:fixed; top:0; left:0; width:280px; height:100vh;
+      position:fixed; top:0; left:0; width:170px; height:100vh;
       background:#fff; border-right:1px solid rgba(15,23,42,.08);
       display:none; flex-direction:column; justify-content:space-between;
-      padding:2.5rem 2rem; z-index:80; overflow-y:auto;
+      padding:2.5rem 1.25rem; z-index:80; overflow-y:auto;
     }
     body:not(.landing-active) .site-sidebar{ display:flex; }
     .sidebar-top{ display:flex; flex-direction:column; gap:2.5rem; }
     .sidebar-name{ position:relative; display:inline-block; text-align:left; background:none; border:none; padding:0; cursor:pointer; }
     .sidebar-name-text{ font-family:var(--font-serif); font-weight:700; font-size:1.7rem; line-height:1.25; color:#000; }
     .sidebar-name:hover .sidebar-name-text{ color:#0200FC; }
-    .sidebar-name-dot{ position:absolute; top:-.4rem; right:-1rem; width:.6rem; height:.6rem; border-radius:50%; background:var(--n-green); }
     .sidebar-nav{ display:flex; flex-direction:column; gap:.9rem; }
     .sidebar-nav-opt{
       font-family:var(--font-serif); font-size:1.15rem; font-weight:700;
@@ -633,7 +632,7 @@
       margin:0 0 1.5rem 0;
     }
     .hero-greeting-lines{
-      font-family:var(--font-serif); font-size:33px; line-height:1.6;
+      font-family:var(--font-serif); font-size:38px; line-height:1.6;
       font-weight:400; color:#000; white-space:nowrap;
     }
     /* Height is set via JS (see syncHeroAvatarHeight below) to exactly
@@ -721,8 +720,12 @@
     body.landing-active #topbar{ display:none; }
     body.landing-active .footer-pre,
     body.landing-active .footer-bar{ display:none; }
-    body:not(.landing-active) .footer-bar{ margin-left:280px; }
+    body:not(.landing-active) > .view:not(.landing-view){ margin-left:170px; width:calc(100% - 170px); }
+    body:not(.landing-active) #main-content{ margin-left:calc(170px + (100% - 170px - 996px)/2); margin-right:auto; width:996px; }
+    body:not(.landing-active) .footer-bar{ margin-left:170px; }
     @media(max-width:900px){
+      body:not(.landing-active) > .view:not(.landing-view){ margin-left:0; width:100%; }
+      body:not(.landing-active) #main-content{ margin-left:0; width:100%; }
       body:not(.landing-active) .footer-bar{ margin-left:0; }
     }
     .landing-view.active{ position:relative; min-height:100dvh; overflow:hidden; }
@@ -789,7 +792,6 @@
     <div class="sidebar-top">
       <button type="button" class="sidebar-name" data-view="home">
         <span class="sidebar-name-text">Sruti<br>Bhattacharjee</span>
-        <span class="sidebar-name-dot" aria-hidden="true"></span>
       </button>
       <nav class="sidebar-nav" id="sidebarNav">
         <button type="button" class="sidebar-nav-opt" data-view="home" data-i18n="menu.portfolio">Work</button>
@@ -834,11 +836,6 @@
         <img class="hero-side-avatar" src="images/others/selfi_anim2.png" alt="" onerror="this.style.display='none';"/>
       </div>
       <p class="hero-tagline" data-i18n="home.tagline">I advocate for the human in human&ndash;AI interaction.</p>
-      <p class="hero-quote" data-i18n="home.quote">Come in, get comfortable, stay a while.</p>
-      <nav class="about-links">
-        <a href="mailto:srutib2636@gmail.com" class="footer-link"><span class="footer-icon-chip"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span data-i18n="about.nav.contact">Contact Me</span></a>
-        <a href="#" class="footer-link" data-view="about"><span class="footer-icon-chip"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span><span data-i18n="section.about">About Me</span></a>
-      </nav>
     </div>
   </header>
  
@@ -882,12 +879,6 @@
           <img src="images/others/selfie.png" alt="Sruti Bhattacharjee" onerror="this.style.display='none';this.parentElement.style.display='flex';this.parentElement.style.alignItems='center';this.parentElement.style.justifyContent='center';this.parentElement.innerHTML='<span style=&quot;font-size:3rem&quot;>👩‍💻</span>'"/>
         </div>
       </div>
-
-      <nav class="about-links about-links-standalone reveal">
-        <a href="mailto:srutib2636@gmail.com" class="footer-link"><span class="footer-icon-chip"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span data-i18n="about.nav.contact">Contact Me</span></a>
-        <a href="#" class="footer-link" data-view="home"><span class="footer-icon-chip"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span><span data-i18n="about.nav.work">My Work</span></a>
-        <a href="#" class="footer-link" data-view="career"><span class="footer-icon-chip"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12.5V17c0 1.5 2.7 3 6 3s6-1.5 6-3v-4.5"/><path d="M22 10v6"/></svg></span><span data-i18n="about.nav.career">My Career</span></a>
-      </nav>
     </div>
   </section>
 
