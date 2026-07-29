@@ -99,7 +99,7 @@
     .shadow-2xl{box-shadow:0 25px 50px -12px rgba(0,0,0,.25)}
     .bg-slate-700{background-color:var(--color-text-body)}
     .bg-slate-800{background-color:var(--color-footer-navy)}
-    .footer-bar{background-color:var(--n-green);color:var(--color-navy);text-align:center;padding:1rem 3rem;margin-top:0;}
+    .footer-bar{background-color:var(--n-green);color:var(--color-navy);text-align:center;padding:.4rem 3rem;margin-top:0;}
     @media(max-width:480px){.footer-bar{padding:1rem 1.25rem;}}
     @media(max-width:360px){.footer-bar{padding:1rem .75rem;font-size:.85rem;}}
     .footer-pre{background:#FFFFDE;text-align:center;padding:1.5rem 1.5rem;}
@@ -202,9 +202,8 @@
     } */
     body:not(.landing-active) .site-sidebar{ display:flex; }
     .sidebar-top{ display:flex; flex-direction:column; gap:2.5rem; }
-    .sidebar-name{ position:relative; display:inline-block; text-align:left; background:none; border:none; padding:0; cursor:pointer; }
+    .sidebar-name{ position:relative; display:inline-block; text-align:left; }
     .sidebar-name-text{ font-family:var(--font-serif); font-weight:700; font-size:1.7rem; line-height:1.25; color:#000; }
-    .sidebar-name:hover .sidebar-name-text{ color:#0200FC; }
     .sidebar-nav{ display:flex; flex-direction:column; gap:.9rem; }
     .sidebar-nav-opt{
       font-family:var(--font-serif); font-size:1.15rem; font-weight:700;
@@ -660,7 +659,7 @@
     }
     .hero-tagline-big{ font-size:33px; }
     .hero-new-inner p.hero-kicker{
-      font-family:var(--font-serif); font-size:30px; font-weight:700;
+      font-family:var(--font-serif); font-size:30px; font-weight:400;
       text-transform:none; letter-spacing:normal; color:#0200FC;
       margin:1rem 0 1.25rem 0; text-align:left;
     }
@@ -795,9 +794,9 @@
 
   <aside class="site-sidebar" id="siteSidebar">
     <div class="sidebar-top">
-      <button type="button" class="sidebar-name" data-view="home">
+      <span class="sidebar-name">
         <span class="sidebar-name-text">Sruti<br>Bhattacharjee</span>
-      </button>
+      </span>
       <nav class="sidebar-nav" id="sidebarNav">
         <button type="button" class="sidebar-nav-opt" data-view="home" data-i18n="menu.portfolio">Work</button>
         <button type="button" class="sidebar-nav-opt" data-view="about" data-i18n="menu.about">About</button>
@@ -1080,7 +1079,7 @@
         'home.bio':"I'm a mixed-method UX Research practitioner with a background in Multimodal Perception Analysis and Visual Computing. My interdisciplinary experience in AI and Human\u2013Computer Interaction helps me uncover user needs and challenges to shape interactive, accessible, and immersive experiences. I aspire to advance ethical human\u2013AI symbiosis through evidence-based product decisions.",
         'home.greeting':"Hello there,<br>Sruti is here",
         'home.kicker':"UX Researcher &amp; Sensemaker",
-        'home.tagline':"I advocate for the human in human\u2013AI interaction.",
+        'home.tagline':"I advocate for humans in human\u2013AI interaction.",
         'home.quote':"Come in, get comfortable, stay a while.",
         'contact.heading':"Let's Work Together",
         'gallery.travel':'Some Sunsets I Enjoyed','gallery.paintings':'Paintings','gallery.other':'Other','gallery.books':'Some Books From My Shelf',
