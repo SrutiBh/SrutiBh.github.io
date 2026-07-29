@@ -568,21 +568,20 @@
     @media(max-width:640px){.jvp{height:440px}.jdetail{width:calc(100% - 20px)!important;left:10px!important}.jlogo{width:3.3rem;height:3.3rem;min-width:3.3rem}}
  
     .lang-dd{position:relative;}
-    .lang-btn{display:flex;align-items:center;justify-content:center;gap:.2rem;width:3.5rem;height:3.5rem;padding:0;border-radius:999px;border:none;font-family:var(--font-serif);font-size:1.05rem;font-weight:400;color:#000;letter-spacing:.01em;background:var(--color-bg-hover);cursor:pointer;transition:background-color .18s ease,color .18s ease,font-weight .18s ease;}
+    .lang-btn{display:flex;align-items:center;justify-content:center;gap:.2rem;padding:0;border-radius:0;border:none;font-family:var(--font-serif);font-size:1.15rem;font-weight:400;color:#000;letter-spacing:.01em;background:none;cursor:pointer;transition:font-weight .18s ease;}
     .lang-btn:hover{ font-weight:700; }
     .site-lang-topright{ position:fixed; top:1.5rem; right:1.5rem; z-index:85; display:none; }
     body:not(.landing-active) .site-lang-topright{ display:block; }
     .site-lang-topright .lang-btn{ font-size:1.15rem; }
     @media(max-width:900px){ .site-lang-topright{ display:none !important; } }
-    .lang-dd.open .lang-btn{background:#0200FC;color:#fff;}
+    .lang-dd.open .lang-btn{ font-weight:700; }
     .lang-btn svg.chev{flex-shrink:0;transition:transform .18s ease;}
     .lang-dd.open .lang-btn svg.chev{transform:rotate(180deg);}
     .lang-menu{position:absolute;top:calc(100% + 10px);right:0;background:#fff;border-radius:.75rem;box-shadow:0 14px 34px rgba(21,32,61,.20);padding:.5rem;display:none;min-width:280px;z-index:70;}
     .lang-dd.open .lang-menu{display:block;}
     .lang-opt{display:flex;align-items:center;justify-content:space-between;width:100%;padding:.5rem .7rem;border-radius:.5rem;border:none;background:transparent;font-size:1.15rem;font-weight:400;color:#000;cursor:pointer;text-align:left;font-family:var(--font-serif);transition:color .18s ease,background-color .18s ease,font-weight .18s ease;}
     .lang-opt:hover{ font-weight:700; }
-    .lang-opt:hover{background:#FFFFDE;color:#000;}
-    .lang-opt.active{background:#0200FC;color:#fff;}
+    .lang-opt.active{ font-weight:700; }
  
     .menu-dd{position:relative;}
     .menu-btn{display:flex;align-items:center;justify-content:center;width:3.5rem;height:3.5rem;border-radius:999px;border:none;background:var(--color-bg-hover);color:#0200FC;cursor:pointer;transition:background-color .18s ease,color .18s ease;}
