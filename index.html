@@ -406,9 +406,7 @@
        its exact natural content width (also measured, not guessed), so
        the gap after the text ends up matching the gap before the logo
        automatically, and every line stays on one row (no wrap). */
-    .edu-row{display:flex;align-items:flex-start;gap:1.5rem;min-height:180px;background:#fff;padding:1.5rem 1.75rem;border:1.5px solid #dce2f0;border-left:10px solid var(--n-green);border-right:10px solid var(--n-green);border-radius:1.5rem;box-shadow:0 1px 4px rgba(21,32,61,.05);overflow:hidden;align-self:flex-start;transition:width .5s cubic-bezier(.4,0,.2,1),box-shadow .22s,border-color .22s;}
-    .edu-row-text{opacity:0;transition:opacity .35s ease .12s;}
-    .edu-row:hover .edu-row-text{opacity:1;}
+    .edu-row{display:flex;align-items:flex-start;gap:1.5rem;min-height:180px;background:#fff;padding:1.5rem 1.75rem;border:1.5px solid #dce2f0;border-left:10px solid var(--n-green);border-right:10px solid var(--n-green);border-radius:1.5rem;box-shadow:0 1px 4px rgba(21,32,61,.05);transition:box-shadow .22s,border-color .22s,transform .22s;width:996px;max-width:100%;align-self:center;}
     .edu-row-text h3{white-space:nowrap;}
     /* Fixed-size box wrapping every logo, sized to the largest logo (WBUT,
        132px). Since this box — not the image itself — is what the flex
@@ -1744,9 +1742,6 @@
           S.s=S.ts;S.x=S.tx;S.y=S.ty;
         });});
       }
-      if(view==='career'&&typeof initEduRowUnfold==='function'){
-        requestAnimationFrame(function(){requestAnimationFrame(initEduRowUnfold);});
-      }
       if(!opts.silent){
         requestAnimationFrame(function(){
           window.scrollTo({top:0,behavior:'smooth'});
@@ -1804,40 +1799,6 @@
       showView(route.view,{silent:true,projectId:route.projectId});
     });
 
-    /* Each education row starts collapsed to just its logo (centered via
-       equal left/right padding), then widens on hover to its exact
-       natural content width — measured directly, not guessed, so CSS
-       can smoothly transition `width` between two real pixel values
-       (browsers can't animate to/from `auto` or `fit-content`). This
-       also guarantees the gap after the text matches the gap before the
-       logo in the expanded state, since that width IS the content's own
-       width plus the same padding on both sides. */
-    function initEduRowUnfold(){
-      document.querySelectorAll('#careerView .edu-row').forEach(function(row){
-        if(row.dataset.unfoldReady)return; // avoid re-binding listeners on repeat calls
-        const logo=row.querySelector('.edu-logo-wrap');
-        if(!logo)return;
-        const cs=getComputedStyle(row);
-        const padL=parseFloat(cs.paddingLeft)||0, padR=parseFloat(cs.paddingRight)||0;
-        const borderL=parseFloat(cs.borderLeftWidth)||0, borderR=parseFloat(cs.borderRightWidth)||0;
-        const logoW=logo.getBoundingClientRect().width;
-        const collapsedWidth=logoW+padL+padR+borderL+borderR;
-
-        const prevWidth=row.style.width;
-        row.style.transition='none';
-        row.style.width='auto';
-        const fullWidth=row.getBoundingClientRect().width;
-        row.style.width=collapsedWidth+'px';
-        void row.offsetWidth; // force reflow so the width above actually applies before re-enabling transition
-        row.style.transition='';
-
-        row.addEventListener('mouseenter',function(){ row.style.width=fullWidth+'px'; });
-        row.addEventListener('mouseleave',function(){ row.style.width=collapsedWidth+'px'; });
-        row.dataset.unfoldReady='1';
-      });
-    }
- 
- 
     const LANG_LABEL={en:'EN',fr:'FR',sv:'SV',de:'DE',no:'NO'};
  
     function applyStaticTranslations(lang){
