@@ -190,11 +190,16 @@
        the sidebar instead of underneath it.
        ============================================================ */
     .site-sidebar{
-      position:fixed; top:0; left:0; width:170px; height:100vh;
-      background:#fff; border-right:1px solid rgba(15,23,42,.08);
+      position:fixed; top:0; left:0; width:230px; height:100vh;
+      background:#fff; border-right:none;
       display:none; flex-direction:column; justify-content:space-between;
       padding:2.5rem 1.25rem; z-index:80; overflow-y:auto;
     }
+    /* .site-sidebar::after{
+      content:''; position:absolute; top:2.5rem; bottom:2.5rem; right:0;
+      width:1px;
+      background:linear-gradient(180deg, rgba(15,23,42,.85) 0%, rgba(15,23,42,.85) 75%, rgba(15,23,42,0) 100%);
+    } */
     body:not(.landing-active) .site-sidebar{ display:flex; }
     .sidebar-top{ display:flex; flex-direction:column; gap:2.5rem; }
     .sidebar-name{ position:relative; display:inline-block; text-align:left; background:none; border:none; padding:0; cursor:pointer; }
@@ -655,19 +660,19 @@
     }
     .hero-tagline-big{ font-size:33px; }
     .hero-new-inner p.hero-kicker{
-      font-family:var(--font-serif); font-size:1rem; font-weight:700;
-      text-transform:uppercase; letter-spacing:.18em; color:#0200FC;
-      margin:0 0 1.25rem 0; text-align:left;
+      font-family:var(--font-serif); font-size:30px; font-weight:700;
+      text-transform:none; letter-spacing:normal; color:#0200FC;
+      margin:1rem 0 1.25rem 0; text-align:left;
     }
     .hero-new-inner p.hero-quote{
       font-family:var(--font-serif); font-style:italic; font-size:1.35rem;
       font-weight:400; color:#0200FC; margin:1rem 0 0 0; text-align:left;
     }
-    .hero-content-divider{
+    /* .hero-content-divider{
       max-width:996px; margin:3rem auto 0; padding:0 1rem;
       height:1px;
       background:linear-gradient(90deg, rgba(15,23,42,.85) 0%, rgba(15,23,42,.85) 75%, rgba(15,23,42,0) 100%);
-    }
+    } */
     @media(max-width:640px){
       .hero-greeting-lines{ white-space:normal; }
       .hero-greeting-flex{ gap:.75rem; }
@@ -720,9 +725,9 @@
     body.landing-active #topbar{ display:none; }
     body.landing-active .footer-pre,
     body.landing-active .footer-bar{ display:none; }
-    body:not(.landing-active) > .view:not(.landing-view){ margin-left:170px; width:calc(100% - 170px); }
-    body:not(.landing-active) #main-content{ margin-left:calc(170px + (100% - 170px - 996px)/2); margin-right:auto; width:996px; }
-    body:not(.landing-active) .footer-bar{ margin-left:170px; }
+    body:not(.landing-active) > .view:not(.landing-view){ margin-left:230px; width:calc(100% - 230px); }
+    body:not(.landing-active) #main-content{ margin-left:calc(230px + (100% - 230px - 996px)/2); margin-right:auto; width:996px; }
+    body:not(.landing-active) .footer-bar{ margin-left:230px; }
     @media(max-width:900px){
       body:not(.landing-active) > .view:not(.landing-view){ margin-left:0; width:100%; }
       body:not(.landing-active) #main-content{ margin-left:0; width:100%; }
@@ -830,11 +835,11 @@
     <div class="hero-new-inner">
       <!-- <h1>Sruti Bhattacharjee</h1> -->
       <h1 class="sr-only-hero-title" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;">Sruti Bhattacharjee</h1>
-      <p class="hero-kicker" data-i18n="home.kicker">UX Researcher &amp; Sensemaker</p>
       <div class="hero-greeting-flex">
         <div class="hero-greeting-lines" data-i18n="home.greeting">Hello there,<br>Sruti is here.</div>
         <img class="hero-side-avatar" src="images/others/selfi_anim2.png" alt="" onerror="this.style.display='none';"/>
       </div>
+      <p class="hero-kicker" data-i18n="home.kicker">UX Researcher &amp; Sensemaker</p>
       <p class="hero-tagline" data-i18n="home.tagline">I advocate for the human in human&ndash;AI interaction.</p>
     </div>
   </header>
