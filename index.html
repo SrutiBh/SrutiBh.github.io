@@ -514,23 +514,12 @@
     @keyframes bounceY{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
     .bounce-icon{animation:bounceY 2.2s ease-in-out infinite}
  
-    .jshell{position:relative;background:linear-gradient(180deg,#0d1328 0%,#111936 46%,var(--color-navy) 100%);border-radius:1rem;overflow:hidden;box-shadow:0 16px 40px rgba(15,23,42,.14);transition:all .28s ease;overscroll-behavior:contain;margin-left:-1vw;margin-right:-1vw;}
+    .jshell{position:relative;background:url('images/others/journey_map_bg.jpg') center/cover no-repeat;border-radius:1rem;overflow:hidden;box-shadow:0 16px 40px rgba(15,23,42,.14);transition:all .28s ease;overscroll-behavior:contain;margin-left:-1vw;margin-right:-1vw;}
     .jicon-btn{width:34px;height:34px;border-radius:999px;border:1px solid rgba(255,255,255,.10);background:rgba(10,16,32,.26);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s,transform .15s,border-color .15s;font-family:var(--font-serif);font-size:.9rem;line-height:1;}
     .jicon-btn:hover{background:rgba(10,16,32,.38);border-color:rgba(255,255,255,.16);transform:translateY(-1px);}
-    .jvp{position:relative;height:620px;overflow:hidden;touch-action:pan-y;overscroll-behavior:contain;cursor:default;background:linear-gradient(180deg, #FDECC8 0%, #FFC9A8 22%, #BFE3E0 48%, #7FBFD6 75%, #4E8FBF 100%);transition:height .28s ease;}
+    .jvp{position:relative;height:620px;overflow:hidden;touch-action:pan-y;overscroll-behavior:contain;cursor:default;background:none;transition:height .28s ease;}
     .jvp.dragging{cursor:default}
-    .jvp-sun{position:absolute;top:26px;right:48px;width:74px;height:74px;border-radius:50%;background:#FCEB6E;opacity:0.95;z-index:0;pointer-events:none;}
-    .jvp-sun-face{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity 1.2s ease;}
-    .jvp-sun-face.active{opacity:1;}
-    .jvp-eye{fill:#7a4f22;transform-box:fill-box;transform-origin:center;}
-    .jvp-eye.blink{animation:jvpSunBlink .35s ease-in-out 1;}
-    @keyframes jvpSunBlink{
-      0%,100%{transform:scaleY(1);}
-      50%{transform:scaleY(.15);}
-    }
-    .jvp-mouth{fill:none;stroke:#7a4f22;stroke-width:3;stroke-linecap:round;opacity:0;transform:scaleY(.3);transform-box:fill-box;transform-origin:center;transition:opacity .3s ease, transform .3s ease;}
-    .jvp-mouth.smile{opacity:1;transform:scaleY(1);}
-    #jvpCloudCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;}
+    .jvp-sun{position:absolute;top:26px;right:48px;width:74px;height:74px;border-radius:50%;background:radial-gradient(circle at 40% 34%, #EC9A82 0%, #DD684F 55%, #C24A3B 100%);box-shadow:0 0 40px 14px rgba(217,99,76,.26);opacity:0.95;z-index:2;pointer-events:none;}
     .jworld{position:absolute;left:0;top:0;width:3600px;height:1800px;transform-origin:0 0;will-change:transform;z-index:1;}
     .jisland{position:absolute;width:380px;height:370px;transform:translate(-50%,-50%);cursor:pointer;user-select:none;}
     .jisland:focus-visible{outline:3px solid #fff;outline-offset:6px;border-radius:999px;}
@@ -949,14 +938,7 @@
  
         <div class="jshell reveal" id="jshell">
           <div class="jvp" id="jvp">
-            <div class="jvp-sun">
-              <svg class="jvp-sun-face" viewBox="0 0 74 74" xmlns="http://www.w3.org/2000/svg">
-                <circle class="jvp-eye jvp-eye-l" cx="26" cy="33" r="4"></circle>
-                <circle class="jvp-eye jvp-eye-r" cx="48" cy="33" r="4"></circle>
-                <path class="jvp-mouth" d="M30 52 Q37 58 44 52"></path>
-              </svg>
-            </div>
-            <canvas id="jvpCloudCanvas"></canvas>
+            <div class="jvp-sun"></div>
             <div class="jworld" id="jworld"></div>
             <div class="jdetail" id="jdetail">
               <div class="jdetail-header" id="jdetailHeader">
@@ -2038,42 +2020,8 @@ const PLACES=[
     const cardState={left:null,top:null,width:null,height:null};
     function saveCardState(){if(!detail.classList.contains('open'))return;cardState.left=detail.style.left;cardState.top=detail.style.top;cardState.width=detail.style.width;cardState.height=detail.style.height;}
     function applyCardState(){if(cardState.left!==null)detail.style.left=cardState.left;if(cardState.top!==null)detail.style.top=cardState.top;if(cardState.width!==null)detail.style.width=cardState.width;if(cardState.height!==null)detail.style.height=cardState.height;}
-    function playSunReaction(){
-      const sun=shell.querySelector('.jvp-sun');
-      if(!sun)return;
-      const face=sun.querySelector('.jvp-sun-face');
-      const eyes=sun.querySelectorAll('.jvp-eye');
-      const mouth=sun.querySelector('.jvp-mouth');
-      if(!face||!mouth)return;
-      // Clear any in-flight reaction so re-clicking another island restarts cleanly
-      if(sun._sunTimers){ sun._sunTimers.forEach(t=>clearTimeout(t)); }
-      sun._sunTimers=[];
-      face.classList.remove('active');
-      mouth.classList.remove('smile');
-      eyes.forEach(e=>e.classList.remove('blink'));
-      void face.getBoundingClientRect(); // force reflow so the blink animation restarts
-      face.classList.add('active');
-      eyes.forEach(e=>e.classList.add('blink'));
-      sun._sunTimers.push(setTimeout(function(){
-        mouth.classList.add('smile');
-      }, 400));
-      // The smile holds until 3s from the click, then fades out — unless
-      // cancelSunReaction() fires first (see below), which happens the
-      // instant the island card is closed by clicking outside it.
-      sun._sunTimers.push(setTimeout(function(){ face.classList.remove('active'); }, 3000));
-    }
-    // Immediately hides the sun's reaction, called whenever the island
-    // detail card is closed (e.g. clicking outside it) — so the smile
-    // never outlives the card it belongs to, even if under 3s have passed.
-    function cancelSunReaction(){
-      const sun=shell.querySelector('.jvp-sun');
-      if(!sun)return;
-      if(sun._sunTimers){ sun._sunTimers.forEach(t=>clearTimeout(t)); sun._sunTimers=[]; }
-      const face=sun.querySelector('.jvp-sun-face');
-      if(face)face.classList.remove('active');
-    }
-    function selectPlace(i){suppressClose=true;selectedIdx=i;const p=islands[i];islands.forEach((is,j)=>is.el.classList.toggle('sel',j===i));dtitle.textContent=p.city;dsub.textContent='';dcards.innerHTML=(p.groups||[]).map(g=>`<div class="jcard"><div class="jcard-head"><div class="jlogo"><img src="${g.logo||''}" alt="${g.alt||g.org||p.city}" onerror="var p=this.parentElement;p.innerHTML='🏛️';p.style.fontSize='1.25rem';"></div><div class="jorg-wrap"><div class="jorg">${g.org||p.city}</div></div></div><div class="jroles">${(g.experiences||[]).map(e=>{const tt=e['title_'+currentLang]||e.title;const nn=e['note_'+currentLang]||e.note;return `<div class="jrole"><div class="jct">${tt}</div><div class="jcy">${e.year}</div><div class="jcn">${nn}</div><div class="jtags">${(e.tags||[]).map(t=>`<span class="jtag">${t}</span>`).join('')}</div></div>`;}).join('')}</div></div>`).join('');const wasOpen=detail.classList.contains('open');if(wasOpen){saveCardState();detail.style.transition='none';applyCardState();requestAnimationFrame(()=>{detail.style.transition='';});}else{detail.classList.add('open');if(cardState.left!==null)applyCardState();else positionDetail();}focusOn(p.x,p.y,1.1);setTimeout(()=>{suppressClose=false;},50);playSunReaction();}
-    function closeDetail(){if(detail.classList.contains('open'))saveCardState();detail.classList.remove('open');islands.forEach(is=>is.el.classList.remove('sel'));selectedIdx=-1;cancelSunReaction();}
+    function selectPlace(i){suppressClose=true;selectedIdx=i;const p=islands[i];islands.forEach((is,j)=>is.el.classList.toggle('sel',j===i));dtitle.textContent=p.city;dsub.textContent='';dcards.innerHTML=(p.groups||[]).map(g=>`<div class="jcard"><div class="jcard-head"><div class="jlogo"><img src="${g.logo||''}" alt="${g.alt||g.org||p.city}" onerror="var p=this.parentElement;p.innerHTML='🏛️';p.style.fontSize='1.25rem';"></div><div class="jorg-wrap"><div class="jorg">${g.org||p.city}</div></div></div><div class="jroles">${(g.experiences||[]).map(e=>{const tt=e['title_'+currentLang]||e.title;const nn=e['note_'+currentLang]||e.note;return `<div class="jrole"><div class="jct">${tt}</div><div class="jcy">${e.year}</div><div class="jcn">${nn}</div><div class="jtags">${(e.tags||[]).map(t=>`<span class="jtag">${t}</span>`).join('')}</div></div>`;}).join('')}</div></div>`).join('');const wasOpen=detail.classList.contains('open');if(wasOpen){saveCardState();detail.style.transition='none';applyCardState();requestAnimationFrame(()=>{detail.style.transition='';});}else{detail.classList.add('open');if(cardState.left!==null)applyCardState();else positionDetail();}focusOn(p.x,p.y,1.1);setTimeout(()=>{suppressClose=false;},50);}
+    function closeDetail(){if(detail.classList.contains('open'))saveCardState();detail.classList.remove('open');islands.forEach(is=>is.el.classList.remove('sel'));selectedIdx=-1;}
     function focusOn(wx,wy,zoom){const vw=vp.clientWidth,vh=vp.clientHeight;S.ts=Math.max(S.minS,Math.min(S.maxS,zoom));S.tx=vw*.5-wx*S.ts;S.ty=vh*.5-wy*S.ts;}
     function fitAll(){const vw=vp.clientWidth||680,vh=vp.clientHeight||620;let minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity;islands.forEach(p=>{minX=Math.min(minX,p.x-300);maxX=Math.max(maxX,p.x+300);minY=Math.min(minY,p.y-380);maxY=Math.max(maxY,p.y+720);});const cW=maxX-minX,cH=maxY-minY,s=Math.min(vw/cW,vh/cH);S.ts=Math.max(S.minS,Math.min(S.maxS,s));S.tx=(vw-cW*S.ts)*.5-minX*S.ts;S.ty=(vh-cH*S.ts)*.5-minY*S.ts+100;}
     function resetView(){fitAll();closeDetail();}
@@ -2102,71 +2050,6 @@ const PLACES=[
     function clampDetailPos(){const vw=vp.clientWidth,vh=vp.clientHeight,dw=detail.offsetWidth,dh=detail.offsetHeight;detail.style.left=Math.max(0,Math.min(vw-dw,parseFloat(detail.style.left)||0))+'px';detail.style.top=Math.max(0,Math.min(vh-dh,parseFloat(detail.style.top)||0))+'px';}
     function tick(){const e=.13;S.s+=(S.ts-S.s)*e;S.x+=(S.tx-S.x)*e;S.y+=(S.ty-S.y)*e;world.style.transform=`translate(${S.x}px,${S.y}px) scale(${S.s})`;requestAnimationFrame(tick);}
     buildIslands();
-    (function buildJvpClouds(){
-      const canvas=document.getElementById('jvpCloudCanvas');
-      if(!canvas)return;
-      const ctx=canvas.getContext('2d');
- 
-      function drawCloud(x, y, scale){
-        ctx.save();
-        ctx.translate(x, y);
-        ctx.scale(scale, scale);
-        ctx.fillStyle='rgba(255,255,255,0.95)';
-        ctx.beginPath();
-        ctx.ellipse(30, 38, 28, 18, 0, 0, Math.PI*2);
-        ctx.ellipse(60, 26, 34, 24, 0, 0, Math.PI*2);
-        ctx.ellipse(92, 38, 24, 16, 0, 0, Math.PI*2);
-        ctx.fill();
-        ctx.restore();
-      }
- 
-      const cloudDefs=[
-        {topRatio:0.08, scale:1,   speed:14, startOffset:0},
-        {topRatio:0.20, scale:0.7, speed:9,  startOffset:0.35},
-        {topRatio:0.40, scale:1.2, speed:18, startOffset:0.65},
-        {topRatio:0.58, scale:0.8, speed:11, startOffset:0.15},
-        {topRatio:0.14, scale:0.6, speed:7,  startOffset:0.8}
-      ];
-      const cloudWidth=120;
-      const clouds=cloudDefs.map(c=>({...c, x:0}));
- 
-      function spreadClouds(){
-        clouds.forEach(c=>{
-          const span=canvas.width + cloudWidth*c.scale*2;
-          c.x = -cloudWidth*c.scale + c.startOffset*span;
-        });
-      }
- 
-      // The About section starts hidden (display:none), so on first load the
-      // canvas measures 0×0. Rather than only resizing on window 'resize'
-      // (which never fires just from switching tabs), check every frame
-      // whether the container's real size has changed — the moment the
-      // About tab is opened, this picks up the true width immediately and
-      // spreads the clouds across the full sky right away.
-      let lastW=-1, lastH=-1;
-      function tickClouds(){
-        const w=vp.clientWidth, h=vp.clientHeight;
-        if(w!==lastW || h!==lastH){
-          canvas.width=w;
-          canvas.height=h;
-          lastW=w; lastH=h;
-          if(w>0) spreadClouds();
-        }
-        if(canvas.width>0){
-          ctx.clearRect(0,0,canvas.width,canvas.height);
-          clouds.forEach(c=>{
-            c.x += c.speed/60;
-            const cw=cloudWidth*c.scale;
-            if(c.x > canvas.width + cw){
-              c.x = -cw;
-            }
-            drawCloud(c.x, canvas.height*c.topRatio, c.scale);
-          });
-        }
-        requestAnimationFrame(tickClouds);
-      }
-      requestAnimationFrame(tickClouds);
-    })();
     function initMap(){fitAll();S.s=S.ts;S.x=S.tx;S.y=S.ty;tick();}
     requestAnimationFrame(()=>requestAnimationFrame(initMap));
     window.addEventListener('resize',()=>{if(!detail.classList.contains('open'))fitAll();else clampDetailPos();});
