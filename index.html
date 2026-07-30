@@ -1023,20 +1023,38 @@
   <script>
     document.addEventListener('DOMContentLoaded',function(){
     const prefersReducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const revealObserver=prefersReducedMotion?null:new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        const elTallerThanViewport=entry.target.getBoundingClientRect().height>window.innerHeight;
-        const shouldShow=elTallerThanViewport?entry.isIntersecting:entry.intersectionRatio>=0.9;
-        entry.target.classList.toggle('in-view',shouldShow);
+    let revealTicking=false;
+    function checkReveals(){
+      const vh=window.innerHeight;
+      document.querySelectorAll('.reveal').forEach(function(el){
+        const r=el.getBoundingClientRect();
+        if(r.height<=0){ return; }
+        const elTallerThanViewport=r.height>vh;
+        const visibleTop=Math.max(0,r.top);
+        const visibleBottom=Math.min(vh,r.bottom);
+        const visibleHeight=Math.max(0,visibleBottom-visibleTop);
+        const ratio=visibleHeight/r.height;
+        const shouldShow=elTallerThanViewport?(visibleHeight>0):(ratio>=0.9);
+        el.classList.toggle('in-view',shouldShow);
       });
-    },{threshold:[0,0.9,1],rootMargin:'0px'});
+      revealTicking=false;
+    }
+    function requestRevealCheck(){
+      if(revealTicking)return;
+      revealTicking=true;
+      window.requestAnimationFrame(checkReveals);
+    }
     window.observeReveals=function(){
-      if(!revealObserver){
+      if(prefersReducedMotion){
         document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in-view');});
         return;
       }
-      document.querySelectorAll('.reveal').forEach(function(el){revealObserver.observe(el);});
+      checkReveals();
     };
+    if(!prefersReducedMotion){
+      window.addEventListener('scroll',requestRevealCheck,{passive:true});
+      window.addEventListener('resize',requestRevealCheck);
+    }
     window.observeReveals();
  
     const skipLink=document.getElementById('skipLink');
