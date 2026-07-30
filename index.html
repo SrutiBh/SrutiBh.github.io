@@ -222,9 +222,10 @@
       background:linear-gradient(180deg, rgba(15,23,42,.85) 0%, rgba(15,23,42,.85) 75%, rgba(15,23,42,0) 100%);
     } */
     body:not(.landing-active) .site-sidebar{ display:flex; }
-    .sidebar-top{ display:flex; flex-direction:column; gap:4rem; }
+    .sidebar-top{ display:flex; flex-direction:column; gap:0; }
     .sidebar-name{ position:relative; display:inline-block; text-align:left; }
     .sidebar-name-text{ font-family:'Lora',serif; font-weight:500; font-size:36px; line-height:1.25; color:#000; }
+    .sidebar-role{ font-family:var(--font-serif); font-size:1.15rem; font-weight:400; color:#2B3752; margin:.6rem 0 3rem 0; }
     .sidebar-nav{ display:flex; flex-direction:column; gap:32px; }
     .sidebar-nav-opt{
       font-family:var(--font-serif); font-size:1.3rem; font-weight:400;
@@ -274,7 +275,7 @@
     .view.active{display:block;animation:pfadeUp .35s ease both;}
     header.hero-bg.view.active{display:flex;}
     .view-kicker{font-size:1.55rem;font-weight:700;letter-spacing:.03em;color:var(--color-navy);margin:0 0 .85rem;}
-    .view-headline{font-family:'Lora',serif;font-weight:400;letter-spacing:-.01em;font-size:33px;line-height:1.04;color:var(--color-navy-dark);margin:0 0 1.4rem;}
+    .view-headline{font-family:'Comic Sans MS','Comic Neue','Comic Sans',cursive;font-weight:400;letter-spacing:-.01em;font-size:33px;line-height:1.04;color:var(--color-navy-dark);margin:0 0 1.4rem;}
     .view-sub{font-family:var(--font-serif);font-size:1.02rem;line-height:1.65;color:var(--color-text-muted);max-width:640px;margin:0 0 2.5rem;font-weight:400;}
  
     @keyframes pfadeUp{from{opacity:0}to{opacity:1}}
@@ -301,7 +302,7 @@
     /* Matches .about-desc-title exactly (same style used for "About Me" /
        "Education" / "Career Journey" on the Home page) so section names
        here read consistently with the rest of the site. */
-    .gallery-subhead{font-family:'Lora',serif;font-size:33px;font-weight:400;color:#2B3752;margin:2.5rem 0 1.1rem;}
+    .gallery-subhead{font-family:'Comic Sans MS','Comic Neue','Comic Sans',cursive;font-size:33px;font-weight:400;color:#2B3752;margin:2.5rem 0 1.1rem;}
     .my-other-work-heading{color:#2B3752;}
     .about-block:first-of-type .gallery-subhead{margin-top:0;}
  
@@ -332,7 +333,7 @@
     /* Heading matches .about-desc-title exactly (same class used for
        "About Me" / "Education" / "Career Journey") for visual consistency. */
     .contact-heading{
-      font-family:'Lora',serif;
+      font-family:'Comic Sans MS','Comic Neue','Comic Sans',cursive;
       font-size:33px;
       font-weight:400;
       color:#2B3752;
@@ -458,7 +459,7 @@
     }
     .about-bio{font-family:var(--font-serif);font-size:1.1rem;line-height:1.65;color:var(--color-text-muted);font-weight:400;}
  
-    .about-desc-title{font-family:'Lora',serif;font-size:33px;font-weight:400;color:#2B3752;margin:0 0 1.1rem 0;}
+    .about-desc-title{font-family:'Comic Sans MS','Comic Neue','Comic Sans',cursive;font-size:33px;font-weight:400;color:#2B3752;margin:0 0 1.1rem 0;}
     .about-desc-text{font-family:var(--font-serif);font-size:1.6rem;line-height:1.6;font-weight:400;color:#000;margin:0;text-align:justify;text-justify:inter-word;}
     .edu-transcript{display:flex;flex-direction:column;gap:1.25rem;}
     /* Career page specifically: title, map, and boxes all share the same
@@ -696,7 +697,7 @@
     .new-section{ background:#fff; padding:5rem 1rem 4rem; }
     .new-section-inner{ max-width:996px; margin:0 auto; }
     .new-section-heading{
-      font-family:'Lora',serif; font-weight:400; font-size:33px;
+      font-family:'Comic Sans MS','Comic Neue','Comic Sans',cursive; font-weight:400; font-size:33px;
       text-transform:none; letter-spacing:normal; color:#2B3752;
       margin:0 0 1.1rem 0;
     }
@@ -739,7 +740,7 @@
        ============================================================ */
     body:not(.landing-active)::before{
       content:''; position:absolute; inset:0; z-index:-1;
-      background:url('images/others/page_wallpaper.png') right top/420px auto no-repeat;
+      background:url('images/others/page_wallpaper.jpg') right top/420px auto no-repeat;
       opacity:.4;
     }
     body.landing-active #topbar{ display:none; }
@@ -821,6 +822,7 @@
       <span class="sidebar-name">
         <span class="sidebar-name-text">Sruti<br>Bhattacharjee</span>
       </span>
+      <p class="sidebar-role" data-i18n="home.kicker">UX Researcher &amp; Sensemaker</p>
       <nav class="sidebar-nav" id="sidebarNav">
         <button type="button" class="sidebar-nav-opt" data-view="home" data-i18n="menu.portfolio">Work</button>
         <button type="button" class="sidebar-nav-opt" data-view="about" data-i18n="menu.about">About</button>
@@ -852,7 +854,6 @@
         <div class="hero-greeting-lines" data-i18n="home.greeting">Hello there,<br>Sruti is here.</div>
         <!-- <img class="hero-side-avatar" src="images/others/selfi_anim2.png" alt="" onerror="this.style.display='none';"/> -->
       </div>
-      <p class="hero-kicker" data-i18n="home.kicker">UX Researcher &amp; Sensemaker</p>
       <p class="hero-tagline" data-i18n="home.tagline">I advocate for the human in human&ndash;AI interaction.</p>
     </div>
   </header>
