@@ -476,7 +476,7 @@
        its exact natural content width (also measured, not guessed), so
        the gap after the text ends up matching the gap before the logo
        automatically, and every line stays on one row (no wrap). */
-    .edu-row{display:flex;align-items:flex-start;gap:1.5rem;min-height:180px;background:#fff;padding:1.5rem 1.75rem;border:1.5px solid #dce2f0;border-left:10px solid #2B3752;border-right:10px solid #2B3752;border-radius:1.5rem;box-shadow:0 1px 4px rgba(21,32,61,.05);transition:box-shadow .22s,border-color .22s,transform .22s;width:996px;max-width:100%;align-self:center;}
+    .edu-row{display:flex;align-items:flex-start;gap:1.5rem;min-height:180px;background:#fff;padding:1.5rem 1.75rem;border:1.5px solid #dce2f0;border-left:3px solid #2B3752;border-right:3px solid #2B3752;border-radius:1.5rem;box-shadow:0 1px 4px rgba(21,32,61,.05);transition:box-shadow .22s,border-color .22s,transform .22s;width:996px;max-width:100%;align-self:center;}
     .edu-row-text h3{white-space:nowrap;}
     /* Fixed-size box wrapping every logo, sized to the largest logo (WBUT,
        132px). Since this box — not the image itself — is what the flex
@@ -522,7 +522,7 @@
     @keyframes bounceY{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
     .bounce-icon{animation:bounceY 2.2s ease-in-out infinite}
  
-    .jshell{position:relative;background:url('images/others/journey_map_bg.jpg') center/cover no-repeat;border-radius:1rem;overflow:hidden;box-shadow:0 16px 40px rgba(15,23,42,.14);transition:all .28s ease;overscroll-behavior:contain;margin-left:-1vw;margin-right:-1vw;}
+    .jshell{position:relative;background:url('images/others/journey_map_bg.jpg') center/cover no-repeat;border-radius:1rem;overflow:hidden;box-shadow:0 1px 4px rgba(21,32,61,.06);transition:all .28s ease;overscroll-behavior:contain;margin-left:-1vw;margin-right:-1vw;}
     .jicon-btn{width:34px;height:34px;border-radius:999px;border:1px solid rgba(255,255,255,.10);background:rgba(10,16,32,.26);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s,transform .15s,border-color .15s;font-family:var(--font-serif);font-size:.9rem;line-height:1;}
     .jicon-btn:hover{background:rgba(10,16,32,.38);border-color:rgba(255,255,255,.16);transform:translateY(-1px);}
     .jvp{position:relative;height:620px;overflow:hidden;touch-action:pan-y;overscroll-behavior:contain;cursor:default;background:none;transition:height .28s ease;}
@@ -2279,7 +2279,8 @@ const PLACES=[
       points.forEach(p => {
         const age = now - p.born;
         const growT = Math.min(1, age / SPREAD_DURATION);
-        const grown = 1 - Math.pow(1 - growT, 3);
+        const c1 = 1.70158, c3 = c1 + 1;
+        const grown = growT >= 1 ? 1 : 1 + c3 * Math.pow(growT - 1, 3) + c1 * Math.pow(growT - 1, 2);
         const radius = p.radius * grown;
  
         let wiggleAngle = 0, jitterX = 0, jitterY = 0;
