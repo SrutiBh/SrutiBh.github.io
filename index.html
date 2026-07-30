@@ -477,8 +477,8 @@
        the gap after the text ends up matching the gap before the logo
        automatically, and every line stays on one row (no wrap). */
     .edu-row{position:relative;display:flex;align-items:flex-start;gap:1.5rem;min-height:180px;background:#fff;padding:1.5rem 1.75rem;border:1.5px solid #dce2f0;border-radius:1.5rem;box-shadow:0 1px 4px rgba(21,32,61,.05);transition:box-shadow .22s,border-color .22s,transform .22s;width:996px;max-width:100%;align-self:center;}
-    .edu-row::before{ content:''; position:absolute; top:0; left:0; width:11px; height:11px; border-top:3px solid #2B3752; border-left:3px solid #2B3752; border-radius:1.5rem 0 0 0; pointer-events:none; }
-    .edu-row::after{ content:''; position:absolute; bottom:0; right:0; width:11px; height:11px; border-bottom:3px solid #2B3752; border-right:3px solid #2B3752; border-radius:0 0 1.5rem 0; pointer-events:none; }
+    .edu-row::before{ content:''; position:absolute; top:0; left:0; width:11px; height:11px; border-top:3px solid #2B3752; border-left:3px solid #2B3752; border-radius:.75rem 0 0 0; pointer-events:none; }
+    .edu-row::after{ content:''; position:absolute; bottom:0; right:0; width:11px; height:11px; border-bottom:3px solid #2B3752; border-right:3px solid #2B3752; border-radius:0 0 .75rem 0; pointer-events:none; }
     .edu-row-text h3{white-space:nowrap;}
     /* Fixed-size box wrapping every logo, sized to the largest logo (WBUT,
        132px). Since this box — not the image itself — is what the flex
@@ -2095,7 +2095,9 @@ const PLACES=[
       const contentHeight=inner.getBoundingClientRect().height;
       heroSection.style.height=wasHeightStyle;
       const heroExtraHeight=280; // breathing-room buffer around the content, split evenly top/bottom via justify-content:center; also leaves room for the scroll-down arrow
-      const target=Math.round(contentHeight+heroExtraHeight);
+      const contentTarget=Math.round(contentHeight+heroExtraHeight);
+      const viewportTarget=Math.round(window.innerHeight-95); // fills the viewport; -95 accounts for .new-section's 80px top padding plus a small visible sliver of the tabs
+      const target=Math.max(contentTarget, viewportTarget);
       if(target>0){
         heroSection.style.minHeight=target+'px';
         heroSection.style.height=target+'px';
@@ -2286,7 +2288,7 @@ const PLACES=[
       points.forEach(p => {
         const age = now - p.born;
         const growT = Math.min(1, age / SPREAD_DURATION);
-        const c1 = 3.5, c3 = c1 + 1;
+        const c1 = 6.5, c3 = c1 + 1;
         const grown = growT >= 1 ? 1 : 1 + c3 * Math.pow(growT - 1, 3) + c1 * Math.pow(growT - 1, 2);
         const radius = p.radius * grown;
  
