@@ -99,7 +99,8 @@
     .shadow-2xl{box-shadow:0 25px 50px -12px rgba(0,0,0,.25)}
     .bg-slate-700{background-color:var(--color-text-body)}
     .bg-slate-800{background-color:var(--color-footer-navy)}
-    .footer-bar{background-color:var(--n-green);color:var(--color-navy);text-align:center;padding:.4rem 3rem;margin-top:auto;}
+    .footer-pattern{width:100%;height:56px;background-image:url('images/others/footer.jpg');background-repeat:repeat-x;background-size:auto 100%;margin-top:auto;position:relative;z-index:90;}
+    .footer-bar{background-color:var(--n-green);color:#fff;font-family:'Nunito',sans-serif;text-align:center;padding:.4rem 3rem;position:relative;z-index:90;}
     @media(max-width:480px){.footer-bar{padding:1rem 1.25rem;}}
     @media(max-width:360px){.footer-bar{padding:1rem .75rem;font-size:.85rem;}}
     .footer-pre{background:#FFFFDE;text-align:center;padding:1.5rem 1.5rem;}
@@ -224,7 +225,7 @@
     .sidebar-nav-opt:hover{ font-weight:500; transform:scale(1.12); }
     .sidebar-nav-opt.active{ color:#000; font-weight:600; }
     .sidebar-nav-opt.active:hover{ font-weight:600; }
-    .sidebar-social{ display:flex; align-items:flex-end; gap:1.1rem; color:#000; margin-bottom:-1rem; }
+    .sidebar-social{ display:flex; align-items:flex-end; gap:1.1rem; color:#000; margin-bottom:135px; }
     .sidebar-social a{ color:inherit; display:flex; transition:transform .18s ease; }
     .sidebar-social a:hover{ color:#000; transform:scale(1.12); }
     .sidebar-social a:hover svg{ stroke-width:2.6; }
@@ -617,7 +618,7 @@
       --n-cream:#FAF6EE;
       --n-border:#E7E0D0;
       --n-pink:#FCD8E4;
-      --n-green:#064420;
+      --n-green:#1B4D3E;
       --n-blue:#B4E4F0;
     }
  
@@ -730,14 +731,13 @@
        ============================================================ */
     body.landing-active #topbar{ display:none; }
     body.landing-active .footer-pre,
+    body.landing-active .footer-pattern,
     body.landing-active .footer-bar{ display:none; }
     body:not(.landing-active) > .view:not(.landing-view){ margin-left:300px; width:calc(100% - 300px); }
     body:not(.landing-active) #main-content{ margin-left:calc(300px + (100% - 300px - 996px)/2); margin-right:auto; width:996px; }
-    body:not(.landing-active) .footer-bar{ margin-left:300px; }
     @media(max-width:900px){
       body:not(.landing-active) > .view:not(.landing-view){ margin-left:0; width:100%; }
       body:not(.landing-active) #main-content{ margin-left:0; width:100%; }
-      body:not(.landing-active) .footer-bar{ margin-left:0; }
     }
     .landing-view.active{ position:relative; min-height:100dvh; overflow:hidden; }
     .landing-layer{
@@ -1001,6 +1001,7 @@
   </main>
  
  
+  <div class="footer-pattern"></div>
   <footer class="footer-bar">
     <p>© Sruti Bhattacharjee. <span data-i18n="footer.rights">All rights reserved.</span></p>
   </footer>
