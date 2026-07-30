@@ -23,7 +23,7 @@
   <meta name="twitter:image" content="https://srutibhattacharjee.com/images/profile/glass_profile.jpeg">
  
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Nunito:wght@400;500;600;700;800&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
  
   <script type="application/ld+json">
   {
@@ -184,7 +184,7 @@
     }
  
     html{min-height:100%;overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%;}
-    body{font-family:var(--font-serif);background-color:#fff;display:flex;flex-direction:column;min-height:100vh;overflow-x:clip;margin:0;}
+    body{font-family:var(--font-serif);background-color:#fff;display:flex;flex-direction:column;min-height:100vh;overflow-x:clip;margin:0;position:relative;}
     body.project-page-active{background-color:var(--color-white);} /* project case study pages use a pure white background throughout, not the site's usual off-white */
     /* STICKY FOOTER — on short pages (e.g. Contact), pushes the footer block
        down to the bottom of the viewport instead of leaving a blank gap
@@ -214,7 +214,6 @@
       background:
         linear-gradient(90deg, rgba(255,255,255,.88) 0%, rgba(255,255,255,.88) 65%, rgba(255,255,255,1) 100%),
         url('images/others/red.jpg') center/cover no-repeat;
-      filter:blur(2px);
       z-index:-1;
     }
     /* .site-sidebar::after{
@@ -476,7 +475,9 @@
        its exact natural content width (also measured, not guessed), so
        the gap after the text ends up matching the gap before the logo
        automatically, and every line stays on one row (no wrap). */
-    .edu-row{display:flex;align-items:flex-start;gap:1.5rem;min-height:180px;background:#fff;padding:1.5rem 1.75rem;border:1.5px solid #dce2f0;border-left:3px solid #2B3752;border-right:3px solid #2B3752;border-radius:1.5rem;box-shadow:0 1px 4px rgba(21,32,61,.05);transition:box-shadow .22s,border-color .22s,transform .22s;width:996px;max-width:100%;align-self:center;}
+    .edu-row{position:relative;display:flex;align-items:flex-start;gap:1.5rem;min-height:180px;background:#fff;padding:1.5rem 1.75rem;border:1.5px solid #dce2f0;border-radius:1.5rem;box-shadow:0 1px 4px rgba(21,32,61,.05);transition:box-shadow .22s,border-color .22s,transform .22s;width:996px;max-width:100%;align-self:center;}
+    .edu-row::before{ content:''; position:absolute; top:0; left:0; width:11px; height:11px; border-top:3px solid #2B3752; border-left:3px solid #2B3752; border-radius:1.5rem 0 0 0; pointer-events:none; }
+    .edu-row::after{ content:''; position:absolute; bottom:0; right:0; width:11px; height:11px; border-bottom:3px solid #2B3752; border-right:3px solid #2B3752; border-radius:0 0 1.5rem 0; pointer-events:none; }
     .edu-row-text h3{white-space:nowrap;}
     /* Fixed-size box wrapping every logo, sized to the largest logo (WBUT,
        132px). Since this box — not the image itself — is what the flex
@@ -538,7 +539,7 @@
     .jisland.sel .jinner{transform:scale(1.07)}
  
     .jlabel{position:absolute;left:50%;top:-72px;transform:translateX(-50%);text-align:center;pointer-events:none;white-space:nowrap;}
-    .jcity{font-family:'Comic Sans MS','Comic Sans',cursive;font-size:3.6rem;font-weight:400;letter-spacing:.14em;color:#000;-webkit-font-smoothing:antialiased;}
+    .jcity{font-family:'Comic Sans MS','Comic Neue','Comic Sans',cursive;font-size:3.6rem;font-weight:400;letter-spacing:.14em;color:#000;-webkit-font-smoothing:antialiased;}
     .jtop{position:absolute;left:50%;top:28px;width:248px;height:148px;transform:translateX(-50%);clip-path:polygon(10% 24%,25% 10%,67% 6%,88% 20%,94% 48%,81% 76%,40% 91%,13% 77%,5% 48%);}
     .jrim{position:absolute;left:50%;top:155px;width:268px;height:22px;transform:translateX(-50%);clip-path:polygon(6% 24%,23% 2%,68% 0%,91% 18%,96% 54%,79% 100%,34% 100%,10% 82%,4% 52%);}
     .jbot{position:absolute;left:50%;top:164px;width:172px;height:130px;transform:translateX(-50%);background:linear-gradient(180deg,#a0714f 0%,#7a5235 50%,#5c3d22 100%);clip-path:polygon(26% 0,77% 0,100% 19%,84% 55%,63% 100%,40% 92%,17% 58%,0 18%);}
@@ -546,7 +547,7 @@
     .jtree::before{content:"";position:absolute;left:7px;bottom:0;width:5px;height:15px;background:#6b4423;border-radius:2px}
     .jtree::after{content:"";position:absolute;left:0;top:0;width:18px;height:28px;background:#22a855;clip-path:polygon(50% 0,100% 44%,76% 44%,100% 100%,0 100%,24% 44%,0 44%)}
     .jstone{position:absolute;width:10px;height:8px;background:#c8d6e0;border-radius:4px;opacity:.6}
-    .jyears{position:absolute;left:50%;top:314px;transform:translateX(-50%);width:340px;font-family:'Comic Sans MS','Comic Sans',cursive;font-size:2.1rem;font-weight:400;letter-spacing:.12em;color:#000;white-space:normal;pointer-events:none;text-align:center;line-height:1.3;-webkit-font-smoothing:antialiased;}
+    .jyears{position:absolute;left:50%;top:314px;transform:translateX(-50%);width:340px;font-family:'Comic Sans MS','Comic Neue','Comic Sans',cursive;font-size:2.1rem;font-weight:400;letter-spacing:.12em;color:#000;white-space:normal;pointer-events:none;text-align:center;line-height:1.3;-webkit-font-smoothing:antialiased;}
     .jmark-spire{position:absolute;left:50%;top:42px;transform:translateX(-50%);width:8px;height:38px}
     .jmark-spire::before{content:"";position:absolute;left:3px;bottom:0;width:2px;height:28px;background:rgba(240,246,255,.85)}
     .jmark-spire::after{content:"";position:absolute;left:50%;top:0;width:10px;height:10px;transform:translateX(-50%);border-radius:999px;background:rgba(225,238,255,.92)}
@@ -651,7 +652,7 @@
       margin:0 0 1.5rem 0;
     }
     .hero-greeting-lines{
-      font-family:var(--font-serif); font-size:38px; line-height:1.6;
+      font-family:'Comic Sans MS','Comic Neue','Comic Sans',cursive; font-size:38px; line-height:1.6;
       font-weight:400; color:#000; white-space:nowrap;
     }
     /* Height is set via JS (see syncHeroAvatarHeight below) to exactly
@@ -668,8 +669,8 @@
       object-fit:contain;
       margin-top:-9px;
     }
-    .hero-tagline{
-      font-family:var(--font-serif); font-size:2rem; line-height:1.6;
+    .hero-new-inner p.hero-tagline{
+      font-family:'Comic Sans MS','Comic Neue','Comic Sans',cursive; font-size:2rem; line-height:1.6;
       font-weight:400; color:#000; max-width:100%; margin:0; text-align:justify; text-justify:inter-word;
     }
     .hero-tagline-big{ font-size:33px; }
@@ -736,6 +737,11 @@
        into that point (same mechanic/timing as the earlier archway
        concept) and reveals the Home view.
        ============================================================ */
+    body:not(.landing-active)::before{
+      content:''; position:absolute; inset:0; z-index:-1;
+      background:url('images/others/page_wallpaper.png') right top/420px auto no-repeat;
+      opacity:.4;
+    }
     body.landing-active #topbar{ display:none; }
     body.landing-active .footer-pre{ display:none; }
     body:not(.landing-active) > .view:not(.landing-view){ margin-left:300px; width:calc(100% - 300px); }
@@ -844,7 +850,7 @@
       <h1 class="sr-only-hero-title" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;">Sruti Bhattacharjee</h1>
       <div class="hero-greeting-flex">
         <div class="hero-greeting-lines" data-i18n="home.greeting">Hello there,<br>Sruti is here.</div>
-        <img class="hero-side-avatar" src="images/others/selfi_anim2.png" alt="" onerror="this.style.display='none';"/>
+        <!-- <img class="hero-side-avatar" src="images/others/selfi_anim2.png" alt="" onerror="this.style.display='none';"/> -->
       </div>
       <p class="hero-kicker" data-i18n="home.kicker">UX Researcher &amp; Sensemaker</p>
       <p class="hero-tagline" data-i18n="home.tagline">I advocate for the human in human&ndash;AI interaction.</p>
@@ -2087,7 +2093,7 @@ const PLACES=[
       heroSection.style.height='auto';
       const contentHeight=inner.getBoundingClientRect().height;
       heroSection.style.height=wasHeightStyle;
-      const heroExtraHeight=160; // breathing-room buffer around the content, split evenly top/bottom via justify-content:center
+      const heroExtraHeight=280; // breathing-room buffer around the content, split evenly top/bottom via justify-content:center; also leaves room for the scroll-down arrow
       const target=Math.round(contentHeight+heroExtraHeight);
       if(target>0){
         heroSection.style.minHeight=target+'px';
@@ -2279,7 +2285,7 @@ const PLACES=[
       points.forEach(p => {
         const age = now - p.born;
         const growT = Math.min(1, age / SPREAD_DURATION);
-        const c1 = 1.70158, c3 = c1 + 1;
+        const c1 = 3.5, c3 = c1 + 1;
         const grown = growT >= 1 ? 1 : 1 + c3 * Math.pow(growT - 1, 3) + c1 * Math.pow(growT - 1, 2);
         const radius = p.radius * grown;
  
