@@ -854,7 +854,7 @@
         <div class="hero-greeting-lines reveal" data-i18n="home.greeting">Hi,<br>I'm Sruti</div>
         <!-- <img class="hero-side-avatar" src="images/others/selfi_anim2.png" alt="" onerror="this.style.display='none';"/> -->
       </div>
-      <p class="hero-tagline reveal" data-i18n="home.tagline">Sometimes I study users,<br>sometimes I act like them,<br>sometimes I introspect<br>and then,<br>I tell AI what to do &amp; not do.</p>
+      <p class="hero-tagline reveal" data-i18n="home.tagline">Sometimes I study users<br>Sometimes I act like them<br>Sometimes I introspect<br>And then,<br>I tell AI what to do &amp; not do</p>
     </div>
   </header>
  
@@ -1090,7 +1090,7 @@
         'home.bio':"I'm a mixed-method UX Research practitioner with a background in Multimodal Perception Analysis and Visual Computing. My interdisciplinary experience in AI and Human\u2013Computer Interaction helps me uncover user needs and challenges to shape interactive, accessible, and immersive experiences. I aspire to advance ethical human\u2013AI symbiosis through evidence-based product decisions.",
         'home.greeting':"Hi,<br>I'm Sruti",
         'home.kicker':"UX Research Portfolio",
-        'home.tagline':"Sometimes I study users,<br>sometimes I act like them,<br>sometimes I introspect<br>and then,<br>I tell AI what to do & not do.",
+        'home.tagline':"Sometimes I study users<br>Sometimes I act like them<br>Sometimes I introspect<br>And then,<br>I tell AI what to do & not do",
         'home.quote':"Come in, get comfortable, stay a while.",
         'contact.heading':"Let's Work Together",
         'gallery.travel':'Some Sunsets I Enjoyed','gallery.paintings':'Paintings','gallery.other':'Other','gallery.books':'Some Books From My Shelf',
@@ -2096,7 +2096,7 @@ const PLACES=[
       heroSection.style.height=wasHeightStyle;
       const heroExtraHeight=80; // breathing-room buffer around the content, split evenly top/bottom via justify-content:center
       const contentTarget=Math.round(contentHeight+heroExtraHeight);
-      const viewportTarget=Math.round((window.innerHeight-95)*0.7); // increased from half toward more of the viewport-filling height
+      const viewportTarget=Math.round((window.innerHeight-95)*0.9); // increased further toward the viewport-filling height
       const target=Math.max(contentTarget, viewportTarget);
       if(target>0){
         heroSection.style.minHeight=target+'px';
