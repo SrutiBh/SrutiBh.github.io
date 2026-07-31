@@ -224,8 +224,8 @@
     body:not(.landing-active) .site-sidebar{ display:flex; }
     .sidebar-top{ display:flex; flex-direction:column; gap:0; }
     .sidebar-name{ position:relative; display:inline-block; text-align:left; }
-    .sidebar-name-text{ font-family:'Lora',serif; font-weight:500; font-size:36px; line-height:1.25; color:#000; }
-    .sidebar-role{ font-family:var(--font-serif); font-size:1.15rem; font-weight:400; color:#2B3752; margin:.6rem 0 3rem 0; }
+    .sidebar-name-text{ font-family:'Lora',serif; font-weight:700; font-size:36px; line-height:1.25; color:#000; }
+    .sidebar-role{ font-family:var(--font-serif); font-size:1.15rem; font-weight:600; color:#2B3752; margin:.6rem 0 3rem 0; }
     .sidebar-nav{ display:flex; flex-direction:column; gap:32px; }
     .sidebar-nav-opt{
       font-family:var(--font-serif); font-size:1.3rem; font-weight:400;
@@ -638,7 +638,7 @@
     }
     header.hero-new.view.active{display:flex;}
     #heroTrailCanvas{ position:absolute; inset:0; z-index:0; pointer-events:none; }
-    .hero-new-inner{ position:relative; z-index:1; max-width:1180px; width:100%; margin:0 auto; }
+    .hero-new-inner{ position:relative; z-index:1; max-width:1180px; width:100%; margin-left:136px; margin-right:auto; }
     .hero-new-inner h1{
       font-family:var(--font-serif); font-weight:700; letter-spacing:normal;
       text-transform:none; font-size:clamp(1.5rem,5.5vw,3rem); line-height:1.05;
@@ -822,7 +822,7 @@
       <span class="sidebar-name">
         <span class="sidebar-name-text">Sruti<br>Bhattacharjee</span>
       </span>
-      <p class="sidebar-role" data-i18n="home.kicker">UX Researcher &amp; Sensemaker</p>
+      <p class="sidebar-role" data-i18n="home.kicker">UX Research Portfolio</p>
       <nav class="sidebar-nav" id="sidebarNav">
         <button type="button" class="sidebar-nav-opt" data-view="home" data-i18n="menu.portfolio">Work</button>
         <button type="button" class="sidebar-nav-opt" data-view="about" data-i18n="menu.about">About</button>
@@ -1089,7 +1089,7 @@
         'lbl.backToWork':'Back to Work',
         'home.bio':"I'm a mixed-method UX Research practitioner with a background in Multimodal Perception Analysis and Visual Computing. My interdisciplinary experience in AI and Human\u2013Computer Interaction helps me uncover user needs and challenges to shape interactive, accessible, and immersive experiences. I aspire to advance ethical human\u2013AI symbiosis through evidence-based product decisions.",
         'home.greeting':"Hi,<br>I'm Sruti",
-        'home.kicker':"UX Researcher &amp; Sensemaker",
+        'home.kicker':"UX Research Portfolio",
         'home.tagline':"Sometimes I study users,<br>sometimes I act like them,<br>sometimes I introspect<br>and then,<br>I tell AI what to do & not do.",
         'home.quote':"Come in, get comfortable, stay a while.",
         'contact.heading':"Let's Work Together",
@@ -2096,7 +2096,7 @@ const PLACES=[
       heroSection.style.height=wasHeightStyle;
       const heroExtraHeight=80; // breathing-room buffer around the content, split evenly top/bottom via justify-content:center
       const contentTarget=Math.round(contentHeight+heroExtraHeight);
-      const viewportTarget=Math.round((window.innerHeight-95)/2); // half the previous viewport-filling height
+      const viewportTarget=Math.round((window.innerHeight-95)*0.7); // increased from half toward more of the viewport-filling height
       const target=Math.max(contentTarget, viewportTarget);
       if(target>0){
         heroSection.style.minHeight=target+'px';
