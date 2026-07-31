@@ -638,7 +638,7 @@
     }
     header.hero-new.view.active{display:flex;}
     #heroTrailCanvas{ position:absolute; inset:0; z-index:0; pointer-events:none; }
-    .hero-new-inner{ position:relative; z-index:1; max-width:996px; width:100%; margin:0 auto; }
+    .hero-new-inner{ position:relative; z-index:1; max-width:1180px; width:100%; margin:0 auto; }
     .hero-new-inner h1{
       font-family:var(--font-serif); font-weight:700; letter-spacing:normal;
       text-transform:none; font-size:clamp(1.5rem,5.5vw,3rem); line-height:1.05;
@@ -653,7 +653,7 @@
       margin:0 0 1.5rem 0;
     }
     .hero-greeting-lines{
-      font-family:'Comic Sans MS','Comic Neue','Comic Sans',cursive; font-size:38px; line-height:1.6;
+      font-family:var(--font-serif); font-size:38px; line-height:1.6;
       font-weight:400; color:#000; white-space:nowrap;
     }
     /* Height is set via JS (see syncHeroAvatarHeight below) to exactly
@@ -671,8 +671,8 @@
       margin-top:-9px;
     }
     .hero-new-inner p.hero-tagline{
-      font-family:'Comic Sans MS','Comic Neue','Comic Sans',cursive; font-size:2rem; line-height:1.6;
-      font-weight:400; color:#000; max-width:100%; margin:0; text-align:justify; text-justify:inter-word;
+      font-family:var(--font-serif); font-size:2rem; line-height:1.6;
+      font-weight:400; color:#000; max-width:100%; margin:0; text-align:left;
     }
     .hero-tagline-big{ font-size:33px; }
     .hero-new-inner p.hero-kicker{
@@ -822,7 +822,7 @@
       <span class="sidebar-name">
         <span class="sidebar-name-text">Sruti<br>Bhattacharjee</span>
       </span>
-      <p class="sidebar-role" data-i18n="home.kicker">UX Researcher Portfolio</p>
+      <p class="sidebar-role" data-i18n="home.kicker">UX Researcher &amp; Sensemaker</p>
       <nav class="sidebar-nav" id="sidebarNav">
         <button type="button" class="sidebar-nav-opt" data-view="home" data-i18n="menu.portfolio">Work</button>
         <button type="button" class="sidebar-nav-opt" data-view="about" data-i18n="menu.about">About</button>
@@ -851,10 +851,10 @@
       <!-- <h1>Sruti Bhattacharjee</h1> -->
       <h1 class="sr-only-hero-title" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;">Sruti Bhattacharjee</h1>
       <div class="hero-greeting-flex">
-        <div class="hero-greeting-lines reveal" data-i18n="home.greeting">Hello there,<br>Sruti is here.</div>
+        <div class="hero-greeting-lines reveal" data-i18n="home.greeting">Hi,<br>I'm Sruti</div>
         <!-- <img class="hero-side-avatar" src="images/others/selfi_anim2.png" alt="" onerror="this.style.display='none';"/> -->
       </div>
-      <p class="hero-tagline reveal" data-i18n="home.tagline"> Sometimes I study users,<br> sometimes I act like them,<br>sometimes I introspect<br> and then,<br> I tell AI what to do & not do.</p>
+      <p class="hero-tagline reveal" data-i18n="home.tagline">Sometimes I study users,<br>sometimes I act like them,<br>sometimes I introspect<br>and then,<br>I tell AI what to do &amp; not do.</p>
     </div>
   </header>
  
@@ -1089,8 +1089,8 @@
         'lbl.backToWork':'Back to Work',
         'home.bio':"I'm a mixed-method UX Research practitioner with a background in Multimodal Perception Analysis and Visual Computing. My interdisciplinary experience in AI and Human\u2013Computer Interaction helps me uncover user needs and challenges to shape interactive, accessible, and immersive experiences. I aspire to advance ethical human\u2013AI symbiosis through evidence-based product decisions.",
         'home.greeting':"Hi,<br>I'm Sruti",
-        'home.kicker':"UX Research Portfolio",
-        'home.tagline':"Sometimes I study users,<br> sometimes I act like them,<br>sometimes I introspect<br> and then,<br> I tell AI what to do & not do.",
+        'home.kicker':"UX Researcher &amp; Sensemaker",
+        'home.tagline':"Sometimes I study users,<br>sometimes I act like them,<br>sometimes I introspect<br>and then,<br>I tell AI what to do & not do.",
         'home.quote':"Come in, get comfortable, stay a while.",
         'contact.heading':"Let's Work Together",
         'gallery.travel':'Some Sunsets I Enjoyed','gallery.paintings':'Paintings','gallery.other':'Other','gallery.books':'Some Books From My Shelf',
@@ -1142,7 +1142,7 @@
         'lbl.backToWork':'Retour aux Travaux',
         'home.bio':"Je suis une praticienne en recherche UX \u00e0 m\u00e9thodes mixtes, avec une formation en analyse de la perception multimodale et en informatique visuelle. Mon exp\u00e9rience interdisciplinaire en IA et en interaction homme-machine m'aide \u00e0 cerner les besoins et les difficult\u00e9s des utilisateurs afin de fa\u00e7onner des exp\u00e9riences interactives, accessibles et immersives. J'aspire \u00e0 faire progresser une symbiose \u00e9thique entre l'humain et l'IA \u00e0 travers des d\u00e9cisions produit fond\u00e9es sur des donn\u00e9es probantes.",
         'home.greeting':"Bonjour<br>Je suis Sruti",
-        'home.kicker':"Chercheuse UX Portfolio",
+        'home.kicker':"Chercheuse UX &amp; Sensemaker",
         'home.tagline':"Je d\u00e9fends l'humain dans l'interaction humain\u2013IA.",
         'home.quote':"Entrez, installez-vous, restez un moment.",
         'contact.heading':'Travaillons Ensemble',
@@ -1197,7 +1197,7 @@
         'lbl.backToWork':'Tillbaka till Arbete',
         'home.bio':'Jag \u00e4r en UX-forskare med blandade metoder och en bakgrund inom multimodal perceptionsanalys och visuell databehandling. Min tv\u00e4rvetenskapliga erfarenhet inom AI och m\u00e4nniska-datorinteraktion hj\u00e4lper mig att f\u00f6rst\u00e5 anv\u00e4ndares behov och utmaningar f\u00f6r att forma interaktiva, tillg\u00e4ngliga och uppslukande upplevelser. Jag str\u00e4var efter att fr\u00e4mja en etisk symbios mellan m\u00e4nniska och AI genom evidensbaserade produktbeslut.',
         'home.greeting':'Hej Hej<br>Jag \u00e4r Sruti',
-        'home.kicker':'UX-forskare Portfolio',
+        'home.kicker':'UX-forskare &amp; Sensemaker',
         'home.tagline':'Jag talar f\u00f6r m\u00e4nniskan i m\u00e4nniska\u2013AI-interaktion.',
         'home.quote':'Kom in, g\u00f6r dig hemmastadd, stanna ett tag.',
         'contact.heading':'L\u00e5t Oss Samarbeta',
@@ -1252,7 +1252,7 @@
         'lbl.backToWork':'Zur\u00fcck zu Arbeiten',
         'home.bio':'Ich bin eine UX-Researcherin mit gemischten Methoden und einem Hintergrund in multimodaler Wahrnehmungsanalyse und visuellem Computing. Meine interdisziplin\u00e4re Erfahrung in KI und Mensch-Computer-Interaktion hilft mir, Nutzerbed\u00fcrfnisse und Herausforderungen zu erkennen, um interaktive, barrierefreie und immersive Erlebnisse zu gestalten. Ich strebe danach, eine ethische Mensch-KI-Symbiose durch evidenzbasierte Produktentscheidungen voranzutreiben.',
         'home.greeting':'Gr\u00fcezi,<br>Ich bin Sruti',
-        'home.kicker':'UX-Researcherin Portfolio',
+        'home.kicker':'UX-Researcherin &amp; Sensemaker',
         'home.tagline':'Ich setze mich f\u00fcr den Menschen in der Mensch\u2013KI-Interaktion ein.',
         'home.quote':'Komm rein, mach es dir bequem, bleib eine Weile.',
         'contact.heading':'Lass Uns Zusammenarbeiten',
@@ -1307,7 +1307,7 @@
         'lbl.backToWork':'Tilbake til Arbeid',
         'home.bio':'Jeg er en UX-forsker med blandede metoder og bakgrunn innen multimodal persepsjonsanalyse og visuell databehandling. Min tverrfaglige erfaring innen AI og menneske-maskin-interaksjon hjelper meg med \u00e5 avdekke brukerbehov og utfordringer for \u00e5 forme interaktive, tilgjengelige og oppslukende opplevelser. Jeg \u00f8nsker \u00e5 fremme en etisk symbiose mellom menneske og AI gjennom evidensbaserte produktbeslutninger.',
         'home.greeting':'Hei Hei<br>Jeg er Sruti',
-        'home.kicker':'UX-forsker Portfolio',
+        'home.kicker':'UX-forsker &amp; Sensemaker',
         'home.tagline':'Jeg taler menneskets sak i menneske\u2013AI-interaksjon.',
         'home.quote':'Kom inn, gj\u00f8r deg hjemme, bli en stund.',
         'contact.heading':'La Oss Samarbeide',
@@ -2287,14 +2287,11 @@ const PLACES=[
  
       points.forEach(p => {
         const age = now - p.born;
-        const growT = Math.min(1, age / SPREAD_DURATION);
-        const overshootStart = 1.3;
-        const c1 = 3, c3 = c1 + 1;
-        const eased = growT >= 1 ? 1 : 1 + c3 * Math.pow(growT - 1, 3) + c1 * Math.pow(growT - 1, 2);
-        const grown = overshootStart - (overshootStart - 1) * eased;
+        const growT = Math.min(1, age / 90);
+        const grown = 1 - Math.pow(1 - growT, 2); // quick simple grow-in; the thrown feel now comes from squash/stretch below, not from the blob itself inflating and deflating
         const radius = p.radius * grown;
- 
-        let wiggleAngle = 0, jitterX = 0, jitterY = 0;
+
+        let wiggleAngle = 0, jitterX = 0, jitterY = 0, stretchAngle = 0, stretchX = 1, stretchY = 1;
         if(age < SETTLE_DURATION){
           const dt = Math.min(16, 1000/60);
           p.x += p.vx * (dt/1000);
@@ -2302,6 +2299,15 @@ const PLACES=[
           const friction = Math.pow(0.02, dt/SETTLE_DURATION);
           p.vx *= friction;
           p.vy *= friction;
+
+          // squash-and-stretch: elongate along the direction of travel while
+          // moving fast (like a thrown ball), compress perpendicular to
+          // conserve volume, relax back toward a circle as it slows and settles
+          const speed = Math.hypot(p.vx, p.vy);
+          const stretchAmount = Math.min(0.55, speed / 260);
+          stretchAngle = Math.atan2(p.vy, p.vx);
+          stretchX = 1 + stretchAmount;
+          stretchY = 1 / (1 + stretchAmount * 0.7);
         } else {
           const t = now/1000 * p.wiggleSpeed + p.wigglePhase;
           wiggleAngle = Math.sin(t) * 0.16;
@@ -2320,7 +2326,8 @@ const PLACES=[
  
         ctx.save();
         ctx.translate(p.x + jitterX, p.y + jitterY);
-        ctx.rotate(wiggleAngle);
+        ctx.rotate(wiggleAngle + stretchAngle);
+        ctx.scale(stretchX, stretchY);
  
         ctx.beginPath();
         ctx.moveTo(radius, 0);
