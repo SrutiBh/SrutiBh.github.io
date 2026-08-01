@@ -241,7 +241,7 @@
        keyframes below) so it stays noticeable even after a while.
        ---------------------------------------------------------------- */
     .sidebar-toggle-btn{
-      position:fixed; top:50vh; left:300px; z-index:85;
+      position:fixed; top:50vh; left:278px; z-index:85;
       width:44px; height:44px;
       transform:translate(-50%,-50%);
       display:flex; align-items:center; justify-content:center;
@@ -887,7 +887,7 @@
        below for that override. */
     .margin-nav-strip{
       position:sticky; top:0; z-index:50;
-      background:#fff;
+      background-color:#fff; opacity:1;
       border-bottom:1px solid var(--n-border);
       padding:1.25rem 3rem;
     }
@@ -911,7 +911,7 @@
     .margin-nav-btn{
       font-family:var(--font-serif); font-weight:500; font-size:1rem;
       color:#3a4a5a; white-space:nowrap; flex-shrink:0;
-      background:#eef1f5;
+      background-color:#eef1f5; opacity:1;
       border:none; border-radius:999px; padding:.6rem 1.3rem;
       cursor:pointer; position:relative;
       box-shadow:
@@ -942,7 +942,7 @@
     body.margin-view-active.sidebar-collapsed .footer-sticky-wrap{ left:0; }
     body.margin-view-active .margin-nav-strip{
       position:fixed; top:auto; bottom:64.78px; left:300px; right:0; z-index:94;
-      border-bottom:none; border-top:1px solid var(--n-border);
+      border-bottom:none; border-top:none;
     }
     body.margin-view-active.sidebar-collapsed .margin-nav-strip{ left:0; }
     /* Leaves room at the bottom of the page so the last chapter's
