@@ -230,8 +230,8 @@
        reachable whether the sidebar is open or hidden.
        ---------------------------------------------------------------- */
     @keyframes sidebarTogglePop{
-      0%, 92%, 100%{ transform:translate(-50%,-50%) scale(1); }
-      95%{ transform:translate(-50%,-50%) scale(1.15); }
+      0%, 92%, 100%{ transform:scale(1); }
+      95%{ transform:scale(1.15); }
     }
 
     body.sidebar-collapsed .site-sidebar{ display:none !important; }
@@ -250,13 +250,16 @@
        stays noticeable even after a while. */
     .sidebar-minimize-btn{
       position:fixed; top:1rem; left:195px; z-index:85;
-      width:2.4rem; height:2.4rem;
+      width:34px; height:34px;
       display:flex; align-items:center; justify-content:center;
       background:none; border:none; cursor:pointer; padding:0;
       filter:drop-shadow(0 3px 6px rgba(60,70,90,.3));
-      transition:left .3s ease, transform .12s ease;
+      transition:left .3s ease, top .3s ease, transform .12s ease;
       animation:sidebarTogglePop 10s ease-in-out infinite;
     }
+    /* On the M.A.R.G.I.N. page specifically, line up with the vertical
+       center of the circular scroll-arrow buttons in the chapter strip. */
+    body.margin-view-active .sidebar-minimize-btn{ top:18.48px; }
     body.sidebar-collapsed .sidebar-minimize-btn{ left:16px; }
     body.sidebar-collapsed .sidebar-minimize-btn svg{ transform:scaleX(-1); }
     .sidebar-minimize-btn:hover{ transform:scale(1.06); }
@@ -637,8 +640,19 @@
     .lang-current{ font-size:1.3rem; }
     .site-lang-topright{ position:fixed; top:1.5rem; right:1.5rem; z-index:85; display:none; }
     body:not(.landing-active) .site-lang-topright{ display:block; }
-    body.margin-view-active .site-lang-topright{ top:23.5px; }
-    .site-lang-topright .lang-btn{ font-size:1.3rem; }
+    body.margin-view-active .site-lang-topright{ top:18.48px; }
+    /* 3D glossy circle matching the sidebar toggle's exact size/style -
+       chevron icon hidden since there's no room for both it and the
+       language code at this size; the dropdown still opens the same
+       way on click. */
+    .site-lang-topright .lang-btn{
+      width:34px; height:34px; border-radius:50%;
+      background:linear-gradient(135deg,#FFFCFB 0%,#ece6e4 100%);
+      box-shadow:2px 2px 5px rgba(163,177,198,.5), -2px -2px 5px rgba(255,255,255,.85);
+      font-size:.95rem; gap:0;
+    }
+    .site-lang-topright .lang-btn svg.chev{ display:none; }
+    .site-lang-topright .lang-btn:hover{ transform:scale(1.06); }
     @media(max-width:900px){ .site-lang-topright{ display:none !important; } }
     .lang-dd.open .lang-btn{ font-weight:500; }
     .lang-btn svg.chev{flex-shrink:0;transition:transform .18s ease;}
@@ -917,12 +931,12 @@
        give a click target that works with any input device. */
     .margin-nav-arrow{
       flex-shrink:0; width:34px; height:34px; border-radius:50%;
-      background:#fdeeee; border:none; cursor:pointer;
+      background:#FFFCFB; border:none; cursor:pointer;
       display:flex; align-items:center; justify-content:center;
       color:#000;
       box-shadow:2px 2px 5px rgba(163,177,198,.5), -2px -2px 5px rgba(255,255,255,.85);
     }
-    .margin-nav-arrow:hover{ background:#fbe0e0; }
+    .margin-nav-arrow:hover{ background:#f7f0ee; }
     .margin-nav-arrow:disabled{ opacity:.35; cursor:default; box-shadow:none; }
 
     /* ----------------------------------------------------------------
@@ -1165,14 +1179,17 @@
   </div>
 
   <button type="button" class="sidebar-minimize-btn" id="sidebarMinimizeBtn" aria-label="Hide menu">
-    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="34" viewBox="0 0 30 34">
+    <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34">
       <defs>
-        <linearGradient id="minimizeBtnGrad" x1="20%" y1="10%" x2="90%" y2="95%">
-          <stop offset="0%" stop-color="#4a5c80"/>
-          <stop offset="100%" stop-color="#1c2739"/>
+        <linearGradient id="minimizeBtnGrad" x1="15%" y1="10%" x2="90%" y2="95%">
+          <stop offset="0%" stop-color="#FFFCFB"/>
+          <stop offset="100%" stop-color="#ece6e4"/>
         </linearGradient>
       </defs>
-      <polygon points="3,17 17,3 27,3 13,17 27,31 17,31" fill="url(#minimizeBtnGrad)"/>
+      <circle cx="17" cy="17" r="16" fill="url(#minimizeBtnGrad)"/>
+      <rect x="9" y="9" width="16" height="16" rx="3" fill="none" stroke="#5a5a5a" stroke-width="2"/>
+      <line x1="15" y1="9" x2="15" y2="25" stroke="#5a5a5a" stroke-width="2"/>
+      <path d="M12.5 14L10 17L12.5 20" stroke="#5a5a5a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
     </svg>
   </button>
 
