@@ -241,29 +241,29 @@
        keyframes below) so it stays noticeable even after a while.
        ---------------------------------------------------------------- */
     .sidebar-toggle-btn{
-      position:fixed; top:50vh; left:228px; z-index:85;
-      width:44px; height:44px;
+      position:fixed; top:50vh; left:241px; z-index:85;
+      width:18px; height:60px;
       transform:translate(-50%,-50%);
       display:flex; align-items:center; justify-content:center;
-      background:none; border:none; border-radius:50%;
+      background:none; border:none; border-radius:9px;
       padding:0; cursor:pointer;
       box-shadow:
-        5px 5px 10px rgba(60,70,90,.35),
-        -5px -5px 10px rgba(255,255,255,.85);
+        3px 3px 7px rgba(60,70,90,.35),
+        -3px -3px 7px rgba(255,255,255,.85);
       transition:left .3s ease, box-shadow .15s ease;
       animation:sidebarTogglePop 10s ease-in-out infinite;
     }
     .sidebar-toggle-btn:hover{
       box-shadow:
-        6px 6px 12px rgba(60,70,90,.4),
-        -6px -6px 12px rgba(255,255,255,.9);
+        4px 4px 9px rgba(60,70,90,.4),
+        -4px -4px 9px rgba(255,255,255,.9);
     }
     .sidebar-toggle-btn:active{
       box-shadow:
-        inset 3px 3px 6px rgba(60,70,90,.4),
-        inset -3px -3px 6px rgba(255,255,255,.8);
+        inset 2px 2px 5px rgba(60,70,90,.4),
+        inset -2px -2px 5px rgba(255,255,255,.8);
     }
-    body.sidebar-collapsed .sidebar-toggle-btn{ left:38px; }
+    body.sidebar-collapsed .sidebar-toggle-btn{ left:25px; }
     body.sidebar-collapsed .sidebar-toggle-btn svg{ transform:scaleX(-1); }
     @keyframes sidebarTogglePop{
       0%, 92%, 100%{ transform:translate(-50%,-50%) scale(1); }
@@ -906,7 +906,7 @@
       position:sticky; top:0; z-index:50;
       background-color:#fff; opacity:1;
       border-bottom:1px solid var(--n-border);
-      padding:1.25rem 1.5rem;
+      padding:1.75rem 1.5rem;
       display:flex; align-items:center; gap:.75rem;
     }
     .margin-nav-inner{
@@ -954,10 +954,12 @@
     }
     .margin-nav-btn:hover{ transform:translateY(-1px); }
     .margin-nav-btn.active{
-      color:#000; font-weight:550;
+      color:#000; font-weight:700;
+      background-color:#fdeeee;
       box-shadow:
-        inset 3px 3px 6px rgba(163,177,198,.6),
-        inset -3px -3px 6px rgba(255,255,255,.85);
+        inset 5px 5px 10px rgba(163,177,198,.85),
+        inset -5px -5px 10px rgba(255,255,255,.9),
+        inset 0 -8px 14px rgba(120,90,90,.4);
       transform:none;
     }
 
@@ -976,8 +978,35 @@
     body.margin-view-active .margin-nav-strip{
       position:fixed; top:auto; bottom:64.78px; left:250px; right:0; z-index:94;
       border-bottom:none; border-top:none;
+      transition:transform .3s ease;
     }
     body.margin-view-active.sidebar-collapsed .margin-nav-strip{ left:0; }
+    /* Slides the whole chapter-nav strip straight down until it's
+       tucked behind the footer (which sits at z-index:95, above the
+       strip's own 94) - toggled via the small handle tab, in JS
+       (search "marginNavCollapseHandle"). */
+    .margin-nav-strip.nav-tucked{ transform:translateY(100%); }
+
+    /* Small dark tab straddling the strip's top edge, centered
+       horizontally - independently fixed (a sibling, not a descendant,
+       of the strip) so it stays reachable at the same spot on screen
+       even while the strip itself slides down and out of view beneath
+       it. Its own bottom position is toggled alongside the strip so it
+       stays sitting right on the strip's (possibly now-hidden) edge. */
+    .margin-nav-collapse-handle{
+      display:none;
+      position:fixed; bottom:calc(64.78px + 40px); left:50%;
+      transform:translateX(-50%);
+      width:44px; height:14px; border-radius:7px 7px 0 0;
+      background:#fdeeee; border:none; cursor:pointer;
+      box-shadow:0 -2px 6px rgba(163,177,198,.35);
+      z-index:96;
+      transition:bottom .3s ease, border-radius .3s ease;
+    }
+    body.margin-view-active .margin-nav-collapse-handle{ display:block; }
+    .margin-nav-collapse-handle.nav-tucked{
+      bottom:64.78px; border-radius:0 0 7px 7px;
+    }
     /* Leaves room at the bottom of the page so the last chapter's
        content doesn't end up hidden behind the now-fixed nav+footer. */
     body.margin-view-active #marginProjectView{ padding-bottom:150px; }
@@ -1142,9 +1171,9 @@
   </div>
 
   <button type="button" class="sidebar-toggle-btn" id="sidebarToggleBtn" aria-label="Hide menu">
-    <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 44 44">
-      <circle cx="22" cy="22" r="20" fill="#fdeeee"/>
-      <path d="M25 14L17 22L25 30" stroke="#3a4a5c" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="60" viewBox="0 0 18 60">
+      <rect x="1" y="1" width="16" height="58" rx="8" fill="#fdeeee"/>
+      <path d="M11 22L7 30L11 38" stroke="#3a4a5c" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
     </svg>
   </button>
 
@@ -1247,7 +1276,8 @@
          value on each button must match the id="" on that chapter's
          <section> further down — that's what makes clicking it scroll
          to the right place. -->
-    <div class="margin-nav-strip">
+    <button type="button" class="margin-nav-collapse-handle" id="marginNavCollapseHandle" aria-label="Hide chapter navigation"></button>
+    <div class="margin-nav-strip" id="marginNavStrip">
       <button type="button" class="margin-nav-arrow margin-nav-arrow-left" id="marginNavArrowLeft" aria-label="Scroll chapters left">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
       </button>
@@ -2018,6 +2048,20 @@
       window.__updateMarginNavArrows=updateArrowState;
     })();
 
+    /* Nav-strip collapse handle — click the small dark tab to tuck the
+       whole chapter nav strip down behind the footer, freeing up the
+       screen; click it again to bring the strip back. */
+    (function(){
+      const handle=document.getElementById('marginNavCollapseHandle');
+      const strip=document.getElementById('marginNavStrip');
+      if(!handle||!strip)return;
+      handle.addEventListener('click',function(){
+        const tucked=strip.classList.toggle('nav-tucked');
+        handle.classList.toggle('nav-tucked',tucked);
+        handle.setAttribute('aria-label',tucked?'Show chapter navigation':'Hide chapter navigation');
+      });
+    })();
+
     /* Margin chapter scroll-spy — as you scroll through the M.A.R.G.I.N.
        page's chapters, this watches which one is currently most visible
        and marks that chapter's nav button as .active (giving it the
@@ -2621,4 +2665,3 @@ const PLACES=[
   </script>
 </body>
 </html>
- 
