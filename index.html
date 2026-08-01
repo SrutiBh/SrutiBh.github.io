@@ -800,6 +800,172 @@
       transition:opacity .5s ease;
     }
     .landing-whiteout.active{ opacity:1; }
+
+    /* ================================================================
+       PROJECT M.A.R.G.I.N. — "Feeling Vision for Graph Navigation"
+       ================================================================
+       This project's detail page is built differently from the other
+       (prose/case-study) project pages: it's a slide deck. One big
+       section per topic (Overview, Team, Research Strategy, Research
+       Activities, Research Synthesis, Impact, Business Opportunity,
+       Personal Reflections), each roughly one screen tall, with a
+       row of jump-buttons pinned near the top that scroll straight to
+       any section. No Portfolio/Interests tabs appear on this page —
+       it's a standalone view, separate from the rest of the site's tab
+       system.
+
+       The actual HTML for each slide lives further down this file, in
+       the <section data-view="margin" id="marginProjectView"> block —
+       search for "CHAPTER 1", "CHAPTER 2" etc. to jump straight to a
+       given slide's content and edit it directly; it's all plain HTML,
+       no JS template involved.
+       ================================================================ */
+
+    /* Jump-nav strip — sits at the top of the page, one button per
+       chapter. Sticky so it stays reachable while scrolling through
+       the slides below. */
+    .margin-nav-strip{
+      position:sticky; top:0; z-index:50;
+      background:#fff;
+      border-bottom:1px solid var(--n-border);
+      padding:1.5rem 3rem;
+    }
+    .margin-nav-inner{
+      max-width:1400px; margin:0 auto;
+      display:flex; flex-wrap:wrap; gap:.75rem 1.5rem;
+      justify-content:center;
+    }
+    .margin-nav-btn{
+      font-family:var(--font-serif); font-size:1.05rem; font-weight:400;
+      color:#2B3752; background:none; border:none; cursor:pointer;
+      padding:.3rem .1rem; position:relative;
+    }
+    .margin-nav-btn::after{
+      content:''; position:absolute; left:0; right:0; bottom:0; height:2px;
+      background:var(--n-green); transform:scaleX(0); transform-origin:left;
+      transition:transform .2s ease;
+    }
+    .margin-nav-btn:hover::after,
+    .margin-nav-btn.active::after{ transform:scaleX(1); }
+
+    /* Small back-link + project title sitting above the nav strip. */
+    .margin-header{ max-width:1400px; margin:0 auto; padding:2.5rem 3rem 0; }
+    .margin-header .back-link{ margin-bottom:1.25rem; }
+
+    /* ----------------------------------------------------------------
+       TITLE — the big project name at the very top of the page
+       ("Project M.A.R.G.I.N."). To change its size, edit font-size
+       below. To change its colour, edit color below.
+       ---------------------------------------------------------------- */
+    .margin-project-name{
+      font-family:var(--font-serif); font-weight:700;
+      font-size:2.4rem;              /* <-- TITLE size */
+      color:var(--color-navy-dark);  /* <-- TITLE color */
+      margin:0 0 .35rem;
+    }
+    /* Subtitle line right under the title (e.g. "Feeling Vision for
+       Graph Navigation"). Same idea — edit font-size / color here. */
+    .margin-project-subtitle{
+      font-family:var(--font-serif); font-style:italic;
+      font-size:1.2rem;   /* <-- TITLE subtitle size */
+      color:#2B3752;      /* <-- TITLE subtitle color */
+      margin:0 0 1.5rem;
+    }
+
+    /* One slide = one full "chapter". min-height keeps each chapter
+       feeling like its own screen (PPT-slide-ish) without hard-locking
+       it to exactly 100vh, so longer content is never clipped — it just
+       makes that one slide taller and pushes the next one down. */
+    .margin-slide{
+      min-height:80vh;
+      display:flex; align-items:center;
+      padding:5rem 3rem;
+      border-top:1px solid var(--n-border);
+      scroll-margin-top:96px; /* clears the sticky .margin-nav-strip so a jumped-to chapter's title isn't hidden behind it */
+    }
+    .margin-slide:first-of-type{ border-top:none; }
+    .margin-slide-inner{ max-width:1400px; margin:0 auto; width:100%; }
+
+    /* ----------------------------------------------------------------
+       SECTION — each chapter's own title, e.g. "Overview", "Team",
+       "Impact". This is the big heading at the top of every chapter.
+       Also includes the small "Chapter N" kicker label that sits just
+       above it, styled separately in case you want that smaller and
+       the main title bigger (or vice versa).
+       ---------------------------------------------------------------- */
+    .margin-slide-kicker{
+      font-family:var(--font-serif); font-weight:700;
+      font-size:1rem;          /* <-- SECTION kicker size ("Chapter N") */
+      color:var(--n-green);    /* <-- SECTION kicker color */
+      letter-spacing:.08em; text-transform:uppercase;
+      margin:0 0 .75rem;
+    }
+    .margin-slide-title{
+      font-family:'Lora',serif; font-weight:700;
+      font-size:2.6rem;              /* <-- SECTION title size */
+      color:var(--color-navy-dark);  /* <-- SECTION title color */
+      margin:0 0 2rem;
+    }
+
+    /* ----------------------------------------------------------------
+       SUBSECTION — an optional smaller heading INSIDE a chapter, for
+       breaking up a long chapter into named parts (for example, within
+       "Team" you might want "Participants", "Timeline", "Methods" as
+       their own labelled subsections). Not used by default — add
+       <h3 class="margin-subsection-title">Your Label</h3> inside any
+       chapter's .margin-slide-body wherever you want one.
+       ---------------------------------------------------------------- */
+    .margin-subsection-title{
+      font-family:'Lora',serif; font-weight:700;
+      font-size:1.5rem;             /* <-- SUBSECTION title size */
+      color:#2B3752;                /* <-- SUBSECTION title color */
+      margin:1.75rem 0 .75rem;
+    }
+    .margin-subsection-title:first-child{ margin-top:0; }
+
+    /* ----------------------------------------------------------------
+       CONTENT — the actual paragraph text of each chapter (what you
+       write inside <div class="margin-slide-body">).
+       ---------------------------------------------------------------- */
+    .margin-slide-body{
+      font-family:var(--font-serif);
+      font-size:1.35rem;   /* <-- CONTENT text size */
+      color:#000;          /* <-- CONTENT text color */
+      line-height:1.7; max-width:56rem;
+    }
+    .margin-slide-body p{ margin:0 0 1.25rem; }
+    .margin-slide-body p:last-child{ margin-bottom:0; }
+
+    /* ----------------------------------------------------------------
+       MARKING ITEMS — bullet-point lists inside a chapter's content
+       (<ul><li>...</li></ul> inside .margin-slide-body). The bullet
+       list itself inherits CONTENT's font-size/color above unless you
+       override font-size/color specifically on .margin-slide-body li
+       below.
+       ---------------------------------------------------------------- */
+    .margin-slide-body ul{ margin:0 0 1.25rem; padding-left:1.4rem; }
+    .margin-slide-body li{
+      /* font-size: 1.35rem;   <-- uncomment to set MARKING ITEM size independently of CONTENT above */
+      /* color: #000;          <-- uncomment to set MARKING ITEM color independently of CONTENT above */
+      margin-bottom:.6rem;
+    }
+
+    /* Optional two-column layout for slides that want text alongside an
+       image (e.g. Research Activities). Just wrap content in
+       <div class="margin-slide-cols"> with two children instead of
+       using .margin-slide-body directly. */
+    .margin-slide-cols{
+      display:grid; grid-template-columns:1fr 1fr; gap:3rem;
+      align-items:start; max-width:1400px;
+    }
+    .margin-slide-cols img{ width:100%; border-radius:.75rem; display:block; }
+    @media(max-width:900px){
+      .margin-slide{ padding:3.5rem 1.5rem; }
+      .margin-header{ padding:2rem 1.5rem 0; }
+      .margin-nav-strip{ padding:1.25rem 1.5rem; }
+      .margin-slide-cols{ grid-template-columns:1fr; gap:1.5rem; }
+    }
+
   </style>
 </head>
  
@@ -908,6 +1074,166 @@
       </div>
     </div>
   </section>
+ 
+
+  <!-- ================================================================
+       PROJECT M.A.R.G.I.N. — "Feeling Vision for Graph Navigation"
+       ================================================================
+       See the matching CSS block above (search "PROJECT M.A.R.G.I.N."
+       in the <style> section) for how the nav strip / slides / columns
+       are styled. Everything below is plain HTML — edit any chapter's
+       text directly, no JS templating involved. Each chapter is clearly
+       marked and has generous blank space around it so it's easy to
+       find and edit just the one section you want.
+       ================================================================ -->
+  <section class="view" data-view="margin" id="marginProjectView">
+
+    <div class="margin-header">
+      <button type="button" class="back-link" id="marginBackLink">&larr; Back to Portfolio</button>
+      <h1 class="margin-project-name">Project M.A.R.G.I.N.</h1>
+      <p class="margin-project-subtitle">Feeling Vision for Graph Navigation</p>
+    </div>
+
+    <!-- Jump-nav strip: one button per chapter below. The data-jump
+         value on each button must match the id="" on that chapter's
+         <section> further down — that's what makes clicking it scroll
+         to the right place. -->
+    <div class="margin-nav-strip">
+      <div class="margin-nav-inner">
+        <button type="button" class="margin-nav-btn" data-jump="margin-overview">Overview</button>
+        <button type="button" class="margin-nav-btn" data-jump="margin-team">Team</button>
+        <button type="button" class="margin-nav-btn" data-jump="margin-strategy">Research Strategy</button>
+        <button type="button" class="margin-nav-btn" data-jump="margin-activities">Research Activities</button>
+        <button type="button" class="margin-nav-btn" data-jump="margin-synthesis">Research Synthesis</button>
+        <button type="button" class="margin-nav-btn" data-jump="margin-impact">Impact</button>
+        <button type="button" class="margin-nav-btn" data-jump="margin-business">Business Opportunity</button>
+        <button type="button" class="margin-nav-btn" data-jump="margin-reflections">Personal Reflections</button>
+      </div>
+    </div>
+
+
+    <!-- ============================================================
+         CHAPTER 1 — OVERVIEW
+         ============================================================ -->
+    <section class="margin-slide" id="margin-overview">
+      <div class="margin-slide-inner">
+        <p class="margin-slide-kicker">Chapter 1</p>
+        <h2 class="margin-slide-title">Overview</h2>
+        <div class="margin-slide-body">
+          <p>Write the project overview here — what M.A.R.G.I.N. is, the problem it addresses, and the high-level approach, in a few sentences.</p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         CHAPTER 2 — TEAM
+         ============================================================ -->
+    <section class="margin-slide" id="margin-team">
+      <div class="margin-slide-inner">
+        <p class="margin-slide-kicker">Chapter 2</p>
+        <h2 class="margin-slide-title">Team</h2>
+        <div class="margin-slide-body">
+          <p>Write who was on the team here — names, roles, and how the work was divided.</p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         CHAPTER 3 — RESEARCH STRATEGY
+         ============================================================ -->
+    <section class="margin-slide" id="margin-strategy">
+      <div class="margin-slide-inner">
+        <p class="margin-slide-kicker">Chapter 3</p>
+        <h2 class="margin-slide-title">Research Strategy</h2>
+        <div class="margin-slide-body">
+          <p>Write the overall research strategy here — the questions you set out to answer and why you chose this approach.</p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         CHAPTER 4 — RESEARCH ACTIVITIES
+         ============================================================
+         This chapter uses the two-column layout (text + image) instead
+         of the plain .margin-slide-body used above — swap the <img>
+         src for a real photo/diagram when ready. Delete the
+         .margin-slide-cols wrapper and go back to .margin-slide-body
+         if you'd rather keep this chapter text-only, like the others.
+    -->
+    <section class="margin-slide" id="margin-activities">
+      <div class="margin-slide-inner">
+        <p class="margin-slide-kicker">Chapter 4</p>
+        <h2 class="margin-slide-title">Research Activities</h2>
+        <div class="margin-slide-cols">
+          <div class="margin-slide-body">
+            <p>Write what you actually did here — studies run, prototypes built, sessions conducted, etc.</p>
+          </div>
+          <img src="images/projects/graph_blind.jpg" alt="" onerror="this.style.display='none';"/>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         CHAPTER 5 — RESEARCH SYNTHESIS
+         ============================================================ -->
+    <section class="margin-slide" id="margin-synthesis">
+      <div class="margin-slide-inner">
+        <p class="margin-slide-kicker">Chapter 5</p>
+        <h2 class="margin-slide-title">Research Synthesis</h2>
+        <div class="margin-slide-body">
+          <p>Write how you pulled the findings together here — patterns, themes, or key insights that emerged.</p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         CHAPTER 6 — IMPACT
+         ============================================================ -->
+    <section class="margin-slide" id="margin-impact">
+      <div class="margin-slide-inner">
+        <p class="margin-slide-kicker">Chapter 6</p>
+        <h2 class="margin-slide-title">Impact</h2>
+        <div class="margin-slide-body">
+          <p>Write the impact of the work here — what changed as a result, for users, the team, or the product.</p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         CHAPTER 7 — BUSINESS OPPORTUNITY
+         ============================================================ -->
+    <section class="margin-slide" id="margin-business">
+      <div class="margin-slide-inner">
+        <p class="margin-slide-kicker">Chapter 7</p>
+        <h2 class="margin-slide-title">Business Opportunity</h2>
+        <div class="margin-slide-body">
+          <p>Write the business case here — market relevance, potential applications, or commercial angle.</p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         CHAPTER 8 — PERSONAL REFLECTIONS
+         ============================================================ -->
+    <section class="margin-slide" id="margin-reflections">
+      <div class="margin-slide-inner">
+        <p class="margin-slide-kicker">Chapter 8</p>
+        <h2 class="margin-slide-title">Personal Reflections</h2>
+        <div class="margin-slide-body">
+          <p>Write your personal reflections here — what you learned, what you'd do differently, what stayed with you.</p>
+        </div>
+      </div>
+    </section>
+
+  </section>
+  <!-- ================ END PROJECT M.A.R.G.I.N. ================ -->
  
 
   <section class="view about-section" data-view="about" id="aboutView">
@@ -1733,7 +2059,12 @@
       wrap.querySelectorAll('.work-card').forEach(function(card){
         card.addEventListener('click',function(){
           const id=parseInt(card.dataset.id,10);
-          return; // ALL projects temporarily inactive while still in progress - remove this line and uncomment goToProject below to re-enable, project by project, as each is finished
+          if(id===10){ // Project M.A.R.G.I.N. — the only one active so far; others stay inactive until finished
+            setHash('margin');
+            showView('margin');
+            return;
+          }
+          return; // remaining projects temporarily inactive while still in progress - remove this line and uncomment goToProject below to re-enable, project by project, as each is finished
           // if(id===1)return; // "On Progress" placeholder project is not clickable
           // goToProject(id);
         });
@@ -1783,7 +2114,27 @@
         showView('home');
       });
     }
- 
+
+    /* ============================================================
+       PROJECT M.A.R.G.I.N. — jump-nav + back-link wiring. The actual
+       chapter content lives in the HTML (search "CHAPTER 1" etc.); this
+       just handles the "click a chapter name, scroll to that chapter"
+       behaviour and the back-to-portfolio link at the top of the page.
+       ============================================================ */
+    document.querySelectorAll('.margin-nav-btn[data-jump]').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        const target=document.getElementById(btn.dataset.jump);
+        if(target)target.scrollIntoView({behavior:'smooth',block:'start'});
+      });
+    });
+    const marginBackLink=document.getElementById('marginBackLink');
+    if(marginBackLink){
+      marginBackLink.addEventListener('click',function(){
+        setHash('portfolio');
+        showView('portfolio');
+      });
+    }
+
     const HOME_GALLERY=[
       {img:'images/others/sunset/India.jpg', alt:'Sunset in India', key:'country.india'},
       {img:'images/others/sunset/Sweden.jpg', alt:'Sunset in Sweden', key:'country.sweden'},
@@ -1822,7 +2173,7 @@
     renderHomeGallery();
     renderHomeBooks();
  
-    const VALID_VIEWS=['landing','home','portfolio','interests','about','career','work','contact'];
+    const VALID_VIEWS=['landing','home','portfolio','interests','about','career','work','contact','margin'];
     function parseHash(){
       const h=(location.hash||'#landing').replace('#','');
       const m=h.match(/^project-(\d+)$/);
