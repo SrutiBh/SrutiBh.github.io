@@ -987,26 +987,26 @@
        (search "marginNavCollapseHandle"). */
     .margin-nav-strip.nav-tucked{ transform:translateY(100%); }
 
-    /* Small dark tab straddling the strip's top edge, centered
-       horizontally - independently fixed (a sibling, not a descendant,
-       of the strip) so it stays reachable at the same spot on screen
-       even while the strip itself slides down and out of view beneath
-       it. Its own bottom position is toggled alongside the strip so it
-       stays sitting right on the strip's (possibly now-hidden) edge. */
+    /* Matches the sidebar toggle button's exact size/style (thin
+       rounded rectangle, same shadow treatment) - independently fixed
+       (a sibling, not a descendant, of the strip) so it stays reachable
+       at the same spot on screen even while the strip itself slides
+       down and out of view beneath it. */
     .margin-nav-collapse-handle{
       display:none;
-      position:fixed; bottom:calc(64.78px + 40px); left:50%;
+      position:fixed; bottom:182px; left:50%;
       transform:translateX(-50%);
-      width:44px; height:14px; border-radius:7px 7px 0 0;
-      background:#fdeeee; border:none; cursor:pointer;
-      box-shadow:0 -2px 6px rgba(163,177,198,.35);
+      width:60px; height:18px;
+      background:none; border:none; cursor:pointer;
+      box-shadow:
+        3px 3px 7px rgba(60,70,90,.35),
+        -3px -3px 7px rgba(255,255,255,.85);
       z-index:96;
-      transition:bottom .3s ease, border-radius .3s ease;
+      transition:bottom .3s ease;
     }
     body.margin-view-active .margin-nav-collapse-handle{ display:block; }
-    .margin-nav-collapse-handle.nav-tucked{
-      bottom:64.78px; border-radius:0 0 7px 7px;
-    }
+    .margin-nav-collapse-handle.nav-tucked{ bottom:84px; }
+    .margin-nav-collapse-handle.nav-tucked svg{ transform:scaleY(-1); }
     /* Leaves room at the bottom of the page so the last chapter's
        content doesn't end up hidden behind the now-fixed nav+footer. */
     body.margin-view-active #marginProjectView{ padding-bottom:150px; }
@@ -1276,7 +1276,12 @@
          value on each button must match the id="" on that chapter's
          <section> further down — that's what makes clicking it scroll
          to the right place. -->
-    <button type="button" class="margin-nav-collapse-handle" id="marginNavCollapseHandle" aria-label="Hide chapter navigation"></button>
+    <button type="button" class="margin-nav-collapse-handle" id="marginNavCollapseHandle" aria-label="Hide chapter navigation">
+      <svg xmlns="http://www.w3.org/2000/svg" width="60" height="18" viewBox="0 0 60 18">
+        <rect x="1" y="1" width="58" height="16" rx="8" fill="#fdeeee"/>
+        <path d="M22 11L30 7L38 11" stroke="#3a4a5c" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+    </button>
     <div class="margin-nav-strip" id="marginNavStrip">
       <button type="button" class="margin-nav-arrow margin-nav-arrow-left" id="marginNavArrowLeft" aria-label="Scroll chapters left">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
@@ -2665,3 +2670,4 @@ const PLACES=[
   </script>
 </body>
 </html>
+ 
