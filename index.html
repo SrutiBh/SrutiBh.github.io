@@ -639,6 +639,7 @@
     header.hero-new.view.active{display:flex;}
     #heroTrailCanvas{ position:absolute; inset:0; z-index:0; pointer-events:none; }
     .hero-new-inner{ position:relative; z-index:1; max-width:996px; width:100%; margin:0 auto; }
+    .hero-vcenter-group{ position:absolute; top:50vh; left:152px; transform:translateY(-50%); width:996px; z-index:1; }
     .hero-new-inner h1{
       font-family:var(--font-serif); font-weight:700; letter-spacing:normal;
       text-transform:none; font-size:clamp(1.5rem,5.5vw,3rem); line-height:1.05;
@@ -670,9 +671,9 @@
       object-fit:contain;
       margin-top:-9px;
     }
-    .hero-new-inner p.hero-tagline{
+    p.hero-tagline{
       font-family:var(--font-serif); font-size:2rem; line-height:1.6;
-      font-weight:400; font-style:italic; color:#000; max-width:100%; margin:61px 0 0 0; text-align:left;
+      font-weight:400; font-style:italic; color:#000; max-width:100%; margin:20px 0 0 0; text-align:left;
     }
     .hero-tagline-big{ font-size:33px; }
     .hero-new-inner p.hero-kicker{
@@ -849,14 +850,16 @@
  
   <header class="hero-new min-h-[100dvh] relative view" id="heroSection" data-view="home">
     <canvas id="heroTrailCanvas"></canvas>
-    <div class="hero-new-inner">
-      <!-- <h1>Sruti Bhattacharjee</h1> -->
-      <h1 class="sr-only-hero-title" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;">Sruti Bhattacharjee</h1>
+    <div class="hero-vcenter-group">
       <div class="hero-greeting-flex">
         <div class="hero-greeting-lines reveal" data-i18n="home.greeting">Hi,<br>I'm Sruti</div>
         <img class="hero-side-avatar" src="images/others/selfi_anim2.png" alt="" onerror="this.style.display='none';"/>
       </div>
       <p class="hero-tagline reveal" data-i18n="home.tagline">Sometimes I study users<br>Sometimes I act like them<br>Sometimes I introspect<br>And then,<br>I tell AI what to do &amp; not do</p>
+    </div>
+    <div class="hero-new-inner">
+      <!-- <h1>Sruti Bhattacharjee</h1> -->
+      <h1 class="sr-only-hero-title" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;">Sruti Bhattacharjee</h1>
       <div class="n-tabs" role="tablist">
         <button type="button" class="n-tab-btn" data-view-link="portfolio" data-i18n="section.portfolio" role="tab" aria-selected="false">Work</button>
         <button type="button" class="n-tab-btn" data-view-link="interests" data-i18n="section.interests" role="tab" aria-selected="false">Interests</button>
@@ -2123,7 +2126,9 @@ const PLACES=[
       heroSection.style.height=wasHeightStyle;
       const heroExtraHeight=20; // breathing-room buffer around the content, split evenly top/bottom via justify-content:center
       const contentTarget=Math.round(contentHeight+heroExtraHeight);
-      const viewportTarget=Math.round(window.innerHeight); // fill the full viewport height so there's no leftover slack space for the sticky-footer's auto margin to expand into
+      const footerEl=document.querySelector('.footer-sticky-wrap');
+      const footerHeight=footerEl?footerEl.getBoundingClientRect().height:0;
+      const viewportTarget=Math.round(window.innerHeight-footerHeight); // leave exactly enough room for the footer below, so hero+footer together fit in one viewport with no scroll needed
       const target=Math.max(contentTarget, viewportTarget);
       if(target>0){
         heroSection.style.minHeight=target+'px';
