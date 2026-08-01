@@ -99,7 +99,7 @@
     .shadow-2xl{box-shadow:0 25px 50px -12px rgba(0,0,0,.25)}
     .bg-slate-700{background-color:var(--color-text-body)}
     .bg-slate-800{background-color:var(--color-footer-navy)}
-    body:not(.landing-active) .footer-sticky-wrap{margin-left:300px;width:calc(100% - 300px);}
+    body:not(.landing-active) .footer-sticky-wrap{margin-left:250px;width:calc(100% - 250px);}
     .footer-sticky-wrap{position:relative;width:100%;z-index:90;margin-top:auto;}
     body.landing-active .footer-sticky-wrap{display:none;}
     @media(max-width:900px){
@@ -203,7 +203,7 @@
        the sidebar instead of underneath it.
        ============================================================ */
     .site-sidebar{
-      position:fixed; top:0; left:0; width:300px; height:100vh;
+      position:fixed; top:0; left:0; width:250px; height:100vh;
       background:#fff;
       border-right:none;
       display:none; flex-direction:column; justify-content:space-between;
@@ -241,7 +241,7 @@
        keyframes below) so it stays noticeable even after a while.
        ---------------------------------------------------------------- */
     .sidebar-toggle-btn{
-      position:fixed; top:50vh; left:278px; z-index:85;
+      position:fixed; top:50vh; left:228px; z-index:85;
       width:44px; height:44px;
       transform:translate(-50%,-50%);
       display:flex; align-items:center; justify-content:center;
@@ -695,7 +695,13 @@
     header.hero-new.view.active{display:flex;}
     #heroTrailCanvas{ position:absolute; inset:0; z-index:0; pointer-events:none; }
     .hero-new-inner{ position:relative; z-index:1; max-width:996px; width:100%; margin:0 auto; }
-    .hero-vcenter-group{ position:absolute; top:45vh; left:152px; transform:translateY(-50%); width:996px; z-index:1; }
+    .hero-vcenter-group{ position:absolute; top:45vh; left:177px; transform:translateY(-50%); width:996px; z-index:1; transition:left .3s ease; }
+    /* Without this, the hero text stayed frozen at its sidebar-expanded
+       position when the sidebar was hidden, unlike every other page's
+       content (which re-centers automatically via margin:auto). Since
+       this element uses absolute positioning instead, it needs its own
+       explicit collapsed-state value to match that same behavior. */
+    body.sidebar-collapsed .hero-vcenter-group{ left:302px; }
     .hero-new-inner h1{
       font-family:var(--font-serif); font-weight:700; letter-spacing:normal;
       text-transform:none; font-size:clamp(1.5rem,5.5vw,3rem); line-height:1.05;
@@ -804,8 +810,8 @@
     }
     body.landing-active #topbar{ display:none; }
     body.landing-active .footer-pre{ display:none; }
-    body:not(.landing-active) > .view:not(.landing-view){ margin-left:300px; width:calc(100% - 300px); }
-    body:not(.landing-active) #main-content{ margin-left:calc(300px + (100% - 300px - 996px)/2); margin-right:auto; width:996px; }
+    body:not(.landing-active) > .view:not(.landing-view){ margin-left:250px; width:calc(100% - 250px); }
+    body:not(.landing-active) #main-content{ margin-left:calc(250px + (100% - 250px - 996px)/2); margin-right:auto; width:996px; }
     @media(max-width:900px){
       body:not(.landing-active) > .view:not(.landing-view){ margin-left:0; width:100%; }
       body:not(.landing-active) #main-content{ margin-left:0; width:100%; }
@@ -936,12 +942,12 @@
        body.margin-view-active so nothing else on the site is affected.
        ---------------------------------------------------------------- */
     body.margin-view-active .footer-sticky-wrap{
-      position:fixed; bottom:0; left:300px; right:0; z-index:95;
+      position:fixed; bottom:0; left:250px; right:0; z-index:95;
       margin-left:0; width:auto;
     }
     body.margin-view-active.sidebar-collapsed .footer-sticky-wrap{ left:0; }
     body.margin-view-active .margin-nav-strip{
-      position:fixed; top:auto; bottom:64.78px; left:300px; right:0; z-index:94;
+      position:fixed; top:auto; bottom:64.78px; left:250px; right:0; z-index:94;
       border-bottom:none; border-top:none;
     }
     body.margin-view-active.sidebar-collapsed .margin-nav-strip{ left:0; }
