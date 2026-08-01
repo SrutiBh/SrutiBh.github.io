@@ -958,7 +958,7 @@
       color:#000; white-space:nowrap; flex-shrink:0;
       background-color:#FFFCFB; opacity:1;
       border:none; border-radius:999px; padding:.6rem 1.3rem;
-      cursor:pointer; position:relative; z-index:2; isolation:isolate;
+      cursor:pointer; position:relative;
       box-shadow:
         3px 3px 7px rgba(163,177,198,.55),
         -3px -3px 7px rgba(255,255,255,.85);
@@ -967,18 +967,16 @@
     .margin-nav-btn:hover{ transform:translateY(-1px); }
     .margin-nav-btn.active{
       color:#000; font-weight:700; font-size:17px;
-      /* Deliberately distinct from the strip's own #FCF8F8 background —
-         previously this was #FFFCFB, nearly indistinguishable from the
-         strip, so the pill's silhouette visually dissolved into it at
-         the edges (especially the bottom). This tone plus the thin
-         outer contact-shadow below keep the pressed pill's shape crisp
-         and clearly separate from the strip behind it. */
-      background-color:#E9EDF5;
+      /* Same background as the raised state (and the arrow buttons,
+         which already read correctly) — true neumorphism only works
+         when the element's color exactly matches its surroundings; the
+         dent has to be sold entirely by the inset shadow, not by a
+         color patch. Deeper blur + higher contrast than the raised
+         state's outer shadow is what actually sells "pressed in". */
+      background-color:#FFFCFB;
       box-shadow:
-        0 1px 2px rgba(163,177,198,.45),
-        inset 6px 6px 12px rgba(163,177,198,1),
-        inset -6px -6px 12px rgba(255,255,255,1),
-        inset 0 -10px 16px rgba(163,177,198,.7);
+        inset 5px 5px 11px rgba(163,177,198,.9),
+        inset -5px -5px 11px rgba(255,255,255,1);
       transform:none;
     }
 
