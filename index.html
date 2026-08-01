@@ -803,8 +803,13 @@
       padding:0 0 1rem 0; position:relative;
     }
     .n-tab-btn.active{ color:#2B3752; }
+    .n-tab-btn::after{
+      content:''; position:absolute; left:0; right:0; bottom:-1px; height:3px;
+      background:#000; transform:scaleX(0); transform-origin:left;
+      transition:transform .22s ease;
+    }
     .n-tab-btn.active::after,
-    .n-tab-btn:hover::after{ content:''; position:absolute; left:0; right:0; bottom:-1px; height:3px; background:var(--n-green); }
+    .n-tab-btn:hover::after{ transform:scaleX(1); }
     /* ============================================================
        LANDING VIEW — two pre-composed images stacked full-bleed.
        bck.png is the watercolor background; main.png (with the
