@@ -43,9 +43,21 @@
   </script>
  
   <style>
+    /* Accessibility: visually hidden until focused (Tab key) — jumps a
+       keyboard user straight to the active page's main content,
+       skipping the sidebar/nav. See #skipLink in the JS below. */
     .skip-link{position:absolute;left:-9999px;top:0;background:var(--color-navy,#15203d);color:#fff;padding:.75rem 1.25rem;z-index:200;border-radius:0 0 .5rem 0;font-family:var(--font-serif,'Times New Roman',Times,serif);text-decoration:none;}
     .skip-link:focus{left:0;}
  
+    /* ================================================================
+       DESIGN TOKENS — the older, first-generation palette (navy/slate).
+       Still used by: sidebar text, education/career section, contact
+       icons, and assorted legacy utility classes below. The site's
+       current visual language mostly uses its own separate tokens
+       instead (search "--n-*" further down, e.g. --n-navy, --n-cream) —
+       these two systems coexist because the newer one was layered on
+       top of this one rather than replacing it outright.
+       ================================================================ */
     :root{
       --font-serif:'Times New Roman',Times,serif;
       --color-navy:#15203d;
@@ -63,6 +75,14 @@
     }
     *,*::before,*::after{box-sizing:border-box;}
  
+    /* ================================================================
+       UTILITY CLASSES — Tailwind-style single-purpose helpers (e.g.
+       .flex, .mt-8, .w-full). Not all of these are still used on the
+       page today; they're kept because removing an unused one costs
+       nothing, but removing a used one silently breaks layout
+       somewhere. If you're hunting for where a specific utility is
+       used, search the HTML for that exact class name.
+       ================================================================ */
     .absolute{position:absolute}
     .relative{position:relative}
     .flex{display:flex}
@@ -105,7 +125,12 @@
     @media(max-width:900px){
       body:not(.landing-active) .footer-sticky-wrap{margin-left:0;width:100%;}
     }
-    .footer-bar{background:url('data:image/jpeg;base64,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') center/cover no-repeat;color:#000;font-family:'Lora',serif;text-align:center;padding:.4rem 3rem;position:relative;min-height:56px;display:flex;align-items:center;justify-content:center;}
+    /* ================================================================
+       SITE FOOTER — the "© Sruti Bhattacharjee..." bar pinned to the
+       bottom of every page (see .footer-sticky-wrap in the HTML).
+       background image is images/others/footer_bg.jpg.
+       ================================================================ */
+    .footer-bar{background:url('images/others/footer_bg.jpg') center/cover no-repeat;color:#000;font-family:'Lora',serif;text-align:center;padding:.4rem 3rem;position:relative;min-height:56px;display:flex;align-items:center;justify-content:center;}
     .footer-berry-img{position:absolute;right:2rem;bottom:0;height:90px;width:auto;pointer-events:none;}
     .sidebar-social{display:flex;align-items:flex-end;gap:1.1rem;color:#000;}
     .sidebar-social a{ color:inherit; display:flex; transition:transform .18s ease; }
@@ -972,10 +997,8 @@
       min-height:80vh;
       display:flex; align-items:center;
       padding:5rem 3rem;
-      border-top:1px solid var(--n-border);
       scroll-margin-top:100px; /* clears the sticky .margin-nav-strip so a jumped-to chapter's title isn't hidden behind it */
     }
-    .margin-slide:first-of-type{ border-top:none; }
     .margin-slide-inner{ max-width:1400px; margin:0 auto; width:100%; }
 
     /* ----------------------------------------------------------------
@@ -1199,193 +1222,43 @@
  
 
   <!-- ================================================================
-       PROJECT M.A.R.G.I.N. — "Feeling Vision for Graph Navigation"
+       PROJECT DETAIL PAGE — shared template, used by every case-study
+       project (currently just M.A.R.G.I.N., but built to hold more).
        ================================================================
-       See the matching CSS block above (search "PROJECT M.A.R.G.I.N."
-       in the <style> section) for how the nav strip / slides / columns
-       are styled. Everything below is plain HTML — edit any chapter's
-       text directly, no JS templating involved. Each chapter is clearly
-       marked and has generous blank space around it so it's easy to
-       find and edit just the one section you want.
+       This section is intentionally near-empty. Its entire contents —
+       the chapter nav strip, the landing/cover slide, and every chapter
+       slide — are generated by JS from a plain data object, not written
+       here by hand. This is deliberate: it means every project detail
+       page automatically gets the identical structure, spacing, and
+       behavior (nav alignment, active-chapter tracking, collapse
+       handle, etc.) with zero risk of one project drifting out of sync
+       with another, and zero HTML duplication to maintain per project.
+
+       TO ADD OR EDIT A PROJECT: don't touch this HTML at all. Go to
+       the <script> block and search for "PROJECT DETAIL TEMPLATE
+       SYSTEM" — everything lives in two places there:
+         1. PROJECT_DETAIL_DATA — the actual content (title, subtitle,
+            cover photo, role/deliverables/logistics, and the list of
+            chapters — each just {id, label, title, body[, image]}).
+            Add a new project by adding a new entry here; add a chapter
+            by adding one object to a project's sections array.
+         2. renderProjectDetail(data) — the template function that
+            turns that data into the actual markup. If a *structural*
+            bug shows up (wrong alignment, missing element, broken
+            behavior), the fix belongs here — fixing it here fixes it
+            for every project at once, since they all run through this
+            one function.
+
+       If you ever need multiple distinct project pages simultaneously
+       (not just one at a time), extend renderProjectDetail() to accept
+       a target container + view id, and call it once per project into
+       its own <section class="view" data-view="...">. Right now there's
+       only one project, so one shared container is simplest.
        ================================================================ -->
   <section class="view" data-view="margin" id="marginProjectView">
-
-    <!-- Jump-nav strip: one button per chapter below. The data-jump
-         value on each button must match the id="" on that chapter's
-         <section> further down — that's what makes clicking it scroll
-         to the right place. -->
-    <button type="button" class="margin-nav-collapse-handle" id="marginNavCollapseHandle" aria-label="Hide chapter navigation">
-      <svg xmlns="http://www.w3.org/2000/svg" width="52" height="12" viewBox="0 0 52 12">
-        <rect x="1" y="1" width="50" height="10" rx="5" fill="#FFFCFB"/>
-      </svg>
-    </button>
-    <div class="margin-nav-strip" id="marginNavStrip">
-      <div class="margin-nav-strip-content">
-      <div class="margin-nav-inner" id="marginNavInner">
-        <button type="button" class="margin-nav-btn active" data-jump="margin-overview">Overview</button>
-        <button type="button" class="margin-nav-btn" data-jump="margin-team">Team</button>
-        <button type="button" class="margin-nav-btn" data-jump="margin-strategy">Research Strategy</button>
-        <button type="button" class="margin-nav-btn" data-jump="margin-activities">Research Activities</button>
-        <button type="button" class="margin-nav-btn" data-jump="margin-synthesis">Research Synthesis</button>
-        <button type="button" class="margin-nav-btn" data-jump="margin-impact">Impact</button>
-        <button type="button" class="margin-nav-btn" data-jump="margin-business">Business Opportunity</button>
-        <button type="button" class="margin-nav-btn" data-jump="margin-reflections">Personal Reflections</button>
-      </div>
-      </div>
-    </div>
-
-
-    <!-- ============================================================
-         LANDING / COVER SLIDE — project title, description, a photo,
-         and a Role/Logistics-style info table. This is the very first
-         thing visitors see when opening the project; "Overview" (the
-         first item in the nav strip above) is the next slide after
-         this one.
-         ============================================================ -->
-    <section class="margin-slide" id="margin-landing">
-      <div class="margin-slide-inner">
-        <h1 class="margin-project-name">Project M.A.R.G.I.N.</h1>
-        <p class="margin-project-subtitle">Multimodal Accessible Real-time Graphical Interaction &amp; Navigation for the Visually Impaired</p>
-
-        <div class="margin-landing-photo">
-          <img src="images/projects/graph_blind.jpg" alt="" onerror="this.style.display='none';"/>
-        </div>
-
-        <!-- Role/Logistics info table — edit the labels and values
-             directly below. Add or remove a <div class="margin-info-row">
-             for each Role/Deliverables/Logistics line you need. -->
-        <div class="margin-info-table">
-          <div class="margin-info-col">
-            <h3 class="margin-subsection-title">Role</h3>
-            <p>Write your role on this project here.</p>
-            <h3 class="margin-subsection-title">Deliverables</h3>
-            <p><strong>Write the deliverable here.</strong></p>
-          </div>
-          <div class="margin-info-col">
-            <h3 class="margin-subsection-title">Logistics</h3>
-            <div class="margin-info-row"><strong>Duration:</strong> Write duration here</div>
-            <div class="margin-info-row"><strong>Team Members:</strong> Write names here</div>
-            <div class="margin-info-row"><strong>Advisor:</strong> Write advisor name here</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-
-    <!-- ============================================================
-         CHAPTER 1 — OVERVIEW
-         ============================================================ -->
-    <section class="margin-slide" id="margin-overview">
-      <div class="margin-slide-inner">
-        <h2 class="margin-slide-title">Overview</h2>
-        <div class="margin-slide-body">
-          <p>Write the project overview here — what M.A.R.G.I.N. is, the problem it addresses, and the high-level approach, in a few sentences.</p>
-        </div>
-      </div>
-    </section>
-
-
-    <!-- ============================================================
-         CHAPTER 2 — TEAM
-         ============================================================ -->
-    <section class="margin-slide" id="margin-team">
-      <div class="margin-slide-inner">
-        <h2 class="margin-slide-title">Team</h2>
-        <div class="margin-slide-body">
-          <p>Write who was on the team here — names, roles, and how the work was divided.</p>
-        </div>
-      </div>
-    </section>
-
-
-    <!-- ============================================================
-         CHAPTER 3 — RESEARCH STRATEGY
-         ============================================================ -->
-    <section class="margin-slide" id="margin-strategy">
-      <div class="margin-slide-inner">
-        <h2 class="margin-slide-title">Research Strategy</h2>
-        <div class="margin-slide-body">
-          <p>Write the overall research strategy here — the questions you set out to answer and why you chose this approach.</p>
-        </div>
-      </div>
-    </section>
-
-
-    <!-- ============================================================
-         CHAPTER 4 — RESEARCH ACTIVITIES
-         ============================================================
-         This chapter uses the two-column layout (text + image) instead
-         of the plain .margin-slide-body used above — swap the <img>
-         src for a real photo/diagram when ready. Delete the
-         .margin-slide-cols wrapper and go back to .margin-slide-body
-         if you'd rather keep this chapter text-only, like the others.
-    -->
-    <section class="margin-slide" id="margin-activities">
-      <div class="margin-slide-inner">
-        <h2 class="margin-slide-title">Research Activities</h2>
-        <div class="margin-slide-cols">
-          <div class="margin-slide-body">
-            <p>Write what you actually did here — studies run, prototypes built, sessions conducted, etc.</p>
-          </div>
-          <img src="images/projects/graph_blind.jpg" alt="" onerror="this.style.display='none';"/>
-        </div>
-      </div>
-    </section>
-
-
-    <!-- ============================================================
-         CHAPTER 5 — RESEARCH SYNTHESIS
-         ============================================================ -->
-    <section class="margin-slide" id="margin-synthesis">
-      <div class="margin-slide-inner">
-        <h2 class="margin-slide-title">Research Synthesis</h2>
-        <div class="margin-slide-body">
-          <p>Write how you pulled the findings together here — patterns, themes, or key insights that emerged.</p>
-        </div>
-      </div>
-    </section>
-
-
-    <!-- ============================================================
-         CHAPTER 6 — IMPACT
-         ============================================================ -->
-    <section class="margin-slide" id="margin-impact">
-      <div class="margin-slide-inner">
-        <h2 class="margin-slide-title">Impact</h2>
-        <div class="margin-slide-body">
-          <p>Write the impact of the work here — what changed as a result, for users, the team, or the product.</p>
-        </div>
-      </div>
-    </section>
-
-
-    <!-- ============================================================
-         CHAPTER 7 — BUSINESS OPPORTUNITY
-         ============================================================ -->
-    <section class="margin-slide" id="margin-business">
-      <div class="margin-slide-inner">
-        <h2 class="margin-slide-title">Business Opportunity</h2>
-        <div class="margin-slide-body">
-          <p>Write the business case here — market relevance, potential applications, or commercial angle.</p>
-        </div>
-      </div>
-    </section>
-
-
-    <!-- ============================================================
-         CHAPTER 8 — PERSONAL REFLECTIONS
-         ============================================================ -->
-    <section class="margin-slide" id="margin-reflections">
-      <div class="margin-slide-inner">
-        <h2 class="margin-slide-title">Personal Reflections</h2>
-        <div class="margin-slide-body">
-          <p>Write your personal reflections here — what you learned, what you'd do differently, what stayed with you.</p>
-        </div>
-      </div>
-    </section>
-
+    <!-- Populated entirely by renderProjectDetail() at load time — see
+         the comment above. Do not hand-edit markup here. -->
   </section>
-  <!-- ================ END PROJECT M.A.R.G.I.N. ================ -->
  
 
   <section class="view about-section" data-view="about" id="aboutView">
@@ -1395,7 +1268,7 @@
           <p class="about-desc-text reveal" data-i18n="home.bio">I'm a mixed-method UX Research practitioner with a background in Multimodal Perception Analysis and Visual Computing. My interdisciplinary experience in AI and Human&ndash;Computer Interaction helps me uncover user needs and challenges to shape interactive, accessible, and immersive experiences. I aspire to advance ethical human&ndash;AI symbiosis through evidence-based product decisions.</p>
           </div>
         <div class="about-me-photo">
-          <img src="images/others/selfie.png" alt="Sruti Bhattacharjee" onerror="this.style.display='none';this.parentElement.style.display='flex';this.parentElement.style.alignItems='center';this.parentElement.style.justifyContent='center';this.parentElement.innerHTML='<span style=&quot;font-size:3rem&quot;>👩‍💻</span>'"/>
+          <img src="images/others/selfie.png" alt="Sruti Bhattacharjee" loading="lazy" decoding="async" onerror="this.style.display='none';this.parentElement.style.display='flex';this.parentElement.style.alignItems='center';this.parentElement.style.justifyContent='center';this.parentElement.innerHTML='<span style=&quot;font-size:3rem&quot;>👩‍💻</span>'"/>
         </div>
       </div>
     </div>
@@ -1408,7 +1281,7 @@
         <div class="edu-transcript">
  
           <div class="edu-row reveal">
-            <div class="edu-logo-wrap"><img src="images/logos/kth.png" alt="KTH" class="edu-logo"/></div>
+            <div class="edu-logo-wrap"><img src="images/logos/kth.png" alt="KTH" class="edu-logo" loading="lazy" decoding="async"/></div>
             <div class="edu-row-text">
               <h3 data-i18n="edu.1.degree">Master of Science, Interactive Media Technology</h3>
               <p class="edu-inst">Kungliga Tekniska Högskolan (KTH), Sweden</p>
@@ -1417,7 +1290,7 @@
           </div>
  
           <div class="edu-row reveal">
-            <div class="edu-logo-wrap"><img src="images/logos/epfl.png" alt="EPFL" class="edu-logo edu-logo-epfl"/></div>
+            <div class="edu-logo-wrap"><img src="images/logos/epfl.png" alt="EPFL" class="edu-logo edu-logo-epfl" loading="lazy" decoding="async"/></div>
             <div class="edu-row-text">
               <h3 data-i18n="edu.2.degree">Graduate Exchange Student, Computer and Communication Sciences</h3>
               <p class="edu-inst">École Polytechnique Fédérale de Lausanne (EPFL), Switzerland</p>
@@ -1426,7 +1299,7 @@
           </div>
  
           <div class="edu-row reveal">
-            <div class="edu-logo-wrap"><img src="images/logos/wbutnew_edited.jpg" alt="WBUT" class="edu-logo edu-logo-wbut"/></div>
+            <div class="edu-logo-wrap"><img src="images/logos/wbutnew_edited.jpg" alt="WBUT" class="edu-logo edu-logo-wbut" loading="lazy" decoding="async"/></div>
             <div class="edu-row-text">
               <h3 data-i18n="edu.3.degree">Bachelor of Technology, Information Technology</h3>
               <p class="edu-inst">West Bengal University of Technology (WBUT), India</p>
@@ -1435,7 +1308,7 @@
           </div>
  
           <div class="edu-row reveal">
-            <div class="edu-logo-wrap"><img src="images/logos/iitkgp.png" alt="IIT KGP" class="edu-logo edu-logo-iitkgp"/></div>
+            <div class="edu-logo-wrap"><img src="images/logos/iitkgp.png" alt="IIT KGP" class="edu-logo edu-logo-iitkgp" loading="lazy" decoding="async"/></div>
             <div class="edu-row-text">
               <h3 data-i18n="edu.4.degree">Undergrad Visiting Student, Computer Science and Engineering</h3>
               <p class="edu-inst">Indian Institute of Technology Kharagpur (IITKGP), India</p>
@@ -1798,6 +1671,122 @@
       {id:8,cat:'visual',slider:true,meta:'2D to 3D Reconstruction',img:'images/projects/venice1.png',imgAlt:'Preview image of 3D city modelling project',links:[{key:'lbl.code',href:'#'}]},
       {id:9,cat:'visual',meta:'KTH',img:'images/projects/r_mike.gif',imgAlt:'Preview image of game development project',links:[{key:'lbl.code',href:'#'}]}
     ];
+
+    /* ================================================================
+       PROJECT DETAIL TEMPLATE SYSTEM
+       ================================================================
+       Everything that renders inside #marginProjectView (chapter nav
+       strip, landing/cover slide, every chapter slide) is built here
+       from plain data, not written as static HTML. One structure, one
+       function, reused by every project — see the big comment on
+       #marginProjectView in the HTML for the full explanation.
+
+       DATA SHAPE (one entry per project):
+         {
+           name, subtitle, coverImage,       // landing slide header
+           role, deliverable,                // landing slide left column
+           logistics: [{label, value}, ...], // landing slide right column
+           sections: [                       // one entry = one chapter
+             {
+               id,      // used to build both the nav button's data-jump
+                        // and the slide's id — e.g. id:'team' becomes
+                        // data-jump="margin-team" / id="margin-team"
+               label,   // nav button text
+               title,   // slide heading (usually same as label)
+               body,    // array of paragraph strings
+               image    // OPTIONAL — if present, the slide switches to
+                        // the two-column text+image layout automatically
+             }, ...
+           ]
+         }
+       ================================================================ */
+    const PROJECT_DETAIL_DATA={
+      margin:{
+        name:'Project M.A.R.G.I.N.',
+        subtitle:'Multimodal Accessible Real-time Graphical Interaction &amp; Navigation for the Visually Impaired',
+        coverImage:'images/projects/graph_blind.jpg',
+        role:'Write your role on this project here.',
+        deliverable:'Write the deliverable here.',
+        logistics:[
+          {label:'Duration',value:'Write duration here'},
+          {label:'Team Members',value:'Write names here'},
+          {label:'Advisor',value:'Write advisor name here'}
+        ],
+        sections:[
+          {id:'overview',label:'Overview',title:'Overview',
+            body:['Write the project overview here — what M.A.R.G.I.N. is, the problem it addresses, and the high-level approach, in a few sentences.']},
+          {id:'team',label:'Team',title:'Team',
+            body:['Write who was on the team here — names, roles, and how the work was divided.']},
+          {id:'strategy',label:'Research Strategy',title:'Research Strategy',
+            body:['Write the overall research strategy here — the questions you set out to answer and why you chose this approach.']},
+          {id:'activities',label:'Research Activities',title:'Research Activities',
+            body:['Write what you actually did here — studies run, prototypes built, sessions conducted, etc.'],
+            image:'images/projects/graph_blind.jpg'},
+          {id:'synthesis',label:'Research Synthesis',title:'Research Synthesis',
+            body:['Write how you pulled the findings together here — patterns, themes, or key insights that emerged.']},
+          {id:'impact',label:'Impact',title:'Impact',
+            body:['Write the impact of the work here — what changed as a result, for users, the team, or the product.']},
+          {id:'business',label:'Business Opportunity',title:'Business Opportunity',
+            body:['Write the business case here — market relevance, potential applications, or commercial angle.']},
+          {id:'reflections',label:'Personal Reflections',title:'Personal Reflections',
+            body:["Write your personal reflections here — what you learned, what you'd do differently, what stayed with you."]}
+        ]
+      }
+    };
+
+    /* The one function every project's markup is built from. Change
+       something here (a class name, the collapse-handle button, the
+       landing slide's structure, how a two-column chapter renders) and
+       it's fixed for every project at once — that's the whole point.
+       Keeps every CSS class identical to what the stylesheet already
+       targets (.margin-nav-btn, .margin-slide, .margin-slide-cols,
+       etc.), so no CSS changes are needed when this runs. */
+    function renderProjectDetail(viewId,data){
+      const view=document.getElementById(viewId);
+      if(!view)return;
+
+      const navButtonsHtml=data.sections.map(function(s,i){
+        return '<button type="button" class="margin-nav-btn'+(i===0?' active':'')+'" data-jump="margin-'+s.id+'">'+s.label+'</button>';
+      }).join('');
+
+      const logisticsHtml=data.logistics.map(function(l){
+        return '<div class="margin-info-row"><strong>'+l.label+':</strong> '+l.value+'</div>';
+      }).join('');
+
+      const slidesHtml=data.sections.map(function(s){
+        const bodyHtml=s.body.map(function(p){ return '<p>'+p+'</p>'; }).join('');
+        const bodyBlock=s.image
+          ? '<div class="margin-slide-cols"><div class="margin-slide-body">'+bodyHtml+'</div><img src="'+s.image+'" alt="" loading="lazy" decoding="async" onerror="this.style.display=\'none\';"/></div>'
+          : '<div class="margin-slide-body">'+bodyHtml+'</div>';
+        return '<section class="margin-slide" id="margin-'+s.id+'"><div class="margin-slide-inner">'
+          +'<h2 class="margin-slide-title">'+s.title+'</h2>'+bodyBlock
+          +'</div></section>';
+      }).join('');
+
+      view.innerHTML =
+        '<button type="button" class="margin-nav-collapse-handle" id="marginNavCollapseHandle" aria-label="Hide chapter navigation">'
+          +'<svg xmlns="http://www.w3.org/2000/svg" width="52" height="12" viewBox="0 0 52 12"><rect x="1" y="1" width="50" height="10" rx="5" fill="#FFFCFB"/></svg>'
+        +'</button>'
+        +'<div class="margin-nav-strip" id="marginNavStrip"><div class="margin-nav-strip-content">'
+          +'<div class="margin-nav-inner" id="marginNavInner">'+navButtonsHtml+'</div>'
+        +'</div></div>'
+        +'<section class="margin-slide" id="margin-landing"><div class="margin-slide-inner">'
+          +'<h1 class="margin-project-name">'+data.name+'</h1>'
+          +'<p class="margin-project-subtitle">'+data.subtitle+'</p>'
+          +'<div class="margin-landing-photo"><img src="'+data.coverImage+'" alt="" loading="lazy" decoding="async" onerror="this.style.display=\'none\';"/></div>'
+          +'<div class="margin-info-table">'
+            +'<div class="margin-info-col"><h3 class="margin-subsection-title">Role</h3><p>'+data.role+'</p>'
+              +'<h3 class="margin-subsection-title">Deliverables</h3><p><strong>'+data.deliverable+'</strong></p></div>'
+            +'<div class="margin-info-col"><h3 class="margin-subsection-title">Logistics</h3>'+logisticsHtml+'</div>'
+          +'</div>'
+        +'</div></section>'
+        +slidesHtml;
+    }
+    // Render immediately (not deferred) — every binding further down
+    // this script (chapter click handlers, scroll-spy, collapse-handle
+    // toggle, wheel-redirect) queries these elements by id/class and
+    // must find them already in the DOM.
+    renderProjectDetail('marginProjectView',PROJECT_DETAIL_DATA.margin);
  
     function tr(key){
       const dict=TRANSLATIONS[currentLang]||TRANSLATIONS.en;
@@ -1820,7 +1809,7 @@
         const disabledClass=p.id===1?' is-disabled':'';
         return '<button type="button" class="work-card reveal'+disabledClass+'" data-id="'+p.id+'">'
           +'<span class="work-card-thumb">'
-            +'<img class="work-card-img" src="'+p.img+'" alt="'+p.imgAlt+'"'+fitStyle+'>'
+            +'<img class="work-card-img" src="'+p.img+'" alt="'+p.imgAlt+'" loading="lazy" decoding="async"'+fitStyle+'>'
             +'<span class="work-card-overlay"><span class="work-card-title" data-i18n="proj.'+p.id+'.title">'+tr('proj.'+p.id+'.title')+'</span></span>'
           +'</span>'
           +'<span class="work-card-meta">'+(p.meta||'')+'</span>'
@@ -1854,7 +1843,7 @@
         const fitStyle=p.imgFit?(' style="object-fit:'+p.imgFit+';background:#e8ecf5;"'):'';
         return '<button type="button" class="work-card reveal" data-id="'+p.id+'">'
           +'<span class="work-card-thumb">'
-            +'<img class="work-card-img" src="'+p.img+'" alt="'+p.imgAlt+'"'+fitStyle+'>'
+            +'<img class="work-card-img" src="'+p.img+'" alt="'+p.imgAlt+'" loading="lazy" decoding="async"'+fitStyle+'>'
             +'<span class="work-card-overlay"><span class="work-card-title" data-i18n="proj.'+p.id+'.title">'+tr('proj.'+p.id+'.title')+'</span></span>'
           +'</span>'
           +'<span class="work-card-meta">'+(p.meta||'')+'</span>'
@@ -1971,7 +1960,7 @@
       const wrap=document.getElementById('homeGalleryGrid');
       if(!wrap)return;
       wrap.innerHTML=HOME_GALLERY.map(function(g){
-        return '<div class="n-gallery-item"><img src="'+g.img+'" alt="'+g.alt+'"><p class="n-gallery-caption" data-i18n="'+g.key+'">'+tr(g.key)+'</p></div>';
+        return '<div class="n-gallery-item"><img src="'+g.img+'" alt="'+g.alt+'" loading="lazy" decoding="async"><p class="n-gallery-caption" data-i18n="'+g.key+'">'+tr(g.key)+'</p></div>';
       }).join('');
       if(window.observeReveals)window.observeReveals();
     }
@@ -1990,7 +1979,7 @@
       if(!wrap)return;
       wrap.innerHTML=HOME_BOOKS.map(function(b){
         return '<a class="n-book-row" href="'+b.url+'" target="_blank" rel="noopener noreferrer">'
-          +'<span class="n-book-cover"><img src="'+b.img+'" alt="" onerror="this.style.display=\'none\'"></span>'
+          +'<span class="n-book-cover"><img src="'+b.img+'" alt="" loading="lazy" decoding="async" onerror="this.style.display=\'none\'"></span>'
           +'<span><p class="n-book-title">'+b.title+'</p><p class="n-book-author">'+b.author+'</p></span>'
           +'</a>';
       }).join('');
@@ -2019,6 +2008,9 @@
       else document.body.classList.remove('project-page-active');
       if(view==='home'&&typeof window.__resetHeroPaint==='function'){
         window.__resetHeroPaint();
+      }
+      if(view==='home'&&typeof window.__startHeroPaintLoopIfNeeded==='function'){
+        window.__startHeroPaintLoopIfNeeded();
       }
       if(view==='home'&&typeof window.__resizeHeroCanvas==='function'){
         requestAnimationFrame(window.__resizeHeroCanvas);
@@ -2211,7 +2203,7 @@ const PLACES=[
     const cardState={left:null,top:null,width:null,height:null};
     function saveCardState(){if(!detail.classList.contains('open'))return;cardState.left=detail.style.left;cardState.top=detail.style.top;cardState.width=detail.style.width;cardState.height=detail.style.height;}
     function applyCardState(){if(cardState.left!==null)detail.style.left=cardState.left;if(cardState.top!==null)detail.style.top=cardState.top;if(cardState.width!==null)detail.style.width=cardState.width;if(cardState.height!==null)detail.style.height=cardState.height;}
-    function selectPlace(i){suppressClose=true;selectedIdx=i;const p=islands[i];islands.forEach((is,j)=>is.el.classList.toggle('sel',j===i));dtitle.textContent=p.city;dsub.textContent='';dcards.innerHTML=(p.groups||[]).map(g=>`<div class="jcard"><div class="jcard-head"><div class="jlogo"><img src="${g.logo||''}" alt="${g.alt||g.org||p.city}" onerror="var p=this.parentElement;p.innerHTML='🏛️';p.style.fontSize='1.25rem';"></div><div class="jorg-wrap"><div class="jorg">${g.org||p.city}</div></div></div><div class="jroles">${(g.experiences||[]).map(e=>{const tt=e['title_'+currentLang]||e.title;const nn=e['note_'+currentLang]||e.note;return `<div class="jrole"><div class="jct">${tt}</div><div class="jcy">${e.year}</div><div class="jcn">${nn}</div><div class="jtags">${(e.tags||[]).map(t=>`<span class="jtag">${t}</span>`).join('')}</div></div>`;}).join('')}</div></div>`).join('');const wasOpen=detail.classList.contains('open');if(wasOpen){saveCardState();detail.style.transition='none';applyCardState();requestAnimationFrame(()=>{detail.style.transition='';});}else{detail.classList.add('open');if(cardState.left!==null)applyCardState();else positionDetail();}focusOn(p.x,p.y,1.1);setTimeout(()=>{suppressClose=false;},50);}
+    function selectPlace(i){suppressClose=true;selectedIdx=i;const p=islands[i];islands.forEach((is,j)=>is.el.classList.toggle('sel',j===i));dtitle.textContent=p.city;dsub.textContent='';dcards.innerHTML=(p.groups||[]).map(g=>`<div class="jcard"><div class="jcard-head"><div class="jlogo"><img src="${g.logo||''}" alt="${g.alt||g.org||p.city}" loading="lazy" decoding="async" onerror="var p=this.parentElement;p.innerHTML='🏛️';p.style.fontSize='1.25rem';"></div><div class="jorg-wrap"><div class="jorg">${g.org||p.city}</div></div></div><div class="jroles">${(g.experiences||[]).map(e=>{const tt=e['title_'+currentLang]||e.title;const nn=e['note_'+currentLang]||e.note;return `<div class="jrole"><div class="jct">${tt}</div><div class="jcy">${e.year}</div><div class="jcn">${nn}</div><div class="jtags">${(e.tags||[]).map(t=>`<span class="jtag">${t}</span>`).join('')}</div></div>`;}).join('')}</div></div>`).join('');const wasOpen=detail.classList.contains('open');if(wasOpen){saveCardState();detail.style.transition='none';applyCardState();requestAnimationFrame(()=>{detail.style.transition='';});}else{detail.classList.add('open');if(cardState.left!==null)applyCardState();else positionDetail();}focusOn(p.x,p.y,1.1);setTimeout(()=>{suppressClose=false;},50);}
     function closeDetail(){if(detail.classList.contains('open'))saveCardState();detail.classList.remove('open');islands.forEach(is=>is.el.classList.remove('sel'));selectedIdx=-1;}
     function focusOn(wx,wy,zoom){const vw=vp.clientWidth,vh=vp.clientHeight;S.ts=Math.max(S.minS,Math.min(S.maxS,zoom));S.tx=vw*.5-wx*S.ts;S.ty=vh*.5-wy*S.ts;}
     function fitAll(){const vw=vp.clientWidth||680,vh=vp.clientHeight||620;let minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity;islands.forEach(p=>{minX=Math.min(minX,p.x-300);maxX=Math.max(maxX,p.x+300);minY=Math.min(minY,p.y-380);maxY=Math.max(maxY,p.y+720);});const cW=maxX-minX,cH=maxY-minY,s=Math.min(vw/cW,vh/cH);S.ts=Math.max(S.minS,Math.min(S.maxS,s));S.tx=(vw-cW*S.ts)*.5-minX*S.ts;S.ty=(vh-cH*S.ts)*.5-minY*S.ts+100;}
@@ -2450,8 +2442,11 @@ const PLACES=[
     }
     window.__spawnImmediateIfCursorInside=spawnImmediateIfCursorInside;
  
-    window.addEventListener('pointermove', (e) => handleMove(e.clientX, e.clientY));
-    window.addEventListener('mousemove', (e) => handleMove(e.clientX, e.clientY));
+    // pointermove alone covers mouse input in every modern browser
+    // (Pointer Events are a superset of mouse events) — a separate
+    // mousemove listener here was firing handleMove a second time for
+    // the exact same movement, doubling the work done per cursor move.
+    window.addEventListener('pointermove', (e) => handleMove(e.clientX, e.clientY), { passive:true });
     window.addEventListener('touchmove', (e) => {
       if(e.touches && e.touches[0]) handleMove(e.touches[0].clientX, e.touches[0].clientY);
     }, { passive:true });
@@ -2533,8 +2528,23 @@ const PLACES=[
         ctx.restore();
       });
  
-      requestAnimationFrame(draw);
+      // Only keep looping while the hero is actually visible or there
+      // are still drops mid-animation (letting them finish fading out
+      // naturally after navigating away). Otherwise stop entirely
+      // instead of waking the main thread every ~16ms forever on every
+      // page of the site — heroPaintLoopActive tracks this so
+      // __resetHeroPaint (called from showView when returning to Home)
+      // knows whether it needs to restart the loop.
+      if(heroSection.classList.contains('active') || points.length){
+        requestAnimationFrame(draw);
+      } else {
+        heroPaintLoopActive=false;
+      }
     }
+    let heroPaintLoopActive=true;
+    window.__startHeroPaintLoopIfNeeded=function(){
+      if(!heroPaintLoopActive){ heroPaintLoopActive=true; requestAnimationFrame(draw); }
+    };
     draw();
   });
   </script>
