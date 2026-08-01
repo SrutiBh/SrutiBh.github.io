@@ -240,7 +240,7 @@
        keyframes below) so it stays noticeable even after a while.
        ---------------------------------------------------------------- */
     .sidebar-toggle-btn{
-      position:fixed; top:1.5rem; left:240px; z-index:85;
+      position:fixed; top:2.875rem; left:240px; z-index:85;
       width:2.6rem; height:2rem;
       display:flex; align-items:center; justify-content:center;
       background:#fff; border:1px solid var(--n-border); border-radius:.6rem;
@@ -866,32 +866,74 @@
     /* Jump-nav strip — sits at the top of the page, one button per
        chapter. Sticky so it stays reachable while scrolling through
        the slides below. */
+    /* Normally sits sticky at the top of the page; while the
+       M.A.R.G.I.N. project specifically is open, it's repositioned to
+       sit fixed just above the (also-fixed, always-visible) site
+       footer instead — see the body.margin-view-active rules further
+       below for that override. */
     .margin-nav-strip{
       position:sticky; top:0; z-index:50;
       background:#fff;
       border-bottom:1px solid var(--n-border);
-      padding:1.5rem 3rem;
+      padding:1.25rem 3rem;
     }
     .margin-nav-inner{
       max-width:1400px; margin:0 auto;
-      display:flex; flex-wrap:wrap; gap:.75rem 1.5rem;
+      display:flex; flex-wrap:nowrap; gap:.6rem;
       justify-content:center;
+      overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none;
     }
+    .margin-nav-inner::-webkit-scrollbar{ display:none; }
+
+    /* ----------------------------------------------------------------
+       LIQUID-GLASS / NEUMORPHIC NAV BUTTONS — soft, embossed "Button"
+       look at rest (raised, subtle light-from-top-left shadow), and a
+       pressed-in "Input" look for whichever chapter is currently
+       scrolled into view (inset shadow instead, so it reads as pushed
+       down rather than raised). Which button gets .active is decided
+       automatically by scroll position — see the IntersectionObserver
+       in the JS block below ("margin chapter scroll-spy").
+       ---------------------------------------------------------------- */
     .margin-nav-btn{
-      font-family:var(--font-serif); font-weight:500; font-size:32px;
-      color:#000; background:none; border:none; cursor:pointer;
-      padding:0 0 1rem 0; position:relative;
+      font-family:var(--font-serif); font-weight:500; font-size:1rem;
+      color:#3a4a5a; white-space:nowrap; flex-shrink:0;
+      background:#eef1f5;
+      border:none; border-radius:999px; padding:.6rem 1.3rem;
+      cursor:pointer; position:relative;
+      box-shadow:
+        3px 3px 7px rgba(163,177,198,.55),
+        -3px -3px 7px rgba(255,255,255,.85);
+      transition:box-shadow .18s ease, color .18s ease, transform .12s ease;
     }
-    .margin-nav-btn.active{ color:#2B3752; }
-    .margin-nav-btn.active::after,
-    .margin-nav-btn:hover::after{
-      content:''; position:absolute; left:0; right:0; bottom:-1px; height:3px;
-      background:var(--n-green);
+    .margin-nav-btn:hover{ transform:translateY(-1px); }
+    .margin-nav-btn.active{
+      color:#15304a; font-weight:700;
+      box-shadow:
+        inset 3px 3px 6px rgba(163,177,198,.6),
+        inset -3px -3px 6px rgba(255,255,255,.85);
+      transform:none;
     }
 
-    /* Small back-link + project title sitting above the nav strip. */
-    .margin-header{ max-width:1400px; margin:0 auto; padding:2.5rem 3rem 0; }
-    .margin-header .back-link{ margin-bottom:1.25rem; }
+    /* ----------------------------------------------------------------
+       While the M.A.R.G.I.N. page specifically is open: pin the site
+       footer to the bottom of the screen (always visible, no scrolling
+       needed to see it) and move the chapter nav strip to sit directly
+       above it, rather than its usual sticky-top position. Scoped to
+       body.margin-view-active so nothing else on the site is affected.
+       ---------------------------------------------------------------- */
+    body.margin-view-active .footer-sticky-wrap{
+      position:fixed; bottom:0; left:300px; right:0; z-index:95;
+      margin-left:0; width:auto;
+    }
+    body.margin-view-active.sidebar-collapsed .footer-sticky-wrap{ left:0; }
+    body.margin-view-active .margin-nav-strip{
+      position:fixed; top:auto; bottom:64.78px; left:300px; right:0; z-index:94;
+      border-bottom:none; border-top:1px solid var(--n-border);
+    }
+    body.margin-view-active.sidebar-collapsed .margin-nav-strip{ left:0; }
+    /* Leaves room at the bottom of the page so the last chapter's
+       content doesn't end up hidden behind the now-fixed nav+footer. */
+    body.margin-view-active #marginProjectView{ padding-bottom:150px; }
 
     /* ----------------------------------------------------------------
        TITLE — the big project name at the very top of the page
@@ -923,7 +965,7 @@
       display:flex; align-items:center;
       padding:5rem 3rem;
       border-top:1px solid var(--n-border);
-      scroll-margin-top:190px; /* clears the sticky .margin-nav-strip so a jumped-to chapter's title isn't hidden behind it */
+      scroll-margin-top:100px; /* clears the sticky .margin-nav-strip so a jumped-to chapter's title isn't hidden behind it */
     }
     .margin-slide:first-of-type{ border-top:none; }
     .margin-slide-inner{ max-width:1400px; margin:0 auto; width:100%; }
@@ -1001,9 +1043,33 @@
       align-items:start; max-width:1400px;
     }
     .margin-slide-cols img{ width:100%; border-radius:.75rem; display:block; }
+
+    /* ----------------------------------------------------------------
+       LANDING SLIDE — photo + Role/Logistics info table, sitting under
+       the project title/subtitle at the very top of the page.
+       ---------------------------------------------------------------- */
+    .margin-landing-photo{ width:100%; margin:2.5rem 0 3rem; }
+    .margin-landing-photo img{
+      width:100%; max-height:420px; object-fit:cover;
+      border-radius:.75rem; display:block;
+    }
+    .margin-info-table{
+      display:grid; grid-template-columns:1fr 1fr; gap:3rem;
+      padding-top:2rem; border-top:1px solid var(--n-border);
+    }
+    .margin-info-col p{
+      font-family:var(--font-serif); font-size:1.15rem; line-height:1.6;
+      color:#000; margin:0 0 1rem;
+    }
+    .margin-info-row{
+      font-family:var(--font-serif); font-size:1.05rem; line-height:1.8;
+      color:#000;
+    }
+    @media(max-width:760px){
+      .margin-info-table{ grid-template-columns:1fr; gap:1.5rem; }
+    }
     @media(max-width:900px){
       .margin-slide{ padding:3.5rem 1.5rem; }
-      .margin-header{ padding:2rem 1.5rem 0; }
       .margin-nav-strip{ padding:1.25rem 1.5rem; }
       .margin-slide-cols{ grid-template-columns:1fr; gap:1.5rem; }
     }
@@ -1138,17 +1204,13 @@
        ================================================================ -->
   <section class="view" data-view="margin" id="marginProjectView">
 
-    <div class="margin-header">
-      <h1 class="margin-project-name">Project M.A.R.G.I.N.</h1>
-      <p class="margin-project-subtitle">Multimodal Accessible Real-time Graphical Interaction &amp; Navigation</p>
-    </div>
-
     <!-- Jump-nav strip: one button per chapter below. The data-jump
          value on each button must match the id="" on that chapter's
          <section> further down — that's what makes clicking it scroll
          to the right place. -->
     <div class="margin-nav-strip">
       <div class="margin-nav-inner">
+        <button type="button" class="margin-nav-btn" data-jump="margin-overview">Overview</button>
         <button type="button" class="margin-nav-btn" data-jump="margin-team">Team</button>
         <button type="button" class="margin-nav-btn" data-jump="margin-strategy">Research Strategy</button>
         <button type="button" class="margin-nav-btn" data-jump="margin-activities">Research Activities</button>
@@ -1158,6 +1220,43 @@
         <button type="button" class="margin-nav-btn" data-jump="margin-reflections">Personal Reflections</button>
       </div>
     </div>
+
+
+    <!-- ============================================================
+         LANDING / COVER SLIDE — project title, description, a photo,
+         and a Role/Logistics-style info table. This is the very first
+         thing visitors see when opening the project; "Overview" (the
+         first item in the nav strip above) is the next slide after
+         this one.
+         ============================================================ -->
+    <section class="margin-slide" id="margin-landing">
+      <div class="margin-slide-inner">
+        <h1 class="margin-project-name">Project M.A.R.G.I.N.</h1>
+        <p class="margin-project-subtitle">Multimodal Accessible Real-time Graphical Interaction &amp; Navigation</p>
+
+        <div class="margin-landing-photo">
+          <img src="images/projects/graph_blind.jpg" alt="" onerror="this.style.display='none';"/>
+        </div>
+
+        <!-- Role/Logistics info table — edit the labels and values
+             directly below. Add or remove a <div class="margin-info-row">
+             for each Role/Deliverables/Logistics line you need. -->
+        <div class="margin-info-table">
+          <div class="margin-info-col">
+            <h3 class="margin-subsection-title">Role</h3>
+            <p>Write your role on this project here.</p>
+            <h3 class="margin-subsection-title">Deliverables</h3>
+            <p><strong>Write the deliverable here.</strong></p>
+          </div>
+          <div class="margin-info-col">
+            <h3 class="margin-subsection-title">Logistics</h3>
+            <div class="margin-info-row"><strong>Duration:</strong> Write duration here</div>
+            <div class="margin-info-row"><strong>Team Members:</strong> Write names here</div>
+            <div class="margin-info-row"><strong>Advisor:</strong> Write advisor name here</div>
+          </div>
+        </div>
+      </div>
+    </section>
 
 
     <!-- ============================================================
@@ -1178,7 +1277,6 @@
          ============================================================ -->
     <section class="margin-slide" id="margin-team">
       <div class="margin-slide-inner">
-        <p class="margin-slide-kicker">Chapter 2</p>
         <h2 class="margin-slide-title">Team</h2>
         <div class="margin-slide-body">
           <p>Write who was on the team here — names, roles, and how the work was divided.</p>
@@ -1192,7 +1290,6 @@
          ============================================================ -->
     <section class="margin-slide" id="margin-strategy">
       <div class="margin-slide-inner">
-        <p class="margin-slide-kicker">Chapter 3</p>
         <h2 class="margin-slide-title">Research Strategy</h2>
         <div class="margin-slide-body">
           <p>Write the overall research strategy here — the questions you set out to answer and why you chose this approach.</p>
@@ -1212,7 +1309,6 @@
     -->
     <section class="margin-slide" id="margin-activities">
       <div class="margin-slide-inner">
-        <p class="margin-slide-kicker">Chapter 4</p>
         <h2 class="margin-slide-title">Research Activities</h2>
         <div class="margin-slide-cols">
           <div class="margin-slide-body">
@@ -1229,7 +1325,6 @@
          ============================================================ -->
     <section class="margin-slide" id="margin-synthesis">
       <div class="margin-slide-inner">
-        <p class="margin-slide-kicker">Chapter 5</p>
         <h2 class="margin-slide-title">Research Synthesis</h2>
         <div class="margin-slide-body">
           <p>Write how you pulled the findings together here — patterns, themes, or key insights that emerged.</p>
@@ -1243,7 +1338,6 @@
          ============================================================ -->
     <section class="margin-slide" id="margin-impact">
       <div class="margin-slide-inner">
-        <p class="margin-slide-kicker">Chapter 6</p>
         <h2 class="margin-slide-title">Impact</h2>
         <div class="margin-slide-body">
           <p>Write the impact of the work here — what changed as a result, for users, the team, or the product.</p>
@@ -1257,7 +1351,6 @@
          ============================================================ -->
     <section class="margin-slide" id="margin-business">
       <div class="margin-slide-inner">
-        <p class="margin-slide-kicker">Chapter 7</p>
         <h2 class="margin-slide-title">Business Opportunity</h2>
         <div class="margin-slide-body">
           <p>Write the business case here — market relevance, potential applications, or commercial angle.</p>
@@ -1271,7 +1364,6 @@
          ============================================================ -->
     <section class="margin-slide" id="margin-reflections">
       <div class="margin-slide-inner">
-        <p class="margin-slide-kicker">Chapter 8</p>
         <h2 class="margin-slide-title">Personal Reflections</h2>
         <div class="margin-slide-body">
           <p>Write your personal reflections here — what you learned, what you'd do differently, what stayed with you.</p>
@@ -1397,14 +1489,6 @@
       </div>
     </section>
  
-    <section id="portfolio" class="view" data-view="work">
-      <div class="work-sub active" id="workGrid">
-        <div class="work-grid reveal" id="workGridCards"></div>
-        <h3 class="gallery-subhead my-other-work-heading reveal" data-i18n="gallery.otherWork">My Other Work</h3>
-        <div class="work-grid-3 reveal" id="workSliderCards"></div>
-      </div>
-      <div class="work-sub" id="workDetail"></div>
-    </section>
   </main>
  
  
@@ -1741,346 +1825,6 @@
       return (dict&&dict[key]!==undefined)?dict[key]:(TRANSLATIONS.en[key]!==undefined?TRANSLATIONS.en[key]:key);
     }
  
-    function renderWorkGrid(){
-      const wrap=document.getElementById('workGridCards');
-      const projectsToShow=PROJECTS.filter(function(p){return p.cat===WORK_CATEGORY;});
-      wrap.innerHTML=projectsToShow.map(function(p){
-        const fitStyle=p.imgFit?(' style="object-fit:'+p.imgFit+';background:#e8ecf5;"'):'';
-        const disabledClass=p.id===1?' is-disabled':'';
-        return '<button type="button" class="work-card reveal'+disabledClass+'" data-id="'+p.id+'">'
-          +'<span class="work-card-thumb">'
-            +'<img class="work-card-img" src="'+p.img+'" alt="'+p.imgAlt+'"'+fitStyle+'>'
-            +'<span class="work-card-overlay"><span class="work-card-title" data-i18n="proj.'+p.id+'.title">'+tr('proj.'+p.id+'.title')+'</span></span>'
-          +'</span>'
-          +'<span class="work-card-meta">'+(p.meta||'')+'</span>'
-          +'</button>';
-      }).join('');
-      wrap.querySelectorAll('.work-card').forEach(function(card){
-        card.addEventListener('click',function(){
-          const id=parseInt(card.dataset.id,10);
-          return; // ALL projects temporarily inactive while still in progress - remove this line and uncomment goToProject below to re-enable, project by project, as each is finished
-          // if(id===1)return; // "On Progress" placeholder project is not clickable
-          // goToProject(id);
-        });
-      });
-      if(window.observeReveals)window.observeReveals();
-    }
- 
-    /* ============================================================
-       WORK SLIDER — smaller, horizontally-scrolling row of extra
-       project tiles below the main grid. Pulls any project flagged
-       `slider:true` in the PROJECTS array above, regardless of its
-       `cat`. Reuses goToProject() so clicking a card opens the same
-       full project page as the main grid.
-       ============================================================ */
-    function renderWorkSlider(){
-      const wrap=document.getElementById('workSliderCards');
-      if(!wrap)return;
-      const projectsToShow=PROJECTS.filter(function(p){return p.slider===true;});
-      wrap.innerHTML=projectsToShow.map(function(p){
-        const fitStyle=p.imgFit?(' style="object-fit:'+p.imgFit+';background:#e8ecf5;"'):'';
-        return '<button type="button" class="work-card reveal" data-id="'+p.id+'">'
-          +'<span class="work-card-thumb">'
-            +'<img class="work-card-img" src="'+p.img+'" alt="'+p.imgAlt+'"'+fitStyle+'>'
-            +'<span class="work-card-overlay"><span class="work-card-title" data-i18n="proj.'+p.id+'.title">'+tr('proj.'+p.id+'.title')+'</span></span>'
-          +'</span>'
-          +'<span class="work-card-meta">'+(p.meta||'')+'</span>'
-          +'</button>';
-      }).join('');
-      wrap.querySelectorAll('.work-card').forEach(function(card){
-        card.addEventListener('click',function(){
-          return; // temporarily inactive, see main work-card handler above for the re-enable note
-          // goToProject(parseInt(card.dataset.id,10));
-        });
-      });
-      if(window.observeReveals)window.observeReveals();
-    }
- 
-    let currentProjectId=null;
-    /* ============================================================
-       PLACEHOLDER CASE STUDY FACTORY — returns a fresh object with the
-       same section outline as project 3 (Study Context, Research
-       Objective, Research Question, My Role, Research Method, Voice of
-       Participants, Impact, Personal Reflection), all filled with
-       "Write ... here" placeholders. Used below to give every other
-       project the same structure to write into later. Each call returns
-       an independent object, so editing one project's placeholders won't
-       affect another's.
-       ============================================================ */
-    function makePlaceholderCaseStudy(){
-      function methodBlock(title){
-        return {
-          title:title,
-          format:'prose',
-          prose:'Write the '+title.toLowerCase()+' content here.',
-          bullets:['Write point one here','Write point two here'],
-          challenge:{
-            format:'prose',
-            prose:'Write the challenge encountered here.',
-            bullets:['Write challenge point one here','Write challenge point two here']
-          }
-        };
-      }
-      return {
-        studyContext:'Write the study context here.',
-        researchObjective:'Write the research objective here.',
-        researchQuestion:'Write the research question here.',
-        myRole:{
-          intro:'Write your role introduction here.',
-          responsibilitiesLabel:'My primary responsibilities included:',
-          responsibilities:['Write responsibility one here','Write responsibility two here'],
-          outro:'Write any closing note about teammates or collaborators here.'
-        },
-        researchMethod:[
-          methodBlock('Getting Started'),
-          {
-            title:'Experiment Design',
-            subsections:[
-              methodBlock('Storyboarding to Brainstorm Participant Journey'),
-              methodBlock('Technology Selection and Prototype Development'),
-              methodBlock('Task Design')
-            ]
-          },
-          {
-            title:'Data Collection',
-            subsections:[
-              methodBlock('Protocol Development'),
-              methodBlock('Team Role Finalization')
-            ]
-          },
-          methodBlock('Data Analysis')
-        ],
-        voiceOfParticipants:{format:'prose',prose:'Write the voice of participants content here.',bullets:['Write point one here','Write point two here']},
-        impact:{format:'prose',prose:'Write the impact content here.',bullets:['Write point one here','Write point two here']},
-        personalReflection:{format:'prose',prose:'Write the personal reflection content here.',bullets:['Write point one here','Write point two here']}
-      };
-    }
-    const CASE_STUDIES={
-      3:{
-        studyContext:'As workplaces and educational institutions increasingly shift toward distributed collaboration, telecommunication technologies are evolving from simple communication channels into multimodal interaction systems. In addition to the influence of individual modalities, the presence of different combinations of diverse modalities such as visual, auditory, haptic, etc. may also impact users\u2019 perception of self-presence, co-presence, and the collaborative environment. Hence, understanding how these multimodal interaction designs affect collaborative experiences is essential for designing future remote communication systems. This study compared different multimodal interaction designs implemented through three telecommunication systems \u2014 a video-based communication platform, a virtual reality\u2013based communication platform, and a telepresence robot\u2013based communication platform \u2014 to inform how group collaboration is impacted differently by them.',
-        researchObjective:'To investigate how the presence of different modalities in different telecommunication media influences users\u2019 ability to think independently, which impacts productivity directly during remote group work.',
-        researchQuestion:'How do multimodal collaborative technologies influence group productivity during remote collaboration?',
-        myRole:{
-          intro:'I led the experimental design and coordinated the overall research process from planning to reporting. I collaborated with 3 teammates who reviewed the study design and coordinated participant recruitment, wrote the research report, and prepared the final presentation slides.',
-          responsibilitiesLabel:'My primary responsibilities included:',
-          responsibilities:[
-            'Designing the experimental protocol and participant workflow',
-            'Developing the Furhat telepresence prototype using Unity, C#, and Python',
-            'Operating the Furhat robot during experimental sessions',
-            'Analyzing questionnaire data'
-          ],
-          outro:'My Swedish-speaking teammates supported participant interviews, observation, and translation of qualitative responses.'
-        },
-        /* ============================================================
-           RESEARCH METHOD — fill in below. Each block has a `format`
-           field set to either 'prose' or 'bullets':
-             - 'prose'   -> renders the `prose` string as a paragraph
-             - 'bullets' -> renders the `bullets` array as a bulleted list
-           Both `prose` and `bullets` are left in place as placeholders so
-           you can write either version and just flip `format` to switch
-           which one displays. Same pattern applies to every `challenge`
-           block nested inside each subsection.
-           ============================================================ */
-        researchMethod:[
-          {
-            title:'Getting Started',
-            format:'prose',
-            prose:'Write the getting started content here.',
-            bullets:['Write point one here','Write point two here'],
-            challenge:{
-              format:'prose',
-              prose:'Write the challenge encountered here.',
-              bullets:['Write challenge point one here','Write challenge point two here']
-            }
-          },
-          {
-            title:'Experiment Design',
-            subsections:[
-              {
-                title:'Storyboarding to Brainstorm Participant Journey',
-                format:'prose',
-                prose:'Write the storyboarding content here.',
-                bullets:['Write point one here','Write point two here'],
-                challenge:{
-                  format:'prose',
-                  prose:'Write the challenge encountered here.',
-                  bullets:['Write challenge point one here','Write challenge point two here']
-                }
-              },
-              {
-                title:'Technology Selection and Prototype Development',
-                format:'prose',
-                prose:'Write the technology selection and prototype development content here.',
-                bullets:['Write point one here','Write point two here'],
-                challenge:{
-                  format:'prose',
-                  prose:'Write the challenge encountered here.',
-                  bullets:['Write challenge point one here','Write challenge point two here']
-                }
-              },
-              {
-                title:'Task Design',
-                format:'prose',
-                prose:'Write the task design content here.',
-                bullets:['Write point one here','Write point two here'],
-                challenge:{
-                  format:'prose',
-                  prose:'Write the challenge encountered here.',
-                  bullets:['Write challenge point one here','Write challenge point two here']
-                }
-              }
-            ]
-          },
-          {
-            title:'Data Collection',
-            subsections:[
-              {
-                title:'Protocol Development',
-                format:'prose',
-                prose:'Write the protocol development content here.',
-                bullets:['Write point one here','Write point two here'],
-                challenge:{
-                  format:'prose',
-                  prose:'Write the challenge encountered here.',
-                  bullets:['Write challenge point one here','Write challenge point two here']
-                }
-              },
-              {
-                title:'Team Role Finalization',
-                format:'prose',
-                prose:'Write the team role finalization content here.',
-                bullets:['Write point one here','Write point two here'],
-                challenge:{
-                  format:'prose',
-                  prose:'Write the challenge encountered here.',
-                  bullets:['Write challenge point one here','Write challenge point two here']
-                }
-              }
-            ]
-          },
-          {
-            title:'Data Analysis',
-            format:'prose',
-            prose:'Write the data analysis content here.',
-            bullets:['Write point one here','Write point two here'],
-            challenge:{
-              format:'prose',
-              prose:'Write the challenge encountered here.',
-              bullets:['Write challenge point one here','Write challenge point two here']
-            }
-          }
-        ],
-        /* Below three sections use the same prose/bullets `format` toggle
-           as Research Method — write into whichever field you intend to
-           use and set `format` accordingly. */
-        voiceOfParticipants:{
-          format:'prose',
-          prose:'Write the voice of participants content here.',
-          bullets:['Write point one here','Write point two here']
-        },
-        impact:{
-          format:'prose',
-          prose:'Write the impact content here.',
-          bullets:['Write point one here','Write point two here']
-        },
-        personalReflection:{
-          format:'prose',
-          prose:'Write the personal reflection content here.',
-          bullets:['Write point one here','Write point two here']
-        }
-      }
-    };
-    // Give every project except id 1 ("On Progress", which is not clickable)
-    // the same placeholder case-study structure as project 3, ready to write into.
-    [2,4,5,6,7,8,9,10].forEach(function(pid){
-      CASE_STUDIES[pid] = makePlaceholderCaseStudy();
-    });
- 
-    function csListHTML(items){
-      return '<ul class="cs-list">'+items.map(function(i){return '<li>'+i+'</li>';}).join('')+'</ul>';
-    }
-    function csTableHTML(t){
-      return '<div class="cs-table-wrap"><table class="cs-table"><thead><tr>'
-        +t.head.map(function(h){return '<th>'+h+'</th>';}).join('')
-        +'</tr></thead><tbody>'
-        +t.rows.map(function(r){return '<tr>'+r.map(function(c){return '<td>'+c+'</td>';}).join('')+'</tr>';}).join('')
-        +'</tbody></table></div>';
-    }
-    function renderMethodContent(block){
-      if(!block) return '';
-      if(block.format==='bullets') return csListHTML(block.bullets||[]);
-      return '<p class="cs-p">'+(block.prose||'')+'</p>';
-    }
-    function renderMethodBlock(item, isSub){
-      let html = '<div class="'+(isSub?'cs-subsub':'cs-sub')+'">'+item.title+'</div>';
-      if(item.subsections){
-        html += item.subsections.map(function(sub){ return renderMethodBlock(sub, true); }).join('');
-      } else {
-        html += renderMethodContent(item);
-        if(item.challenge){
-          html += '<div class="cs-highlight"><div class="cs-challenge-label">Challenges Encountered</div>'
-            + renderMethodContent(item.challenge)
-            + '</div>';
-        }
-      }
-      return html;
-    }
-    function caseStudyHTML(cs){
-      let html='';
-      if(cs.studyContext)html+='<div class="cs-section reveal"><div class="cs-section-title">Study Context</div><div class="cs-section-body"><p class="cs-p">'+cs.studyContext+'</p></div></div>';
-      if(cs.researchObjective)html+='<div class="cs-section reveal"><div class="cs-section-title">Research Objective</div><div class="cs-section-body"><p class="cs-p">'+cs.researchObjective+'</p></div></div>';
-      if(cs.researchQuestion)html+='<div class="cs-section reveal"><div class="cs-section-title">Research Question</div><div class="cs-section-body"><p class="cs-p">'+cs.researchQuestion+'</p></div></div>';
-      if(cs.myRole)html+='<div class="cs-section reveal"><div class="cs-section-title">My Role</div><div class="cs-section-body">'
-        +(cs.myRole.intro?'<p class="cs-p">'+cs.myRole.intro+'</p>':'')
-        +(cs.myRole.responsibilitiesLabel?'<p class="cs-p">'+cs.myRole.responsibilitiesLabel+'</p>':'')
-        +(cs.myRole.responsibilities?csListHTML(cs.myRole.responsibilities):'')
-        +(cs.myRole.outro?'<p class="cs-p">'+cs.myRole.outro+'</p>':'')
-      +'</div></div>';
-      if(cs.researchMethod)html+='<div class="cs-section reveal"><div class="cs-section-title">Research Method</div><div class="cs-section-body">'
-        +cs.researchMethod.map(function(item){ return renderMethodBlock(item, false); }).join('')
-      +'</div></div>';
-      if(cs.voiceOfParticipants)html+='<div class="cs-section cs-highlight reveal"><div class="cs-section-title">Voice of Participants</div><div class="cs-section-body">'+renderMethodContent(cs.voiceOfParticipants)+'</div></div>';
-      if(cs.impact)html+='<div class="cs-section reveal"><div class="cs-section-title">Impact</div><div class="cs-section-body">'+renderMethodContent(cs.impact)+'</div></div>';
-      if(cs.personalReflection)html+='<div class="cs-section reveal"><div class="cs-section-title">Personal Reflection</div><div class="cs-section-body">'+renderMethodContent(cs.personalReflection)+'</div></div>';
-      return html;
-    }
- 
-    function renderProjectDetail(id){
-      const p=PROJECTS.find(function(x){return x.id===id;});
-      if(!p)return;
-      currentProjectId=id;
-      const linksHtml=p.links.map(function(l){
-        return '<a href="'+l.href+'" target="_blank" rel="noopener noreferrer">'+tr(l.key)+'</a>';
-      }).join('');
-      const cs=CASE_STUDIES[id];
-      document.getElementById('workDetail').innerHTML=
-        '<h1 class="view-headline">'+tr('proj.'+id+'.title')+'</h1>'
-        +'<div class="project-detail-img reveal"><img src="'+p.img+'" alt="'+p.imgAlt+'"></div>'
-        +(cs?caseStudyHTML(cs):'<p class="cs-p reveal">'+tr('proj.'+id+'.desc')+'</p>')
-        +'<div class="proj-card-links">'+linksHtml+'</div>';
-      if(window.observeReveals)window.observeReveals();
-    }
- 
-    function showWorkSub(projectId){
-      const grid=document.getElementById('workGrid'),detail=document.getElementById('workDetail');
-      if(projectId){
-        renderProjectDetail(projectId);
-        grid.classList.remove('active');
-        detail.classList.add('active');
-        document.body.classList.add('project-page-active');
-      }else{
-        currentProjectId=null;
-        detail.classList.remove('active');
-        grid.classList.add('active');
-        document.body.classList.remove('project-page-active');
-      }
-    }
- 
-    function topbarLinksHTML(){
-      return '';
-    }
-    renderWorkGrid();
-    renderWorkSlider();
  
     /* ============================================================
        NEW HOME SECTIONS — Work + Interests embedded directly in the
@@ -2185,6 +1929,27 @@
       });
     });
 
+    /* Margin chapter scroll-spy — as you scroll through the M.A.R.G.I.N.
+       page's chapters, this watches which one is currently most visible
+       and marks that chapter's nav button as .active (giving it the
+       "pressed" look), clearing .active from every other button. The
+       landing/cover slide has no matching nav button, so it's simply
+       skipped when it comes into view — nothing gets marked active for it. */
+    (function(){
+      const marginSlides=document.querySelectorAll('#marginProjectView .margin-slide[id]');
+      if(!marginSlides.length)return;
+      const marginScrollSpy=new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(!entry.isIntersecting)return;
+          const matchingBtn=document.querySelector('.margin-nav-btn[data-jump="'+entry.target.id+'"]');
+          if(!matchingBtn)return; // e.g. the landing slide, which has no nav button
+          document.querySelectorAll('.margin-nav-btn').forEach(function(b){b.classList.remove('active');});
+          matchingBtn.classList.add('active');
+        });
+      },{threshold:0.5});
+      marginSlides.forEach(function(slide){marginScrollSpy.observe(slide);});
+    })();
+
     const HOME_GALLERY=[
       {img:'images/others/sunset/India.jpg', alt:'Sunset in India', key:'country.india'},
       {img:'images/others/sunset/Sweden.jpg', alt:'Sunset in Sweden', key:'country.sweden'},
@@ -2234,6 +1999,7 @@
       opts=opts||{};
       if(VALID_VIEWS.indexOf(view)===-1)view='landing';
       document.body.classList.toggle('landing-active',view==='landing');
+      document.body.classList.toggle('margin-view-active',view==='margin');
       document.querySelectorAll('.view').forEach(function(sec){sec.classList.toggle('active',sec.dataset.view===view);});
       document.querySelectorAll('#topbar [data-view], .site-sidebar [data-view]').forEach(function(btn){btn.classList.toggle('active',btn.dataset.view===view);});
       const mainEl=document.getElementById('main-content');
@@ -2271,14 +2037,6 @@
     function setHash(h){
       try{ if(location.hash!=='#'+h)location.hash=h; }catch(err){ }
     }
-    function goToProject(id){
-      setHash('project-'+id);
-      showView('work',{projectId:id});
-    }
-    function goToWork(){
-      setHash('work');
-      showView('work',{projectId:null});
-    }
     document.querySelectorAll('#topbar [data-view], .site-sidebar [data-view]').forEach(function(btn){
       btn.addEventListener('click',function(e){
         e.preventDefault();
@@ -2292,8 +2050,6 @@
       const el=document.getElementById('homeAbout');
       if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
     });
-    const aboutCtaBtn=document.getElementById('aboutCtaBtn');
-    if(aboutCtaBtn)aboutCtaBtn.addEventListener('click',function(){goToWork();});
     const landingEnterBtn=document.getElementById('landingEnterBtn');
     const landingViewEl=document.getElementById('landingView');
     const landingWhiteout=document.getElementById('landingWhiteout');
@@ -2342,7 +2098,6 @@
       try{ localStorage.setItem('siteLang',lang); }catch(e){ }
       applyStaticTranslations(lang);
       if(typeof selectedIdx!=='undefined'&&selectedIdx>-1)selectPlace(selectedIdx);
-      if(currentProjectId)renderProjectDetail(currentProjectId);
       document.querySelectorAll('.lang-dd.open').forEach(function(dd){setDropdownOpen(dd,false);});
       if(typeof window.__syncHeroHeightToBioEnd==='function'){
         const heroEl=document.getElementById('heroSection');
