@@ -2028,6 +2028,8 @@
        ============================================================ */
     document.querySelectorAll('.margin-nav-btn[data-jump]').forEach(function(btn){
       btn.addEventListener('click',function(){
+        document.querySelectorAll('.margin-nav-btn').forEach(function(b){b.classList.remove('active');});
+        btn.classList.add('active');
         const target=document.getElementById(btn.dataset.jump);
         if(target)target.scrollIntoView({behavior:'smooth',block:'start'});
       });
