@@ -679,7 +679,7 @@
       margin-top:-9px;
     }
     p.hero-tagline{
-      font-family:var(--font-serif); font-size:2rem; line-height:1.6;
+      font-family:var(--font-serif); font-size:30px; line-height:1.6;
       font-weight:400; font-style:italic; color:#000; max-width:100%; margin:20px 0 0 0; text-align:left;
     }
     .hero-tagline-big{ font-size:33px; }
@@ -894,16 +894,11 @@
     .margin-nav-btn:hover{ transform:translateY(-1px); }
     .margin-nav-btn.active{
       color:#000; font-weight:700; font-size:17px;
-      /* Same background as the raised state (and the arrow buttons,
-         which already read correctly) — true neumorphism only works
-         when the element's color exactly matches its surroundings; the
-         dent has to be sold entirely by the inset shadow, not by a
-         color patch. Deeper blur + higher contrast than the raised
-         state's outer shadow is what actually sells "pressed in". */
       background-color:#FFFCFB;
       box-shadow:
-        inset 5px 5px 11px rgba(163,177,198,.9),
-        inset -5px -5px 11px rgba(255,255,255,1);
+        inset 5px 5px 10px rgba(163,177,198,.85),
+        inset -5px -5px 10px rgba(255,255,255,.9),
+        inset 0 -8px 14px rgba(120,90,90,.4);
       transform:none;
     }
 
@@ -919,6 +914,7 @@
       position:fixed; top:0; bottom:auto; left:250px; right:150px; z-index:84;
       border-bottom:none;
       border-radius:12px;
+      box-shadow:0 4px 14px rgba(163,177,198,.35);
       transition:transform .3s ease;
     }
     body.margin-view-active.sidebar-collapsed .margin-nav-strip{ left:16px; }
@@ -940,18 +936,18 @@
        sidebar toggle's own left/right flip. */
     .margin-nav-collapse-handle{
       display:none;
-      position:fixed; left:50%;
+      position:fixed; top:62px; left:50%;
       transform:translateX(-50%);
       width:52px; height:12px;
       background:none; border:none; cursor:pointer;
       box-shadow:
         3px 3px 7px rgba(60,70,90,.35),
         -3px -3px 7px rgba(255,255,255,.85);
-      z-index:83;
+      z-index:86;
       transition:top .3s ease;
     }
     body.margin-view-active .margin-nav-collapse-handle{ display:block; }
-    .margin-nav-collapse-handle.nav-tucked{ top:0 !important; }
+    .margin-nav-collapse-handle.nav-tucked{ top:0; }
     /* Leaves room at the bottom of the page so the last chapter's
        content doesn't end up hidden behind the now-fixed nav+footer. */
 
@@ -1973,29 +1969,16 @@
 
     /* Nav-strip collapse handle — click the small dark tab to tuck the
        whole chapter nav strip down behind the footer, freeing up the
-       screen; click it again to bring the strip back. Its vertical
-       position is measured from the strip's real rendered height
-       (previously a guessed constant, which didn't reliably clear the
-       strip and caused the handle to overlap the bottom of the button
-       row). */
+       screen; click it again to bring the strip back. */
     (function(){
       const handle=document.getElementById('marginNavCollapseHandle');
       const strip=document.getElementById('marginNavStrip');
       if(!handle||!strip)return;
-      const HANDLE_GAP=8; // clear space between the strip's bottom edge and the handle
-      function positionHandle(){
-        if(handle.classList.contains('nav-tucked'))return; // CSS 'top:0 !important' owns this state
-        handle.style.top=Math.round(strip.getBoundingClientRect().bottom+HANDLE_GAP)+'px';
-      }
       handle.addEventListener('click',function(){
         const tucked=strip.classList.toggle('nav-tucked');
         handle.classList.toggle('nav-tucked',tucked);
         handle.setAttribute('aria-label',tucked?'Show chapter navigation':'Hide chapter navigation');
-        if(!tucked)requestAnimationFrame(positionHandle);
       });
-      window.addEventListener('resize',positionHandle);
-      window.__positionMarginNavHandle=positionHandle;
-      requestAnimationFrame(()=>requestAnimationFrame(positionHandle));
     })();
 
     /* Margin chapter scroll-spy — as you scroll through the M.A.R.G.I.N.
@@ -2071,9 +2054,6 @@
       document.querySelectorAll('.view').forEach(function(sec){sec.classList.toggle('active',sec.dataset.view===view);});
       if(view==='margin'&&typeof window.__updateMarginNavArrows==='function'){
         requestAnimationFrame(()=>requestAnimationFrame(window.__updateMarginNavArrows));
-      }
-      if(view==='margin'&&typeof window.__positionMarginNavHandle==='function'){
-        requestAnimationFrame(()=>requestAnimationFrame(window.__positionMarginNavHandle));
       }
       document.querySelectorAll('#topbar [data-view], .site-sidebar [data-view]').forEach(function(btn){btn.classList.toggle('active',btn.dataset.view===view);});
       const mainEl=document.getElementById('main-content');
@@ -2603,4 +2583,3 @@ const PLACES=[
   </script>
 </body>
 </html>
- 
