@@ -641,6 +641,14 @@
     .site-lang-topright{ position:fixed; top:1.5rem; right:1.5rem; z-index:85; display:none; }
     body:not(.landing-active) .site-lang-topright{ display:block; }
     body.margin-view-active .site-lang-topright{ top:18.48px; }
+    /* On the M.A.R.G.I.N. page the language menu node is moved (via JS,
+       see "Language menu: lives fixed top-right" below) into the nav
+       strip itself, right after the '>' arrow — so here it drops out of
+       its usual fixed corner positioning and just sits inline in the
+       flex row instead. */
+    body.margin-view-active .margin-nav-strip .site-lang-topright{
+      position:static; display:flex; margin-left:.6rem; flex-shrink:0; top:auto; right:auto;
+    }
     /* 3D glossy circle matching the sidebar toggle's exact size/style -
        chevron and language code sit side by side, small enough to
        both fit comfortably within the small circle. */
@@ -952,7 +960,7 @@
       color:#000; white-space:nowrap; flex-shrink:0;
       background-color:#FFFCFB; opacity:1;
       border:none; border-radius:999px; padding:.6rem 1.3rem;
-      cursor:pointer; position:relative;
+      cursor:pointer; position:relative; z-index:2; isolation:isolate;
       box-shadow:
         3px 3px 7px rgba(163,177,198,.55),
         -3px -3px 7px rgba(255,255,255,.85);
@@ -963,9 +971,9 @@
       color:#000; font-weight:700; font-size:17px;
       background-color:#FFFCFB;
       box-shadow:
-        inset 5px 5px 10px rgba(163,177,198,.85),
-        inset -5px -5px 10px rgba(255,255,255,.9),
-        inset 0 -8px 14px rgba(120,90,90,.4);
+        inset 6px 6px 12px rgba(163,177,198,.95),
+        inset -6px -6px 12px rgba(255,255,255,.95),
+        inset 0 -10px 16px rgba(163,177,198,.6);
       transform:none;
     }
 
@@ -2009,6 +2017,26 @@
       });
     }
 
+    /* Language menu: lives fixed top-right on every page, but on the
+       M.A.R.G.I.N. page it moves inline into the nav strip, right after
+       the '>' arrow. We just relocate the same DOM node (keeps its
+       listeners/state intact) and put it back where it came from when
+       leaving the page. Called from showView() below. */
+    (function(){
+      const langEl=document.getElementById('siteLangTopright');
+      const marginStrip=document.getElementById('marginNavStrip');
+      if(!langEl||!marginStrip)return;
+      const homeParent=langEl.parentNode;
+      const homeNextSibling=langEl.nextSibling;
+      window.__relocateLangMenu=function(intoMargin){
+        if(intoMargin){
+          if(langEl.parentNode!==marginStrip)marginStrip.appendChild(langEl);
+        } else if(langEl.parentNode!==homeParent){
+          homeParent.insertBefore(langEl,homeNextSibling);
+        }
+      };
+    })();
+
     /* ============================================================
        PROJECT M.A.R.G.I.N. — jump-nav + back-link wiring. The actual
        chapter content lives in the HTML (search "CHAPTER 1" etc.); this
@@ -2150,6 +2178,7 @@
       opts=opts||{};
       if(VALID_VIEWS.indexOf(view)===-1)view='home';
       document.body.classList.toggle('margin-view-active',view==='margin');
+      if(typeof window.__relocateLangMenu==='function')window.__relocateLangMenu(view==='margin');
       document.querySelectorAll('.view').forEach(function(sec){sec.classList.toggle('active',sec.dataset.view===view);});
       if(view==='margin'&&typeof window.__updateMarginNavArrows==='function'){
         requestAnimationFrame(()=>requestAnimationFrame(window.__updateMarginNavArrows));
