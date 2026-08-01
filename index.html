@@ -222,6 +222,48 @@
       background:linear-gradient(180deg, rgba(15,23,42,.85) 0%, rgba(15,23,42,.85) 75%, rgba(15,23,42,0) 100%);
     } */
     body:not(.landing-active) .site-sidebar{ display:flex; }
+
+    /* ----------------------------------------------------------------
+       SIDEBAR HIDE/SHOW TOGGLE
+       One button, always visible, whose position AND arrow direction
+       both flip based on whether the sidebar is currently shown or
+       hidden — same button, same click handler, just two visual states
+       controlled by the body.sidebar-collapsed class (see the JS block
+       near "sidebarToggleBtn" for the toggle logic itself):
+         - sidebar visible: sits right on the sidebar's edge, arrow
+           points left (click to hide)
+         - sidebar hidden: sits at the very left of the screen, arrow
+           points right (click to bring it back) — achieved by simply
+           mirroring the whole icon with scaleX(-1), which flips both
+           the arrow AND which side of the icon looks "open" at once
+       Also pops slightly every 10 seconds (see the sidebarTogglePop
+       keyframes below) so it stays noticeable even after a while.
+       ---------------------------------------------------------------- */
+    .sidebar-toggle-btn{
+      position:fixed; top:1.5rem; left:240px; z-index:85;
+      width:2.6rem; height:2rem;
+      display:flex; align-items:center; justify-content:center;
+      background:#fff; border:1px solid var(--n-border); border-radius:.6rem;
+      color:#000; cursor:pointer;
+      box-shadow:0 4px 14px rgba(15,23,42,.12);
+      transition:left .3s ease;
+      animation:sidebarTogglePop 10s ease-in-out infinite;
+    }
+    body.sidebar-collapsed .sidebar-toggle-btn{ left:16px; }
+    body.sidebar-collapsed .sidebar-toggle-btn svg{ transform:scaleX(-1); }
+    @keyframes sidebarTogglePop{
+      0%, 92%, 100%{ transform:scale(1); }
+      95%{ transform:scale(1.18); }
+    }
+
+    body.sidebar-collapsed .site-sidebar{ display:none !important; }
+    /* When the sidebar is hidden, page content no longer needs to leave
+       room for it — this reclaims that space rather than leaving a
+       blank gap on the left. */
+    body.sidebar-collapsed:not(.landing-active) > .view:not(.landing-view){ margin-left:0; width:100%; }
+    body.sidebar-collapsed:not(.landing-active) #main-content{ margin-left:auto; }
+    body.sidebar-collapsed .footer-sticky-wrap{ margin-left:0; width:100%; }
+
     .sidebar-top{ display:flex; flex-direction:column; gap:0; }
     .sidebar-name{ position:relative; display:inline-block; text-align:left; background:none; border:none; padding:0; cursor:pointer; font:inherit; }
     .sidebar-name-text{ font-family:var(--font-serif); font-weight:550; font-size:36px; line-height:1.25; color:#000; }
@@ -836,17 +878,16 @@
       justify-content:center;
     }
     .margin-nav-btn{
-      font-family:var(--font-serif); font-size:1.05rem; font-weight:400;
-      color:#2B3752; background:none; border:none; cursor:pointer;
-      padding:.3rem .1rem; position:relative;
+      font-family:var(--font-serif); font-weight:500; font-size:32px;
+      color:#000; background:none; border:none; cursor:pointer;
+      padding:0 0 1rem 0; position:relative;
     }
-    .margin-nav-btn::after{
-      content:''; position:absolute; left:0; right:0; bottom:0; height:2px;
-      background:var(--n-green); transform:scaleX(0); transform-origin:left;
-      transition:transform .2s ease;
+    .margin-nav-btn.active{ color:#2B3752; }
+    .margin-nav-btn.active::after,
+    .margin-nav-btn:hover::after{
+      content:''; position:absolute; left:0; right:0; bottom:-1px; height:3px;
+      background:var(--n-green);
     }
-    .margin-nav-btn:hover::after,
-    .margin-nav-btn.active::after{ transform:scaleX(1); }
 
     /* Small back-link + project title sitting above the nav strip. */
     .margin-header{ max-width:1400px; margin:0 auto; padding:2.5rem 3rem 0; }
@@ -867,8 +908,9 @@
        Graph Navigation"). Same idea — edit font-size / color here. */
     .margin-project-subtitle{
       font-family:var(--font-serif); font-style:italic;
-      font-size:1.2rem;   /* <-- TITLE subtitle size */
-      color:#2B3752;      /* <-- TITLE subtitle color */
+      font-size:20px;      /* <-- TITLE subtitle size (matches "UX Research Portfolio") */
+      font-weight:550;     /* <-- TITLE subtitle weight (matches "UX Research Portfolio") */
+      color:#000;          /* <-- TITLE subtitle color (matches "UX Research Portfolio") */
       margin:0 0 1.5rem;
     }
 
@@ -881,7 +923,7 @@
       display:flex; align-items:center;
       padding:5rem 3rem;
       border-top:1px solid var(--n-border);
-      scroll-margin-top:96px; /* clears the sticky .margin-nav-strip so a jumped-to chapter's title isn't hidden behind it */
+      scroll-margin-top:190px; /* clears the sticky .margin-nav-strip so a jumped-to chapter's title isn't hidden behind it */
     }
     .margin-slide:first-of-type{ border-top:none; }
     .margin-slide-inner{ max-width:1400px; margin:0 auto; width:100%; }
@@ -986,6 +1028,14 @@
     </div>
   </div>
 
+  <button type="button" class="sidebar-toggle-btn" id="sidebarToggleBtn" aria-label="Hide menu">
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="24" viewBox="0 0 32 24" fill="none">
+      <rect x="1" y="1" width="30" height="22" rx="6" stroke="currentColor" stroke-width="2"/>
+      <line x1="10" y1="1" x2="10" y2="23" stroke="currentColor" stroke-width="2"/>
+      <path d="M19 8L15 12L19 16" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+
   <aside class="site-sidebar" id="siteSidebar">
     <div class="sidebar-top">
       <button type="button" class="sidebar-name" id="sidebarNameBtn">
@@ -1089,9 +1139,8 @@
   <section class="view" data-view="margin" id="marginProjectView">
 
     <div class="margin-header">
-      <button type="button" class="back-link" id="marginBackLink">&larr; Back to Portfolio</button>
       <h1 class="margin-project-name">Project M.A.R.G.I.N.</h1>
-      <p class="margin-project-subtitle">Feeling Vision for Graph Navigation</p>
+      <p class="margin-project-subtitle">Multimodal Accessible Real-time Graphical Interaction &amp; Navigation</p>
     </div>
 
     <!-- Jump-nav strip: one button per chapter below. The data-jump
@@ -1100,7 +1149,6 @@
          to the right place. -->
     <div class="margin-nav-strip">
       <div class="margin-nav-inner">
-        <button type="button" class="margin-nav-btn" data-jump="margin-overview">Overview</button>
         <button type="button" class="margin-nav-btn" data-jump="margin-team">Team</button>
         <button type="button" class="margin-nav-btn" data-jump="margin-strategy">Research Strategy</button>
         <button type="button" class="margin-nav-btn" data-jump="margin-activities">Research Activities</button>
@@ -1117,7 +1165,6 @@
          ============================================================ -->
     <section class="margin-slide" id="margin-overview">
       <div class="margin-slide-inner">
-        <p class="margin-slide-kicker">Chapter 1</p>
         <h2 class="margin-slide-title">Overview</h2>
         <div class="margin-slide-body">
           <p>Write the project overview here — what M.A.R.G.I.N. is, the problem it addresses, and the high-level approach, in a few sentences.</p>
@@ -2115,6 +2162,16 @@
       });
     }
 
+    /* Sidebar hide/show toggle — see the matching CSS comment above
+       (search "SIDEBAR HIDE/SHOW TOGGLE") for how the button's position
+       and icon direction both flip via the body.sidebar-collapsed class. */
+    const sidebarToggleBtn=document.getElementById('sidebarToggleBtn');
+    if(sidebarToggleBtn){
+      sidebarToggleBtn.addEventListener('click',function(){
+        document.body.classList.toggle('sidebar-collapsed');
+      });
+    }
+
     /* ============================================================
        PROJECT M.A.R.G.I.N. — jump-nav + back-link wiring. The actual
        chapter content lives in the HTML (search "CHAPTER 1" etc.); this
@@ -2127,13 +2184,6 @@
         if(target)target.scrollIntoView({behavior:'smooth',block:'start'});
       });
     });
-    const marginBackLink=document.getElementById('marginBackLink');
-    if(marginBackLink){
-      marginBackLink.addEventListener('click',function(){
-        setHash('portfolio');
-        showView('portfolio');
-      });
-    }
 
     const HOME_GALLERY=[
       {img:'images/others/sunset/India.jpg', alt:'Sunset in India', key:'country.india'},
