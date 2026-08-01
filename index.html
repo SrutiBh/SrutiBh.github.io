@@ -637,26 +637,24 @@
     .lang-dd{position:relative;}
     .lang-btn{display:flex;align-items:center;justify-content:center;gap:.2rem;padding:0;border-radius:0;border:none;font-family:var(--font-serif);font-size:1.3rem;font-weight:400;color:#000;letter-spacing:.01em;background:none;cursor:pointer;transition:font-weight .18s ease, transform .18s ease;transform-origin:center;}
     .lang-btn:hover{ font-weight:500; transform:scale(1.12); }
-    .lang-current{ font-size:10.8px; }
+    .lang-current{ font-size:13px; }
     .site-lang-topright{ position:fixed; top:1.5rem; right:1.5rem; z-index:85; display:none; }
     body:not(.landing-active) .site-lang-topright{ display:block; }
-    /* Stays its own separate, independently-styled circular badge — not
-       merged into the chapter-nav strip's card — just repositioned so it
-       sits right after the strip's '>' arrow instead of the far page
-       corner. top:18.48px lines it up with the strip's vertical center;
-       right:100px sits it just past the strip's right edge (which stops
-       at right:150px, see .margin-nav-strip below), with a clear gap. */
-    body.margin-view-active .site-lang-topright{ top:18.48px; right:100px; }
+    /* Same position as every other page (right:1.5rem, inherited above) —
+       top:18.48px here only keeps its vertical center lined up with the
+       chapter-nav strip's own circular controls (arrows, sidebar toggle)
+       on this page; it doesn't otherwise move. */
+    body.margin-view-active .site-lang-topright{ top:18.48px; }
     /* 3D glossy circle matching the sidebar toggle's exact size/style -
        chevron and language code sit side by side, small enough to
        both fit comfortably within the small circle. */
     .site-lang-topright .lang-btn{
-      width:34px; height:34px; border-radius:50%;
+      width:42px; height:42px; border-radius:50%;
       background:linear-gradient(135deg,#FFFCFB 0%,#ece6e4 100%);
       box-shadow:2px 2px 5px rgba(163,177,198,.5), -2px -2px 5px rgba(255,255,255,.85);
-      font-size:.95rem; flex-direction:row; gap:2px;
+      font-size:1.1rem; flex-direction:row; gap:2px;
     }
-    .site-lang-topright .lang-btn svg.chev{ width:7px; height:7px; }
+    .site-lang-topright .lang-btn svg.chev{ width:9px; height:9px; }
     .site-lang-topright .lang-btn:hover{ transform:scale(1.06); }
     @media(max-width:900px){ .site-lang-topright{ display:none !important; } }
     .lang-dd.open .lang-btn{ font-weight:500; }
