@@ -852,7 +852,15 @@
       position:sticky; top:0; z-index:50;
       background-color:#FCF8F8; opacity:1;
       border-bottom:1px solid var(--n-border);
-      padding:0.9rem 1.5rem 0.9rem 3rem;
+      padding:0.9rem 3rem;
+    }
+    /* This wrapper mirrors .margin-slide-inner exactly (same max-width,
+       same margin:0 auto centering) — it's what actually makes the
+       button row land on the same left/right edges as the slide
+       content below it, using the identical formula rather than a
+       guessed pixel offset. */
+    .margin-nav-strip-content{
+      max-width:1400px; margin:0 auto; width:100%;
       display:flex; align-items:center; gap:.75rem;
     }
     .margin-nav-inner{
@@ -862,28 +870,6 @@
       scroll-behavior:smooth;
     }
     .margin-nav-inner::-webkit-scrollbar{ display:none; }
-
-    /* Visible, clickable prev/next controls — without these, the only
-       way to reach a chapter button hidden by overflow was an
-       undiscoverable mouse-wheel/trackpad gesture with no on-screen
-       hint that scrolling was even possible. These make it obvious and
-       give a click target that works with any input device. */
-    .margin-nav-arrow{
-      flex-shrink:0; width:34px; height:34px; border-radius:50%;
-      background:#FFFCFB; border:none; cursor:pointer;
-      display:flex; align-items:center; justify-content:center;
-      color:#000;
-      box-shadow:2px 2px 5px rgba(163,177,198,.5), -2px -2px 5px rgba(255,255,255,.85);
-    }
-    /* Taken out of the flex row and tucked into the strip's own left
-       gutter (the space before the 3rem content-aligned padding above),
-       so it doesn't push "Overview" away from where the slide content
-       actually starts. */
-    .margin-nav-arrow-left{
-      position:absolute; left:8px; top:50%; transform:translateY(-50%);
-    }
-    .margin-nav-arrow:hover{ background:#f7f0ee; }
-    .margin-nav-arrow:disabled{ opacity:.35; cursor:default; box-shadow:none; }
 
     /* ----------------------------------------------------------------
        LIQUID-GLASS / NEUMORPHIC NAV BUTTONS — soft, embossed "Button"
@@ -899,15 +885,16 @@
       color:#000; white-space:nowrap; flex-shrink:0;
       background:none; border:none; padding:.6rem 1rem;
       cursor:pointer; position:relative;
-      transition:color .18s ease, font-weight .18s ease;
+      transition:color .18s ease;
     }
-    .margin-nav-btn:hover{ color:#2B3752; }
-    .margin-nav-btn.active{
-      color:#000; font-weight:700; font-size:17px;
+    .margin-nav-btn.active{ color:#2B3752; }
+    .margin-nav-btn::after{
+      content:''; position:absolute; left:1rem; right:1rem; bottom:0; height:2px;
+      background:#000; transform:scaleX(0); transform-origin:left;
+      transition:transform .22s ease;
     }
-    .margin-nav-btn.active::after{
-      content:''; position:absolute; left:1rem; right:1rem; bottom:0; height:2px; background:#000;
-    }
+    .margin-nav-btn.active::after,
+    .margin-nav-btn:hover::after{ transform:scaleX(1); }
 
     /* ----------------------------------------------------------------
        While the M.A.R.G.I.N. page specifically is open: the footer
@@ -918,11 +905,11 @@
        body.margin-view-active so nothing else on the site is affected.
        ---------------------------------------------------------------- */
     body.margin-view-active .margin-nav-strip{
-      position:fixed; top:0; bottom:auto; left:250px; right:150px; z-index:84;
+      position:fixed; top:0; bottom:auto; left:250px; right:0; z-index:84;
       border-bottom:none;
-      transition:transform .3s ease;
+      transition:transform .3s ease, left .3s ease;
     }
-    body.margin-view-active.sidebar-collapsed .margin-nav-strip{ left:16px; }
+    body.margin-view-active.sidebar-collapsed .margin-nav-strip{ left:0; }
     /* Slides the whole chapter-nav strip straight up until it's tucked
        out of view above the top of the screen - toggled via the small
        handle tab, in JS (search "marginNavCollapseHandle"). */
@@ -1233,11 +1220,9 @@
       </svg>
     </button>
     <div class="margin-nav-strip" id="marginNavStrip">
-      <button type="button" class="margin-nav-arrow margin-nav-arrow-left" id="marginNavArrowLeft" aria-label="Scroll chapters left">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-      </button>
+      <div class="margin-nav-strip-content">
       <div class="margin-nav-inner" id="marginNavInner">
-        <button type="button" class="margin-nav-btn" data-jump="margin-overview">Overview</button>
+        <button type="button" class="margin-nav-btn active" data-jump="margin-overview">Overview</button>
         <button type="button" class="margin-nav-btn" data-jump="margin-team">Team</button>
         <button type="button" class="margin-nav-btn" data-jump="margin-strategy">Research Strategy</button>
         <button type="button" class="margin-nav-btn" data-jump="margin-activities">Research Activities</button>
@@ -1246,9 +1231,7 @@
         <button type="button" class="margin-nav-btn" data-jump="margin-business">Business Opportunity</button>
         <button type="button" class="margin-nav-btn" data-jump="margin-reflections">Personal Reflections</button>
       </div>
-      <button type="button" class="margin-nav-arrow margin-nav-arrow-right" id="marginNavArrowRight" aria-label="Scroll chapters right">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-      </button>
+      </div>
     </div>
 
 
@@ -1932,44 +1915,16 @@
        movement while hovering the chapter nav strip — without this,
        a mouse user (as opposed to a trackpad user, who can swipe
        horizontally) would have no way to reach any buttons hidden by
-       overflow, since the scrollbar itself is intentionally hidden.
-       The visible left/right arrow buttons (see HTML: marginNavArrowLeft
-       / marginNavArrowRight) are the main, discoverable way to do this
-       though — the wheel redirect is a bonus for anyone who tries it. */
+       overflow, since the scrollbar itself is intentionally hidden. */
     (function(){
       const marginNavInner=document.getElementById('marginNavInner');
-      const arrowLeft=document.getElementById('marginNavArrowLeft');
-      const arrowRight=document.getElementById('marginNavArrowRight');
       if(!marginNavInner)return;
-
       marginNavInner.addEventListener('wheel',function(e){
         if(marginNavInner.scrollWidth<=marginNavInner.clientWidth)return; // nothing to scroll
         if(Math.abs(e.deltaY)<=Math.abs(e.deltaX))return; // already horizontal (trackpad), leave it alone
         e.preventDefault();
         marginNavInner.scrollLeft+=e.deltaY*4;
       },{passive:false});
-
-      function updateArrowState(){
-        const maxScroll=marginNavInner.scrollWidth-marginNavInner.clientWidth;
-        if(arrowLeft)arrowLeft.disabled=marginNavInner.scrollLeft<=2;
-        if(arrowRight)arrowRight.disabled=marginNavInner.scrollLeft>=maxScroll-2;
-      }
-      if(arrowLeft)arrowLeft.addEventListener('click',function(){
-        marginNavInner.scrollLeft-=220;
-      });
-      if(arrowRight)arrowRight.addEventListener('click',function(){
-        marginNavInner.scrollLeft+=220;
-      });
-      marginNavInner.addEventListener('scroll',updateArrowState);
-      window.addEventListener('resize',updateArrowState);
-      updateArrowState();
-      // #marginProjectView is display:none until the user actually
-      // navigates there (Home is the default page now) - scrollWidth/
-      // clientWidth both read as 0 on a hidden element, so the very
-      // first calculation above is meaningless. window.__updateMarginNavArrows
-      // is called again from showView() every time the margin page
-      // actually becomes visible, once its real dimensions exist.
-      window.__updateMarginNavArrows=updateArrowState;
     })();
 
     /* Nav-strip collapse handle — click the small dark tab to tuck the
@@ -2057,9 +2012,6 @@
       if(VALID_VIEWS.indexOf(view)===-1)view='home';
       document.body.classList.toggle('margin-view-active',view==='margin');
       document.querySelectorAll('.view').forEach(function(sec){sec.classList.toggle('active',sec.dataset.view===view);});
-      if(view==='margin'&&typeof window.__updateMarginNavArrows==='function'){
-        requestAnimationFrame(()=>requestAnimationFrame(window.__updateMarginNavArrows));
-      }
       document.querySelectorAll('#topbar [data-view], .site-sidebar [data-view]').forEach(function(btn){btn.classList.toggle('active',btn.dataset.view===view);});
       const mainEl=document.getElementById('main-content');
       if(mainEl)mainEl.style.display=(view==='work')?'':'none';
