@@ -934,7 +934,7 @@
        sidebar toggle's own left/right flip. */
     .margin-nav-collapse-handle{
       display:none;
-      position:fixed; top:62px; left:50%;
+      position:fixed; left:50%;
       transform:translateX(-50%);
       width:52px; height:12px;
       background:none; border:none; cursor:pointer;
@@ -945,7 +945,7 @@
       transition:top .3s ease;
     }
     body.margin-view-active .margin-nav-collapse-handle{ display:block; }
-    .margin-nav-collapse-handle.nav-tucked{ top:0; }
+    .margin-nav-collapse-handle.nav-tucked{ top:0 !important; }
     /* Leaves room at the bottom of the page so the last chapter's
        content doesn't end up hidden behind the now-fixed nav+footer. */
 
@@ -1967,16 +1967,29 @@
 
     /* Nav-strip collapse handle — click the small dark tab to tuck the
        whole chapter nav strip down behind the footer, freeing up the
-       screen; click it again to bring the strip back. */
+       screen; click it again to bring the strip back. Its vertical
+       position is measured from the strip's real rendered height,
+       rather than a hardcoded guess — a fixed pixel value drifted out
+       of alignment (visible gap under the row) whenever the strip's
+       actual height changed, and didn't reliably match between the
+       sidebar-open and sidebar-collapsed states either. */
     (function(){
       const handle=document.getElementById('marginNavCollapseHandle');
       const strip=document.getElementById('marginNavStrip');
       if(!handle||!strip)return;
+      function positionHandle(){
+        if(handle.classList.contains('nav-tucked'))return; // CSS 'top:0 !important' owns this state
+        handle.style.top=Math.round(strip.getBoundingClientRect().bottom)+'px';
+      }
       handle.addEventListener('click',function(){
         const tucked=strip.classList.toggle('nav-tucked');
         handle.classList.toggle('nav-tucked',tucked);
         handle.setAttribute('aria-label',tucked?'Show chapter navigation':'Hide chapter navigation');
+        if(!tucked)requestAnimationFrame(positionHandle);
       });
+      window.addEventListener('resize',positionHandle);
+      window.__positionMarginNavHandle=positionHandle;
+      requestAnimationFrame(()=>requestAnimationFrame(positionHandle));
     })();
 
     /* Margin chapter scroll-spy — as you scroll through the M.A.R.G.I.N.
@@ -2052,6 +2065,9 @@
       document.querySelectorAll('.view').forEach(function(sec){sec.classList.toggle('active',sec.dataset.view===view);});
       if(view==='margin'&&typeof window.__updateMarginNavArrows==='function'){
         requestAnimationFrame(()=>requestAnimationFrame(window.__updateMarginNavArrows));
+      }
+      if(view==='margin'&&typeof window.__positionMarginNavHandle==='function'){
+        requestAnimationFrame(()=>requestAnimationFrame(window.__positionMarginNavHandle));
       }
       document.querySelectorAll('#topbar [data-view], .site-sidebar [data-view]').forEach(function(btn){btn.classList.toggle('active',btn.dataset.view===view);});
       const mainEl=document.getElementById('main-content');
@@ -2581,3 +2597,4 @@ const PLACES=[
   </script>
 </body>
 </html>
+ 
