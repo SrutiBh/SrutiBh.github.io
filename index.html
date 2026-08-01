@@ -632,22 +632,26 @@
     @media(max-width:640px){.jvp{height:440px}.jdetail{width:calc(100% - 20px)!important;left:10px!important}.jlogo{width:3.3rem;height:3.3rem;min-width:3.3rem}}
  
     .lang-dd{position:relative;}
-    .lang-btn{display:flex;align-items:center;justify-content:center;gap:.2rem;padding:0;border-radius:0;border:none;font-family:var(--font-serif);font-size:1.15rem;font-weight:400;color:#000;letter-spacing:.01em;background:none;cursor:pointer;transition:font-weight .18s ease;}
-    .lang-btn:hover{ font-weight:700; }
+    .lang-btn{display:flex;align-items:center;justify-content:center;gap:.2rem;padding:0;border-radius:0;border:none;font-family:var(--font-serif);font-size:1.3rem;font-weight:400;color:#000;letter-spacing:.01em;background:none;cursor:pointer;transition:font-weight .18s ease, transform .18s ease;transform-origin:center;}
+    .lang-btn:hover{ font-weight:500; transform:scale(1.12); }
     .lang-current{ font-size:1.3rem; }
     .site-lang-topright{ position:fixed; top:1.5rem; right:1.5rem; z-index:85; display:none; }
     body:not(.landing-active) .site-lang-topright{ display:block; }
-    body.margin-view-active .site-lang-topright{ top:0; }
+    body.margin-view-active .site-lang-topright{ top:23.5px; }
     .site-lang-topright .lang-btn{ font-size:1.3rem; }
     @media(max-width:900px){ .site-lang-topright{ display:none !important; } }
-    .lang-dd.open .lang-btn{ font-weight:700; }
+    .lang-dd.open .lang-btn{ font-weight:500; }
     .lang-btn svg.chev{flex-shrink:0;transition:transform .18s ease;}
     .lang-dd.open .lang-btn svg.chev{transform:rotate(180deg);}
     .lang-menu{position:absolute;top:calc(100% + 10px);right:0;background:#fff;border-radius:.75rem;box-shadow:0 14px 34px rgba(21,32,61,.20);padding:.5rem;display:none;min-width:280px;z-index:70;}
     .lang-dd.open .lang-menu{display:block;}
-    .lang-opt{display:flex;align-items:center;justify-content:space-between;width:100%;padding:.5rem .7rem;border-radius:.5rem;border:none;background:transparent;font-size:1.3rem;font-weight:400;color:#000;cursor:pointer;text-align:left;font-family:var(--font-serif);transition:color .18s ease,background-color .18s ease,font-weight .18s ease;}
-    .lang-opt:hover{ font-weight:700; }
-    .lang-opt.active{ font-weight:700; }
+    .lang-opt{display:flex;align-items:center;justify-content:space-between;width:100%;padding:.5rem .7rem;border-radius:.5rem;border:none;background:transparent;font-size:1.3rem;font-weight:400;color:#000;cursor:pointer;text-align:left;font-family:var(--font-serif);transition:color .18s ease,background-color .18s ease,font-weight .18s ease,transform .18s ease;transform-origin:left center;}
+    .lang-opt:hover{ font-weight:500; transform:scale(1.12); }
+    /* Chosen language shows 3px SMALLER than the others, rather than
+       the more typical larger-when-active convention - matches the
+       same treatment applied to the M.A.R.G.I.N. chapter buttons
+       (search "margin-nav-btn.active" below). */
+    .lang-opt.active{ font-weight:500; font-size:calc(1.3rem - 3px); }
  
     .menu-dd{position:relative;}
     .menu-btn{display:flex;align-items:center;justify-content:center;width:3.5rem;height:3.5rem;border-radius:999px;border:none;background:var(--color-bg-hover);color:#2B3752;cursor:pointer;transition:background-color .18s ease,color .18s ease;}
@@ -943,7 +947,7 @@
     }
     .margin-nav-btn:hover{ transform:translateY(-1px); }
     .margin-nav-btn.active{
-      color:#000; font-weight:700;
+      color:#000; font-weight:700; font-size:17px;
       background-color:#FFFCFB;
       box-shadow:
         inset 5px 5px 10px rgba(163,177,198,.85),
@@ -1161,16 +1165,14 @@
   </div>
 
   <button type="button" class="sidebar-minimize-btn" id="sidebarMinimizeBtn" aria-label="Hide menu">
-    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="34" viewBox="0 0 30 34">
       <defs>
-        <radialGradient id="minimizeBtnGrad" cx="35%" cy="28%" r="80%">
-          <stop offset="0%" stop-color="#ffffff"/>
-          <stop offset="60%" stop-color="#f3f3f3"/>
-          <stop offset="100%" stop-color="#e2e2e2"/>
-        </radialGradient>
+        <linearGradient id="minimizeBtnGrad" x1="20%" y1="10%" x2="90%" y2="95%">
+          <stop offset="0%" stop-color="#4a5c80"/>
+          <stop offset="100%" stop-color="#1c2739"/>
+        </linearGradient>
       </defs>
-      <circle cx="16" cy="16" r="15" fill="url(#minimizeBtnGrad)" stroke="#e8e8e8" stroke-width="1"/>
-      <path d="M18 10L12 16L18 22" stroke="#8a8a8a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <polygon points="3,17 17,3 27,3 13,17 27,31 17,31" fill="url(#minimizeBtnGrad)"/>
     </svg>
   </button>
 
