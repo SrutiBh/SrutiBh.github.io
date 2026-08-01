@@ -105,7 +105,7 @@
     @media(max-width:900px){
       body:not(.landing-active) .footer-sticky-wrap{margin-left:0;width:100%;}
     }
-    .footer-bar{background:none;color:#000;font-family:'Lora',serif;text-align:center;padding:.4rem 3rem;position:relative;min-height:56px;display:flex;align-items:center;justify-content:center;}
+    .footer-bar{background:url('images/others/footer_bg.jpg') center/cover no-repeat;color:#000;font-family:'Lora',serif;text-align:center;padding:.4rem 3rem;position:relative;min-height:56px;display:flex;align-items:center;justify-content:center;}
     .footer-berry-img{position:absolute;right:2rem;bottom:0;height:90px;width:auto;pointer-events:none;}
     .sidebar-social{display:flex;align-items:flex-end;gap:1.1rem;color:#000;}
     .sidebar-social a{ color:inherit; display:flex; transition:transform .18s ease; }
@@ -230,30 +230,44 @@
        hidden — same button, same click handler, just two visual states
        controlled by the body.sidebar-collapsed class (see the JS block
        near "sidebarToggleBtn" for the toggle logic itself):
-         - sidebar visible: sits right on the sidebar's edge, arrow
-           points left (click to hide)
-         - sidebar hidden: sits at the very left of the screen, arrow
-           points right (click to bring it back) — achieved by simply
+         - sidebar visible: centered on the sidebar's right edge (the
+           "vertical line" the sidebar occupies), at that line's
+           vertical middle — i.e. its center-right point
+         - sidebar hidden: same vertical middle, but shifted to sit at
+           the very left of the screen instead — achieved by simply
            mirroring the whole icon with scaleX(-1), which flips both
            the arrow AND which side of the icon looks "open" at once
        Also pops slightly every 10 seconds (see the sidebarTogglePop
        keyframes below) so it stays noticeable even after a while.
        ---------------------------------------------------------------- */
     .sidebar-toggle-btn{
-      position:fixed; top:2.875rem; left:240px; z-index:85;
-      width:2.6rem; height:2rem;
+      position:fixed; top:50vh; left:300px; z-index:85;
+      width:44px; height:44px;
+      transform:translate(-50%,-50%);
       display:flex; align-items:center; justify-content:center;
-      background:#fff; border:1px solid var(--n-border); border-radius:.6rem;
-      color:#000; cursor:pointer;
-      box-shadow:0 4px 14px rgba(15,23,42,.12);
-      transition:left .3s ease;
+      background:none; border:none; border-radius:50%;
+      padding:0; cursor:pointer;
+      box-shadow:
+        5px 5px 10px rgba(60,70,90,.35),
+        -5px -5px 10px rgba(255,255,255,.85);
+      transition:left .3s ease, box-shadow .15s ease;
       animation:sidebarTogglePop 10s ease-in-out infinite;
     }
-    body.sidebar-collapsed .sidebar-toggle-btn{ left:16px; }
+    .sidebar-toggle-btn:hover{
+      box-shadow:
+        6px 6px 12px rgba(60,70,90,.4),
+        -6px -6px 12px rgba(255,255,255,.9);
+    }
+    .sidebar-toggle-btn:active{
+      box-shadow:
+        inset 3px 3px 6px rgba(60,70,90,.4),
+        inset -3px -3px 6px rgba(255,255,255,.8);
+    }
+    body.sidebar-collapsed .sidebar-toggle-btn{ left:38px; }
     body.sidebar-collapsed .sidebar-toggle-btn svg{ transform:scaleX(-1); }
     @keyframes sidebarTogglePop{
-      0%, 92%, 100%{ transform:scale(1); }
-      95%{ transform:scale(1.18); }
+      0%, 92%, 100%{ transform:translate(-50%,-50%) scale(1); }
+      95%{ transform:translate(-50%,-50%) scale(1.15); }
     }
 
     body.sidebar-collapsed .site-sidebar{ display:none !important; }
@@ -1095,10 +1109,9 @@
   </div>
 
   <button type="button" class="sidebar-toggle-btn" id="sidebarToggleBtn" aria-label="Hide menu">
-    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="24" viewBox="0 0 32 24" fill="none">
-      <rect x="1" y="1" width="30" height="22" rx="6" stroke="currentColor" stroke-width="2"/>
-      <line x1="10" y1="1" x2="10" y2="23" stroke="currentColor" stroke-width="2"/>
-      <path d="M19 8L15 12L19 16" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 44 44">
+      <circle cx="22" cy="22" r="20" fill="#eef1f6"/>
+      <path d="M25 14L17 22L25 30" stroke="#3a4a5c" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
     </svg>
   </button>
 
