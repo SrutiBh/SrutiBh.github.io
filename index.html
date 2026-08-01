@@ -1942,6 +1942,22 @@
       });
     });
 
+    /* Redirects a normal vertical mouse-wheel scroll into horizontal
+       movement while hovering the chapter nav strip — without this,
+       a mouse user (as opposed to a trackpad user, who can swipe
+       horizontally) would have no way to reach any buttons hidden by
+       overflow, since the scrollbar itself is intentionally hidden. */
+    (function(){
+      const marginNavInner=document.querySelector('.margin-nav-inner');
+      if(!marginNavInner)return;
+      marginNavInner.addEventListener('wheel',function(e){
+        if(marginNavInner.scrollWidth<=marginNavInner.clientWidth)return; // nothing to scroll
+        if(Math.abs(e.deltaY)<=Math.abs(e.deltaX))return; // already horizontal (trackpad), leave it alone
+        e.preventDefault();
+        marginNavInner.scrollLeft+=e.deltaY;
+      },{passive:false});
+    })();
+
     /* Margin chapter scroll-spy — as you scroll through the M.A.R.G.I.N.
        page's chapters, this watches which one is currently most visible
        and marks that chapter's nav button as .active (giving it the
