@@ -224,47 +224,11 @@
     body:not(.landing-active) .site-sidebar{ display:flex; }
 
     /* ----------------------------------------------------------------
-       SIDEBAR HIDE/SHOW TOGGLE
-       One button, always visible, whose position AND arrow direction
-       both flip based on whether the sidebar is currently shown or
-       hidden — same button, same click handler, just two visual states
-       controlled by the body.sidebar-collapsed class (see the JS block
-       near "sidebarToggleBtn" for the toggle logic itself):
-         - sidebar visible: centered on the sidebar's right edge (the
-           "vertical line" the sidebar occupies), at that line's
-           vertical middle — i.e. its center-right point
-         - sidebar hidden: same vertical middle, but shifted to sit at
-           the very left of the screen instead — achieved by simply
-           mirroring the whole icon with scaleX(-1), which flips both
-           the arrow AND which side of the icon looks "open" at once
-       Also pops slightly every 10 seconds (see the sidebarTogglePop
-       keyframes below) so it stays noticeable even after a while.
+       SIDEBAR HIDE/SHOW TOGGLE — now handled entirely by the single
+       corner icon button (search "sidebar-minimize-btn") below, which
+       toggles both directions and sits independently fixed so it's
+       reachable whether the sidebar is open or hidden.
        ---------------------------------------------------------------- */
-    .sidebar-toggle-btn{
-      position:fixed; top:50vh; left:170px; z-index:85;
-      width:18px; height:60px;
-      transform:translate(-50%,-50%);
-      display:flex; align-items:center; justify-content:center;
-      background:none; border:none; border-radius:9px;
-      padding:0; cursor:pointer;
-      box-shadow:
-        3px 3px 7px rgba(60,70,90,.35),
-        -3px -3px 7px rgba(255,255,255,.85);
-      transition:left .3s ease, box-shadow .15s ease;
-      animation:sidebarTogglePop 10s ease-in-out infinite;
-    }
-    .sidebar-toggle-btn:hover{
-      box-shadow:
-        4px 4px 9px rgba(60,70,90,.4),
-        -4px -4px 9px rgba(255,255,255,.9);
-    }
-    .sidebar-toggle-btn:active{
-      box-shadow:
-        inset 2px 2px 5px rgba(60,70,90,.4),
-        inset -2px -2px 5px rgba(255,255,255,.8);
-    }
-    body.sidebar-collapsed .sidebar-toggle-btn{ left:25px; }
-    body.sidebar-collapsed .sidebar-toggle-btn svg{ transform:scaleX(-1); }
     @keyframes sidebarTogglePop{
       0%, 92%, 100%{ transform:translate(-50%,-50%) scale(1); }
       95%{ transform:translate(-50%,-50%) scale(1.15); }
@@ -278,6 +242,25 @@
     body.sidebar-collapsed:not(.landing-active) #main-content{ margin-left:auto; }
     body.sidebar-collapsed .footer-sticky-wrap{ margin-left:0; width:100%; }
 
+    /* Sidebar hide/show toggle - a single 3D white icon button, fixed
+       independently of the sidebar itself (not nested inside it), so
+       it stays reachable and toggles both directions regardless of
+       whether the sidebar is currently open or hidden. Pops slightly
+       every 10 seconds (see sidebarTogglePop keyframes above) so it
+       stays noticeable even after a while. */
+    .sidebar-minimize-btn{
+      position:fixed; top:1rem; left:195px; z-index:85;
+      width:2.4rem; height:2.4rem;
+      display:flex; align-items:center; justify-content:center;
+      background:none; border:none; cursor:pointer; padding:0;
+      filter:drop-shadow(0 3px 6px rgba(60,70,90,.3));
+      transition:left .3s ease, transform .12s ease;
+      animation:sidebarTogglePop 10s ease-in-out infinite;
+    }
+    body.sidebar-collapsed .sidebar-minimize-btn{ left:16px; }
+    body.sidebar-collapsed .sidebar-minimize-btn svg{ transform:scaleX(-1); }
+    .sidebar-minimize-btn:hover{ transform:scale(1.06); }
+    .sidebar-minimize-btn:active{ transform:scale(0.94); }
     .sidebar-top{ display:flex; flex-direction:column; gap:0; }
     .sidebar-name{ position:relative; display:inline-block; text-align:left; background:none; border:none; padding:0; cursor:pointer; font:inherit; }
     .sidebar-name-text{ font-family:var(--font-serif); font-weight:550; font-size:36px; line-height:1.25; color:#000; }
@@ -654,6 +637,7 @@
     .lang-current{ font-size:1.3rem; }
     .site-lang-topright{ position:fixed; top:1.5rem; right:1.5rem; z-index:85; display:none; }
     body:not(.landing-active) .site-lang-topright{ display:block; }
+    body.margin-view-active .site-lang-topright{ top:0; }
     .site-lang-topright .lang-btn{ font-size:1.3rem; }
     @media(max-width:900px){ .site-lang-topright{ display:none !important; } }
     .lang-dd.open .lang-btn{ font-weight:700; }
@@ -909,7 +893,7 @@
        below for that override. */
     .margin-nav-strip{
       position:sticky; top:0; z-index:50;
-      background-color:#fff; opacity:1;
+      background-color:#FCF8F8; opacity:1;
       border-bottom:1px solid var(--n-border);
       padding:0.9rem 1.5rem;
       display:flex; align-items:center; gap:.75rem;
@@ -949,7 +933,7 @@
     .margin-nav-btn{
       font-family:var(--font-serif); font-weight:550; font-size:20px;
       color:#000; white-space:nowrap; flex-shrink:0;
-      background-color:#fdeeee; opacity:1;
+      background-color:#FFFCFB; opacity:1;
       border:none; border-radius:999px; padding:.6rem 1.3rem;
       cursor:pointer; position:relative;
       box-shadow:
@@ -960,7 +944,7 @@
     .margin-nav-btn:hover{ transform:translateY(-1px); }
     .margin-nav-btn.active{
       color:#000; font-weight:700;
-      background-color:#fdeeee;
+      background-color:#FFFCFB;
       box-shadow:
         inset 5px 5px 10px rgba(163,177,198,.85),
         inset -5px -5px 10px rgba(255,255,255,.9),
@@ -969,52 +953,53 @@
     }
 
     /* ----------------------------------------------------------------
-       While the M.A.R.G.I.N. page specifically is open: pin the site
-       footer to the bottom of the screen (always visible, no scrolling
-       needed to see it) and move the chapter nav strip to sit directly
-       above it, rather than its usual sticky-top position. Scoped to
+       While the M.A.R.G.I.N. page specifically is open: the footer
+       stays in its normal (non-sticky) position at the end of the
+       page content, and the chapter nav strip sits fixed at the very
+       top instead, sharing the same row as the language switcher
+       (top:1.5rem) rather than its own separate bar. Scoped to
        body.margin-view-active so nothing else on the site is affected.
        ---------------------------------------------------------------- */
-    body.margin-view-active .footer-sticky-wrap{
-      position:fixed; bottom:0; left:250px; right:0; z-index:95;
-      margin-left:0; width:auto;
-    }
-    body.margin-view-active.sidebar-collapsed .footer-sticky-wrap{ left:0; }
     body.margin-view-active .margin-nav-strip{
-      position:fixed; top:auto; bottom:63.78px; left:250px; right:0; z-index:94;
-      border-bottom:none; border-top:none;
+      position:fixed; top:0; bottom:auto; left:250px; right:150px; z-index:84;
+      border-bottom:none;
+      border-radius:12px;
+      box-shadow:0 4px 14px rgba(163,177,198,.35);
       transition:transform .3s ease;
     }
-    body.margin-view-active.sidebar-collapsed .margin-nav-strip{ left:0; }
-    /* Slides the whole chapter-nav strip straight down until it's
-       tucked behind the footer (which sits at z-index:95, above the
-       strip's own 94) - toggled via the small handle tab, in JS
-       (search "marginNavCollapseHandle"). */
-    .margin-nav-strip.nav-tucked{ transform:translateY(100%); }
+    body.margin-view-active.sidebar-collapsed .margin-nav-strip{ left:16px; }
+    /* Slides the whole chapter-nav strip straight up until it's tucked
+       out of view above the top of the screen - toggled via the small
+       handle tab, in JS (search "marginNavCollapseHandle"). */
+    .margin-nav-strip.nav-tucked{ transform:translateY(-200%); }
+    /* Leaves room at the top of the page's own content so the first
+       chapter (Overview) doesn't render hidden underneath the now-
+       fixed top strip. */
+    body.margin-view-active #marginProjectView{ padding-top:90px; }
 
     /* Matches the sidebar toggle button's exact size/style (thin
        rounded rectangle, same shadow treatment) - independently fixed
        (a sibling, not a descendant, of the strip) so it stays reachable
        at the same spot on screen even while the strip itself slides
-       down and out of view beneath it. */
+       away above it. Sits just below the strip's new top position,
+       flipping to point the other way once tucked, same as the
+       sidebar toggle's own left/right flip. */
     .margin-nav-collapse-handle{
       display:none;
-      position:fixed; bottom:121px; left:50%;
+      position:fixed; top:62px; left:50%;
       transform:translateX(-50%);
       width:52px; height:12px;
       background:none; border:none; cursor:pointer;
       box-shadow:
         3px 3px 7px rgba(60,70,90,.35),
         -3px -3px 7px rgba(255,255,255,.85);
-      z-index:96;
-      transition:bottom .3s ease;
+      z-index:86;
+      transition:top .3s ease;
     }
     body.margin-view-active .margin-nav-collapse-handle{ display:block; }
-    .margin-nav-collapse-handle.nav-tucked{ bottom:70px; }
-    .margin-nav-collapse-handle.nav-tucked svg{ transform:scaleY(-1); }
+    .margin-nav-collapse-handle.nav-tucked{ top:0; }
     /* Leaves room at the bottom of the page so the last chapter's
        content doesn't end up hidden behind the now-fixed nav+footer. */
-    body.margin-view-active #marginProjectView{ padding-bottom:130px; }
 
     /* ----------------------------------------------------------------
        TITLE — the big project name at the very top of the page
@@ -1175,10 +1160,17 @@
     </div>
   </div>
 
-  <button type="button" class="sidebar-toggle-btn" id="sidebarToggleBtn" aria-label="Hide menu">
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="60" viewBox="0 0 18 60">
-      <rect x="1" y="1" width="16" height="58" rx="8" fill="#fdeeee"/>
-      <path d="M11 22L7 30L11 38" stroke="#3a4a5c" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <button type="button" class="sidebar-minimize-btn" id="sidebarMinimizeBtn" aria-label="Hide menu">
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+      <defs>
+        <radialGradient id="minimizeBtnGrad" cx="35%" cy="28%" r="80%">
+          <stop offset="0%" stop-color="#ffffff"/>
+          <stop offset="60%" stop-color="#f3f3f3"/>
+          <stop offset="100%" stop-color="#e2e2e2"/>
+        </radialGradient>
+      </defs>
+      <circle cx="16" cy="16" r="15" fill="url(#minimizeBtnGrad)" stroke="#e8e8e8" stroke-width="1"/>
+      <path d="M18 10L12 16L18 22" stroke="#8a8a8a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
     </svg>
   </button>
 
@@ -1283,8 +1275,7 @@
          to the right place. -->
     <button type="button" class="margin-nav-collapse-handle" id="marginNavCollapseHandle" aria-label="Hide chapter navigation">
       <svg xmlns="http://www.w3.org/2000/svg" width="52" height="12" viewBox="0 0 52 12">
-        <rect x="1" y="1" width="50" height="10" rx="5" fill="#fdeeee"/>
-        <path d="M19 7L26 4L33 7" stroke="#3a4a5c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <rect x="1" y="1" width="50" height="10" rx="5" fill="#FFFCFB"/>
       </svg>
     </button>
     <div class="margin-nav-strip" id="marginNavStrip">
@@ -1991,12 +1982,13 @@
       });
     }
 
-    /* Sidebar hide/show toggle — see the matching CSS comment above
-       (search "SIDEBAR HIDE/SHOW TOGGLE") for how the button's position
-       and icon direction both flip via the body.sidebar-collapsed class. */
-    const sidebarToggleBtn=document.getElementById('sidebarToggleBtn');
-    if(sidebarToggleBtn){
-      sidebarToggleBtn.addEventListener('click',function(){
+    /* Sidebar hide/show toggle — a single icon button, independently
+       fixed (search "SIDEBAR HIDE/SHOW TOGGLE" in the CSS above), that
+       toggles both directions and stays reachable regardless of the
+       sidebar's current state. */
+    const sidebarMinimizeBtn=document.getElementById('sidebarMinimizeBtn');
+    if(sidebarMinimizeBtn){
+      sidebarMinimizeBtn.addEventListener('click',function(){
         document.body.classList.toggle('sidebar-collapsed');
       });
     }
