@@ -906,7 +906,7 @@
       position:sticky; top:0; z-index:50;
       background-color:#fff; opacity:1;
       border-bottom:1px solid var(--n-border);
-      padding:1.75rem 1.5rem;
+      padding:0.9rem 1.5rem;
       display:flex; align-items:center; gap:.75rem;
     }
     .margin-nav-inner{
@@ -976,7 +976,7 @@
     }
     body.margin-view-active.sidebar-collapsed .footer-sticky-wrap{ left:0; }
     body.margin-view-active .margin-nav-strip{
-      position:fixed; top:auto; bottom:64.78px; left:250px; right:0; z-index:94;
+      position:fixed; top:auto; bottom:63.78px; left:250px; right:0; z-index:94;
       border-bottom:none; border-top:none;
       transition:transform .3s ease;
     }
@@ -994,9 +994,9 @@
        down and out of view beneath it. */
     .margin-nav-collapse-handle{
       display:none;
-      position:fixed; bottom:140px; left:50%;
+      position:fixed; bottom:121px; left:50%;
       transform:translateX(-50%);
-      width:60px; height:18px;
+      width:52px; height:12px;
       background:none; border:none; cursor:pointer;
       box-shadow:
         3px 3px 7px rgba(60,70,90,.35),
@@ -1005,11 +1005,11 @@
       transition:bottom .3s ease;
     }
     body.margin-view-active .margin-nav-collapse-handle{ display:block; }
-    .margin-nav-collapse-handle.nav-tucked{ bottom:84px; }
+    .margin-nav-collapse-handle.nav-tucked{ bottom:70px; }
     .margin-nav-collapse-handle.nav-tucked svg{ transform:scaleY(-1); }
     /* Leaves room at the bottom of the page so the last chapter's
        content doesn't end up hidden behind the now-fixed nav+footer. */
-    body.margin-view-active #marginProjectView{ padding-bottom:150px; }
+    body.margin-view-active #marginProjectView{ padding-bottom:130px; }
 
     /* ----------------------------------------------------------------
        TITLE — the big project name at the very top of the page
@@ -1277,9 +1277,9 @@
          <section> further down — that's what makes clicking it scroll
          to the right place. -->
     <button type="button" class="margin-nav-collapse-handle" id="marginNavCollapseHandle" aria-label="Hide chapter navigation">
-      <svg xmlns="http://www.w3.org/2000/svg" width="60" height="18" viewBox="0 0 60 18">
-        <rect x="1" y="1" width="58" height="16" rx="8" fill="#fdeeee"/>
-        <path d="M22 11L30 7L38 11" stroke="#3a4a5c" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <svg xmlns="http://www.w3.org/2000/svg" width="52" height="12" viewBox="0 0 52 12">
+        <rect x="1" y="1" width="50" height="10" rx="5" fill="#fdeeee"/>
+        <path d="M19 7L26 4L33 7" stroke="#3a4a5c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
       </svg>
     </button>
     <div class="margin-nav-strip" id="marginNavStrip">
