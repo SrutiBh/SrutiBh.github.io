@@ -640,15 +640,13 @@
     .lang-current{ font-size:10.8px; }
     .site-lang-topright{ position:fixed; top:1.5rem; right:1.5rem; z-index:85; display:none; }
     body:not(.landing-active) .site-lang-topright{ display:block; }
-    body.margin-view-active .site-lang-topright{ top:18.48px; }
-    /* On the M.A.R.G.I.N. page the language menu node is moved (via JS,
-       see "Language menu: lives fixed top-right" below) into the nav
-       strip itself, right after the '>' arrow — so here it drops out of
-       its usual fixed corner positioning and just sits inline in the
-       flex row instead. */
-    body.margin-view-active .margin-nav-strip .site-lang-topright{
-      position:static; display:flex; margin-left:.6rem; flex-shrink:0; top:auto; right:auto;
-    }
+    /* Stays its own separate, independently-styled circular badge — not
+       merged into the chapter-nav strip's card — just repositioned so it
+       sits right after the strip's '>' arrow instead of the far page
+       corner. top:18.48px lines it up with the strip's vertical center;
+       right:100px sits it just past the strip's right edge (which stops
+       at right:150px, see .margin-nav-strip below), with a clear gap. */
+    body.margin-view-active .site-lang-topright{ top:18.48px; right:100px; }
     /* 3D glossy circle matching the sidebar toggle's exact size/style -
        chevron and language code sit side by side, small enough to
        both fit comfortably within the small circle. */
@@ -969,11 +967,18 @@
     .margin-nav-btn:hover{ transform:translateY(-1px); }
     .margin-nav-btn.active{
       color:#000; font-weight:700; font-size:17px;
-      background-color:#FFFCFB;
+      /* Deliberately distinct from the strip's own #FCF8F8 background —
+         previously this was #FFFCFB, nearly indistinguishable from the
+         strip, so the pill's silhouette visually dissolved into it at
+         the edges (especially the bottom). This tone plus the thin
+         outer contact-shadow below keep the pressed pill's shape crisp
+         and clearly separate from the strip behind it. */
+      background-color:#E9EDF5;
       box-shadow:
-        inset 6px 6px 12px rgba(163,177,198,.95),
-        inset -6px -6px 12px rgba(255,255,255,.95),
-        inset 0 -10px 16px rgba(163,177,198,.6);
+        0 1px 2px rgba(163,177,198,.45),
+        inset 6px 6px 12px rgba(163,177,198,1),
+        inset -6px -6px 12px rgba(255,255,255,1),
+        inset 0 -10px 16px rgba(163,177,198,.7);
       transform:none;
     }
 
@@ -2017,26 +2022,6 @@
       });
     }
 
-    /* Language menu: lives fixed top-right on every page, but on the
-       M.A.R.G.I.N. page it moves inline into the nav strip, right after
-       the '>' arrow. We just relocate the same DOM node (keeps its
-       listeners/state intact) and put it back where it came from when
-       leaving the page. Called from showView() below. */
-    (function(){
-      const langEl=document.getElementById('siteLangTopright');
-      const marginStrip=document.getElementById('marginNavStrip');
-      if(!langEl||!marginStrip)return;
-      const homeParent=langEl.parentNode;
-      const homeNextSibling=langEl.nextSibling;
-      window.__relocateLangMenu=function(intoMargin){
-        if(intoMargin){
-          if(langEl.parentNode!==marginStrip)marginStrip.appendChild(langEl);
-        } else if(langEl.parentNode!==homeParent){
-          homeParent.insertBefore(langEl,homeNextSibling);
-        }
-      };
-    })();
-
     /* ============================================================
        PROJECT M.A.R.G.I.N. — jump-nav + back-link wiring. The actual
        chapter content lives in the HTML (search "CHAPTER 1" etc.); this
@@ -2178,7 +2163,6 @@
       opts=opts||{};
       if(VALID_VIEWS.indexOf(view)===-1)view='home';
       document.body.classList.toggle('margin-view-active',view==='margin');
-      if(typeof window.__relocateLangMenu==='function')window.__relocateLangMenu(view==='margin');
       document.querySelectorAll('.view').forEach(function(sec){sec.classList.toggle('active',sec.dataset.view===view);});
       if(view==='margin'&&typeof window.__updateMarginNavArrows==='function'){
         requestAnimationFrame(()=>requestAnimationFrame(window.__updateMarginNavArrows));
