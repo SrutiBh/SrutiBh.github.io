@@ -833,6 +833,13 @@
        no JS template involved.
        ================================================================ */
 
+    /* Whole M.A.R.G.I.N. page shares one seamless background — the same
+       off-white shade the nav strip/buttons used to have as their own
+       separate card color. The strip and buttons no longer carry their
+       own background, so this is what makes the page (not the buttons)
+       read as "white". */
+    #marginProjectView{ background-color:#FCF8F8; }
+
     /* Jump-nav strip — sits at the top of the page, one button per
        chapter. Sticky so it stays reachable while scrolling through
        the slides below. */
@@ -883,23 +890,16 @@
     .margin-nav-btn{
       font-family:var(--font-serif); font-weight:550; font-size:20px;
       color:#000; white-space:nowrap; flex-shrink:0;
-      background-color:#FFFCFB; opacity:1;
-      border:none; border-radius:999px; padding:.6rem 1.3rem;
+      background:none; border:none; padding:.6rem 1rem;
       cursor:pointer; position:relative;
-      box-shadow:
-        3px 3px 7px rgba(163,177,198,.55),
-        -3px -3px 7px rgba(255,255,255,.85);
-      transition:box-shadow .18s ease, color .18s ease, transform .12s ease;
+      transition:color .18s ease, font-weight .18s ease;
     }
-    .margin-nav-btn:hover{ transform:translateY(-1px); }
+    .margin-nav-btn:hover{ color:#2B3752; }
     .margin-nav-btn.active{
       color:#000; font-weight:700; font-size:17px;
-      background-color:#FFFCFB;
-      box-shadow:
-        inset 5px 5px 10px rgba(163,177,198,.85),
-        inset -5px -5px 10px rgba(255,255,255,.9),
-        inset 0 -8px 14px rgba(120,90,90,.4);
-      transform:none;
+    }
+    .margin-nav-btn.active::after{
+      content:''; position:absolute; left:1rem; right:1rem; bottom:0; height:2px; background:#000;
     }
 
     /* ----------------------------------------------------------------
@@ -913,8 +913,6 @@
     body.margin-view-active .margin-nav-strip{
       position:fixed; top:0; bottom:auto; left:250px; right:150px; z-index:84;
       border-bottom:none;
-      border-radius:12px;
-      box-shadow:0 4px 14px rgba(163,177,198,.35);
       transition:transform .3s ease;
     }
     body.margin-view-active.sidebar-collapsed .margin-nav-strip{ left:16px; }
