@@ -1010,7 +1010,7 @@
       padding:1.75rem 3rem 5rem;
       scroll-margin-top:100px; /* clears the sticky .margin-nav-strip so a jumped-to chapter's title isn't hidden behind it */
     }
-    .margin-slide-inner{ max-width:var(--project-content-width,1400px); margin:0 auto; width:100%; }
+    .margin-slide-inner{ max-width:1400px; margin:0 auto; width:100%; }
 
     /* ----------------------------------------------------------------
        SECTION — each chapter's own title, e.g. "Overview", "Team",
@@ -1172,10 +1172,11 @@
       width:100%; height:100%;
       object-fit:contain; display:block;
     }
-    .margin-info-table{
-      display:grid; grid-template-columns:1fr 1fr; gap:3rem;
+    .margin-info-row4{
+      display:grid; grid-template-columns:repeat(4,1fr); gap:2.5rem;
+      max-width:var(--project-content-width,1400px);
     }
-    .margin-info-col p{
+    .margin-info-row4-col p{
       font-family:var(--font-serif); font-size:1.15rem; line-height:1.6;
       color:#000; margin:0 0 1rem;
     }
@@ -1183,10 +1184,11 @@
       font-family:var(--font-serif); font-size:1.05rem; line-height:1.8;
       color:#000;
     }
-    @media(max-width:760px){
-      .margin-info-table{ grid-template-columns:1fr; gap:1.5rem; }
+    @media(max-width:900px){
+      .margin-info-row4{ grid-template-columns:1fr 1fr; gap:1.5rem 2rem; }
     }
     @media(max-width:640px){
+      .margin-info-row4{ grid-template-columns:1fr; gap:1.5rem; }
       .margin-landing-photo{ height:320px; }
     }
     @media(max-width:900px){
@@ -1872,7 +1874,7 @@
 
        COMMANDS:
          .title(text)  .subtitle(text)  .cover(src)
-         .role(text)  .deliverable(text)
+         .role(text)  .deliverable(text)  .uxrMethod(text)
          .logistics(label, value)          — call once per row, any number of times
          .section(id, label, title?)       — starts a new chapter (slide 1); title defaults to label
          .item(text)                       — an agenda bullet on the current section's own slide
@@ -1925,6 +1927,7 @@
         cover(src){ data.coverImage=src; return api; },
         role(text){ data.role=text; return api; },
         deliverable(text){ data.deliverable=text; return api; },
+        uxrMethod(text){ data.uxrMethod=text; return api; },
         logistics(label,value){ data.logistics.push({label,value}); return api; },
 
         // Slide 1 of a chapter — the section itself. Starting a new
@@ -1987,6 +1990,7 @@
       .cover('images/projects/margin.jpg')
       .role('Write your role on this project here.')
       .deliverable('Write the deliverable here.')
+      .uxrMethod('Write the UX research method(s) used here.')
       .logistics('Duration','Write duration here')
       .logistics('Team Members','Write names here')
       .logistics('Advisor','Write advisor name here')
@@ -2052,6 +2056,28 @@
         default:
           return '<p>'+(block.text||'')+'</p>';
       }
+    }
+
+    /* ================================================================
+       PROJECT PAGE ONLY — renderProjectInfoRow()
+       ================================================================
+       Builds the Role / Logistics / Used UXR Method / Deliverable row
+       on a project's landing slide. This function is called from
+       exactly one place — renderProjectDetail() below — and nothing
+       on any other page (Home, About, Career) calls it or shares its
+       CSS classes (all scoped under .margin-info-row4-*), so changes
+       here can only ever affect project description pages.
+       ================================================================ */
+    function renderProjectInfoRow(data,logisticsHtml){
+      const items=[
+        {label:'Role',html:'<p>'+(data.role||'')+'</p>'},
+        {label:'Logistics',html:logisticsHtml},
+        {label:'Used UXR Method',html:'<p>'+(data.uxrMethod||'')+'</p>'},
+        {label:'Deliverable',html:'<p><strong>'+(data.deliverable||'')+'</strong></p>'}
+      ];
+      return '<div class="margin-info-row4">'+items.map(function(it){
+        return '<div class="margin-info-row4-col"><h3 class="margin-subsection-title">'+it.label+'</h3>'+it.html+'</div>';
+      }).join('')+'</div>';
     }
 
     function renderProjectDetail(viewId,data){
@@ -2163,11 +2189,7 @@
           +'<h1 class="margin-project-name">'+(data.name||'Untitled Project')+'</h1>'
           +'<p class="margin-project-subtitle">'+(data.subtitle||'')+'</p>'
           +(data.coverImage?'<div class="margin-landing-photo"><img src="'+data.coverImage+'" alt="" loading="lazy" decoding="async" onerror="this.style.display=\'none\';"/></div>':'')
-          +'<div class="margin-info-table">'
-            +'<div class="margin-info-col"><h3 class="margin-subsection-title">Role</h3><p>'+(data.role||'')+'</p>'
-              +'<h3 class="margin-subsection-title">Deliverables</h3><p><strong>'+(data.deliverable||'')+'</strong></p></div>'
-            +'<div class="margin-info-col"><h3 class="margin-subsection-title">Logistics</h3>'+logisticsHtml+'</div>'
-          +'</div>'
+          +renderProjectInfoRow(data,logisticsHtml)
         +'</div></section>'
         +slidesHtml;
     }
@@ -2196,15 +2218,15 @@
       renderProjectDetail(containerId,PROJECT_DETAIL_DATA[key]);
     });
 
-    /* Content should end at the same vertical line as the last chapter
-       button (e.g. "Personal Reflections") — that line isn't a fixed
-       number, it depends on the actual rendered width of every button
-       (chapter count, label length, language, viewport), so it has to
-       be measured live rather than hardcoded. This finds the last nav
-       button's right edge, relative to the strip's own content box
-       (the same box .margin-slide-inner is centered within), and
-       stores it as a CSS variable every slide in this project reads
-       as its max-width. */
+    /* The Role/Logistics/Used UXR Method/Deliverable row should end at
+       the same vertical line as the last chapter button (e.g.
+       "Personal Reflections") — that line isn't a fixed number, it
+       depends on the actual rendered width of every button (chapter
+       count, label length, language, viewport), so it has to be
+       measured live rather than hardcoded. Finds the last nav button's
+       right edge, relative to the strip's own content box (the same
+       box .margin-slide-inner is centered within), and stores it as a
+       CSS variable .margin-info-row4 reads as its own max-width. */
     function syncProjectContentWidth(key){
       const stripContent=document.querySelector('#'+key+'NavStrip .margin-nav-strip-content');
       const view=document.getElementById(key+'ProjectView');
