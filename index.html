@@ -1157,10 +1157,20 @@
        LANDING SLIDE — photo + Role/Logistics info table, sitting under
        the project title/subtitle at the very top of the page.
        ---------------------------------------------------------------- */
-    .margin-landing-photo{ width:996px; max-width:100%; margin:1.5rem 0 2rem; }
+    /* Same centering technique as .margin-nav-strip-content (the
+       chapter title buttons row): a flex container with
+       align-items:center, so the image sits vertically centered within
+       its allotted space exactly the way the nav buttons do — rather
+       than the image just being top-anchored above whatever height it
+       happens to render at. */
+    .margin-landing-photo{
+      width:100%; max-width:996px; height:500px; margin:1.5rem 0 2rem;
+      display:flex; align-items:center; justify-content:center;
+      overflow:hidden; border-radius:.75rem;
+    }
     .margin-landing-photo img{
-      width:100%; height:620px; object-fit:cover; display:block;
-      border-radius:.75rem;
+      width:100%; height:100%;
+      object-fit:contain; display:block;
     }
     .margin-info-table{
       display:grid; grid-template-columns:1fr 1fr; gap:3rem;
@@ -1178,7 +1188,7 @@
       .margin-info-table{ grid-template-columns:1fr; gap:1.5rem; }
     }
     @media(max-width:640px){
-      .margin-landing-photo img{ height:440px; }
+      .margin-landing-photo{ height:320px; }
     }
     @media(max-width:900px){
       .margin-slide{ padding:3.5rem 1.5rem; }
