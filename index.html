@@ -1010,7 +1010,7 @@
       padding:1.75rem 3rem 5rem;
       scroll-margin-top:100px; /* clears the sticky .margin-nav-strip so a jumped-to chapter's title isn't hidden behind it */
     }
-    .margin-slide-inner{ max-width:var(--project-content-width,1400px); margin:0 auto; width:100%; }
+    .margin-slide-inner{ width:100%; }
 
     /* ----------------------------------------------------------------
        SECTION — each chapter's own title, e.g. "Overview", "Team",
@@ -1081,7 +1081,7 @@
        <div class="margin-slide-cols"> with two children instead of
        using .margin-slide-body directly. */
     .margin-slide-cols{
-      display:flex; gap:3rem; align-items:flex-start; max-width:var(--project-content-width,1400px);
+      display:flex; gap:3rem; align-items:flex-start; width:100%;
     }
     .margin-slide-cols .margin-slide-body{ flex:1; min-width:0; }
     .margin-slide-cols img{ flex:1; min-width:0; width:100%; border-radius:.75rem; display:block; }
@@ -2218,23 +2218,37 @@
     });
 
     /* Every slide's content — title, body text, image+text layout, the
-       info row — should end at the same vertical line as the last
-       chapter button (e.g. "Personal Reflections"). That line isn't a
-       fixed number, it depends on the actual rendered width of every
-       button (chapter count, label length, language, viewport), so it
-       has to be measured live. Finds the last nav button's right edge,
-       relative to the strip's own content box (the same box
-       .margin-slide-inner is centered within), and stores it as a CSS
-       variable every slide reads as its own max-width. */
+       info row — should sit between two exact vertical lines: the
+       first button's ("Overview") left edge, and the last button's
+       ("Personal Reflections", or whichever chapter is last) right
+       edge. These are real viewport coordinates, not a single
+       calculated width — a centered max-width doesn't work here,
+       since centering a smaller box inside a wider parent shifts its
+       left edge inward too, throwing off exactly where the right edge
+       lands. Instead, each .margin-slide-inner gets an explicit
+       marginLeft (to start exactly at the first button's left edge)
+       and an explicit width (to end exactly at the last button's right
+       edge), computed fresh against its own parent .margin-slide's
+       padding box — so this is correct regardless of sidebar state,
+       viewport size, chapter count, or language. */
     function syncProjectContentWidth(key){
       const stripContent=document.querySelector('#'+key+'NavStrip .margin-nav-strip-content');
       const view=document.getElementById(key+'ProjectView');
       if(!stripContent||!view)return;
       const buttons=stripContent.querySelectorAll('.margin-nav-btn');
       if(!buttons.length)return;
-      const lastBtn=buttons[buttons.length-1];
-      const width=lastBtn.getBoundingClientRect().right-stripContent.getBoundingClientRect().left;
-      if(width>0)view.style.setProperty('--project-content-width',Math.round(width)+'px');
+      const pointA=buttons[0].getBoundingClientRect().left;
+      const pointB=buttons[buttons.length-1].getBoundingClientRect().right;
+      const targetWidth=pointB-pointA;
+      if(targetWidth<=0)return;
+      view.querySelectorAll('.margin-slide-inner').forEach(function(inner){
+        const slide=inner.closest('.margin-slide');
+        if(!slide)return;
+        const slidePaddingLeft=parseFloat(getComputedStyle(slide).paddingLeft)||0;
+        const slideContentLeft=slide.getBoundingClientRect().left+slidePaddingLeft;
+        inner.style.marginLeft=Math.round(pointA-slideContentLeft)+'px';
+        inner.style.width=Math.round(targetWidth)+'px';
+      });
     }
     window.__syncProjectContentWidth=syncProjectContentWidth;
     window.addEventListener('resize',function(){
