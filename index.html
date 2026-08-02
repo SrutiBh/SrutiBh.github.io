@@ -1010,7 +1010,7 @@
       padding:1.75rem 3rem 5rem;
       scroll-margin-top:100px; /* clears the sticky .margin-nav-strip so a jumped-to chapter's title isn't hidden behind it */
     }
-    .margin-slide-inner{ max-width:1400px; margin:0 auto; width:100%; }
+    .margin-slide-inner{ max-width:var(--project-content-width,1400px); margin:0 auto; width:100%; }
 
     /* ----------------------------------------------------------------
        SECTION — each chapter's own title, e.g. "Overview", "Team",
@@ -2195,6 +2195,34 @@
       }
       renderProjectDetail(containerId,PROJECT_DETAIL_DATA[key]);
     });
+
+    /* "Content should never extend further right than where the last
+       chapter button (e.g. "Personal Reflections") ends" — that
+       boundary depends on the actual rendered width of every button
+       (varies by chapter count, label length, language), so it can't
+       be a fixed CSS number; it has to be measured live. This finds
+       the last nav button's right edge, relative to the strip's own
+       content box (the same box .margin-slide-inner is centered
+       within), and stores it as a CSS variable that every slide in
+       this project reads as its max-width. */
+    function syncProjectContentWidth(key){
+      const stripContent=document.querySelector('#'+key+'NavStrip .margin-nav-strip-content');
+      const view=document.getElementById(key+'ProjectView');
+      if(!stripContent||!view)return;
+      const buttons=stripContent.querySelectorAll('.margin-nav-btn');
+      if(!buttons.length)return;
+      const lastBtn=buttons[buttons.length-1];
+      const width=lastBtn.getBoundingClientRect().right-stripContent.getBoundingClientRect().left;
+      if(width>0)view.style.setProperty('--project-content-width',Math.round(width)+'px');
+    }
+    window.__syncProjectContentWidth=syncProjectContentWidth;
+    window.addEventListener('resize',function(){
+      if(!document.body.classList.contains('margin-view-active'))return;
+      Object.keys(PROJECT_DETAIL_DATA).forEach(function(key){
+        const view=document.getElementById(key+'ProjectView');
+        if(view&&view.classList.contains('active'))syncProjectContentWidth(key);
+      });
+    });
  
     function tr(key){
       const dict=TRANSLATIONS[currentLang]||TRANSLATIONS.en;
@@ -2442,6 +2470,9 @@
           journeyMap.camera.x=journeyMap.camera.tx;
           journeyMap.camera.y=journeyMap.camera.ty;
         });});
+      }
+      if(Object.prototype.hasOwnProperty.call(PROJECT_DETAIL_DATA,view)&&typeof window.__syncProjectContentWidth==='function'){
+        requestAnimationFrame(()=>requestAnimationFrame(()=>window.__syncProjectContentWidth(view)));
       }
       if(!opts.silent){
         requestAnimationFrame(function(){
