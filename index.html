@@ -50,13 +50,29 @@
     .skip-link:focus{left:0;}
  
     /* ================================================================
-       DESIGN TOKENS — the older, first-generation palette (navy/slate).
-       Still used by: sidebar text, education/career section, contact
-       icons, and assorted legacy utility classes below. The site's
-       current visual language mostly uses its own separate tokens
-       instead (search "--n-*" further down, e.g. --n-navy, --n-cream) —
-       these two systems coexist because the newer one was layered on
-       top of this one rather than replacing it outright.
+       DESIGN TOKENS — two systems, kept genuinely separate on purpose.
+       ================================================================
+       These are NOT duplicates of each other under different names —
+       every color that looks like it might overlap (navy/navy,
+       border/border, page-bg/cream) actually resolves to a different
+       hex value. They're two deliberately distinct palettes used in
+       different areas, not one palette with inconsistent naming, so
+       they're kept as separate token sets rather than forced together.
+
+       LEGACY (--color-*, --font-serif): the original navy/slate
+       palette. Used by: sidebar text, education/career section,
+       contact icons, and assorted legacy utility classes below.
+
+       CURRENT (--n-*): the newer cream/warm-tan palette layered on top
+       for the hero, work grid, and project-detail template. Used by:
+       .hero-new*, .work-card*, .margin-*, .n-*.
+
+       Both live here together (previously the --n-* block was defined
+       ~600 lines further down in the stylesheet) purely so there's one
+       place to look for every design token on the site — CSS custom
+       properties on :root apply globally regardless of where in the
+       file they're declared, so this move changes nothing about how
+       anything renders.
        ================================================================ */
     :root{
       --font-serif:'Times New Roman',Times,serif;
@@ -72,6 +88,18 @@
       --color-white:#fff;
       --color-border:#e2e8f0;
       --color-border-light:#cbd5e1;
+
+      --n-font-display:'Space Grotesk', sans-serif;
+      --n-font-body:'Inter', sans-serif;
+      --n-font-mono:'JetBrains Mono', monospace;
+      --n-ink:#17181C;
+      --n-ink-muted:#5B5B62;
+      --n-navy:#1B2A4A;
+      --n-cream:#FAF6EE;
+      --n-border:#E7E0D0;
+      --n-pink:#FCD8E4;
+      --n-green:#1B4D3E;
+      --n-blue:#B4E4F0;
     }
     *,*::before,*::after{box-sizing:border-box;}
  
@@ -636,27 +664,10 @@
     .reveal{opacity:0;transform:translateY(26px);transition:opacity .65s ease,transform .65s ease;}
     .reveal.in-view{opacity:1;transform:translateY(0);}
     @media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important;transition:none!important;}}
-    /* ============================================================
-       NEW HERO + WORK/INTERESTS SECTION — ghibli soft-pastel system.
-       Deliberately separate token names (--n-*) so the untouched
-       topbar/footer (still on --font-serif / --color-navy) don't
-       collide with this. To be unified later once header/footer
-       are revisited.
-       ============================================================ */
-    :root{
-      --n-font-display:'Space Grotesk', sans-serif;
-      --n-font-body:'Inter', sans-serif;
-      --n-font-mono:'JetBrains Mono', monospace;
-      --n-ink:#17181C;
-      --n-ink-muted:#5B5B62;
-      --n-navy:#1B2A4A;
-      --n-cream:#FAF6EE;
-      --n-border:#E7E0D0;
-      --n-pink:#FCD8E4;
-      --n-green:#1B4D3E;
-      --n-blue:#B4E4F0;
-    }
- 
+    /* --n-* design tokens (ink/navy/cream/border/pink/green/blue) now
+       live in the single :root block near the top of the stylesheet,
+       alongside the legacy --color-* tokens — see "DESIGN TOKENS"
+       there. Nothing else about this hero/work-grid system changed. */
     .hero-new{
       background:#fff; position:relative; overflow:hidden;
       padding:1rem;
@@ -863,7 +874,7 @@
        separate card color. The strip and buttons no longer carry their
        own background, so this is what makes the page (not the buttons)
        read as "white". */
-    #marginProjectView{ background-color:#FCF8F8; }
+    .project-detail-view{ background-color:#FCF8F8; }
 
     /* Jump-nav strip — sits at the top of the page, one button per
        chapter. Sticky so it stays reachable while scrolling through
@@ -942,7 +953,7 @@
     /* Leaves room at the top of the page's own content so the first
        chapter (Overview) doesn't render hidden underneath the now-
        fixed top strip. */
-    body.margin-view-active #marginProjectView{ padding-top:90px; }
+    body.margin-view-active .project-detail-view{ padding-top:5rem; }
 
     /* Matches the sidebar toggle button's exact size/style (thin
        rounded rectangle, same shadow treatment) - independently fixed
@@ -994,9 +1005,9 @@
        it to exactly 100vh, so longer content is never clipped — it just
        makes that one slide taller and pushes the next one down. */
     .margin-slide{
-      min-height:80vh;
-      display:flex; align-items:center;
-      padding:5rem 3rem;
+      min-height:calc(100vh - 5rem); /* 5rem matches .project-detail-view's own top clearance for the fixed nav strip below, so clearance + slide height always sum to exactly 100vh — no room for the next slide to show through, at any screen size */
+      display:flex; align-items:flex-start;
+      padding:1.75rem 3rem 5rem;
       scroll-margin-top:100px; /* clears the sticky .margin-nav-strip so a jumped-to chapter's title isn't hidden behind it */
     }
     .margin-slide-inner{ max-width:1400px; margin:0 auto; width:100%; }
@@ -1070,23 +1081,90 @@
        <div class="margin-slide-cols"> with two children instead of
        using .margin-slide-body directly. */
     .margin-slide-cols{
-      display:grid; grid-template-columns:1fr 1fr; gap:3rem;
-      align-items:start; max-width:1400px;
+      display:flex; gap:3rem; align-items:flex-start; max-width:1400px;
     }
-    .margin-slide-cols img{ width:100%; border-radius:.75rem; display:block; }
+    .margin-slide-cols .margin-slide-body{ flex:1; min-width:0; }
+    .margin-slide-cols img{ flex:1; min-width:0; width:100%; border-radius:.75rem; display:block; }
+    /* Default DOM order is text-then-image, which reads correctly for
+       screen readers regardless of layout — .image-left only changes
+       where the image appears VISUALLY (via flex order), not the
+       underlying reading order. */
+    .margin-slide-cols.image-left img{ order:-1; }
+
+    /* Full-width layout — image spans the whole slide, text below it
+       (used when a picture is the main content, not a side element). */
+    .margin-slide-full-image{ max-width:1400px; margin:0 0 2rem; }
+    .margin-slide-full-image img{ width:100%; max-height:60vh; object-fit:cover; border-radius:.75rem; display:block; }
+
+    /* ----------------------------------------------------------------
+       CONTENT BLOCKS — list/table/stats/image, usable inside any
+       chapter's body array alongside plain paragraph text. Styled to
+       match .margin-slide-body exactly (same font, same navy-dark
+       accents) so they read as part of the same design system
+       regardless of which project or chapter uses them.
+       ---------------------------------------------------------------- */
+    .margin-list{
+      font-family:var(--font-serif); font-size:1.35rem; color:#000; line-height:1.7;
+      max-width:56rem; margin:0 0 1.25rem; padding-left:1.4rem;
+    }
+    .margin-list li{ margin-bottom:.6rem; }
+
+    /* Auto-generated outline (from .item()/.subsection() in
+       createProject()) — items in the section's own font size, their
+       subsections nested underneath as smaller jump-links to each
+       subsection's own real slide. */
+    .margin-outline{ margin-top:.5rem; }
+    .margin-outline-sub{
+      list-style:none; margin:.4rem 0 .8rem; padding-left:1.2rem;
+      font-size:1.05rem;
+    }
+    .margin-outline-sub li{ margin-bottom:.3rem; }
+    .margin-outline-sub a{
+      color:var(--color-navy-dark); text-decoration:none; border-bottom:1px solid var(--n-border);
+      transition:border-color .18s ease;
+    }
+    .margin-outline-sub a:hover{ border-color:var(--color-navy-dark); }
+
+    .margin-table-wrap{ max-width:56rem; overflow-x:auto; margin:0 0 1.25rem; }
+    .margin-table{ width:100%; border-collapse:collapse; font-family:var(--font-serif); font-size:1.05rem; }
+    .margin-table th,.margin-table td{
+      border:1px solid var(--n-border); padding:.65rem .9rem; text-align:left; vertical-align:top;
+    }
+    .margin-table th{
+      background:#F5F1E8; color:var(--color-navy-dark); font-weight:700;
+      font-size:.85rem; text-transform:uppercase; letter-spacing:.03em;
+    }
+    .margin-table td{ color:#000; }
+
+    .margin-stats{
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:1.5rem;
+      max-width:56rem; margin:0 0 1.5rem; padding:1.5rem 0; border-top:1px solid var(--n-border); border-bottom:1px solid var(--n-border);
+    }
+    .margin-stat-value{ font-family:'Lora',serif; font-weight:700; font-size:1.8rem; color:var(--color-navy-dark); }
+    .margin-stat-label{
+      font-family:var(--font-serif); font-size:.85rem; color:var(--color-text-muted);
+      text-transform:uppercase; letter-spacing:.04em; margin-top:.3rem;
+    }
+
+    .margin-block-image{ max-width:56rem; margin:0 0 1.5rem; }
+    .margin-block-image img{ width:100%; border-radius:.75rem; display:block; }
+    .margin-block-image figcaption{
+      font-family:var(--font-serif); font-style:italic; font-size:.95rem;
+      color:var(--color-text-muted); margin-top:.6rem;
+    }
 
     /* ----------------------------------------------------------------
        LANDING SLIDE — photo + Role/Logistics info table, sitting under
        the project title/subtitle at the very top of the page.
        ---------------------------------------------------------------- */
-    .margin-landing-photo{ width:100%; margin:2.5rem 0 3rem; }
+    .margin-landing-photo{ width:100%; max-width:340px; margin:1.5rem 0 2rem; }
     .margin-landing-photo img{
-      width:100%; max-height:420px; object-fit:cover;
-      border-radius:.75rem; display:block;
+      width:100%; height:auto; display:block;
+      border-radius:.75rem;
     }
     .margin-info-table{
       display:grid; grid-template-columns:1fr 1fr; gap:3rem;
-      padding-top:2rem; border-top:1px solid var(--n-border);
+      padding-top:2rem;
     }
     .margin-info-col p{
       font-family:var(--font-serif); font-size:1.15rem; line-height:1.6;
@@ -1102,7 +1180,7 @@
     @media(max-width:900px){
       .margin-slide{ padding:3.5rem 1.5rem; }
       .margin-nav-strip{ padding:1.25rem 1.5rem; }
-      .margin-slide-cols{ grid-template-columns:1fr; gap:1.5rem; }
+      .margin-slide-cols{ flex-direction:column; gap:1.5rem; }
     }
 
   </style>
@@ -1255,7 +1333,7 @@
        its own <section class="view" data-view="...">. Right now there's
        only one project, so one shared container is simplest.
        ================================================================ -->
-  <section class="view" data-view="margin" id="marginProjectView">
+  <section class="view project-detail-view" data-view="margin" id="marginProjectView">
     <!-- Populated entirely by renderProjectDetail() at load time — see
          the comment above. Do not hand-edit markup here. -->
   </section>
@@ -1663,7 +1741,7 @@
       {id:3,cat:'ux',meta:'Multimodal Telecommunication<br>Interview &middot; Survey',img:'images/projects/VRvsRobovsZoomfinal.png',imgAlt:'Preview image of remote communication project',imgFit:'contain',links:[]},
       {id:1,cat:'ux',meta:'Coming Soon',img:'images/projects/vrle_classroom.jpeg',imgAlt:'Preview image of VR learning environment project',links:[]},
       {id:2,cat:'ux',meta:'Education Technology<br>Participatory Design &middot; Design Fiction &middot; Interview',img:'images/projects/unil.jpg',imgAlt:'Preview image of hybrid class research project',links:[]},
-      {id:10,cat:'ux',meta:'Accessible Design<br>Interview &middot; Somaesthetics',img:'images/projects/graph_blind.jpg',imgAlt:'Preview image of Accessible Visualization project',links:[]},
+      {id:10,cat:'ux',meta:'Accessible Design<br>Interview &middot; Somaesthetics',img:'images/projects/graph_blind.jpg',imgAlt:'Preview image of Accessible Visualization project',links:[],projectSlug:'margin'},
       {id:4,cat:'interaction',meta:'EPFL',img:'images/projects/protest_project.png',imgAlt:'Augmented City interaction design',links:[]},
       {id:5,cat:'interaction',slider:true,meta:'Haptic Perception &middot; A/B Testing',img:'images/projects/haptic_ericsson.png',imgAlt:'Preview image of haptic systems project',links:[{key:'lbl.code',href:'#'}]},
       {id:6,cat:'interaction',meta:'KTH',img:'images/projects/teach_figma.png',imgAlt:'Preview image of remote learning UX project',links:[]},
@@ -1693,46 +1771,231 @@
                         // data-jump="margin-team" / id="margin-team"
                label,   // nav button text
                title,   // slide heading (usually same as label)
-               body,    // array of paragraph strings
-               image    // OPTIONAL — if present, the slide switches to
-                        // the two-column text+image layout automatically
+               body,    // array of content — each item is EITHER a
+                        // plain string (becomes a paragraph, the
+                        // original simple format) OR a typed block
+                        // object for richer content:
+                        //   {type:'paragraph', text:'...'}
+                        //   {type:'list', items:['...', '...']}
+                        //   {type:'table', headers:[...], rows:[[...],...]}
+                        //   {type:'stats', items:[{label,value}, ...]}
+                        //   {type:'image', src, alt, caption}
+                        // Mixing plain strings and typed blocks in the
+                        // same array is fine — see renderContentBlock()
+                        // just above renderProjectDetail() below.
+               image    // OPTIONAL — a single "hero" image beside the
+                        // body text (two-column layout), separate from
+                        // any {type:'image'} blocks inside body, which
+                        // render full-width, in-flow, one-per-block
              }, ...
            ]
          }
        ================================================================ */
-    const PROJECT_DETAIL_DATA={
-      margin:{
-        name:'Project M.A.R.G.I.N.',
-        subtitle:'Multimodal Accessible Real-time Graphical Interaction &amp; Navigation for the Visually Impaired',
-        coverImage:'images/projects/graph_blind.jpg',
-        role:'Write your role on this project here.',
-        deliverable:'Write the deliverable here.',
-        logistics:[
-          {label:'Duration',value:'Write duration here'},
-          {label:'Team Members',value:'Write names here'},
-          {label:'Advisor',value:'Write advisor name here'}
-        ],
-        sections:[
-          {id:'overview',label:'Overview',title:'Overview',
-            body:['Write the project overview here — what M.A.R.G.I.N. is, the problem it addresses, and the high-level approach, in a few sentences.']},
-          {id:'team',label:'Team',title:'Team',
-            body:['Write who was on the team here — names, roles, and how the work was divided.']},
-          {id:'strategy',label:'Research Strategy',title:'Research Strategy',
-            body:['Write the overall research strategy here — the questions you set out to answer and why you chose this approach.']},
-          {id:'activities',label:'Research Activities',title:'Research Activities',
-            body:['Write what you actually did here — studies run, prototypes built, sessions conducted, etc.'],
-            image:'images/projects/graph_blind.jpg'},
-          {id:'synthesis',label:'Research Synthesis',title:'Research Synthesis',
-            body:['Write how you pulled the findings together here — patterns, themes, or key insights that emerged.']},
-          {id:'impact',label:'Impact',title:'Impact',
-            body:['Write the impact of the work here — what changed as a result, for users, the team, or the product.']},
-          {id:'business',label:'Business Opportunity',title:'Business Opportunity',
-            body:['Write the business case here — market relevance, potential applications, or commercial angle.']},
-          {id:'reflections',label:'Personal Reflections',title:'Personal Reflections',
-            body:["Write your personal reflections here — what you learned, what you'd do differently, what stayed with you."]}
-        ]
+    /* ================================================================
+       PROJECT AUTHORING BUILDER — createProject()
+       ================================================================
+       An easier way to fill in project content than writing the raw
+       data object directly: chainable commands, read top-to-bottom,
+       no braces/commas/brackets to balance by hand — closer to writing
+       LaTeX commands in Overleaf than editing a JS object literal.
+
+       It produces exactly the same data shape documented above —
+       PROJECT_DETAIL_DATA[slug] ends up identical either way, so this
+       is purely a friendlier way to WRITE the data, not a different
+       system. You can still hand-write a plain object instead if you
+       ever prefer to.
+
+       SIMPLE USAGE — one slide per .section(). Content commands
+       (.paragraph, .list, .table, .stats, .image) apply to whichever
+       .section() was called most recently:
+
+         createProject('newproject')
+           .title('Project Name')
+           .subtitle('One-line description')
+           .cover('images/projects/cover.jpg')
+           .role('What you did on this project.')
+           .deliverable('What you shipped.')
+           .logistics('Duration', '6 weeks')
+           .logistics('Team Members', 'You, Someone Else')
+           .section('overview', 'Overview')
+             .paragraph('What this project is and why it matters.')
+           .section('team', 'Team')
+             .paragraph('Who worked on it and how the work was split.')
+             .list(['Person A — role', 'Person B — role'])
+           .section('results', 'Results')
+             .stats([{label:'Participants', value:'24'}, {label:'Duration', value:'3 weeks'}])
+             .table(['Method','Sample'], [['Interviews','12'],['Survey','84']])
+             .image('images/projects/results.jpg', 'results chart', 'Figure 1: outcomes')
+           .build();
+
+       PPT-STYLE USAGE — Section > Items > Subsections, like a
+       PowerPoint outline. A .section() becomes slide 1, showing an
+       auto-generated agenda list; each .item() is a bullet on that
+       agenda; each .subsection() under an item becomes its OWN full
+       slide (slide 2, 3, 4...), reached by scrolling past slide 1 —
+       the agenda also links straight to each one:
+
+         createProject('newproject')
+           .title('Project Name')
+           .section('activities', 'Research Activities')
+             .paragraph('Optional intro text, shown above the agenda on slide 1.')
+             .item('User Interviews')
+               .subsection('interviews-method', 'Methodology')
+                 .paragraph('This is slide 2 — its own full slide.')
+               .subsection('interviews-findings', 'Findings')
+                 .paragraph('This is slide 3.')
+                 .list(['Theme A', 'Theme B'])
+             .item('Surveys')
+               .subsection('survey-design', 'Survey Design')
+                 .paragraph('This is slide 4.')
+           .section('impact', 'Impact')                       // back to a normal single-slide section
+             .paragraph('Sections without .item() work exactly as before.')
+           .build();
+
+       Mixing styles is fine — some sections can be simple single
+       slides, others can use the Item/Subsection structure, in the
+       same project. Content commands always apply to whichever is
+       "current" — a .section() or, once you call .subsection(), that
+       subsection — until the next .section()/.subsection() call.
+
+       COMMANDS:
+         .title(text)  .subtitle(text)  .cover(src)
+         .role(text)  .deliverable(text)
+         .logistics(label, value)          — call once per row, any number of times
+         .section(id, label, title?)       — starts a new chapter (slide 1); title defaults to label
+         .item(text)                       — an agenda bullet on the current section's own slide
+         .subsection(id, label, title?)    — a full new slide under the current item; title defaults to label
+         .heroImage(src, position?)        — the slide's main image, right under the title.
+                                              position: 'right' (default) — image right, text left
+                                                        'left'  — image left, text right
+                                                        'full'  — image spans the whole slide, text below
+                                              (different from .image(), which adds a full-width
+                                              in-flow picture further down inside the body text —
+                                              a slide can use .heroImage(), .image() blocks, or both)
+         .paragraph(text)
+         .list(items)
+         .table(headers, rows)
+         .stats(items)                     — items: [{label, value}, ...]
+         .image(src, alt?, caption?)
+         .build()                          — registers the project into PROJECT_DETAIL_DATA
+                                              and returns the finished plain data object
+       ================================================================ */
+    function createProject(slug){
+      const data={ name:'', subtitle:'', coverImage:'', role:'', deliverable:'', logistics:[], sections:[] };
+      let currentSection=null; // the top-level chapter (has a nav button)
+      let currentItem=null;    // the outline bullet .subsection() attaches under
+      let currentTarget=null;  // where .paragraph/.list/.table/.stats/.image/.heroImage apply — either the section itself, or a subsection slide
+
+      function requireSection(command){
+        if(!currentSection){
+          throw new Error('createProject("'+slug+'"): .'+command+'() was called before .section(...) — '
+            +'call .section(id, label) first.');
+        }
       }
-    };
+      function requireItem(command){
+        requireSection(command);
+        if(!currentItem){
+          throw new Error('createProject("'+slug+'"): .'+command+'() was called before .item(...) — '
+            +'a subsection belongs under an item. Call .item("...") first, or add content '
+            +'directly to the section without .item()/.subsection() if slides within slides are not needed.');
+        }
+      }
+      function requireTarget(command){
+        if(!currentTarget){
+          throw new Error('createProject("'+slug+'"): .'+command+'() was called before .section(...) or .subsection(...) — '
+            +'every content command needs a slide to add to.');
+        }
+      }
+
+      const api={
+        title(text){ data.name=text; return api; },
+        subtitle(text){ data.subtitle=text; return api; },
+        cover(src){ data.coverImage=src; return api; },
+        role(text){ data.role=text; return api; },
+        deliverable(text){ data.deliverable=text; return api; },
+        logistics(label,value){ data.logistics.push({label,value}); return api; },
+
+        // Slide 1 of a chapter — the section itself. Starting a new
+        // section resets items/subsections tracking.
+        section(id,label,title){
+          currentSection={ id, label, title: title||label, body:[], items:[], subsections:[] };
+          data.sections.push(currentSection);
+          currentItem=null;
+          currentTarget=currentSection;
+          return api;
+        },
+
+        // An outline bullet on the section's own slide (slide 1) —
+        // e.g. "User Interviews". Doesn't need its own slide unless
+        // you also add .subsection(...) calls under it.
+        item(text){
+          requireSection('item');
+          currentItem={ text:text, subsectionIds:[] };
+          currentSection.items.push(currentItem);
+          currentTarget=currentSection; // content added right after .item() (with no .subsection()) still lands on the section's own slide
+          return api;
+        },
+
+        // A full standalone slide (slide 2, 3, 4...) holding the
+        // detail for the current item. Appears right after its parent
+        // section's own slide, in the order you add them. Must follow
+        // an .item() call so the outline on slide 1 can link to it.
+        subsection(id,label,title){
+          requireItem('subsection');
+          const sub={ id:id, label:label, title:title||label, body:[] };
+          currentSection.subsections.push(sub);
+          currentItem.subsectionIds.push({id:id,label:label});
+          currentTarget=sub;
+          return api;
+        },
+
+        heroImage(src,position){ requireTarget('heroImage'); currentTarget.image=src; currentTarget.imagePosition=position; return api; },
+        paragraph(text){ requireTarget('paragraph'); currentTarget.body.push({type:'paragraph',text:text}); return api; },
+        list(items){ requireTarget('list'); currentTarget.body.push({type:'list',items:items}); return api; },
+        table(headers,rows){ requireTarget('table'); currentTarget.body.push({type:'table',headers:headers,rows:rows}); return api; },
+        stats(items){ requireTarget('stats'); currentTarget.body.push({type:'stats',items:items}); return api; },
+        image(src,alt,caption){ requireTarget('image'); currentTarget.body.push({type:'image',src:src,alt:alt||'',caption:caption||''}); return api; },
+
+        build(){
+          PROJECT_DETAIL_DATA[slug]=data;
+          return data;
+        }
+      };
+      return api;
+    }
+
+    const PROJECT_DETAIL_DATA={};
+
+    // Same content as before, now written with createProject() instead
+    // of a raw object literal — this is the real M.A.R.G.I.N. content,
+    // just in the easier-to-fill-in format.
+    createProject('margin')
+      .title('Project M.A.R.G.I.N.')
+      .subtitle('Multimodal Accessible Real-time Graphical Interaction &amp; Navigation for the Visually Impaired')
+      .cover('images/projects/margin.jpg')
+      .role('Write your role on this project here.')
+      .deliverable('Write the deliverable here.')
+      .logistics('Duration','Write duration here')
+      .logistics('Team Members','Write names here')
+      .logistics('Advisor','Write advisor name here')
+      .section('overview','Overview')
+        .paragraph('Write the project overview here — what M.A.R.G.I.N. is, the problem it addresses, and the high-level approach, in a few sentences.')
+      .section('team','Team')
+        .paragraph('Write who was on the team here — names, roles, and how the work was divided.')
+      .section('strategy','Research Strategy')
+        .paragraph('Write the overall research strategy here — the questions you set out to answer and why you chose this approach.')
+      .section('activities','Research Activities')
+        .paragraph('Write what you actually did here — studies run, prototypes built, sessions conducted, etc.')
+        .heroImage('images/projects/graph_blind.jpg')
+      .section('synthesis','Research Synthesis')
+        .paragraph('Write how you pulled the findings together here — patterns, themes, or key insights that emerged.')
+      .section('impact','Impact')
+        .paragraph('Write the impact of the work here — what changed as a result, for users, the team, or the product.')
+      .section('business','Business Opportunity')
+        .paragraph('Write the business case here — market relevance, potential applications, or commercial angle.')
+      .section('reflections','Personal Reflections')
+        .paragraph("Write your personal reflections here — what you learned, what you'd do differently, what stayed with you.")
+      .build();
 
     /* The one function every project's markup is built from. Change
        something here (a class name, the collapse-handle button, the
@@ -1741,42 +2004,156 @@
        Keeps every CSS class identical to what the stylesheet already
        targets (.margin-nav-btn, .margin-slide, .margin-slide-cols,
        etc.), so no CSS changes are needed when this runs. */
+    /* Renders one content block inside a chapter's body. A section's
+       `body` can be EITHER the original simple format (an array of
+       plain strings, each becoming a paragraph — every existing
+       project keeps working unchanged) OR an array of typed block
+       objects for richer content:
+         {type:'paragraph', text:'...'}
+         {type:'list', items:['...','...']}
+         {type:'table', headers:['Col A','Col B'], rows:[['a','b'],...]}
+         {type:'stats', items:[{label:'Duration', value:'6 weeks'}, ...]}
+         {type:'image', src:'...', alt:'', caption:''}
+       Mixing both formats in the same array works too — a plain
+       string and a typed object can sit side by side. */
+    function renderContentBlock(block){
+      if(typeof block==='string') return '<p>'+block+'</p>';
+      if(!block || typeof block!=='object') return '';
+      switch(block.type){
+        case 'list':
+          return '<ul class="margin-list">'+(block.items||[]).map(function(i){ return '<li>'+i+'</li>'; }).join('')+'</ul>';
+        case 'table': {
+          const headers=Array.isArray(block.headers)?block.headers:[];
+          const rows=Array.isArray(block.rows)?block.rows:[];
+          const headHtml=headers.length?'<thead><tr>'+headers.map(function(h){ return '<th>'+h+'</th>'; }).join('')+'</tr></thead>':'';
+          const bodyHtml='<tbody>'+rows.map(function(r){ return '<tr>'+(r||[]).map(function(c){ return '<td>'+c+'</td>'; }).join('')+'</tr>'; }).join('')+'</tbody>';
+          return '<div class="margin-table-wrap"><table class="margin-table">'+headHtml+bodyHtml+'</table></div>';
+        }
+        case 'stats':
+          return '<div class="margin-stats">'+(block.items||[]).map(function(s){
+            return '<div class="margin-stat"><div class="margin-stat-value">'+(s.value||'')+'</div><div class="margin-stat-label">'+(s.label||'')+'</div></div>';
+          }).join('')+'</div>';
+        case 'image':
+          return '<figure class="margin-block-image"><img src="'+block.src+'" alt="'+(block.alt||'')+'" loading="lazy" decoding="async" onerror="this.style.display=\'none\';"/>'
+            +(block.caption?'<figcaption>'+block.caption+'</figcaption>':'')+'</figure>';
+        case 'paragraph':
+        default:
+          return '<p>'+(block.text||'')+'</p>';
+      }
+    }
+
     function renderProjectDetail(viewId,data){
       const view=document.getElementById(viewId);
       if(!view)return;
+      // viewId is the container's DOM id ("marginProjectView"); slug is
+      // the plain project key ("margin") used to prefix every internal
+      // id (data-jump, slide ids, nav strip ids) so two projects never
+      // collide. Containers always follow the "{key}ProjectView"
+      // naming convention (see the render loop below), so this is a
+      // safe, simple derivation rather than a fragile string guess.
+      const slug=viewId.replace(/ProjectView$/,'');
 
-      const navButtonsHtml=data.sections.map(function(s,i){
-        return '<button type="button" class="margin-nav-btn'+(i===0?' active':'')+'" data-jump="margin-'+s.id+'">'+s.label+'</button>';
+      // Defensive: if a project is missing or malformed (e.g. a field
+      // got forgotten while adding new content), fail visibly and
+      // safely instead of throwing and leaving the whole section blank.
+      if(!data || typeof data!=='object'){
+        console.warn('renderProjectDetail: no data provided for view "'+viewId+'"');
+        view.innerHTML='<section class="margin-slide"><div class="margin-slide-inner"><h2 class="margin-slide-title">Project data missing</h2></div></section>';
+        return;
+      }
+      const sections=Array.isArray(data.sections)?data.sections:[];
+      const logistics=Array.isArray(data.logistics)?data.logistics:[];
+      if(!sections.length){
+        console.warn('renderProjectDetail: "'+(data.name||viewId)+'" has no sections defined');
+      }
+
+      const navButtonsHtml=sections.map(function(s,i){
+        const id=s&&s.id?s.id:'section-'+i;
+        const label=s&&s.label?s.label:'Untitled';
+        return '<button type="button" class="margin-nav-btn'+(i===0?' active':'')+'" data-jump="'+slug+'-'+id+'">'+label+'</button>';
       }).join('');
 
-      const logisticsHtml=data.logistics.map(function(l){
-        return '<div class="margin-info-row"><strong>'+l.label+':</strong> '+l.value+'</div>';
+      const logisticsHtml=logistics.map(function(l){
+        const label=l&&l.label?l.label:'';
+        const value=l&&l.value?l.value:'';
+        return '<div class="margin-info-row"><strong>'+label+':</strong> '+value+'</div>';
       }).join('');
 
-      const slidesHtml=data.sections.map(function(s){
-        const bodyHtml=s.body.map(function(p){ return '<p>'+p+'</p>'; }).join('');
-        const bodyBlock=s.image
-          ? '<div class="margin-slide-cols"><div class="margin-slide-body">'+bodyHtml+'</div><img src="'+s.image+'" alt="" loading="lazy" decoding="async" onerror="this.style.display=\'none\';"/></div>'
-          : '<div class="margin-slide-body">'+bodyHtml+'</div>';
-        return '<section class="margin-slide" id="margin-'+s.id+'"><div class="margin-slide-inner">'
-          +'<h2 class="margin-slide-title">'+s.title+'</h2>'+bodyBlock
+      // Renders the outline list on a section's own slide, if it has
+      // any items — this is the auto-generated "PPT agenda" view:
+      // each item shown as a bullet, with its subsections (if any)
+      // listed underneath as jump-links to their own dedicated slides.
+      function renderOutline(items,slug){
+        if(!Array.isArray(items)||!items.length)return '';
+        return '<ul class="margin-list margin-outline">'+items.map(function(it){
+          const subLinks=(it.subsectionIds||[]).length
+            ? '<ul class="margin-outline-sub">'+it.subsectionIds.map(function(sub){
+                const subId=(sub&&sub.id)?sub.id:sub;
+                const subLabel=(sub&&sub.label)?sub.label:subId;
+                return '<li><a href="#'+slug+'-'+subId+'">'+subLabel+'</a></li>';
+              }).join('')+'</ul>'
+            : '';
+          return '<li>'+(it.text||'')+subLinks+'</li>';
+        }).join('')+'</ul>';
+      }
+
+      // One slide's worth of markup — used for both a section's own
+      // slide and each of its subsection slides (same shape, so the
+      // same renderer works for both).
+      function renderSlideSection(slideId,title,body,heroImage,extraHtml,heroImagePosition){
+        const bodyHtml=body.map(renderContentBlock).join('')+(extraHtml||'');
+        const position=heroImagePosition||'right'; // 'right' matches the original, only-ever behavior — existing data with no position set keeps rendering exactly as before
+        let bodyBlock;
+        if(!heroImage){
+          bodyBlock='<div class="margin-slide-body">'+bodyHtml+'</div>';
+        } else if(position==='full'){
+          bodyBlock='<div class="margin-slide-full-image"><img src="'+heroImage+'" alt="" loading="lazy" decoding="async" onerror="this.style.display=\'none\';"/></div>'
+            +'<div class="margin-slide-body">'+bodyHtml+'</div>';
+        } else {
+          const leftClass=position==='left'?' image-left':'';
+          bodyBlock='<div class="margin-slide-cols'+leftClass+'"><div class="margin-slide-body">'+bodyHtml+'</div><img src="'+heroImage+'" alt="" loading="lazy" decoding="async" onerror="this.style.display=\'none\';"/></div>';
+        }
+        return '<section class="margin-slide" id="'+slideId+'"><div class="margin-slide-inner">'
+          +'<h2 class="margin-slide-title">'+title+'</h2>'+bodyBlock
           +'</div></section>';
+      }
+
+      const slidesHtml=sections.map(function(s,i){
+        const id=s&&s.id?s.id:'section-'+i;
+        const title=s&&s.title?s.title:(s&&s.label?s.label:'Untitled');
+        const body=Array.isArray(s&&s.body)?s.body:[];
+        const outlineHtml=renderOutline(s&&s.items,slug);
+        const ownSlide=renderSlideSection(slug+'-'+id,title,body,s&&s.image,outlineHtml,s&&s.imagePosition);
+
+        // Each .subsection() becomes its own real slide (slide 2, 3,
+        // 4...), in the order it was added, right after this
+        // section's own slide — same rendering, own id, no nav button
+        // (reached by scrolling, same as any PPT sub-slide).
+        const subsections=Array.isArray(s&&s.subsections)?s.subsections:[];
+        const subSlides=subsections.map(function(sub,j){
+          const subId=sub&&sub.id?sub.id:id+'-sub-'+j;
+          const subTitle=sub&&sub.title?sub.title:(sub&&sub.label?sub.label:'Untitled');
+          const subBody=Array.isArray(sub&&sub.body)?sub.body:[];
+          return renderSlideSection(slug+'-'+subId,subTitle,subBody,sub&&sub.image,'',sub&&sub.imagePosition);
+        }).join('');
+
+        return ownSlide+subSlides;
       }).join('');
 
       view.innerHTML =
-        '<button type="button" class="margin-nav-collapse-handle" id="marginNavCollapseHandle" aria-label="Hide chapter navigation">'
+        '<button type="button" class="margin-nav-collapse-handle" id="'+slug+'NavCollapseHandle" aria-label="Hide chapter navigation">'
           +'<svg xmlns="http://www.w3.org/2000/svg" width="52" height="12" viewBox="0 0 52 12"><rect x="1" y="1" width="50" height="10" rx="5" fill="#FFFCFB"/></svg>'
         +'</button>'
-        +'<div class="margin-nav-strip" id="marginNavStrip"><div class="margin-nav-strip-content">'
-          +'<div class="margin-nav-inner" id="marginNavInner">'+navButtonsHtml+'</div>'
+        +'<div class="margin-nav-strip" id="'+slug+'NavStrip"><div class="margin-nav-strip-content">'
+          +'<div class="margin-nav-inner" id="'+slug+'NavInner">'+navButtonsHtml+'</div>'
         +'</div></div>'
-        +'<section class="margin-slide" id="margin-landing"><div class="margin-slide-inner">'
-          +'<h1 class="margin-project-name">'+data.name+'</h1>'
-          +'<p class="margin-project-subtitle">'+data.subtitle+'</p>'
-          +'<div class="margin-landing-photo"><img src="'+data.coverImage+'" alt="" loading="lazy" decoding="async" onerror="this.style.display=\'none\';"/></div>'
+        +'<section class="margin-slide" id="'+slug+'-landing"><div class="margin-slide-inner">'
+          +'<h1 class="margin-project-name">'+(data.name||'Untitled Project')+'</h1>'
+          +'<p class="margin-project-subtitle">'+(data.subtitle||'')+'</p>'
+          +(data.coverImage?'<div class="margin-landing-photo"><img src="'+data.coverImage+'" alt="" loading="lazy" decoding="async" onerror="this.style.display=\'none\';"/></div>':'')
           +'<div class="margin-info-table">'
-            +'<div class="margin-info-col"><h3 class="margin-subsection-title">Role</h3><p>'+data.role+'</p>'
-              +'<h3 class="margin-subsection-title">Deliverables</h3><p><strong>'+data.deliverable+'</strong></p></div>'
+            +'<div class="margin-info-col"><h3 class="margin-subsection-title">Role</h3><p>'+(data.role||'')+'</p>'
+              +'<h3 class="margin-subsection-title">Deliverables</h3><p><strong>'+(data.deliverable||'')+'</strong></p></div>'
             +'<div class="margin-info-col"><h3 class="margin-subsection-title">Logistics</h3>'+logisticsHtml+'</div>'
           +'</div>'
         +'</div></section>'
@@ -1786,7 +2163,26 @@
     // this script (chapter click handlers, scroll-spy, collapse-handle
     // toggle, wheel-redirect) queries these elements by id/class and
     // must find them already in the DOM.
-    renderProjectDetail('marginProjectView',PROJECT_DETAIL_DATA.margin);
+    //
+    // For every project in PROJECT_DETAIL_DATA: find its container by
+    // id ("{key}ProjectView"), or create one automatically if it
+    // doesn't already exist in the HTML. "margin" has a hand-written
+    // container (see #marginProjectView in the HTML) purely so it's
+    // easy to find while editing — any NEW project added to
+    // PROJECT_DETAIL_DATA gets its container created here with zero
+    // HTML to write.
+    Object.keys(PROJECT_DETAIL_DATA).forEach(function(key){
+      const containerId=key+'ProjectView';
+      let container=document.getElementById(containerId);
+      if(!container){
+        container=document.createElement('section');
+        container.id=containerId;
+        container.className='view project-detail-view';
+        container.setAttribute('data-view',key);
+        document.getElementById('marginProjectView').insertAdjacentElement('afterend',container);
+      }
+      renderProjectDetail(containerId,PROJECT_DETAIL_DATA[key]);
+    });
  
     function tr(key){
       const dict=TRANSLATIONS[currentLang]||TRANSLATIONS.en;
@@ -1807,7 +2203,7 @@
       wrap.innerHTML=projectsToShow.map(function(p){
         const fitStyle=p.imgFit?(' style="object-fit:'+p.imgFit+';background:#e8ecf5;"'):'';
         const disabledClass=p.id===1?' is-disabled':'';
-        return '<button type="button" class="work-card reveal'+disabledClass+'" data-id="'+p.id+'">'
+        return '<button type="button" class="work-card reveal'+disabledClass+'" data-id="'+p.id+'"'+(p.projectSlug?' data-project-slug="'+p.projectSlug+'"':'')+'>'
           +'<span class="work-card-thumb">'
             +'<img class="work-card-img" src="'+p.img+'" alt="'+p.imgAlt+'" loading="lazy" decoding="async"'+fitStyle+'>'
             +'<span class="work-card-overlay"><span class="work-card-title" data-i18n="proj.'+p.id+'.title">'+tr('proj.'+p.id+'.title')+'</span></span>'
@@ -1817,15 +2213,15 @@
       }).join('');
       wrap.querySelectorAll('.work-card').forEach(function(card){
         card.addEventListener('click',function(){
-          const id=parseInt(card.dataset.id,10);
-          if(id===10){ // Project M.A.R.G.I.N. — the only one active so far; others stay inactive until finished
-            setHash('margin');
-            showView('margin');
+          const slug=card.dataset.projectSlug;
+          if(slug&&PROJECT_DETAIL_DATA[slug]){
+            setHash(slug);
+            showView(slug);
             return;
           }
           return; // remaining projects temporarily inactive while still in progress - remove this line and uncomment goToProject below to re-enable, project by project, as each is finished
           // if(id===1)return; // "On Progress" placeholder project is not clickable
-          // goToProject(id);
+          // goToProject(parseInt(card.dataset.id,10));
         });
       });
       if(window.observeReveals)window.observeReveals();
@@ -1893,7 +2289,8 @@
        ============================================================ */
     document.querySelectorAll('.margin-nav-btn[data-jump]').forEach(function(btn){
       btn.addEventListener('click',function(){
-        document.querySelectorAll('.margin-nav-btn').forEach(function(b){b.classList.remove('active');});
+        const scope=btn.closest('.project-detail-view')||document;
+        scope.querySelectorAll('.margin-nav-btn').forEach(function(b){b.classList.remove('active');});
         btn.classList.add('active');
         const target=document.getElementById(btn.dataset.jump);
         if(target)target.scrollIntoView({behavior:'smooth',block:'start'});
@@ -1904,9 +2301,12 @@
        movement while hovering the chapter nav strip — without this,
        a mouse user (as opposed to a trackpad user, who can swipe
        horizontally) would have no way to reach any buttons hidden by
-       overflow, since the scrollbar itself is intentionally hidden. */
-    (function(){
-      const marginNavInner=document.getElementById('marginNavInner');
+       overflow, since the scrollbar itself is intentionally hidden.
+       Bound once per project (ids are scoped by project key, e.g.
+       "marginNavInner", "newprojectNavInner"), so this applies
+       automatically to every project without hardcoding which one. */
+    Object.keys(PROJECT_DETAIL_DATA).forEach(function(key){
+      const marginNavInner=document.getElementById(key+'NavInner');
       if(!marginNavInner)return;
       marginNavInner.addEventListener('wheel',function(e){
         if(marginNavInner.scrollWidth<=marginNavInner.clientWidth)return; // nothing to scroll
@@ -1914,37 +2314,42 @@
         e.preventDefault();
         marginNavInner.scrollLeft+=e.deltaY*4;
       },{passive:false});
-    })();
+    });
 
     /* Nav-strip collapse handle — click the small dark tab to tuck the
        whole chapter nav strip down behind the footer, freeing up the
-       screen; click it again to bring the strip back. */
-    (function(){
-      const handle=document.getElementById('marginNavCollapseHandle');
-      const strip=document.getElementById('marginNavStrip');
+       screen; click it again to bring the strip back. Bound once per
+       project, same reasoning as the wheel-redirect above. */
+    Object.keys(PROJECT_DETAIL_DATA).forEach(function(key){
+      const handle=document.getElementById(key+'NavCollapseHandle');
+      const strip=document.getElementById(key+'NavStrip');
       if(!handle||!strip)return;
       handle.addEventListener('click',function(){
         const tucked=strip.classList.toggle('nav-tucked');
         handle.classList.toggle('nav-tucked',tucked);
         handle.setAttribute('aria-label',tucked?'Show chapter navigation':'Hide chapter navigation');
       });
-    })();
+    });
 
-    /* Margin chapter scroll-spy — as you scroll through the M.A.R.G.I.N.
-       page's chapters, this watches which one is currently most visible
-       and marks that chapter's nav button as .active (giving it the
+    /* Project chapter scroll-spy — as you scroll through any project's
+       chapters, this watches which one is currently most visible and
+       marks that chapter's nav button as .active (giving it the
        "pressed" look), clearing .active from every other button. The
        landing/cover slide has no matching nav button, so it's simply
-       skipped when it comes into view — nothing gets marked active for it. */
+       skipped when it comes into view — nothing gets marked active for
+       it. Scoped to .project-detail-view (shared by every project's
+       container) rather than one hardcoded id, so this observes every
+       project's chapters, not just margin's. */
     (function(){
-      const marginSlides=document.querySelectorAll('#marginProjectView .margin-slide[id]');
+      const marginSlides=document.querySelectorAll('.project-detail-view .margin-slide[id]');
       if(!marginSlides.length)return;
       const marginScrollSpy=new IntersectionObserver(function(entries){
         entries.forEach(function(entry){
           if(!entry.isIntersecting)return;
           const matchingBtn=document.querySelector('.margin-nav-btn[data-jump="'+entry.target.id+'"]');
           if(!matchingBtn)return; // e.g. the landing slide, which has no nav button
-          document.querySelectorAll('.margin-nav-btn').forEach(function(b){b.classList.remove('active');});
+          const scope=entry.target.closest('.project-detail-view')||document;
+          scope.querySelectorAll('.margin-nav-btn').forEach(function(b){b.classList.remove('active');});
           matchingBtn.classList.add('active');
         });
       },{threshold:0.5});
@@ -1989,7 +2394,7 @@
     renderHomeGallery();
     renderHomeBooks();
  
-    const VALID_VIEWS=['home','portfolio','interests','about','career','work','margin'];
+    const VALID_VIEWS=['home','portfolio','interests','about','career','work'].concat(Object.keys(PROJECT_DETAIL_DATA));
     function parseHash(){
       const h=(location.hash||'#home').replace('#','');
       const m=h.match(/^project-(\d+)$/);
@@ -1999,24 +2404,18 @@
     function showView(view,opts){
       opts=opts||{};
       if(VALID_VIEWS.indexOf(view)===-1)view='home';
-      document.body.classList.toggle('margin-view-active',view==='margin');
+      document.body.classList.toggle('margin-view-active',Object.prototype.hasOwnProperty.call(PROJECT_DETAIL_DATA,view));
       document.querySelectorAll('.view').forEach(function(sec){sec.classList.toggle('active',sec.dataset.view===view);});
       document.querySelectorAll('#topbar [data-view], .site-sidebar [data-view]').forEach(function(btn){btn.classList.toggle('active',btn.dataset.view===view);});
       const mainEl=document.getElementById('main-content');
       if(mainEl)mainEl.style.display=(view==='work')?'':'none';
       if(view==='work')showWorkSub(opts.projectId||null);
       else document.body.classList.remove('project-page-active');
-      if(view==='home'&&typeof window.__resetHeroPaint==='function'){
-        window.__resetHeroPaint();
-      }
-      if(view==='home'&&typeof window.__startHeroPaintLoopIfNeeded==='function'){
-        window.__startHeroPaintLoopIfNeeded();
-      }
-      if(view==='home'&&typeof window.__resizeHeroCanvas==='function'){
-        requestAnimationFrame(window.__resizeHeroCanvas);
-      }
-      if(view==='home'&&typeof window.__spawnImmediateIfCursorInside==='function'){
-        requestAnimationFrame(()=>requestAnimationFrame(window.__spawnImmediateIfCursorInside));
+      if(view==='home'&&window.heroPaintTrail){
+        window.heroPaintTrail.reset();
+        window.heroPaintTrail.startIfNeeded();
+        requestAnimationFrame(()=>window.heroPaintTrail.resize());
+        requestAnimationFrame(()=>requestAnimationFrame(()=>window.heroPaintTrail.spawnImmediateIfCursorInside()));
       }
       if(view==='home'&&typeof window.__syncHeroAvatarHeight==='function'){
         requestAnimationFrame(()=>requestAnimationFrame(window.__syncHeroAvatarHeight));
@@ -2024,10 +2423,12 @@
       if(view==='home'&&typeof window.__syncHeroHeightToBioEnd==='function'){
         requestAnimationFrame(()=>requestAnimationFrame(window.__syncHeroHeightToBioEnd));
       }
-      if(view==='career'&&typeof fitAll==='function'){
+      if(view==='career'&&journeyMap){
         requestAnimationFrame(function(){requestAnimationFrame(function(){
-          if(!detail.classList.contains('open'))fitAll();
-          S.s=S.ts;S.x=S.tx;S.y=S.ty;
+          if(!journeyMap.detail.classList.contains('open'))journeyMap.fitAll();
+          journeyMap.camera.s=journeyMap.camera.ts;
+          journeyMap.camera.x=journeyMap.camera.tx;
+          journeyMap.camera.y=journeyMap.camera.ty;
         });});
       }
       if(!opts.silent){
@@ -2079,7 +2480,7 @@
       currentLang=lang;
       try{ localStorage.setItem('siteLang',lang); }catch(e){ }
       applyStaticTranslations(lang);
-      if(typeof selectedIdx!=='undefined'&&selectedIdx>-1)selectPlace(selectedIdx);
+      if(journeyMap&&journeyMap.selectedIdx>-1)journeyMap.selectPlace(journeyMap.selectedIdx);
       document.querySelectorAll('.lang-dd.open').forEach(function(dd){setDropdownOpen(dd,false);});
       if(typeof window.__syncHeroHeightToBioEnd==='function'){
         const heroEl=document.getElementById('heroSection');
@@ -2190,52 +2591,278 @@ const PLACES=[
     ];
  
     const POSITIONS=[{x:-100,y:500},{x:-100,y:1300},{x:400,y:900},{x:820,y:350},{x:820,y:1450},{x:1400,y:900},{x:2500,y:900},{x:1950,y:500},{x:1950,y:1300},{x:3100,y:900}];
-    var detail, S;
+    /* ================================================================
+       JOURNEY MAP — the draggable/zoomable career map on the Career
+       page. Was previously ~15 loose closure variables (S, selectedIdx,
+       suppressClose, cardState, ddrag, resizeDir, etc.) sharing one
+       function scope — hard to see what state existed without reading
+       every line. Now a real class: every piece of state is a named
+       instance property (this.camera, this.drag, this.resize, etc.),
+       and every behavior is a method. Functionally identical to the
+       previous version — this is a structural cleanup, not a redesign.
+       ================================================================ */
+    class JourneyMap {
+      constructor(rootEl, places, positions){
+        this.shell = rootEl;
+        this.world = document.getElementById('jworld');
+        this.vp = document.getElementById('jvp');
+        this.detail = document.getElementById('jdetail');
+        this.detailBody = document.getElementById('jdetailBody');
+        this.dtitle = document.getElementById('jdtitle');
+        this.dsub = document.getElementById('jdsubtitle');
+        this.dcards = document.getElementById('jcards');
+        this.detailHeader = document.getElementById('jdetailHeader');
+
+        // Pan/zoom camera (was the loose "S" object)
+        this.camera = { s:1, x:0, y:0, ts:1, tx:0, ty:0, minS:.05, maxS:2.2 };
+
+        this.islands = places.map((p,i)=>({...p, ...positions[i], el:null}));
+        this.selectedIdx = -1;
+        this.suppressClose = false;
+        this.cardState = { left:null, top:null, width:null, height:null };
+
+        // Detail-card drag state (was ddrag/ddx/ddy/dStartL/dStartT)
+        this.drag = { active:false, x:0, y:0, startLeft:0, startTop:0 };
+        // Detail-card resize state (was rdrag/resizeDir/rdx/rdy/rStart*)
+        this.resize = { active:false, dir:'', x:0, y:0, startW:0, startH:0, startLeft:0, startTop:0 };
+        this.MIN_W = 240;
+        this.MIN_H = 80;
+
+        this._init();
+      }
+
+      _markHTML(t){
+        return t==='spire' ? '<div class="jmark-spire"></div>'
+          : t==='arch' ? '<div class="jmark-arch"></div>'
+          : '<div class="jmark-pavilion"></div>';
+      }
+
+      _yearsLabel(p){
+        if(!p.years || !p.years.length) return '';
+        const lines = [];
+        for(let i=0;i<p.years.length;i+=2) lines.push(p.years.slice(i,i+2).join(', '));
+        return lines.join('<br>');
+      }
+
+      _buildIslands(){
+        this.islands.forEach((p,i)=>{
+          const el = document.createElement('div');
+          el.className = 'jisland';
+          el.style.cssText = `left:${p.x}px;top:${p.y}px`;
+          el.setAttribute('role','button');
+          el.setAttribute('tabindex','0');
+          el.setAttribute('aria-label', p.city);
+          el.innerHTML = `<div class="jinner"><div class="jlabel"><div class="jcity">${p.city}</div></div><div class="jbody"><div class="jtop" style="background:${p.top}"></div><div class="jrim" style="background:${p.rim}"></div><div class="jbot"></div>${this._markHTML(p.mark)}<div class="jtree" style="left:114px;top:108px"></div><div class="jtree" style="left:168px;top:88px;transform:scale(1.15)"></div><div class="jtree" style="left:82px;top:96px;transform:scale(0.85)"></div><div class="jstone" style="left:158px;top:162px"></div><div class="jstone" style="left:178px;top:170px"></div></div></div><div class="jyears">${this._yearsLabel(p)}</div>`;
+          el.addEventListener('click', e=>{ e.stopPropagation(); this.selectPlace(i); });
+          el.addEventListener('keydown', e=>{
+            if(e.key==='Enter'||e.key===' '){ e.preventDefault(); e.stopPropagation(); this.selectPlace(i); }
+          });
+          this.world.appendChild(el);
+          p.el = el;
+        });
+      }
+
+      _saveCardState(){
+        if(!this.detail.classList.contains('open')) return;
+        this.cardState.left = this.detail.style.left;
+        this.cardState.top = this.detail.style.top;
+        this.cardState.width = this.detail.style.width;
+        this.cardState.height = this.detail.style.height;
+      }
+
+      _applyCardState(){
+        if(this.cardState.left!==null) this.detail.style.left = this.cardState.left;
+        if(this.cardState.top!==null) this.detail.style.top = this.cardState.top;
+        if(this.cardState.width!==null) this.detail.style.width = this.cardState.width;
+        if(this.cardState.height!==null) this.detail.style.height = this.cardState.height;
+      }
+
+      selectPlace(i){
+        this.suppressClose = true;
+        this.selectedIdx = i;
+        const p = this.islands[i];
+        this.islands.forEach((is,j)=>is.el.classList.toggle('sel', j===i));
+        this.dtitle.textContent = p.city;
+        this.dsub.textContent = '';
+        this.dcards.innerHTML = (p.groups||[]).map(g=>{
+          const logoImg = `<img src="${g.logo||''}" alt="${g.alt||g.org||p.city}" loading="lazy" decoding="async" onerror="var p=this.parentElement;p.innerHTML='🏛️';p.style.fontSize='1.25rem';">`;
+          const roles = (g.experiences||[]).map(e=>{
+            const tt = e['title_'+currentLang] || e.title;
+            const nn = e['note_'+currentLang] || e.note;
+            return `<div class="jrole"><div class="jct">${tt}</div><div class="jcy">${e.year}</div><div class="jcn">${nn}</div><div class="jtags">${(e.tags||[]).map(t=>`<span class="jtag">${t}</span>`).join('')}</div></div>`;
+          }).join('');
+          return `<div class="jcard"><div class="jcard-head"><div class="jlogo">${logoImg}</div><div class="jorg-wrap"><div class="jorg">${g.org||p.city}</div></div></div><div class="jroles">${roles}</div></div>`;
+        }).join('');
+        const wasOpen = this.detail.classList.contains('open');
+        if(wasOpen){
+          this._saveCardState();
+          this.detail.style.transition = 'none';
+          this._applyCardState();
+          requestAnimationFrame(()=>{ this.detail.style.transition = ''; });
+        } else {
+          this.detail.classList.add('open');
+          if(this.cardState.left!==null) this._applyCardState();
+          else this._positionDetail();
+        }
+        this.focusOn(p.x, p.y, 1.1);
+        setTimeout(()=>{ this.suppressClose = false; }, 50);
+      }
+
+      closeDetail(){
+        if(this.detail.classList.contains('open')) this._saveCardState();
+        this.detail.classList.remove('open');
+        this.islands.forEach(is=>is.el.classList.remove('sel'));
+        this.selectedIdx = -1;
+      }
+
+      focusOn(wx, wy, zoom){
+        const vw = this.vp.clientWidth, vh = this.vp.clientHeight, cam = this.camera;
+        cam.ts = Math.max(cam.minS, Math.min(cam.maxS, zoom));
+        cam.tx = vw*.5 - wx*cam.ts;
+        cam.ty = vh*.5 - wy*cam.ts;
+      }
+
+      fitAll(){
+        const vw = this.vp.clientWidth||680, vh = this.vp.clientHeight||620;
+        let minX=Infinity, maxX=-Infinity, minY=Infinity, maxY=-Infinity;
+        this.islands.forEach(p=>{
+          minX=Math.min(minX,p.x-300); maxX=Math.max(maxX,p.x+300);
+          minY=Math.min(minY,p.y-380); maxY=Math.max(maxY,p.y+720);
+        });
+        const cW=maxX-minX, cH=maxY-minY, s=Math.min(vw/cW, vh/cH), cam=this.camera;
+        cam.ts = Math.max(cam.minS, Math.min(cam.maxS, s));
+        cam.tx = (vw-cW*cam.ts)*.5 - minX*cam.ts;
+        cam.ty = (vh-cH*cam.ts)*.5 - minY*cam.ts + 100;
+      }
+
+      resetView(){ this.fitAll(); this.closeDetail(); }
+
+      _positionDetail(){
+        const vw = this.vp.clientWidth;
+        this.detail.style.left = Math.max(14, Math.round(vw*0.237)) + 'px';
+        this.detail.style.top = '0px';
+        this.detail.style.right = 'auto';
+        this.detail.style.bottom = 'auto';
+        this._saveCardState();
+      }
+
+      _clampDetailPos(){
+        const vw=this.vp.clientWidth, vh=this.vp.clientHeight, dw=this.detail.offsetWidth, dh=this.detail.offsetHeight;
+        this.detail.style.left = Math.max(0, Math.min(vw-dw, parseFloat(this.detail.style.left)||0)) + 'px';
+        this.detail.style.top = Math.max(0, Math.min(vh-dh, parseFloat(this.detail.style.top)||0)) + 'px';
+      }
+
+      _tick = () => {
+        const e = .13, cam = this.camera;
+        cam.s += (cam.ts-cam.s)*e;
+        cam.x += (cam.tx-cam.x)*e;
+        cam.y += (cam.ty-cam.y)*e;
+        this.world.style.transform = `translate(${cam.x}px,${cam.y}px) scale(${cam.s})`;
+        requestAnimationFrame(this._tick);
+      };
+
+      _bindEvents(){
+        this.vp.addEventListener('click', e=>{
+          if(this.detail.contains(e.target)) return;
+          if(this.suppressClose) return;
+          if(this.detail.classList.contains('open')) this.resetView();
+        });
+        document.addEventListener('click', e=>{
+          if(!this.detail.classList.contains('open')) return;
+          if(this.shell.contains(e.target)) return; // clicks inside the map are already handled above
+          if(this.suppressClose) return;
+          this.resetView();
+        });
+        ['pointerdown','click','dblclick'].forEach(evt=>{
+          this.detail.addEventListener(evt, e=>e.stopPropagation());
+        });
+        ['wheel','touchstart','touchmove'].forEach(evt=>{
+          this.detail.addEventListener(evt, e=>e.stopPropagation(), {passive:true});
+        });
+        this.detailBody.addEventListener('pointerdown', e=>e.stopPropagation());
+        this.detailBody.addEventListener('wheel', e=>e.stopPropagation(), {passive:true});
+
+        this.detailHeader.addEventListener('pointerdown', e=>{
+          if(e.target.closest('button')) return;
+          this.drag.active = true;
+          this.detailHeader.setPointerCapture(e.pointerId);
+          const r = this.detail.getBoundingClientRect(), vr = this.vp.getBoundingClientRect();
+          this.drag.startLeft = r.left-vr.left;
+          this.drag.startTop = r.top-vr.top;
+          this.drag.x = e.clientX; this.drag.y = e.clientY;
+          e.stopPropagation();
+        });
+        this.detailHeader.addEventListener('pointermove', e=>{
+          if(!this.drag.active) return;
+          const dx=e.clientX-this.drag.x, dy=e.clientY-this.drag.y;
+          const vw=this.vp.clientWidth, vh=this.vp.clientHeight, dw=this.detail.offsetWidth, dh=this.detail.offsetHeight;
+          this.detail.style.left = Math.max(0, Math.min(vw-dw, this.drag.startLeft+dx)) + 'px';
+          this.detail.style.top = Math.max(0, Math.min(vh-dh, this.drag.startTop+dy)) + 'px';
+          this._saveCardState();
+          e.stopPropagation();
+        });
+        this.detailHeader.addEventListener('pointerup', e=>{ this.drag.active=false; e.stopPropagation(); });
+
+        this.detail.querySelectorAll('.jresize').forEach(h=>{
+          h.addEventListener('pointerdown', e=>{
+            this.resize.active = true;
+            this.resize.dir = h.dataset.dir;
+            h.setPointerCapture(e.pointerId);
+            const r = this.detail.getBoundingClientRect(), vr = this.vp.getBoundingClientRect();
+            this.resize.startW = r.width; this.resize.startH = r.height;
+            this.resize.startLeft = r.left-vr.left; this.resize.startTop = r.top-vr.top;
+            this.resize.x = e.clientX; this.resize.y = e.clientY;
+            e.stopPropagation();
+          });
+          h.addEventListener('pointermove', e=>{
+            if(!this.resize.active) return;
+            const dx=e.clientX-this.resize.x, dy=e.clientY-this.resize.y;
+            const vw=this.vp.clientWidth, vh=this.vp.clientHeight, dir=this.resize.dir;
+            let nW=this.resize.startW, nH=this.resize.startH, nL=this.resize.startLeft, nT=this.resize.startTop;
+            if(dir.includes('e')) nW = Math.max(this.MIN_W, Math.min(vw-nL, this.resize.startW+dx));
+            if(dir.includes('s')) nH = Math.max(this.MIN_H, Math.min(vh-nT, this.resize.startH+dy));
+            if(dir.includes('w')){
+              nL = Math.max(0, Math.min(this.resize.startLeft+this.resize.startW-this.MIN_W, this.resize.startLeft+dx));
+              nW = this.resize.startW - (nL-this.resize.startLeft);
+            }
+            if(dir.includes('n')){
+              nT = Math.max(0, Math.min(this.resize.startTop+this.resize.startH-this.MIN_H, this.resize.startTop+dy));
+              nH = this.resize.startH - (nT-this.resize.startTop);
+            }
+            if(nL+nW>vw) nW = vw-nL;
+            if(nT+nH>vh) nH = vh-nT;
+            this.detail.style.left = nL+'px';
+            this.detail.style.top = nT+'px';
+            this.detail.style.width = nW+'px';
+            this.detail.style.height = nH+'px';
+            this._saveCardState();
+            e.stopPropagation();
+          });
+          h.addEventListener('pointerup', e=>{ this.resize.active=false; this.resize.dir=''; e.stopPropagation(); });
+        });
+
+        window.addEventListener('resize', ()=>{
+          if(!this.detail.classList.contains('open')) this.fitAll();
+          else this._clampDetailPos();
+        });
+      }
+
+      _init(){
+        this._buildIslands();
+        this._bindEvents();
+        requestAnimationFrame(()=>requestAnimationFrame(()=>{
+          this.fitAll();
+          this.camera.s = this.camera.ts;
+          this.camera.x = this.camera.tx;
+          this.camera.y = this.camera.ty;
+          this._tick();
+        }));
+      }
+    }
+
+    let journeyMap = null;
     if(document.getElementById('jshell')){
-    const shell=document.getElementById('jshell'),world=document.getElementById('jworld'),vp=document.getElementById('jvp'),detailBody=document.getElementById('jdetailBody'),dtitle=document.getElementById('jdtitle'),dsub=document.getElementById('jdsubtitle'),dcards=document.getElementById('jcards');
-    detail=document.getElementById('jdetail');
-    S={s:1,x:0,y:0,ts:1,tx:0,ty:0,minS:.05,maxS:2.2};
-    const islands=PLACES.map((p,i)=>({...p,...POSITIONS[i],el:null}));
-    function markHTML(t){return t==='spire'?'<div class="jmark-spire"></div>':t==='arch'?'<div class="jmark-arch"></div>':'<div class="jmark-pavilion"></div>';}
-    function yearsLabel(p){if(!p.years||!p.years.length)return'';const l=[];for(let i=0;i<p.years.length;i+=2)l.push(p.years.slice(i,i+2).join(', '));return l.join('<br>');}
-    function buildIslands(){islands.forEach((p,i)=>{const el=document.createElement('div');el.className='jisland';el.style.cssText=`left:${p.x}px;top:${p.y}px`;el.setAttribute('role','button');el.setAttribute('tabindex','0');el.setAttribute('aria-label',p.city);el.innerHTML=`<div class="jinner"><div class="jlabel"><div class="jcity">${p.city}</div></div><div class="jbody"><div class="jtop" style="background:${p.top}"></div><div class="jrim" style="background:${p.rim}"></div><div class="jbot"></div>${markHTML(p.mark)}<div class="jtree" style="left:114px;top:108px"></div><div class="jtree" style="left:168px;top:88px;transform:scale(1.15)"></div><div class="jtree" style="left:82px;top:96px;transform:scale(0.85)"></div><div class="jstone" style="left:158px;top:162px"></div><div class="jstone" style="left:178px;top:170px"></div></div></div><div class="jyears">${yearsLabel(p)}</div>`;el.addEventListener('click',e=>{e.stopPropagation();selectPlace(i);});el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();e.stopPropagation();selectPlace(i);}});world.appendChild(el);p.el=el;});}
-    let selectedIdx=-1,suppressClose=false;
-    const cardState={left:null,top:null,width:null,height:null};
-    function saveCardState(){if(!detail.classList.contains('open'))return;cardState.left=detail.style.left;cardState.top=detail.style.top;cardState.width=detail.style.width;cardState.height=detail.style.height;}
-    function applyCardState(){if(cardState.left!==null)detail.style.left=cardState.left;if(cardState.top!==null)detail.style.top=cardState.top;if(cardState.width!==null)detail.style.width=cardState.width;if(cardState.height!==null)detail.style.height=cardState.height;}
-    function selectPlace(i){suppressClose=true;selectedIdx=i;const p=islands[i];islands.forEach((is,j)=>is.el.classList.toggle('sel',j===i));dtitle.textContent=p.city;dsub.textContent='';dcards.innerHTML=(p.groups||[]).map(g=>`<div class="jcard"><div class="jcard-head"><div class="jlogo"><img src="${g.logo||''}" alt="${g.alt||g.org||p.city}" loading="lazy" decoding="async" onerror="var p=this.parentElement;p.innerHTML='🏛️';p.style.fontSize='1.25rem';"></div><div class="jorg-wrap"><div class="jorg">${g.org||p.city}</div></div></div><div class="jroles">${(g.experiences||[]).map(e=>{const tt=e['title_'+currentLang]||e.title;const nn=e['note_'+currentLang]||e.note;return `<div class="jrole"><div class="jct">${tt}</div><div class="jcy">${e.year}</div><div class="jcn">${nn}</div><div class="jtags">${(e.tags||[]).map(t=>`<span class="jtag">${t}</span>`).join('')}</div></div>`;}).join('')}</div></div>`).join('');const wasOpen=detail.classList.contains('open');if(wasOpen){saveCardState();detail.style.transition='none';applyCardState();requestAnimationFrame(()=>{detail.style.transition='';});}else{detail.classList.add('open');if(cardState.left!==null)applyCardState();else positionDetail();}focusOn(p.x,p.y,1.1);setTimeout(()=>{suppressClose=false;},50);}
-    function closeDetail(){if(detail.classList.contains('open'))saveCardState();detail.classList.remove('open');islands.forEach(is=>is.el.classList.remove('sel'));selectedIdx=-1;}
-    function focusOn(wx,wy,zoom){const vw=vp.clientWidth,vh=vp.clientHeight;S.ts=Math.max(S.minS,Math.min(S.maxS,zoom));S.tx=vw*.5-wx*S.ts;S.ty=vh*.5-wy*S.ts;}
-    function fitAll(){const vw=vp.clientWidth||680,vh=vp.clientHeight||620;let minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity;islands.forEach(p=>{minX=Math.min(minX,p.x-300);maxX=Math.max(maxX,p.x+300);minY=Math.min(minY,p.y-380);maxY=Math.max(maxY,p.y+720);});const cW=maxX-minX,cH=maxY-minY,s=Math.min(vw/cW,vh/cH);S.ts=Math.max(S.minS,Math.min(S.maxS,s));S.tx=(vw-cW*S.ts)*.5-minX*S.ts;S.ty=(vh-cH*S.ts)*.5-minY*S.ts+100;}
-    function resetView(){fitAll();closeDetail();}
-    vp.addEventListener('click',e=>{if(detail.contains(e.target))return;if(suppressClose)return;if(detail.classList.contains('open'))resetView();});
-    document.addEventListener('click',e=>{
-      if(!detail.classList.contains('open'))return;
-      if(shell.contains(e.target))return; /* clicks inside the map itself are already handled above */
-      if(suppressClose)return;
-      resetView();
-    });
-    detail.addEventListener('pointerdown',e=>e.stopPropagation());detail.addEventListener('click',e=>e.stopPropagation());detail.addEventListener('dblclick',e=>e.stopPropagation());detail.addEventListener('wheel',e=>e.stopPropagation(),{passive:true});detail.addEventListener('touchstart',e=>e.stopPropagation(),{passive:true});detail.addEventListener('touchmove',e=>e.stopPropagation(),{passive:true});detailBody.addEventListener('pointerdown',e=>e.stopPropagation());detailBody.addEventListener('wheel',e=>e.stopPropagation(),{passive:true});
-    const detailHeader=document.getElementById('jdetailHeader');
-    let ddrag=false,ddx=0,ddy=0,dStartL=0,dStartT=0;
-    function positionDetail(){const vw=vp.clientWidth,dw=detail.offsetWidth;detail.style.left=Math.max(14,Math.round(vw*0.237))+'px';detail.style.top='0px';detail.style.right='auto';detail.style.bottom='auto';saveCardState();}
-    detailHeader.addEventListener('pointerdown',e=>{if(e.target.closest('button'))return;ddrag=true;detailHeader.setPointerCapture(e.pointerId);const r=detail.getBoundingClientRect(),vr=vp.getBoundingClientRect();dStartL=r.left-vr.left;dStartT=r.top-vr.top;ddx=e.clientX;ddy=e.clientY;e.stopPropagation();});
-    detailHeader.addEventListener('pointermove',e=>{if(!ddrag)return;const dx=e.clientX-ddx,dy=e.clientY-ddy,vw=vp.clientWidth,vh=vp.clientHeight,dw=detail.offsetWidth,dh=detail.offsetHeight;detail.style.left=Math.max(0,Math.min(vw-dw,dStartL+dx))+'px';detail.style.top=Math.max(0,Math.min(vh-dh,dStartT+dy))+'px';saveCardState();e.stopPropagation();});
-    detailHeader.addEventListener('pointerup',e=>{ddrag=false;e.stopPropagation();});
-    const resizeHandles=detail.querySelectorAll('.jresize');
-    let rdrag=false,resizeDir='',rdx=0,rdy=0,rStartW=0,rStartH=0,rStartL=0,rStartT=0;
-    const MIN_W=240,MIN_H=80;
-    resizeHandles.forEach(h=>{
-      h.addEventListener('pointerdown',e=>{rdrag=true;resizeDir=h.dataset.dir;h.setPointerCapture(e.pointerId);const r=detail.getBoundingClientRect(),vr=vp.getBoundingClientRect();rStartW=r.width;rStartH=r.height;rStartL=r.left-vr.left;rStartT=r.top-vr.top;rdx=e.clientX;rdy=e.clientY;e.stopPropagation();});
-      h.addEventListener('pointermove',e=>{if(!rdrag)return;const dx=e.clientX-rdx,dy=e.clientY-rdy,vw=vp.clientWidth,vh=vp.clientHeight;let nW=rStartW,nH=rStartH,nL=rStartL,nT=rStartT;if(resizeDir.includes('e'))nW=Math.max(MIN_W,Math.min(vw-nL,rStartW+dx));if(resizeDir.includes('s'))nH=Math.max(MIN_H,Math.min(vh-nT,rStartH+dy));if(resizeDir.includes('w')){nL=Math.max(0,Math.min(rStartL+rStartW-MIN_W,rStartL+dx));nW=rStartW-(nL-rStartL);}if(resizeDir.includes('n')){nT=Math.max(0,Math.min(rStartT+rStartH-MIN_H,rStartT+dy));nH=rStartH-(nT-rStartT);}if(nL+nW>vw)nW=vw-nL;if(nT+nH>vh)nH=vh-nT;detail.style.left=nL+'px';detail.style.top=nT+'px';detail.style.width=nW+'px';detail.style.height=nH+'px';saveCardState();e.stopPropagation();});
-      h.addEventListener('pointerup',e=>{rdrag=false;resizeDir='';e.stopPropagation();});
-    });
-    function clampDetailPos(){const vw=vp.clientWidth,vh=vp.clientHeight,dw=detail.offsetWidth,dh=detail.offsetHeight;detail.style.left=Math.max(0,Math.min(vw-dw,parseFloat(detail.style.left)||0))+'px';detail.style.top=Math.max(0,Math.min(vh-dh,parseFloat(detail.style.top)||0))+'px';}
-    function tick(){const e=.13;S.s+=(S.ts-S.s)*e;S.x+=(S.tx-S.x)*e;S.y+=(S.ty-S.y)*e;world.style.transform=`translate(${S.x}px,${S.y}px) scale(${S.s})`;requestAnimationFrame(tick);}
-    buildIslands();
-    function initMap(){fitAll();S.s=S.ts;S.x=S.tx;S.y=S.ty;tick();}
-    requestAnimationFrame(()=>requestAnimationFrame(initMap));
-    window.addEventListener('resize',()=>{if(!detail.classList.contains('open'))fitAll();else clampDetailPos();});
+      journeyMap = new JourneyMap(document.getElementById('jshell'), PLACES, POSITIONS);
     }
     applyStaticTranslations(currentLang);
     (function(){ const route=parseHash(); showView(route.view,{silent:true,projectId:route.projectId}); })();
@@ -2330,223 +2957,241 @@ const PLACES=[
     const canvas = document.getElementById('heroTrailCanvas');
     const heroSection = document.getElementById('heroSection');
     if(!canvas || !heroSection) return;
-    const ctx = canvas.getContext('2d');
-    let points = [];
-    window.__resetHeroPaint = function(){ points = []; };
- 
-    const COLOR_PALETTE = [
-      [252, 216, 228], // FCD8E4 — soft pink
-      [172, 255, 72],  // ACFF48 — vivid young-leaf green
-      [180, 228, 240]  // B4E4F0 — sky blue
-    ];
- 
-    function buildTufts(){
-      const tufts = [];
-      const count = 4 + Math.floor(Math.random() * 3);
-      for(let i = 0; i < count; i++){
-        const angle = (i / count) * Math.PI * 2 + Math.random() * 0.5;
-        const dist = 0.78 + Math.random() * 0.22;
-        tufts.push({
-          dx: Math.cos(angle) * dist,
-          dy: Math.sin(angle) * dist,
-          r: 0.16 + Math.random() * 0.12
-        });
+
+    /* ================================================================
+       HERO PAINT TRAIL — the ghibli-blob cursor trail on the Home hero.
+       Was previously 4 separate global functions on window
+       (window.__resetHeroPaint, __resizeHeroCanvas,
+       __spawnImmediateIfCursorInside, __startHeroPaintLoopIfNeeded)
+       plus a dozen closure variables (points, lastX/Y, rawPointerX/Y,
+       distSinceSpawn, heroPaintLoopActive...) sharing one scope. Same
+       behavior, now one class with one exposed instance
+       (window.heroPaintTrail) and a small, named method surface
+       (.reset(), .resize(), .spawnImmediateIfCursorInside(),
+       .startIfNeeded()) instead of four loosely-related globals.
+       ================================================================ */
+    class HeroPaintTrail {
+      static COLOR_PALETTE = [
+        [252, 216, 228], // FCD8E4 — soft pink
+        [172, 255, 72],  // ACFF48 — vivid young-leaf green
+        [180, 228, 240]  // B4E4F0 — sky blue
+      ];
+      static SETTLE_DURATION = 550;
+      static POINT_LIFESPAN = 10000;
+      static FADE_START = 6000;
+      static FADE_DURATION = HeroPaintTrail.POINT_LIFESPAN - HeroPaintTrail.FADE_START;
+      static EYES_CLOSE_AT = 0.5;
+      static MIN_SPAWN_GAP = 40;
+
+      constructor(canvas, heroSection){
+        this.canvas = canvas;
+        this.heroSection = heroSection;
+        this.ctx = canvas.getContext('2d');
+        this.points = [];
+        this.lastX = null; this.lastY = null;
+        this.rawPointerX = null; this.rawPointerY = null; // tracked at all times, regardless of hero active state
+        this.distSinceSpawn = 0;
+        this.loopActive = true;
+
+        this.resize();
+        window.addEventListener('resize', () => this.resize());
+        window.addEventListener('pointermove', (e) => this._handleMove(e.clientX, e.clientY), { passive:true });
+        window.addEventListener('touchmove', (e) => {
+          if(e.touches && e.touches[0]) this._handleMove(e.touches[0].clientX, e.touches[0].clientY);
+        }, { passive:true });
+
+        this._draw = this._draw.bind(this);
+        this._draw();
       }
-      return tufts;
-    }
- 
-    const SPREAD_DURATION = 300;
-    const SETTLE_DURATION = 550;
-    const POINT_LIFESPAN = 10000;
-    const FADE_START = 6000;
-    const FADE_DURATION = POINT_LIFESPAN - FADE_START;
-    const EYES_CLOSE_AT = 0.5;
- 
-    function resizeCanvas(){
-      canvas.width = heroSection.clientWidth;
-      canvas.height = heroSection.clientHeight;
-    }
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-    window.__resizeHeroCanvas = resizeCanvas;
- 
-    let lastX = null, lastY = null;
-    let rawPointerX = null, rawPointerY = null; // tracked at all times, regardless of hero active state
- 
-    function spawnDrop(x, y, dirX, dirY, speed){
-      const color = COLOR_PALETTE[Math.floor(Math.random() * COLOR_PALETTE.length)];
-      const push = Math.min(60, 8 + speed * 1.4);
-      points.push({
-        x, y,
-        vx: dirX * push,
-        vy: dirY * push,
-        radius: 15 + Math.random() * 16,
-        tufts: buildTufts(),
-        hasEyes: Math.random() < 0.4,
-        color,
-        wigglePhase: Math.random() * Math.PI * 2,
-        wiggleSpeed: 1.3 + Math.random() * 0.8,
-        born: performance.now()
-      });
-      if(points.length > 200) points.splice(0, points.length - 200);
-    }
- 
-    const MIN_SPAWN_GAP = 40;
-    let distSinceSpawn = 0;
- 
-    function handleMove(clientX, clientY){
-      rawPointerX = clientX; rawPointerY = clientY;
-      if(!heroSection.classList.contains('active')){
-        lastX = null; lastY = null;
-        return;
+
+      reset(){ this.points = []; }
+
+      resize(){
+        this.canvas.width = this.heroSection.clientWidth;
+        this.canvas.height = this.heroSection.clientHeight;
       }
-      const rect = heroSection.getBoundingClientRect();
-      if(clientX < rect.left || clientX > rect.right || clientY < rect.top || clientY > rect.bottom){
-        lastX = null; lastY = null;
-        return;
+
+      startIfNeeded(){
+        if(!this.loopActive){ this.loopActive = true; requestAnimationFrame(this._draw); }
       }
-      const x = clientX - rect.left, y = clientY - rect.top;
-      if(lastX !== null){
-        const dx = x - lastX, dy = y - lastY;
-        const dist = Math.hypot(dx, dy);
-        distSinceSpawn += dist;
-        if(distSinceSpawn >= MIN_SPAWN_GAP){
-          const dirX = dist > 0.01 ? dx / dist : 0;
-          const dirY = dist > 0.01 ? dy / dist : 0;
-          spawnDrop(x, y, dirX, dirY, dist);
-          distSinceSpawn = 0;
+
+      /* Called right when the Home view becomes active. mousemove/
+         pointermove events only fire on actual movement — if the
+         cursor is already resting over the interactive area from
+         before (e.g. right after the landing-page zoom transition
+         lands), nothing would spawn until the user physically moved
+         the mouse, which feels like a dead/broken area for a beat.
+         Uses the continuously-tracked raw pointer position to spawn a
+         bubble immediately if the cursor already happens to be inside
+         the hero bounds the moment it appears. */
+      spawnImmediateIfCursorInside(){
+        if(this.rawPointerX===null||this.rawPointerY===null) return;
+        const rect = this.heroSection.getBoundingClientRect();
+        if(this.rawPointerX<rect.left||this.rawPointerX>rect.right||this.rawPointerY<rect.top||this.rawPointerY>rect.bottom) return;
+        this._spawnDrop(this.rawPointerX-rect.left, this.rawPointerY-rect.top, 0, 0, 0);
+        this.distSinceSpawn = 0;
+        this.lastX = this.rawPointerX-rect.left;
+        this.lastY = this.rawPointerY-rect.top;
+      }
+
+      _buildTufts(){
+        const tufts = [];
+        const count = 4 + Math.floor(Math.random() * 3);
+        for(let i = 0; i < count; i++){
+          const angle = (i / count) * Math.PI * 2 + Math.random() * 0.5;
+          const dist = 0.78 + Math.random() * 0.22;
+          tufts.push({
+            dx: Math.cos(angle) * dist,
+            dy: Math.sin(angle) * dist,
+            r: 0.16 + Math.random() * 0.12
+          });
         }
-      } else {
-        spawnDrop(x, y, 0, 0, 0);
-        distSinceSpawn = 0;
+        return tufts;
       }
-      lastX = x; lastY = y;
-    }
 
-    /* Called right when the Home view becomes active. mousemove/pointermove
-       events only fire on actual movement — if the cursor is already
-       resting over the interactive area from before (e.g. right after the
-       landing-page zoom transition lands), nothing would spawn until the
-       user physically moved the mouse, which feels like a dead/broken
-       area for a beat. This uses the continuously-tracked raw pointer
-       position to spawn a bubble immediately, if the cursor already
-       happens to be inside the hero bounds the moment it appears. */
-    function spawnImmediateIfCursorInside(){
-      if(rawPointerX===null||rawPointerY===null)return;
-      const rect=heroSection.getBoundingClientRect();
-      if(rawPointerX<rect.left||rawPointerX>rect.right||rawPointerY<rect.top||rawPointerY>rect.bottom)return;
-      const x=rawPointerX-rect.left, y=rawPointerY-rect.top;
-      spawnDrop(x, y, 0, 0, 0);
-      distSinceSpawn=0;
-      lastX=x; lastY=y;
-    }
-    window.__spawnImmediateIfCursorInside=spawnImmediateIfCursorInside;
- 
-    // pointermove alone covers mouse input in every modern browser
-    // (Pointer Events are a superset of mouse events) — a separate
-    // mousemove listener here was firing handleMove a second time for
-    // the exact same movement, doubling the work done per cursor move.
-    window.addEventListener('pointermove', (e) => handleMove(e.clientX, e.clientY), { passive:true });
-    window.addEventListener('touchmove', (e) => {
-      if(e.touches && e.touches[0]) handleMove(e.touches[0].clientX, e.touches[0].clientY);
-    }, { passive:true });
- 
-    function lerp(a, b, t){ return a + (b - a) * t; }
- 
-    function draw(){
-      const now = performance.now();
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      points = points.filter(p => now - p.born < POINT_LIFESPAN);
- 
-      points.forEach(p => {
-        const age = now - p.born;
-        const growT = Math.min(1, age / 90);
-        const grown = 1 - Math.pow(1 - growT, 2); // quick simple grow-in; the thrown feel now comes from squash/stretch below, not from the blob itself inflating and deflating
-        const radius = p.radius * grown;
+      _spawnDrop(x, y, dirX, dirY, speed){
+        const color = HeroPaintTrail.COLOR_PALETTE[Math.floor(Math.random() * HeroPaintTrail.COLOR_PALETTE.length)];
+        const push = Math.min(60, 8 + speed * 1.4);
+        this.points.push({
+          x, y,
+          vx: dirX * push,
+          vy: dirY * push,
+          radius: 15 + Math.random() * 16,
+          tufts: this._buildTufts(),
+          hasEyes: Math.random() < 0.4,
+          color,
+          wigglePhase: Math.random() * Math.PI * 2,
+          wiggleSpeed: 1.3 + Math.random() * 0.8,
+          born: performance.now()
+        });
+        if(this.points.length > 200) this.points.splice(0, this.points.length - 200);
+      }
 
-        let wiggleAngle = 0, jitterX = 0, jitterY = 0, stretchAngle = 0, stretchX = 1, stretchY = 1;
-        if(age < SETTLE_DURATION){
-          const dt = Math.min(16, 1000/60);
-          p.x += p.vx * (dt/1000);
-          p.y += p.vy * (dt/1000);
-          const friction = Math.pow(0.02, dt/SETTLE_DURATION);
-          p.vx *= friction;
-          p.vy *= friction;
-
-          // squash-and-stretch: elongate along the direction of travel while
-          // moving fast (like a thrown ball), compress perpendicular to
-          // conserve volume, relax back toward a circle as it slows and settles
-          const speed = Math.hypot(p.vx, p.vy);
-          const stretchAmount = Math.min(0.55, speed / 260);
-          stretchAngle = Math.atan2(p.vy, p.vx);
-          stretchX = 1 + stretchAmount;
-          stretchY = 1 / (1 + stretchAmount * 0.7);
+      _handleMove(clientX, clientY){
+        this.rawPointerX = clientX; this.rawPointerY = clientY;
+        if(!this.heroSection.classList.contains('active')){
+          this.lastX = null; this.lastY = null;
+          return;
+        }
+        const rect = this.heroSection.getBoundingClientRect();
+        if(clientX < rect.left || clientX > rect.right || clientY < rect.top || clientY > rect.bottom){
+          this.lastX = null; this.lastY = null;
+          return;
+        }
+        const x = clientX - rect.left, y = clientY - rect.top;
+        if(this.lastX !== null){
+          const dx = x - this.lastX, dy = y - this.lastY;
+          const dist = Math.hypot(dx, dy);
+          this.distSinceSpawn += dist;
+          if(this.distSinceSpawn >= HeroPaintTrail.MIN_SPAWN_GAP){
+            const dirX = dist > 0.01 ? dx / dist : 0;
+            const dirY = dist > 0.01 ? dy / dist : 0;
+            this._spawnDrop(x, y, dirX, dirY, dist);
+            this.distSinceSpawn = 0;
+          }
         } else {
-          const t = now/1000 * p.wiggleSpeed + p.wigglePhase;
-          wiggleAngle = Math.sin(t) * 0.16;
-          jitterX = Math.sin(t * 1.3) * 1.6;
-          jitterY = Math.cos(t * 1.1) * 1.2;
+          this._spawnDrop(x, y, 0, 0, 0);
+          this.distSinceSpawn = 0;
         }
- 
-        const fadeT = age > FADE_START
-          ? Math.min(1, (age - FADE_START) / FADE_DURATION)
-          : 0;
-        const [pr, pg, pb] = p.color;
-        const cr = lerp(pr, 255, fadeT);
-        const cg = lerp(pg, 255, fadeT);
-        const cb = lerp(pb, 255, fadeT);
-        const alpha = 0.82 * (1 - fadeT * 0.85);
- 
-        ctx.save();
-        ctx.translate(p.x + jitterX, p.y + jitterY);
-        ctx.rotate(wiggleAngle + stretchAngle);
-        ctx.scale(stretchX, stretchY);
- 
-        ctx.beginPath();
-        ctx.moveTo(radius, 0);
-        ctx.arc(0, 0, Math.max(radius, 0), 0, Math.PI*2);
-        p.tufts.forEach(t => {
-          const tx = t.dx * radius, ty = t.dy * radius, tr = t.r * radius;
-          ctx.moveTo(tx + tr, ty);
-          ctx.arc(tx, ty, Math.max(tr,0), 0, Math.PI*2);
-        });
-        ctx.fillStyle = `rgba(${cr},${cg},${cb},${alpha})`;
-        ctx.fill();
- 
-        if(p.hasEyes && fadeT < EYES_CLOSE_AT){
-          const eyeFade = 1 - Math.min(1, fadeT / EYES_CLOSE_AT);
-          const eyeR = radius * 0.09;
-          const eyeSpacing = radius * 0.32;
-          const eyeY = -radius * 0.08;
-          ctx.fillStyle = `rgba(70,60,55,${0.75 * eyeFade})`;
+        this.lastX = x; this.lastY = y;
+      }
+
+      static _lerp(a, b, t){ return a + (b - a) * t; }
+
+      _draw(){
+        const now = performance.now();
+        const ctx = this.ctx;
+        ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
+        this.points = this.points.filter(p => now - p.born < HeroPaintTrail.POINT_LIFESPAN);
+
+        this.points.forEach(p => {
+          const age = now - p.born;
+          const growT = Math.min(1, age / 90);
+          const grown = 1 - Math.pow(1 - growT, 2); // quick simple grow-in; the thrown feel comes from squash/stretch below, not from the blob inflating/deflating
+          const radius = p.radius * grown;
+
+          let wiggleAngle = 0, jitterX = 0, jitterY = 0, stretchAngle = 0, stretchX = 1, stretchY = 1;
+          if(age < HeroPaintTrail.SETTLE_DURATION){
+            const dt = Math.min(16, 1000/60);
+            p.x += p.vx * (dt/1000);
+            p.y += p.vy * (dt/1000);
+            const friction = Math.pow(0.02, dt/HeroPaintTrail.SETTLE_DURATION);
+            p.vx *= friction;
+            p.vy *= friction;
+
+            // squash-and-stretch: elongate along the direction of travel
+            // while moving fast (like a thrown ball), compress
+            // perpendicular to conserve volume, relax back toward a
+            // circle as it slows and settles
+            const speed = Math.hypot(p.vx, p.vy);
+            const stretchAmount = Math.min(0.55, speed / 260);
+            stretchAngle = Math.atan2(p.vy, p.vx);
+            stretchX = 1 + stretchAmount;
+            stretchY = 1 / (1 + stretchAmount * 0.7);
+          } else {
+            const t = now/1000 * p.wiggleSpeed + p.wigglePhase;
+            wiggleAngle = Math.sin(t) * 0.16;
+            jitterX = Math.sin(t * 1.3) * 1.6;
+            jitterY = Math.cos(t * 1.1) * 1.2;
+          }
+
+          const fadeT = age > HeroPaintTrail.FADE_START
+            ? Math.min(1, (age - HeroPaintTrail.FADE_START) / HeroPaintTrail.FADE_DURATION)
+            : 0;
+          const [pr, pg, pb] = p.color;
+          const cr = HeroPaintTrail._lerp(pr, 255, fadeT);
+          const cg = HeroPaintTrail._lerp(pg, 255, fadeT);
+          const cb = HeroPaintTrail._lerp(pb, 255, fadeT);
+          const alpha = 0.82 * (1 - fadeT * 0.85);
+
+          ctx.save();
+          ctx.translate(p.x + jitterX, p.y + jitterY);
+          ctx.rotate(wiggleAngle + stretchAngle);
+          ctx.scale(stretchX, stretchY);
+
           ctx.beginPath();
-          ctx.arc(-eyeSpacing, eyeY, Math.max(eyeR,0), 0, Math.PI*2);
-          ctx.arc(eyeSpacing, eyeY, Math.max(eyeR,0), 0, Math.PI*2);
+          ctx.moveTo(radius, 0);
+          ctx.arc(0, 0, Math.max(radius, 0), 0, Math.PI*2);
+          p.tufts.forEach(t => {
+            const tx = t.dx * radius, ty = t.dy * radius, tr = t.r * radius;
+            ctx.moveTo(tx + tr, ty);
+            ctx.arc(tx, ty, Math.max(tr,0), 0, Math.PI*2);
+          });
+          ctx.fillStyle = `rgba(${cr},${cg},${cb},${alpha})`;
           ctx.fill();
+
+          if(p.hasEyes && fadeT < HeroPaintTrail.EYES_CLOSE_AT){
+            const eyeFade = 1 - Math.min(1, fadeT / HeroPaintTrail.EYES_CLOSE_AT);
+            const eyeR = radius * 0.09;
+            const eyeSpacing = radius * 0.32;
+            const eyeY = -radius * 0.08;
+            ctx.fillStyle = `rgba(70,60,55,${0.75 * eyeFade})`;
+            ctx.beginPath();
+            ctx.arc(-eyeSpacing, eyeY, Math.max(eyeR,0), 0, Math.PI*2);
+            ctx.arc(eyeSpacing, eyeY, Math.max(eyeR,0), 0, Math.PI*2);
+            ctx.fill();
+          }
+
+          ctx.restore();
+        });
+
+        // Only keep looping while the hero is actually visible or there
+        // are still drops mid-animation (letting them finish fading out
+        // naturally after navigating away) — otherwise stop entirely
+        // instead of waking the main thread every ~16ms forever on
+        // every page of the site. startIfNeeded() (called from showView
+        // when returning to Home) restarts it.
+        if(this.heroSection.classList.contains('active') || this.points.length){
+          requestAnimationFrame(this._draw);
+        } else {
+          this.loopActive = false;
         }
- 
-        ctx.restore();
-      });
- 
-      // Only keep looping while the hero is actually visible or there
-      // are still drops mid-animation (letting them finish fading out
-      // naturally after navigating away). Otherwise stop entirely
-      // instead of waking the main thread every ~16ms forever on every
-      // page of the site — heroPaintLoopActive tracks this so
-      // __resetHeroPaint (called from showView when returning to Home)
-      // knows whether it needs to restart the loop.
-      if(heroSection.classList.contains('active') || points.length){
-        requestAnimationFrame(draw);
-      } else {
-        heroPaintLoopActive=false;
       }
     }
-    let heroPaintLoopActive=true;
-    window.__startHeroPaintLoopIfNeeded=function(){
-      if(!heroPaintLoopActive){ heroPaintLoopActive=true; requestAnimationFrame(draw); }
-    };
-    draw();
+
+    window.heroPaintTrail = new HeroPaintTrail(canvas, heroSection);
   });
   </script>
 </body>
 </html>
+ 
