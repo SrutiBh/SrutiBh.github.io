@@ -1057,7 +1057,7 @@
       font-family:var(--font-serif);
       font-size:1.35rem;   /* <-- CONTENT text size */
       color:#000;          /* <-- CONTENT text color */
-      line-height:1.7; max-width:56rem;
+      line-height:1.7;
     }
     .margin-slide-body p{ margin:0 0 1.25rem; }
     .margin-slide-body p:last-child{ margin-bottom:0; }
@@ -1081,7 +1081,7 @@
        <div class="margin-slide-cols"> with two children instead of
        using .margin-slide-body directly. */
     .margin-slide-cols{
-      display:flex; gap:3rem; align-items:flex-start; max-width:1400px;
+      display:flex; gap:3rem; align-items:flex-start; max-width:var(--project-content-width,1400px);
     }
     .margin-slide-cols .margin-slide-body{ flex:1; min-width:0; }
     .margin-slide-cols img{ flex:1; min-width:0; width:100%; border-radius:.75rem; display:block; }
@@ -2217,15 +2217,15 @@
       renderProjectDetail(containerId,PROJECT_DETAIL_DATA[key]);
     });
 
-    /* The Role/Logistics/Used UXR Method/Deliverable row should end at
-       the same vertical line as the last chapter button (e.g.
-       "Personal Reflections") — that line isn't a fixed number, it
-       depends on the actual rendered width of every button (chapter
-       count, label length, language, viewport), so it has to be
-       measured live rather than hardcoded. Finds the last nav button's
-       right edge, relative to the strip's own content box (the same
-       box .margin-slide-inner is centered within), and stores it as a
-       CSS variable .margin-info-row4 reads as its own max-width. */
+    /* Every slide's content — title, body text, image+text layout, the
+       info row — should end at the same vertical line as the last
+       chapter button (e.g. "Personal Reflections"). That line isn't a
+       fixed number, it depends on the actual rendered width of every
+       button (chapter count, label length, language, viewport), so it
+       has to be measured live. Finds the last nav button's right edge,
+       relative to the strip's own content box (the same box
+       .margin-slide-inner is centered within), and stores it as a CSS
+       variable every slide reads as its own max-width. */
     function syncProjectContentWidth(key){
       const stripContent=document.querySelector('#'+key+'NavStrip .margin-nav-strip-content');
       const view=document.getElementById(key+'ProjectView');
