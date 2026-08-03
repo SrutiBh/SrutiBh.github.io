@@ -654,7 +654,7 @@
        both fit comfortably within the small circle. */
     .site-lang-topright .lang-btn{
       width:42px; height:42px; border-radius:50%;
-      background:linear-gradient(135deg,#FFFCFB 0%,#ece6e4 100%);
+      background:url('images/others/footer_bg.jpg') center/cover no-repeat;
       box-shadow:2px 2px 5px rgba(163,177,198,.5), -2px -2px 5px rgba(255,255,255,.85);
       font-size:1.1rem; flex-direction:row; gap:2px;
     }
@@ -989,7 +989,7 @@
       position:fixed; top:62px; left:50%;
       transform:translateX(-50%);
       width:52px; height:12px;
-      background:none; border:none; cursor:pointer;
+      background:url('images/others/footer_bg.jpg') center/cover no-repeat; border:none; cursor:pointer;
       box-shadow:
         3px 3px 7px rgba(60,70,90,.35),
         -3px -3px 7px rgba(255,255,255,.85);
@@ -1229,23 +1229,21 @@
     <button type="button" class="margin-project-nav-btn" id="marginBackToWorkBtn" aria-label="Back to portfolio">
       <svg xmlns="http://www.w3.org/2000/svg" width="54" height="44" viewBox="0 0 54 44">
         <defs>
-          <linearGradient id="marginBackBtnGrad" x1="10%" y1="0%" x2="90%" y2="100%">
-            <stop offset="0%" stop-color="#F2EDEA"/>
-            <stop offset="100%" stop-color="#cfc5c0"/>
-          </linearGradient>
+          <pattern id="marginBackBtnImg" patternUnits="userSpaceOnUse" x="0" y="0" width="54" height="44">
+            <image href="images/others/footer_bg.jpg" x="0" y="0" width="54" height="44" preserveAspectRatio="xMidYMid slice"/>
+          </pattern>
         </defs>
-        <path d="M19 11 Q17 11 16 12.3 L7 20 Q5 22 7 24 L16 31.7 Q17 33 19 33 L20 33 Q20 33 20 31 L20 28.5 L47 28.5 Q50 28.5 50 25.5 L50 18.5 Q50 15.5 47 15.5 L20 15.5 L20 12.8 Q20 11 19 11 Z" fill="url(#marginBackBtnGrad)"/>
+        <path d="M19 11 Q17 11 16 12.3 L7 20 Q5 22 7 24 L16 31.7 Q17 33 19 33 L20 33 Q20 33 20 31 L20 28.5 L47 28.5 Q50 28.5 50 25.5 L50 18.5 Q50 15.5 47 15.5 L20 15.5 L20 12.8 Q20 11 19 11 Z" fill="url(#marginBackBtnImg)"/>
       </svg>
     </button>
     <button type="button" class="margin-project-nav-btn" id="marginNextProjectBtn" aria-label="Next project">
       <svg xmlns="http://www.w3.org/2000/svg" width="54" height="44" viewBox="0 0 54 44">
         <defs>
-          <linearGradient id="marginNextBtnGrad" x1="10%" y1="0%" x2="90%" y2="100%">
-            <stop offset="0%" stop-color="#F2EDEA"/>
-            <stop offset="100%" stop-color="#cfc5c0"/>
-          </linearGradient>
+          <pattern id="marginNextBtnImg" patternUnits="userSpaceOnUse" x="0" y="0" width="54" height="44">
+            <image href="images/others/footer_bg.jpg" x="0" y="0" width="54" height="44" preserveAspectRatio="xMidYMid slice"/>
+          </pattern>
         </defs>
-        <path d="M35 11 Q37 11 38 12.3 L47 20 Q49 22 47 24 L38 31.7 Q37 33 35 33 L34 33 Q34 33 34 31 L34 28.5 L7 28.5 Q4 28.5 4 25.5 L4 18.5 Q4 15.5 7 15.5 L34 15.5 L34 12.8 Q34 11 35 11 Z" fill="url(#marginNextBtnGrad)"/>
+        <path d="M35 11 Q37 11 38 12.3 L47 20 Q49 22 47 24 L38 31.7 Q37 33 35 33 L34 33 Q34 33 34 31 L34 28.5 L7 28.5 Q4 28.5 4 25.5 L4 18.5 Q4 15.5 7 15.5 L34 15.5 L34 12.8 Q34 11 35 11 Z" fill="url(#marginNextBtnImg)"/>
       </svg>
     </button>
   </div>
@@ -1266,12 +1264,11 @@
   <button type="button" class="sidebar-minimize-btn" id="sidebarMinimizeBtn" aria-label="Hide menu">
     <svg xmlns="http://www.w3.org/2000/svg" width="34" height="30" viewBox="0 0 34 30">
       <defs>
-        <linearGradient id="minimizeBtnGrad" x1="10%" y1="0%" x2="90%" y2="100%">
-          <stop offset="0%" stop-color="#ffffff"/>
-          <stop offset="100%" stop-color="#e4e4e4"/>
-        </linearGradient>
+        <pattern id="minimizeBtnImg" patternUnits="userSpaceOnUse" x="0" y="0" width="34" height="30">
+          <image href="images/others/footer_bg.jpg" x="0" y="0" width="34" height="30" preserveAspectRatio="xMidYMid slice"/>
+        </pattern>
       </defs>
-      <rect x="4" y="3" width="26" height="24" rx="5" fill="url(#minimizeBtnGrad)" stroke="#d5d5d5" stroke-width="1"/>
+      <rect x="4" y="3" width="26" height="24" rx="5" fill="url(#minimizeBtnImg)" stroke="#d5d5d5" stroke-width="1"/>
       <line x1="13" y1="5.5" x2="13" y2="24.5" stroke="#c8c8c8" stroke-width="1.5"/>
     </svg>
   </button>
@@ -2226,7 +2223,7 @@
 
       view.innerHTML =
         '<button type="button" class="margin-nav-collapse-handle" id="'+slug+'NavCollapseHandle" aria-label="Hide chapter navigation">'
-          +'<svg xmlns="http://www.w3.org/2000/svg" width="52" height="12" viewBox="0 0 52 12"><rect x="1" y="1" width="50" height="10" rx="5" fill="#FFFCFB"/></svg>'
+          +'<svg xmlns="http://www.w3.org/2000/svg" width="52" height="12" viewBox="0 0 52 12"><defs><pattern id="'+slug+'NavCollapseImg" patternUnits="userSpaceOnUse" x="0" y="0" width="52" height="12"><image href="images/others/footer_bg.jpg" x="0" y="0" width="52" height="12" preserveAspectRatio="xMidYMid slice"/></pattern></defs><rect x="1" y="1" width="50" height="10" rx="5" fill="url(#'+slug+'NavCollapseImg)"/></svg>'
         +'</button>'
         +'<div class="margin-nav-strip" id="'+slug+'NavStrip"><div class="margin-nav-strip-content">'
           +'<div class="margin-nav-inner" id="'+slug+'NavInner">'+navButtonsHtml+'</div>'
