@@ -305,7 +305,7 @@
       position:fixed; top:1rem; left:195px; z-index:85;
       width:34px; height:34px;
       display:flex; align-items:center; justify-content:center;
-      background:none; border:none; cursor:pointer; padding:0;
+      background:none; border:none; cursor:ew-resize; padding:0;
       filter:drop-shadow(0 3px 6px rgba(60,70,90,.3));
       transition:left .3s ease, top .3s ease, transform .12s ease;
       animation:sidebarTogglePop 10s ease-in-out infinite;
@@ -1001,7 +1001,7 @@
       display:none;
       position:fixed; top:62px; left:50%;
       width:36px; height:12px;
-      background:none; border:none; cursor:pointer; padding:0;
+      background:none; border:none; cursor:ns-resize; padding:0;
       filter:drop-shadow(0 3px 6px rgba(60,70,90,.3));
       z-index:86;
       transition:top .3s ease, transform .12s ease;
@@ -2354,7 +2354,7 @@
 
       view.innerHTML =
         '<button type="button" class="margin-nav-collapse-handle" id="'+slug+'NavCollapseHandle" aria-label="Hide chapter navigation">'
-          +'<svg xmlns="http://www.w3.org/2000/svg" width="36" height="12" viewBox="0 0 36 12"><defs><pattern id="'+slug+'NavCollapseImg" patternUnits="userSpaceOnUse" x="0" y="0" width="36" height="12"><image href="images/others/footer_bg.jpg" x="0" y="0" width="36" height="12" preserveAspectRatio="xMidYMid slice"/></pattern></defs><rect x="1" y="1" width="34" height="10" rx="5" fill="url(#'+slug+'NavCollapseImg)" stroke="#d5d5d5" stroke-width="1"/></svg>'
+          +'<svg xmlns="http://www.w3.org/2000/svg" width="36" height="12" viewBox="0 0 36 12"><defs><pattern id="'+slug+'NavCollapseImg" patternUnits="userSpaceOnUse" x="0" y="0" width="36" height="12"><image href="images/others/footer_bg.jpg" x="0" y="0" width="36" height="12" preserveAspectRatio="xMidYMid slice"/></pattern></defs><rect x="1" y="1" width="34" height="10" rx="5" fill="url(#'+slug+'NavCollapseImg)" stroke="#d5d5d5" stroke-width="1"/><line x1="12" y1="6" x2="24" y2="6" stroke="#000" stroke-width="1.2" stroke-linecap="round"/></svg>'
         +'</button>'
         +'<div class="margin-nav-strip" id="'+slug+'NavStrip"><div class="margin-nav-strip-content">'
           +'<button type="button" class="margin-nav-scroll-btn margin-nav-scroll-left" id="'+slug+'NavScrollLeft" aria-label="Scroll chapters left"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>'
