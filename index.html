@@ -913,12 +913,15 @@
       padding:0.9rem 5rem 0.9rem 3rem; /* right padding reserves guaranteed clearance for the language menu (32px circle + 24px offset + 24px gap = 80px), so the button row can never reach it regardless of screen width */
     }
     /* This wrapper mirrors .margin-slide-inner exactly (same max-width,
-       same margin:0 auto centering) — it's what actually makes the
-       button row land on the same left/right edges as the slide
-       content below it, using the identical formula rather than a
-       guessed pixel offset. */
+       same margin:0 auto centering) — a plain centered max-width, the
+       same technique every other page on the site uses (.about-inner,
+       .hero-new-inner, .new-section-inner all share this 996px value),
+       so the button row lands on the same left/right edges as the
+       slide content below it at any screen size and regardless of
+       whether the sidebar is open or collapsed — no JS measurement
+       needed. */
     .margin-nav-strip-content{
-      max-width:1400px; margin:0 auto; width:100%;
+      max-width:996px; margin:0 auto; width:100%;
       display:flex; align-items:center; gap:.75rem;
     }
     .margin-nav-inner{
@@ -1057,7 +1060,11 @@
     .margin-slide.margin-slide-compact{
       min-height:0; padding-bottom:1.75rem;
     }
-    .margin-slide-inner{ width:100%; }
+    /* Same static centered max-width as .margin-nav-strip-content and
+       every other page's content wrapper (.about-inner etc.) — content
+       always lands in the same place regardless of viewport size or
+       sidebar state, with no JS involved. */
+    .margin-slide-inner{ width:100%; max-width:996px; margin:0 auto; }
 
     /* ----------------------------------------------------------------
        SECTION — each chapter's own title, e.g. "Overview", "Team",
@@ -1149,7 +1156,7 @@
 
     /* Full-width layout — image spans the whole slide, text below it
        (used when a picture is the main content, not a side element). */
-    .margin-slide-full-image{ max-width:1400px; margin:0 0 2rem; }
+    .margin-slide-full-image{ max-width:996px; margin:0 0 2rem; }
     .margin-slide-full-image img{ width:100%; max-height:60vh; object-fit:cover; border-radius:.75rem; display:block; }
 
     /* ----------------------------------------------------------------
@@ -1166,6 +1173,21 @@
     .margin-list li{ margin-bottom:.6rem; }
     .margin-item-list li{ margin-bottom:2rem; }
     .margin-item-list .margin-desc-text{ margin:.5rem 0 0; }
+
+    /* Used UXR Method / Deliverable on the landing slide's info row —
+       scoped separately from the general .margin-list above (used all
+       over the rest of a project's body content) so this
+       text-transform only ever touches these two fields, never any
+       other list on the page. Matches .margin-info-row4-col p's type
+       size/color so the list reads as part of the same row whether the
+       field is a paragraph or a list. */
+    .margin-info-list{
+      font-family:var(--font-serif); font-size:1.6rem; line-height:1.6;
+      color:#000; max-width:none; margin:0; padding-left:1.4rem;
+      text-transform:capitalize;
+    }
+    p.margin-info-list{ padding-left:0; }
+    .margin-info-list li{ margin-bottom:.4rem; }
 
     /* Auto-generated outline (from .item()/.subsection() in
        createProject()) — items in the section's own font size, their
@@ -1230,9 +1252,21 @@
       width:100%; height:100%;
       object-fit:contain; display:block;
     }
+    /* Column widths hug their own content (max-content) instead of
+       splitting the row into four equal-width slots. With equal 1fr
+       columns, a short value like "Solo" or "1 week" left a lot of
+       unused space inside its own column before the next column even
+       started — on top of the actual 2.5rem gap — so the visual gap
+       after short fields (Team, Duration) looked much bigger than the
+       gap after fuller ones (Used UXR Method, Deliverable), even
+       though the CSS gap was identical throughout. With max-content
+       columns, that leftover space disappears and 2.5rem is the whole
+       gap between every column, so all three gaps now read the same
+       width regardless of how long each field's content is. */
     .margin-info-row4{
-      display:grid; grid-template-columns:repeat(4,1fr); gap:2.5rem;
+      display:grid; grid-template-columns:repeat(4,max-content); gap:2.5rem;
     }
+    .margin-info-row4-col{ max-width:220px; }
     .margin-info-row4-col p{
       font-family:var(--font-serif); font-size:1.6rem; line-height:1.6;
       font-weight:400; color:#000; margin:0 0 1rem;
@@ -1240,6 +1274,7 @@
     }
     @media(max-width:900px){
       .margin-info-row4{ grid-template-columns:1fr 1fr; gap:1.5rem 2rem; }
+      .margin-info-row4-col{ max-width:none; }
     }
     @media(max-width:640px){
       .margin-info-row4{ grid-template-columns:1fr; gap:1.5rem; }
@@ -2093,7 +2128,7 @@
       .team('Solo')
       .duration('1 week')
       .uxrMethod(['Guerrilla interview','Somesthetic roleplaying','Questionnaire'])
-      .deliverable('working prototype, presentation')
+      .deliverable(['Working prototype','Presentation'])
       .section('overview','Overview','Study Context')
         .linkTo('landing')
         .compact()
@@ -2138,7 +2173,7 @@
       .team('Write team members here.')
       .duration('Write duration here.')
       .uxrMethod(['Write method one here','Write method two here','Write method three here'])
-      .deliverable('write the deliverable here')
+      .deliverable(['Write the deliverable here'])
       .section('overview','Overview')
         .paragraph('Project overview here — what this project is, the problem it addresses, and the high-level approach, in a few sentences.')
       .section('team','Team')
@@ -2215,15 +2250,24 @@
        CSS classes (all scoped under .margin-info-row4-*), so changes
        here can only ever affect project description pages.
        ================================================================ */
+    /* Renders Used UXR Method and Deliverable the same way: a real
+       bulleted list (.margin-info-list) when the field is an array,
+       falling back to a single paragraph for old-style plain-string
+       data so nothing breaks if a project hasn't been updated yet.
+       .margin-info-list items are title-cased purely in CSS
+       (text-transform:capitalize — see the CSS block), so every item
+       reads "Like This" regardless of how it was typed in the data. */
+    function renderInfoList(value){
+      return Array.isArray(value)
+        ? '<ul class="margin-list margin-info-list">'+value.map(function(m){ return '<li>'+m+'</li>'; }).join('')+'</ul>'
+        : '<p class="margin-info-list">'+(value||'')+'</p>';
+    }
     function renderProjectInfoRow(data){
-      const uxrMethodHtml=Array.isArray(data.uxrMethod)
-        ? '<ul class="margin-list">'+data.uxrMethod.map(function(m){ return '<li>'+m+'</li>'; }).join('')+'</ul>'
-        : '<p>'+(data.uxrMethod||'')+'</p>';
       const items=[
         {label:'Team',html:'<p>'+(data.team||'')+'</p>'},
         {label:'Duration',html:'<p>'+(data.duration||'')+'</p>'},
-        {label:'Used UXR Method',html:uxrMethodHtml},
-        {label:'Deliverable',html:'<p>'+(data.deliverable||'')+'</p>'}
+        {label:'Used UXR Method',html:renderInfoList(data.uxrMethod)},
+        {label:'Deliverable',html:renderInfoList(data.deliverable)}
       ];
       return '<div class="margin-info-row4">'+items.map(function(it){
         return '<div class="margin-info-row4-col"><h3 class="margin-subsection-title">'+it.label+'</h3>'+it.html+'</div>';
@@ -2395,46 +2439,11 @@
     });
 
     /* Every slide's content — title, body text, image+text layout, the
-       info row — should sit between two exact vertical lines: the
-       first button's ("Overview") left edge, and the last button's
-       ("Personal Reflections", or whichever chapter is last) right
-       edge. These are real viewport coordinates, not a single
-       calculated width — a centered max-width doesn't work here,
-       since centering a smaller box inside a wider parent shifts its
-       left edge inward too, throwing off exactly where the right edge
-       lands. Instead, each .margin-slide-inner gets an explicit
-       marginLeft (to start exactly at the first button's left edge)
-       and an explicit width (to end exactly at the last button's right
-       edge), computed fresh against its own parent .margin-slide's
-       padding box — so this is correct regardless of sidebar state,
-       viewport size, chapter count, or language. */
-    function syncProjectContentWidth(key){
-      const stripContent=document.querySelector('#'+key+'NavStrip .margin-nav-strip-content');
-      const view=document.getElementById(key+'ProjectView');
-      if(!stripContent||!view)return;
-      const buttons=stripContent.querySelectorAll('.margin-nav-btn');
-      if(!buttons.length)return;
-      const pointA=buttons[0].getBoundingClientRect().left;
-      const pointB=buttons[buttons.length-1].getBoundingClientRect().right;
-      const targetWidth=pointB-pointA;
-      if(targetWidth<=0)return;
-      view.querySelectorAll('.margin-slide-inner').forEach(function(inner){
-        const slide=inner.closest('.margin-slide');
-        if(!slide)return;
-        const slidePaddingLeft=parseFloat(getComputedStyle(slide).paddingLeft)||0;
-        const slideContentLeft=slide.getBoundingClientRect().left+slidePaddingLeft;
-        inner.style.marginLeft=Math.round(pointA-slideContentLeft)+'px';
-        inner.style.width=Math.round(targetWidth)+'px';
-      });
-    }
-    window.__syncProjectContentWidth=syncProjectContentWidth;
-    window.addEventListener('resize',function(){
-      if(!document.body.classList.contains('margin-view-active'))return;
-      Object.keys(PROJECT_DETAIL_DATA).forEach(function(key){
-        const view=document.getElementById(key+'ProjectView');
-        if(view&&view.classList.contains('active'))syncProjectContentWidth(key);
-      });
-    });
+       info row — sits inside a plain centered max-width:996px column
+       (.margin-slide-inner, see CSS), the same technique every other
+       page on the site already uses. That alone keeps it landing in
+       the same place regardless of sidebar state, viewport size,
+       chapter count, or language, with no JS measurement required. */
 
     function tr(key){
       const dict=TRANSLATIONS[currentLang]||TRANSLATIONS.en;
@@ -2729,9 +2738,6 @@
           journeyMap.camera.x=journeyMap.camera.tx;
           journeyMap.camera.y=journeyMap.camera.ty;
         });});
-      }
-      if(Object.prototype.hasOwnProperty.call(PROJECT_DETAIL_DATA,view)&&typeof window.__syncProjectContentWidth==='function'){
-        requestAnimationFrame(()=>requestAnimationFrame(()=>window.__syncProjectContentWidth(view)));
       }
       if(!opts.silent){
         requestAnimationFrame(function(){
