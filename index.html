@@ -1032,6 +1032,14 @@
       padding:1.75rem 3rem 5rem;
       scroll-margin-top:100px; /* clears the sticky .margin-nav-strip so a jumped-to chapter's title isn't hidden behind it */
     }
+    /* Compact slides (via .compact() in createProject()) size to their
+       actual content instead of forcing a full screen's worth of
+       height — for short slides meant to sit close to their
+       neighbors, e.g. a short "Research Problem" question slide
+       between two others. */
+    .margin-slide.margin-slide-compact{
+      min-height:0; padding-bottom:1.75rem;
+    }
     .margin-slide-inner{ width:100%; }
 
     /* ----------------------------------------------------------------
@@ -1064,12 +1072,21 @@
        chapter's .margin-slide-body wherever you want one.
        ---------------------------------------------------------------- */
     .margin-subsection-title{
-      font-family:'Lora',serif; font-weight:700;
-      font-size:1.5rem;             /* <-- SUBSECTION title size */
+      font-family:var(--font-serif); font-weight:400;
+      font-size:33px;                /* <-- SUBSECTION title size (matches "Education") */
       color:#2B3752;                /* <-- SUBSECTION title color */
       margin:1.75rem 0 .75rem;
     }
     .margin-subsection-title:first-child{ margin-top:0; }
+    /* Description text matching the About page's paragraph style
+       exactly — used by {type:'subheading'} content blocks (a
+       heading + description pair inside a chapter body), distinct
+       from the smaller default .margin-slide-body p styling. */
+    .margin-desc-text{
+      font-family:var(--font-serif); font-size:1.6rem; line-height:1.6;
+      font-weight:400; color:#000; margin:0 0 1.25rem;
+      text-align:justify; text-justify:inter-word;
+    }
 
     /* ----------------------------------------------------------------
        CONTENT — the actual paragraph text of each chapter (what you
@@ -1130,6 +1147,8 @@
       max-width:56rem; margin:0 0 1.25rem; padding-left:1.4rem;
     }
     .margin-list li{ margin-bottom:.6rem; }
+    .margin-item-list li{ margin-bottom:2rem; }
+    .margin-item-list .margin-desc-text{ margin:.5rem 0 0; }
 
     /* Auto-generated outline (from .item()/.subsection() in
        createProject()) — items in the section's own font size, their
@@ -1198,12 +1217,9 @@
       display:grid; grid-template-columns:repeat(4,1fr); gap:2.5rem;
     }
     .margin-info-row4-col p{
-      font-family:var(--font-serif); font-size:1.15rem; line-height:1.6;
-      color:#000; margin:0 0 1rem;
-    }
-    .margin-info-row{
-      font-family:var(--font-serif); font-size:1.05rem; line-height:1.8;
-      color:#000;
+      font-family:var(--font-serif); font-size:1.6rem; line-height:1.6;
+      font-weight:400; color:#000; margin:0 0 1rem;
+      text-align:justify; text-justify:inter-word;
     }
     @media(max-width:900px){
       .margin-info-row4{ grid-template-columns:1fr 1fr; gap:1.5rem 2rem; }
@@ -1795,10 +1811,10 @@
  
     const WORK_CATEGORY='ux';
     const PROJECTS=[
+      {id:10,cat:'ux',meta:'Accessibility<br>Interview &middot; Somaesthetics',img:'images/projects/cover.jpg',imgAlt:'Preview image of Project M.A.R.G.I.N.',links:[],projectSlug:'margin'},
+      {id:2,cat:'ux',meta:'Education Technology<br>Participatory Design &middot; Design Fiction &middot; Interview',img:'images/projects/unil.jpg',imgAlt:'Preview image of hybrid class research project',links:[],projectSlug:'edtech'},
       {id:3,cat:'ux',meta:'Multimodal Telecommunication<br>Interview &middot; Survey',img:'images/projects/VRvsRobovsZoomfinal.png',imgAlt:'Preview image of remote communication project',imgFit:'contain',links:[]},
       {id:1,cat:'ux',meta:'Coming Soon',img:'images/projects/vrle_classroom.jpeg',imgAlt:'Preview image of VR learning environment project',links:[]},
-      {id:2,cat:'ux',meta:'Education Technology<br>Participatory Design &middot; Design Fiction &middot; Interview',img:'images/projects/unil.jpg',imgAlt:'Preview image of hybrid class research project',links:[]},
-      {id:10,cat:'ux',meta:'Accessibility<br>Interview &middot; Somaesthetics',img:'images/projects/cover.jpg',imgAlt:'Preview image of Project M.A.R.G.I.N.',links:[],projectSlug:'margin'},
       {id:4,cat:'interaction',meta:'EPFL',img:'images/projects/protest_project.png',imgAlt:'Augmented City interaction design',links:[]},
       {id:5,cat:'interaction',slider:true,meta:'Haptic Perception &middot; A/B Testing',img:'images/projects/haptic_ericsson.png',imgAlt:'Preview image of haptic systems project',links:[{key:'lbl.code',href:'#'}]},
       {id:6,cat:'interaction',meta:'KTH',img:'images/projects/teach_figma.png',imgAlt:'Preview image of remote learning UX project',links:[]},
@@ -1972,14 +1988,39 @@
         deliverable(text){ data.deliverable=text; return api; },
         uxrMethod(text){ data.uxrMethod=text; return api; },
         logistics(label,value){ data.logistics.push({label,value}); return api; },
+        team(text){ data.team=text; return api; },
+        duration(text){ data.duration=text; return api; },
 
         // Slide 1 of a chapter — the section itself. Starting a new
         // section resets items/subsections tracking.
         section(id,label,title){
-          currentSection={ id, label, title: title||label, body:[], items:[], subsections:[] };
+          currentSection={ id, label, title: title||label, body:[], items:[], subsections:[], navTarget:null };
           data.sections.push(currentSection);
           currentItem=null;
           currentTarget=currentSection;
+          return api;
+        },
+
+        // Overrides where this section's NAV BUTTON jumps to, without
+        // changing the section's own slide (it still renders normally,
+        // in its usual position in the scroll order — just unreachable
+        // by clicking its own button, since that now points elsewhere).
+        // 'landing' jumps to the project's landing slide; any other
+        // value is treated as another section's id.
+        linkTo(target){
+          requireSection('linkTo');
+          currentSection.navTarget=target;
+          return api;
+        },
+
+        // Sizes the current slide to its actual content instead of
+        // forcing it to fill a full screen — for short slides meant to
+        // sit close to their neighbors rather than each being padded
+        // out with empty space. Works on whichever is "current" — a
+        // section or a subsection.
+        compact(){
+          requireTarget('compact');
+          currentTarget.compact=true;
           return api;
         },
 
@@ -2013,6 +2054,7 @@
         table(headers,rows){ requireTarget('table'); currentTarget.body.push({type:'table',headers:headers,rows:rows}); return api; },
         stats(items){ requireTarget('stats'); currentTarget.body.push({type:'stats',items:items}); return api; },
         image(src,alt,caption){ requireTarget('image'); currentTarget.body.push({type:'image',src:src,alt:alt||'',caption:caption||''}); return api; },
+        subheading(heading,text){ requireTarget('subheading'); currentTarget.body.push({type:'subheading',heading:heading,text:text||''}); return api; },
 
         build(){
           PROJECT_DETAIL_DATA[slug]=data;
@@ -2031,27 +2073,69 @@
       .title('Project M.A.R.G.I.N.')
       .subtitle('Multimodal Accessible Real-time Graphical Interaction &amp; Navigation for the Visually Impaired')
       .cover('images/projects/margin.jpg')
-      .role('Write your role on this project here.')
-      .deliverable('Write the deliverable here.')
-      .uxrMethod('Write the UX research method(s) used here.')
-      .logistics('Duration','Write duration here')
-      .logistics('Team Members','Write names here')
-      .logistics('Advisor','Write advisor name here')
-      .section('overview','Overview')
-        .paragraph('Write the project overview here — what M.A.R.G.I.N. is, the problem it addresses, and the high-level approach, in a few sentences.')
+      .team('Solo')
+      .duration('1 week')
+      .uxrMethod(['Guerrilla interview','Somesthetic roleplaying','Questionnaire'])
+      .deliverable('working prototype, presentation')
+      .section('overview','Overview','Study Context')
+        .linkTo('landing')
+        .compact()
+        .subheading('Computer-Based Assessment Platforms Have Evolved. Accessibility Has Not','Description here.')
+        .subheading('Existing Accommodations Limit Independence And Efficiency','Description here.')
+        .subheading('The Accessibility Gap Extends Beyond Examinations','Description here.')
+      .section('research-problem','Research Problem')
+        .compact()
+        .paragraph('How can interactive technology support independent, real-time exploration and interpretation of graphical information for blind users?')
+      .section('research-objectives','Research Objectives')
+        .compact()
+        .list([
+          "Understand users' cognitive models, workflows, and accessibility challenges when interpreting graphical information.",
+          'Define the core interaction requirements for a multimodal graph accessibility MVP.',
+          'Identify high-impact technology innovation opportunities for independent, real-time graph accessibility.'
+        ])
       .section('team','Team')
         .paragraph('Write who was on the team here — names, roles, and how the work was divided.')
       .section('strategy','Research Strategy')
-        .paragraph('Write the overall research strategy here — the questions you set out to answer and why you chose this approach.')
+        .paragraph('Overall research strategy here — the questions you set out to answer and why you chose this approach.')
       .section('activities','Research Activities')
         .paragraph('Write what you actually did here — studies run, prototypes built, sessions conducted, etc.')
         .heroImage('images/projects/graph_blind.jpg')
       .section('synthesis','Research Synthesis')
         .paragraph('Write how you pulled the findings together here — patterns, themes, or key insights that emerged.')
       .section('impact','Impact')
-        .paragraph('Write the impact of the work here — what changed as a result, for users, the team, or the product.')
+        .paragraph('Impact of the work here — what changed as a result, for users, the team, or the product.')
       .section('business','Business Opportunity')
-        .paragraph('Write the business case here — market relevance, potential applications, or commercial angle.')
+        .paragraph('Business case here — market relevance, potential applications, or commercial angle.')
+      .section('reflections','Personal Reflections')
+        .paragraph("Write your personal reflections here — what you learned, what you'd do differently, what stayed with you.")
+      .build();
+
+    // Education Technology project — same format as M.A.R.G.I.N. above:
+    // same field set (role/team/duration/uxrMethod/deliverable) and the
+    // same 8 chapters, just with this project's own content.
+    createProject('edtech')
+      .title('EdTech for Novice Programming Learners in Hybrid Collaborative Classes')
+      .subtitle('Investigating design needs of EdTech to facilitate effective learning for novice programming students in hybrid collaborative learning environments.')
+      .cover('images/projects/unil.jpg')
+      .role('Write your role on this project here.')
+      .team('Write team members here.')
+      .duration('Write duration here.')
+      .uxrMethod(['Write method one here','Write method two here','Write method three here'])
+      .deliverable('write the deliverable here')
+      .section('overview','Overview')
+        .paragraph('Project overview here — what this project is, the problem it addresses, and the high-level approach, in a few sentences.')
+      .section('team','Team')
+        .paragraph('Write who was on the team here — names, roles, and how the work was divided.')
+      .section('strategy','Research Strategy')
+        .paragraph('Overall research strategy here — the questions you set out to answer and why you chose this approach.')
+      .section('activities','Research Activities')
+        .paragraph('Write what you actually did here — studies run, prototypes built, sessions conducted, etc.')
+      .section('synthesis','Research Synthesis')
+        .paragraph('Write how you pulled the findings together here — patterns, themes, or key insights that emerged.')
+      .section('impact','Impact')
+        .paragraph('Impact of the work here — what changed as a result, for users, the team, or the product.')
+      .section('business','Business Opportunity')
+        .paragraph('Business case here — market relevance, potential applications, or commercial angle.')
       .section('reflections','Personal Reflections')
         .paragraph("Write your personal reflections here — what you learned, what you'd do differently, what stayed with you.")
       .build();
@@ -2095,6 +2179,9 @@
         case 'image':
           return '<figure class="margin-block-image"><img src="'+block.src+'" alt="'+(block.alt||'')+'" loading="lazy" decoding="async" onerror="this.style.display=\'none\';"/>'
             +(block.caption?'<figcaption>'+block.caption+'</figcaption>':'')+'</figure>';
+        case 'subheading':
+          return '<h3 class="margin-subsection-title">'+(block.heading||'')+'</h3>'
+            +(block.text?'<p class="margin-desc-text">'+block.text+'</p>':'');
         case 'paragraph':
         default:
           return '<p>'+(block.text||'')+'</p>';
@@ -2111,12 +2198,15 @@
        CSS classes (all scoped under .margin-info-row4-*), so changes
        here can only ever affect project description pages.
        ================================================================ */
-    function renderProjectInfoRow(data,logisticsHtml){
+    function renderProjectInfoRow(data){
+      const uxrMethodHtml=Array.isArray(data.uxrMethod)
+        ? '<ul class="margin-list">'+data.uxrMethod.map(function(m){ return '<li>'+m+'</li>'; }).join('')+'</ul>'
+        : '<p>'+(data.uxrMethod||'')+'</p>';
       const items=[
-        {label:'Role',html:'<p>'+(data.role||'')+'</p>'},
-        {label:'Logistics',html:logisticsHtml},
-        {label:'Used UXR Method',html:'<p>'+(data.uxrMethod||'')+'</p>'},
-        {label:'Deliverable',html:'<p><strong>'+(data.deliverable||'')+'</strong></p>'}
+        {label:'Team',html:'<p>'+(data.team||'')+'</p>'},
+        {label:'Duration',html:'<p>'+(data.duration||'')+'</p>'},
+        {label:'Used UXR Method',html:uxrMethodHtml},
+        {label:'Deliverable',html:'<p>'+(data.deliverable||'')+'</p>'}
       ];
       return '<div class="margin-info-row4">'+items.map(function(it){
         return '<div class="margin-info-row4-col"><h3 class="margin-subsection-title">'+it.label+'</h3>'+it.html+'</div>';
@@ -2143,7 +2233,6 @@
         return;
       }
       const sections=Array.isArray(data.sections)?data.sections:[];
-      const logistics=Array.isArray(data.logistics)?data.logistics:[];
       if(!sections.length){
         console.warn('renderProjectDetail: "'+(data.name||viewId)+'" has no sections defined');
       }
@@ -2151,13 +2240,8 @@
       const navButtonsHtml=sections.map(function(s,i){
         const id=s&&s.id?s.id:'section-'+i;
         const label=s&&s.label?s.label:'Untitled';
-        return '<button type="button" class="margin-nav-btn'+(i===0?' active':'')+'" data-jump="'+slug+'-'+id+'">'+label+'</button>';
-      }).join('');
-
-      const logisticsHtml=logistics.map(function(l){
-        const label=l&&l.label?l.label:'';
-        const value=l&&l.value?l.value:'';
-        return '<div class="margin-info-row"><strong>'+label+':</strong> '+value+'</div>';
+        const jumpTarget=(s&&s.navTarget)?(s.navTarget==='landing'?'landing':s.navTarget):id;
+        return '<button type="button" class="margin-nav-btn'+(i===0?' active':'')+'" data-jump="'+slug+'-'+jumpTarget+'">'+label+'</button>';
       }).join('');
 
       // Renders the outline list on a section's own slide, if it has
@@ -2181,8 +2265,37 @@
       // One slide's worth of markup — used for both a section's own
       // slide and each of its subsection slides (same shape, so the
       // same renderer works for both).
-      function renderSlideSection(slideId,title,body,heroImage,extraHtml,heroImagePosition){
-        const bodyHtml=body.map(renderContentBlock).join('')+(extraHtml||'');
+      /* Renders a section's full body array, with one special case:
+         consecutive {type:'subheading'} blocks (from .subheading())
+         get grouped into ONE shared bulleted list — bold item text,
+         description underneath each, matching the reference bullet
+         style — rather than each becoming its own separate heading
+         element. Any other block type (paragraph/list/table/etc.)
+         still renders individually via renderContentBlock as before. */
+      function renderBody(body){
+        const out=[];
+        let i=0;
+        while(i<body.length){
+          const block=body[i];
+          if(block && typeof block==='object' && block.type==='subheading'){
+            const group=[];
+            while(i<body.length && body[i] && typeof body[i]==='object' && body[i].type==='subheading'){
+              group.push(body[i]);
+              i++;
+            }
+            out.push('<ul class="margin-list margin-item-list">'+group.map(function(b){
+              return '<li><strong>'+(b.heading||'')+'</strong>'+(b.text?'<div class="margin-desc-text">'+b.text+'</div>':'')+'</li>';
+            }).join('')+'</ul>');
+          } else {
+            out.push(renderContentBlock(block));
+            i++;
+          }
+        }
+        return out.join('');
+      }
+
+      function renderSlideSection(slideId,title,body,heroImage,extraHtml,heroImagePosition,compact){
+        const bodyHtml=renderBody(body)+(extraHtml||'');
         const position=heroImagePosition||'right'; // 'right' matches the original, only-ever behavior — existing data with no position set keeps rendering exactly as before
         let bodyBlock;
         if(!heroImage){
@@ -2194,7 +2307,8 @@
           const leftClass=position==='left'?' image-left':'';
           bodyBlock='<div class="margin-slide-cols'+leftClass+'"><div class="margin-slide-body">'+bodyHtml+'</div><img src="'+heroImage+'" alt="" loading="lazy" decoding="async" onerror="this.style.display=\'none\';"/></div>';
         }
-        return '<section class="margin-slide" id="'+slideId+'"><div class="margin-slide-inner">'
+        const compactClass=compact?' margin-slide-compact':'';
+        return '<section class="margin-slide'+compactClass+'" id="'+slideId+'"><div class="margin-slide-inner">'
           +'<h2 class="margin-slide-title">'+title+'</h2>'+bodyBlock
           +'</div></section>';
       }
@@ -2204,7 +2318,7 @@
         const title=s&&s.title?s.title:(s&&s.label?s.label:'Untitled');
         const body=Array.isArray(s&&s.body)?s.body:[];
         const outlineHtml=renderOutline(s&&s.items,slug);
-        const ownSlide=renderSlideSection(slug+'-'+id,title,body,s&&s.image,outlineHtml,s&&s.imagePosition);
+        const ownSlide=renderSlideSection(slug+'-'+id,title,body,s&&s.image,outlineHtml,s&&s.imagePosition,s&&s.compact);
 
         // Each .subsection() becomes its own real slide (slide 2, 3,
         // 4...), in the order it was added, right after this
@@ -2215,7 +2329,7 @@
           const subId=sub&&sub.id?sub.id:id+'-sub-'+j;
           const subTitle=sub&&sub.title?sub.title:(sub&&sub.label?sub.label:'Untitled');
           const subBody=Array.isArray(sub&&sub.body)?sub.body:[];
-          return renderSlideSection(slug+'-'+subId,subTitle,subBody,sub&&sub.image,'',sub&&sub.imagePosition);
+          return renderSlideSection(slug+'-'+subId,subTitle,subBody,sub&&sub.image,'',sub&&sub.imagePosition,sub&&sub.compact);
         }).join('');
 
         return ownSlide+subSlides;
@@ -2232,7 +2346,7 @@
           +'<h1 class="margin-project-name">'+(data.name||'Untitled Project')+'</h1>'
           +'<p class="margin-project-subtitle">'+(data.subtitle||'')+'</p>'
           +(data.coverImage?'<div class="margin-landing-photo"><img src="'+data.coverImage+'" alt="" loading="lazy" decoding="async" onerror="this.style.display=\'none\';"/></div>':'')
-          +renderProjectInfoRow(data,logisticsHtml)
+          +renderProjectInfoRow(data)
         +'</div></section>'
         +slidesHtml;
     }
