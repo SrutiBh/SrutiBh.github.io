@@ -317,6 +317,28 @@
     body.sidebar-collapsed .sidebar-minimize-btn svg{ transform:scaleX(-1); }
     .sidebar-minimize-btn:hover{ transform:scale(1.06); }
     .sidebar-minimize-btn:active{ transform:scale(0.94); }
+
+    /* Back-to-portfolio / next-project buttons — shown only while a
+       project description page is open. Same size, gradient, stroke,
+       and drop-shadow as .sidebar-minimize-btn above (same "white 3D
+       toggle" style), just with arrow icons instead of the rect+line
+       icon. Positioned at the same bottom offset as .sidebar-social
+       (same row) and the same right offset as .site-lang-topright
+       (same column). */
+    .margin-project-nav-buttons{
+      position:fixed; bottom:2.5rem; right:1.5rem; z-index:85;
+      display:none; gap:12px;
+    }
+    body.margin-view-active .margin-project-nav-buttons{ display:flex; }
+    .margin-project-nav-btn{
+      width:54px; height:44px;
+      display:flex; align-items:center; justify-content:center;
+      background:none; border:none; cursor:pointer; padding:0;
+      filter:drop-shadow(0 3px 6px rgba(60,70,90,.3));
+      transition:transform .12s ease;
+    }
+    .margin-project-nav-btn:hover{ transform:scale(1.06); }
+    .margin-project-nav-btn:active{ transform:scale(0.94); }
     .sidebar-top{ display:flex; flex-direction:column; gap:0; }
     .sidebar-name{ position:relative; display:inline-block; text-align:left; background:none; border:none; padding:0; cursor:pointer; font:inherit; }
     .sidebar-name-text{ font-family:var(--font-serif); font-weight:550; font-size:36px; line-height:1.25; color:#000; }
@@ -1203,6 +1225,31 @@
  
   <a href="#" class="skip-link" id="skipLink" data-i18n="a11y.skiplink">Skip to main content</a>
  
+  <div class="margin-project-nav-buttons">
+    <button type="button" class="margin-project-nav-btn" id="marginBackToWorkBtn" aria-label="Back to portfolio">
+      <svg xmlns="http://www.w3.org/2000/svg" width="54" height="44" viewBox="0 0 54 44">
+        <defs>
+          <linearGradient id="marginBackBtnGrad" x1="10%" y1="0%" x2="90%" y2="100%">
+            <stop offset="0%" stop-color="#ffffff"/>
+            <stop offset="100%" stop-color="#e4e4e4"/>
+          </linearGradient>
+        </defs>
+        <path d="M19 11 Q17 11 16 12.3 L7 20 Q5 22 7 24 L16 31.7 Q17 33 19 33 L20 33 Q20 33 20 31 L20 28.5 L47 28.5 Q50 28.5 50 25.5 L50 18.5 Q50 15.5 47 15.5 L20 15.5 L20 12.8 Q20 11 19 11 Z" fill="url(#marginBackBtnGrad)" stroke="#d5d5d5" stroke-width="1" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <button type="button" class="margin-project-nav-btn" id="marginNextProjectBtn" aria-label="Next project">
+      <svg xmlns="http://www.w3.org/2000/svg" width="54" height="44" viewBox="0 0 54 44">
+        <defs>
+          <linearGradient id="marginNextBtnGrad" x1="10%" y1="0%" x2="90%" y2="100%">
+            <stop offset="0%" stop-color="#ffffff"/>
+            <stop offset="100%" stop-color="#e4e4e4"/>
+          </linearGradient>
+        </defs>
+        <path d="M35 11 Q37 11 38 12.3 L47 20 Q49 22 47 24 L38 31.7 Q37 33 35 33 L34 33 Q34 33 34 31 L34 28.5 L7 28.5 Q4 28.5 4 25.5 L4 18.5 Q4 15.5 7 15.5 L34 15.5 L34 12.8 Q34 11 35 11 Z" fill="url(#marginNextBtnGrad)" stroke="#d5d5d5" stroke-width="1" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+
   <div class="site-lang-topright" id="siteLangTopright">
     <div class="lang-dd sidebar-lang-dd">
       <button type="button" class="lang-btn" aria-haspopup="true" aria-expanded="false"><svg class="chev" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg><span class="lang-current">En</span></button>
@@ -2355,6 +2402,29 @@
         document.body.classList.toggle('sidebar-collapsed');
       });
     }
+
+    /* Back-to-portfolio / next-project buttons — only relevant while a
+       project page is open (see .margin-project-nav-buttons CSS,
+       hidden otherwise). "Next" cycles through PROJECT_DETAIL_DATA in
+       object-key order and wraps around at the end — with only one
+       project that just stays on itself, which is fine as a default
+       until a second project exists to cycle to. */
+    const marginBackToWorkBtn=document.getElementById('marginBackToWorkBtn');
+    if(marginBackToWorkBtn)marginBackToWorkBtn.addEventListener('click',function(){
+      setHash('portfolio');
+      showView('portfolio');
+    });
+    const marginNextProjectBtn=document.getElementById('marginNextProjectBtn');
+    if(marginNextProjectBtn)marginNextProjectBtn.addEventListener('click',function(){
+      const activeProjectEl=document.querySelector('.project-detail-view.active');
+      const currentKey=activeProjectEl?activeProjectEl.dataset.view:null;
+      const keys=Object.keys(PROJECT_DETAIL_DATA);
+      if(!currentKey||!keys.length)return;
+      const idx=keys.indexOf(currentKey);
+      const nextKey=keys[(idx+1)%keys.length];
+      setHash(nextKey);
+      showView(nextKey);
+    });
 
     /* ============================================================
        PROJECT M.A.R.G.I.N. — jump-nav + back-link wiring. The actual
