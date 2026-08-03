@@ -1000,15 +1000,19 @@
     .margin-nav-collapse-handle{
       display:none;
       position:fixed; top:62px; left:50%;
-      transform:translateX(-50%);
       width:36px; height:12px;
-      background:url('images/others/footer_bg.jpg') center/cover no-repeat; border:none; cursor:pointer;
-      box-shadow:
-        3px 3px 7px rgba(60,70,90,.35),
-        -3px -3px 7px rgba(255,255,255,.85);
+      background:none; border:none; cursor:pointer; padding:0;
+      filter:drop-shadow(0 3px 6px rgba(60,70,90,.3));
       z-index:86;
-      transition:top .3s ease;
+      transition:top .3s ease, transform .12s ease;
     }
+    /* Same "white 3D toggle" treatment as .sidebar-minimize-btn: a
+       drop-shadow filter on the button (not a box-shadow on the shape),
+       plus matching hover/active scale feedback. translateX keeps the
+       handle horizontally centered under both states. */
+    .margin-nav-collapse-handle{ transform:translateX(-50%); }
+    .margin-nav-collapse-handle:hover{ transform:translateX(-50%) scale(1.06); }
+    .margin-nav-collapse-handle:active{ transform:translateX(-50%) scale(0.94); }
     body.margin-view-active .margin-nav-collapse-handle{ display:block; }
     .margin-nav-collapse-handle.nav-tucked{ top:0; }
     /* Leaves room at the bottom of the page so the last chapter's
@@ -2350,7 +2354,7 @@
 
       view.innerHTML =
         '<button type="button" class="margin-nav-collapse-handle" id="'+slug+'NavCollapseHandle" aria-label="Hide chapter navigation">'
-          +'<svg xmlns="http://www.w3.org/2000/svg" width="36" height="12" viewBox="0 0 36 12"><defs><pattern id="'+slug+'NavCollapseImg" patternUnits="userSpaceOnUse" x="0" y="0" width="36" height="12"><image href="images/others/footer_bg.jpg" x="0" y="0" width="36" height="12" preserveAspectRatio="xMidYMid slice"/></pattern></defs><rect x="1" y="1" width="34" height="10" rx="5" fill="url(#'+slug+'NavCollapseImg)"/></svg>'
+          +'<svg xmlns="http://www.w3.org/2000/svg" width="36" height="12" viewBox="0 0 36 12"><defs><pattern id="'+slug+'NavCollapseImg" patternUnits="userSpaceOnUse" x="0" y="0" width="36" height="12"><image href="images/others/footer_bg.jpg" x="0" y="0" width="36" height="12" preserveAspectRatio="xMidYMid slice"/></pattern></defs><rect x="1" y="1" width="34" height="10" rx="5" fill="url(#'+slug+'NavCollapseImg)" stroke="#d5d5d5" stroke-width="1"/></svg>'
         +'</button>'
         +'<div class="margin-nav-strip" id="'+slug+'NavStrip"><div class="margin-nav-strip-content">'
           +'<button type="button" class="margin-nav-scroll-btn margin-nav-scroll-left" id="'+slug+'NavScrollLeft" aria-label="Scroll chapters left"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>'
