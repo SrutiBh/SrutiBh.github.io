@@ -334,7 +334,7 @@
       width:70px; height:58px;
       display:flex; align-items:center; justify-content:center;
       background:none; border:none; cursor:pointer; padding:0;
-      filter:drop-shadow(4px 6px 9px rgba(60,70,90,.55)) drop-shadow(-2px -2px 6px rgba(255,255,255,.85));
+      filter:drop-shadow(4px 4px 8px rgba(163,177,198,.7)) drop-shadow(-4px -4px 8px rgba(255,255,255,.9));
       transition:transform .12s ease;
     }
     .margin-project-nav-btn:hover{ transform:scale(1.06); }
@@ -910,7 +910,7 @@
       position:sticky; top:0; z-index:50;
       background-color:#FCF8F8; opacity:1;
       border-bottom:1px solid var(--n-border);
-      padding:0.9rem 3rem;
+      padding:0.9rem 5rem 0.9rem 3rem; /* right padding reserves guaranteed clearance for the language menu (32px circle + 24px offset + 24px gap = 80px), so the button row can never reach it regardless of screen width */
     }
     /* This wrapper mirrors .margin-slide-inner exactly (same max-width,
        same margin:0 auto centering) — it's what actually makes the
@@ -930,13 +930,17 @@
     .margin-nav-inner::-webkit-scrollbar{ display:none; }
     .margin-nav-scroll-btn{
       display:none; align-items:center; justify-content:center;
-      width:26px; height:26px; flex-shrink:0;
-      background:none; border:none; cursor:pointer; padding:0;
+      width:26px; height:26px; flex-shrink:0; border-radius:50%;
+      background:linear-gradient(135deg,#FFFCFB 0%,#ece6e4 100%);
+      box-shadow:2px 2px 5px rgba(163,177,198,.5), -2px -2px 5px rgba(255,255,255,.85);
+      border:none; cursor:pointer; padding:0;
       color:#8a8a8a; transition:color .18s ease, transform .12s ease;
     }
     .margin-nav-scroll-btn.visible{ display:flex; }
     .margin-nav-scroll-btn:hover{ color:#2B3752; }
     .margin-nav-scroll-btn:active{ transform:scale(0.9); }
+    .margin-nav-scroll-left{ margin-right:14px; }
+    .margin-nav-scroll-right{ margin-left:14px; }
 
     /* ----------------------------------------------------------------
        LIQUID-GLASS / NEUMORPHIC NAV BUTTONS — soft, embossed "Button"
@@ -2349,9 +2353,9 @@
           +'<svg xmlns="http://www.w3.org/2000/svg" width="52" height="12" viewBox="0 0 52 12"><defs><pattern id="'+slug+'NavCollapseImg" patternUnits="userSpaceOnUse" x="0" y="0" width="52" height="12"><image href="images/others/footer_bg.jpg" x="0" y="0" width="52" height="12" preserveAspectRatio="xMidYMid slice"/></pattern></defs><rect x="1" y="1" width="50" height="10" rx="5" fill="url(#'+slug+'NavCollapseImg)"/></svg>'
         +'</button>'
         +'<div class="margin-nav-strip" id="'+slug+'NavStrip"><div class="margin-nav-strip-content">'
-          +'<button type="button" class="margin-nav-scroll-btn margin-nav-scroll-left" id="'+slug+'NavScrollLeft" aria-label="Scroll chapters left"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>'
+          +'<button type="button" class="margin-nav-scroll-btn margin-nav-scroll-left" id="'+slug+'NavScrollLeft" aria-label="Scroll chapters left"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>'
           +'<div class="margin-nav-inner" id="'+slug+'NavInner">'+navButtonsHtml+'</div>'
-          +'<button type="button" class="margin-nav-scroll-btn margin-nav-scroll-right" id="'+slug+'NavScrollRight" aria-label="Scroll chapters right"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>'
+          +'<button type="button" class="margin-nav-scroll-btn margin-nav-scroll-right" id="'+slug+'NavScrollRight" aria-label="Scroll chapters right"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>'
         +'</div></div>'
         +'<section class="margin-slide" id="'+slug+'-landing"><div class="margin-slide-inner">'
           +'<h1 class="margin-project-name">'+(data.name||'Untitled Project')+'</h1>'
