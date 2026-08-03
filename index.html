@@ -1298,7 +1298,7 @@
         </pattern>
       </defs>
       <rect x="4" y="3" width="26" height="24" rx="5" fill="url(#minimizeBtnImg)" stroke="#d5d5d5" stroke-width="1"/>
-      <line x1="13" y1="5.5" x2="13" y2="24.5" stroke="#c8c8c8" stroke-width="1.5"/>
+      <line x1="13" y1="5.5" x2="13" y2="24.5" stroke="#000" stroke-width="1"/>
     </svg>
   </button>
 
@@ -2053,10 +2053,10 @@
         // section's own slide, in the order you add them. Must follow
         // an .item() call so the outline on slide 1 can link to it.
         subsection(id,label,title){
-          requireItem('subsection');
+          requireSection('subsection');
           const sub={ id:id, label:label, title:title||label, body:[] };
           currentSection.subsections.push(sub);
-          currentItem.subsectionIds.push({id:id,label:label});
+          if(currentItem)currentItem.subsectionIds.push({id:id,label:label});
           currentTarget=sub;
           return api;
         },
@@ -2096,16 +2096,16 @@
         .subheading('Computer-Based Assessment Platforms Have Evolved. Accessibility Has Not','Description here.')
         .subheading('Existing Accommodations Limit Independence And Efficiency','Description here.')
         .subheading('The Accessibility Gap Extends Beyond Examinations','Description here.')
-      .section('research-problem','Research Problem')
-        .compact()
-        .paragraph('How can interactive technology support independent, real-time exploration and interpretation of graphical information for blind users?')
-      .section('research-objectives','Research Objectives')
-        .compact()
-        .list([
-          "Understand users' cognitive models, workflows, and accessibility challenges when interpreting graphical information.",
-          'Define the core interaction requirements for a multimodal graph accessibility MVP.',
-          'Identify high-impact technology innovation opportunities for independent, real-time graph accessibility.'
-        ])
+        .subsection('problem-statement','Problem Statement')
+          .compact()
+          .paragraph('How can interactive technology support independent, real-time exploration and interpretation of graphical information for blind users?')
+        .subsection('research-objectives','Research Objectives')
+          .compact()
+          .list([
+            "Understand users' cognitive models, workflows, and accessibility challenges when interpreting graphical information.",
+            'Define the core interaction requirements for a multimodal graph accessibility MVP.',
+            'Identify high-impact technology innovation opportunities for independent, real-time graph accessibility.'
+          ])
       .section('team','Team')
         .list(['<strong>Myself</strong>&nbsp;&nbsp;(Planning,&nbsp;&nbsp;recruiting, moderation/interviewing,&nbsp;&nbsp;prompts design, data analysis, MVP design, prototype development, presenting)'])
       .section('strategy','Research Strategy')
