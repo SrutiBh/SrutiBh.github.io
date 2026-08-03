@@ -330,6 +330,15 @@
       display:none; gap:12px;
     }
     body.margin-view-active .margin-project-nav-buttons{ display:flex; }
+    /* Applied by JS (search "pinProjectNavButtons") once the footer
+       scrolls close enough that the fixed position above would start
+       overlapping it. Switches from tracking the viewport to sitting
+       at a fixed point on the page — same clearance above the footer
+       that a project slide's own content already keeps (5rem, see
+       .margin-slide's bottom padding), so the buttons stop moving at
+       exactly the same distance from the footer that ordinary content
+       does everywhere else on the site. */
+    .margin-project-nav-buttons.docked{ position:absolute; bottom:auto; }
     .margin-project-nav-btn{
       width:70px; height:58px;
       display:flex; align-items:center; justify-content:center;
@@ -1185,6 +1194,7 @@
       font-family:var(--font-serif); font-size:1.6rem; line-height:1.6;
       color:#000; max-width:none; margin:0; padding-left:1.4rem;
       text-transform:capitalize;
+      text-align:justify; text-justify:inter-word;
     }
     p.margin-info-list{ padding-left:0; }
     .margin-info-list li{ margin-bottom:.4rem; }
@@ -1263,8 +1273,16 @@
        columns, that leftover space disappears and 2.5rem is the whole
        gap between every column, so all three gaps now read the same
        width regardless of how long each field's content is. */
+    /* justify-content:space-between keeps each column hugging its own
+       content (so the fix above still holds — no leftover space
+       inside a column inflating the gap after it) while spreading any
+       remaining row width out as EXTRA gap distributed equally across
+       all three gaps. That's what makes the row use the full 996px
+       content width — matching every paragraph/list elsewhere on the
+       page — without reintroducing uneven spacing. */
     .margin-info-row4{
       display:grid; grid-template-columns:repeat(4,max-content); gap:2.5rem;
+      justify-content:space-between;
     }
     .margin-info-row4-col{ max-width:220px; }
     .margin-info-row4-col p{
@@ -2565,6 +2583,40 @@
       showView(nextKey);
     });
 
+    /* Keeps the back/next buttons from floating on top of the site
+       footer. While there's still room, they behave exactly as before
+       (position:fixed, pinned to the viewport). Once the footer scrolls
+       close enough that the fixed spot would land on or past it, they
+       switch to a fixed point on the page instead — sitting the same
+       5rem above the footer that a project slide's own bottom padding
+       already keeps (see .margin-slide), so they come to rest at the
+       same clearance from the footer that ordinary page content has
+       everywhere else on the site, rather than overlapping it. */
+    function pinProjectNavButtons(){
+      const el=document.querySelector('.margin-project-nav-buttons');
+      const footer=document.querySelector('.footer-sticky-wrap');
+      if(!el||!footer)return;
+      if(!document.body.classList.contains('margin-view-active')){
+        el.classList.remove('docked');
+        el.style.top='';
+        return;
+      }
+      const gap=80; // 5rem — matches .margin-slide's own bottom padding
+      const elHeight=el.getBoundingClientRect().height;
+      const footerTop=footer.getBoundingClientRect().top;
+      const fixedTop=window.innerHeight-2.5*16-elHeight; // where it currently sits while position:fixed
+      if(footerTop<fixedTop+elHeight+gap-2.5*16){
+        el.classList.add('docked');
+        el.style.top=Math.round(window.scrollY+footerTop-gap-elHeight)+'px';
+      } else {
+        el.classList.remove('docked');
+        el.style.top='';
+      }
+    }
+    window.addEventListener('scroll',pinProjectNavButtons,{passive:true});
+    window.addEventListener('resize',pinProjectNavButtons);
+    window.__pinProjectNavButtons=pinProjectNavButtons;
+
     /* ============================================================
        PROJECT M.A.R.G.I.N. — jump-nav + back-link wiring. The actual
        chapter content lives in the HTML (search "CHAPTER 1" etc.); this
@@ -2738,6 +2790,9 @@
           journeyMap.camera.x=journeyMap.camera.tx;
           journeyMap.camera.y=journeyMap.camera.ty;
         });});
+      }
+      if(typeof pinProjectNavButtons==='function'){
+        requestAnimationFrame(()=>requestAnimationFrame(pinProjectNavButtons));
       }
       if(!opts.silent){
         requestAnimationFrame(function(){
