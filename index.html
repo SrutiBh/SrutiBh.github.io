@@ -1134,6 +1134,10 @@
       font-weight:400; color:#000; margin:0 0 1.25rem;
       text-align:justify; text-justify:inter-word;
     }
+    /* The research question on the landing slide — same .margin-desc-text
+       type (font/weight/size), just a bit of breathing room above it so
+       it doesn't crowd the italic subtitle right before it. */
+    .margin-research-question{ margin-top:1rem; }
 
     /* ----------------------------------------------------------------
        CONTENT — the actual paragraph text of each chapter (what you
@@ -2078,6 +2082,11 @@
       const api={
         title(text){ data.name=text; return api; },
         subtitle(text){ data.subtitle=text; return api; },
+        // The project's core research question — shown on the landing
+        // slide right under the subtitle, styled as plain body text
+        // (not a title) so it reads as part of the intro, not another
+        // heading.
+        researchQuestion(text){ data.researchQuestion=text; return api; },
         cover(src){ data.coverImage=src; return api; },
         role(text){ data.role=text; return api; },
         deliverable(text){ data.deliverable=text; return api; },
@@ -2181,6 +2190,7 @@
     createProject('margin')
       .title('Project M.A.R.G.I.N.')
       .subtitle('Multimodal Accessible Real-time Graphical Interaction &amp; Navigation for the Visually Impaired')
+      .researchQuestion('How can interactive technology support independent, real-time exploration and interpretation of graphical information for blind users?')
       .cover('images/projects/margin.jpg')
       .team('Myself (Planning, recruiting, moderation/interviewing, prompts design, data analysis, MVP design, prototype development, presenting)')
       .duration('1 week')
@@ -2193,10 +2203,6 @@
         .subheading('Computer-Based Assessment Platforms Have Evolved. Accessibility Has Not','High-stakes computer-based examinations such as the GRE and GMAT increasingly rely on complex graphical reasoning. Yet graph interaction remains predominantly visual, limiting independent access for blind and low-vision candidates under strict time constraints.')
         .subheading('Existing Accommodations Limit Independence And Efficiency','Current accommodations primarily depend on human readers or scribes to verbally interpret graphs. While enabling participation, they introduce interpretation latency, cognitive overhead, potential information leakage, and reduced testing efficiency.')
         .subheading('The Accessibility Gap Extends Beyond Examinations','Similar challenges exist across all STEM workplaces where graphical information supports learning, collaboration, and decision-making. Existing assistive technologies provide limited support for independent, real-time graphical exploration.')
-        .subsection('problem-statement','Problem Statement')
-          .compact()
-          .smallTitle()
-          .paragraph('How can interactive technology support independent, real-time exploration and interpretation of graphical information for blind users?')
         .subsection('research-objectives','Research Objectives')
           .compact()
           .smallTitle()
@@ -2467,6 +2473,7 @@
         +'<section class="margin-slide" id="'+slug+'-landing"><div class="margin-slide-inner">'
           +'<h1 class="margin-project-name">'+(data.name||'Untitled Project')+'</h1>'
           +'<p class="margin-project-subtitle">'+(data.subtitle||'')+'</p>'
+          +(data.researchQuestion?'<p class="margin-desc-text margin-research-question">'+data.researchQuestion+'</p>':'')
           +(data.coverImage?'<div class="margin-landing-photo"><img src="'+data.coverImage+'" alt="" loading="lazy" decoding="async" onerror="this.style.display=\'none\';"/></div>':'')
           +renderProjectInfoRow(data)
         +'</div></section>'
