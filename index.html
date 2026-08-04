@@ -1137,7 +1137,7 @@
     /* The research question on the landing slide — same .margin-desc-text
        type (font/weight/size), just a bit of breathing room above it so
        it doesn't crowd the italic subtitle right before it. */
-    .margin-research-question{ margin-top:1rem; }
+    .margin-research-question{ margin-top:1rem; margin-bottom:1rem; }
 
     /* ----------------------------------------------------------------
        CONTENT — the actual paragraph text of each chapter (what you
@@ -1227,6 +1227,13 @@
     }
     p.margin-info-list{ padding-left:0; }
     .margin-info-list li{ margin-bottom:.4rem; }
+    /* Roles field: "Myself" (the lead line) stays at the normal
+       .margin-info-list size (1.6rem); the task bullets underneath it
+       step down to 1.28rem — a 4:5 ratio against the lead line, so
+       they read as detail nested under it rather than equal-weight
+       siblings. */
+    .margin-info-lead{ margin-bottom:.5rem; }
+    .margin-info-list-sub{ font-size:1.4rem; }
 
     /* Auto-generated outline (from .item()/.subsection() in
        createProject()) — items in the section's own font size, their
@@ -1283,7 +1290,7 @@
        than the image just being top-anchored above whatever height it
        happens to render at. */
     .margin-landing-photo{
-      width:100%; max-width:996px; height:500px; margin:0.1rem 0;
+      width:100%; max-width:996px; height:500px; margin:1rem 0;
       display:flex; align-items:center; justify-content:center;
       overflow:hidden; border-radius:.75rem;
     }
@@ -2092,7 +2099,10 @@
         deliverable(text){ data.deliverable=text; return api; },
         uxrMethod(text){ data.uxrMethod=text; return api; },
         logistics(label,value){ data.logistics.push({label,value}); return api; },
-        team(text){ data.team=text; return api; },
+        // A plain string/array keeps working as before. Pass a second
+        // argument (an array) to get a lead line ("Myself") with its
+        // own smaller bullet list underneath — see renderRolesField().
+        team(text,items){ data.team=items?{lead:text,items:items}:text; return api; },
         duration(text){ data.duration=text; return api; },
 
         // Slide 1 of a chapter — the section itself. Starting a new
@@ -2192,7 +2202,7 @@
       .subtitle('Multimodal Accessible Real-time Graphical Interaction &amp; Navigation for the Visually Impaired')
       .researchQuestion('How can interactive technology support independent, real-time exploration and interpretation of graphical information for blind users?')
       .cover('images/projects/margin.jpg')
-      .team('Myself (Planning, recruiting, moderation/interviewing, prompts design, data analysis, MVP design, prototype development, presenting)')
+      .team('Myself',['Planning','Recruiting','Moderation/Interviewing','Prompt Design','Data Analysis','MVP Design','Prototype Development','Presenting'])
       .duration('1 week')
       .uxrMethod(['Guerrilla interview','Somesthetic roleplaying','Questionnaire'])
       .deliverable(['MVP Prototype','Presentation'])
@@ -2326,9 +2336,21 @@
         ? '<ul class="margin-list margin-info-list">'+value.map(function(m){ return '<li>'+m+'</li>'; }).join('')+'</ul>'
         : '<p class="margin-info-list">'+(value||'')+'</p>';
     }
+    /* Roles gets its own renderer: a lead line ("Myself") at the
+       normal .margin-info-list size, with the task bullets underneath
+       it a size down — set via .team(lead, items) in createProject().
+       Falls back to renderInfoList's plain behavior for old-style
+       data (a bare string or array with no lead). */
+    function renderRolesField(value){
+      if(value && typeof value==='object' && !Array.isArray(value) && Array.isArray(value.items)){
+        return '<p class="margin-info-list margin-info-lead">'+(value.lead||'')+'</p>'
+          +'<ul class="margin-list margin-info-list margin-info-list-sub">'+value.items.map(function(m){ return '<li>'+m+'</li>'; }).join('')+'</ul>';
+      }
+      return renderInfoList(value);
+    }
     function renderProjectInfoRow(data){
       const items=[
-        {label:'Roles',html:'<p>'+(data.team||'')+'</p>'},
+        {label:'Roles',html:renderRolesField(data.team)},
         {label:'Duration',html:'<p>'+(data.duration||'')+'</p>'},
         {label:'Used UXR Method',html:renderInfoList(data.uxrMethod)},
         {label:'Deliverable',html:renderInfoList(data.deliverable)}
