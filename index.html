@@ -1095,6 +1095,19 @@
       color:var(--color-navy-dark);  /* <-- SECTION title color */
       margin:0 0 2rem;
     }
+    /* Set via .smallTitle() in createProject() — for a slide whose
+       title is really a sub-heading within its chapter (e.g. "Study
+       Context" on the Overview slide, or "Problem Statement"/"Research
+       Objectives" on their own slides) rather than a true chapter
+       title matching a nav button. Matches the landing info row's
+       label style exactly (same size/font/color as Team/Duration/Used
+       UXR Method) — not bold, unlike the default .margin-slide-title
+       above. */
+    .margin-slide-title.margin-slide-title-small{
+      font-family:var(--font-serif); font-weight:400;
+      font-size:33px; color:#2B3752;
+      margin:0 0 1.25rem;
+    }
 
     /* ----------------------------------------------------------------
        SUBSECTION — an optional smaller heading INSIDE a chapter, for
@@ -1131,7 +1144,10 @@
       color:#000;          /* <-- CONTENT text color */
       line-height:1.7;
     }
-    .margin-slide-body p{ margin:0 0 1.25rem; }
+    .margin-slide-body p{
+      margin:0 0 1.25rem;
+      text-align:justify; text-justify:inter-word;
+    }
     .margin-slide-body p:last-child{ margin-bottom:0; }
 
     /* ----------------------------------------------------------------
@@ -1178,10 +1194,17 @@
     .margin-list{
       font-family:var(--font-serif); font-size:1.35rem; color:#000; line-height:1.7;
       max-width:56rem; margin:0 0 1.25rem; padding-left:1.4rem;
+      text-align:justify; text-justify:inter-word;
     }
     .margin-list li{ margin-bottom:.6rem; }
     .margin-item-list li{ margin-bottom:2rem; }
     .margin-item-list .margin-desc-text{ margin:.5rem 0 0; }
+    /* The bold lead-in line (from .subheading()'s first argument) was
+       inheriting .margin-list's smaller 1.35rem body size, while its
+       own description right below it (.margin-desc-text) renders at
+       1.6rem — so the heading looked smaller than its own caption.
+       Matched here to the same 1.6rem/serif as the description. */
+    .margin-item-list li strong{ font-size:1.6rem; font-family:var(--font-serif); }
 
     /* Used UXR Method / Deliverable on the landing slide's info row —
        scoped separately from the general .margin-list above (used all
@@ -2094,6 +2117,20 @@
           return api;
         },
 
+        // Renders this slide's own title (Study Context, Problem
+        // Statement, Research Objectives, etc.) in the same small,
+        // non-bold style as the landing info row's labels (Team/
+        // Duration/Used UXR Method) instead of the large bold style
+        // used by real chapter titles (the ones that match a nav
+        // button, like "Research Strategy"). Use this for titles that
+        // are a sub-heading within a chapter rather than the chapter
+        // itself.
+        smallTitle(){
+          requireTarget('smallTitle');
+          currentTarget.smallTitle=true;
+          return api;
+        },
+
         // An outline bullet on the section's own slide (slide 1) —
         // e.g. "User Interviews". Doesn't need its own slide unless
         // you also add .subsection(...) calls under it.
@@ -2146,25 +2183,26 @@
       .team('Solo')
       .duration('1 week')
       .uxrMethod(['Guerrilla interview','Somesthetic roleplaying','Questionnaire'])
-      .deliverable(['Working prototype','Presentation'])
+      .deliverable(['MVP Prototype','Presentation'])
       .section('overview','Overview','Study Context')
         .linkTo('landing')
         .compact()
+        .smallTitle()
         .subheading('Computer-Based Assessment Platforms Have Evolved. Accessibility Has Not','Description here.')
         .subheading('Existing Accommodations Limit Independence And Efficiency','Description here.')
         .subheading('The Accessibility Gap Extends Beyond Examinations','Description here.')
         .subsection('problem-statement','Problem Statement')
           .compact()
+          .smallTitle()
           .paragraph('How can interactive technology support independent, real-time exploration and interpretation of graphical information for blind users?')
         .subsection('research-objectives','Research Objectives')
           .compact()
+          .smallTitle()
           .list([
             "Understand users' cognitive models, workflows, and accessibility challenges when interpreting graphical information.",
             'Define the core interaction requirements for a multimodal graph accessibility MVP.',
             'Identify high-impact technology innovation opportunities for independent, real-time graph accessibility.'
           ])
-      .section('team','Team')
-        .list(['<strong>Myself</strong>&nbsp;&nbsp;(Planning,&nbsp;&nbsp;recruiting, moderation/interviewing,&nbsp;&nbsp;prompts design, data analysis, MVP design, prototype development, presenting)'])
       .section('strategy','Research Strategy')
         .paragraph('Overall research strategy here — the questions you set out to answer and why you chose this approach.')
       .section('activities','Research Activities')
@@ -2282,7 +2320,7 @@
     }
     function renderProjectInfoRow(data){
       const items=[
-        {label:'Team',html:'<p>'+(data.team||'')+'</p>'},
+        {label:'Roles',html:'<p>'+(data.team||'')+'</p>'},
         {label:'Duration',html:'<p>'+(data.duration||'')+'</p>'},
         {label:'Used UXR Method',html:renderInfoList(data.uxrMethod)},
         {label:'Deliverable',html:renderInfoList(data.deliverable)}
@@ -2373,7 +2411,7 @@
         return out.join('');
       }
 
-      function renderSlideSection(slideId,title,body,heroImage,extraHtml,heroImagePosition,compact){
+      function renderSlideSection(slideId,title,body,heroImage,extraHtml,heroImagePosition,compact,smallTitle){
         const bodyHtml=renderBody(body)+(extraHtml||'');
         const position=heroImagePosition||'right'; // 'right' matches the original, only-ever behavior — existing data with no position set keeps rendering exactly as before
         let bodyBlock;
@@ -2387,8 +2425,9 @@
           bodyBlock='<div class="margin-slide-cols'+leftClass+'"><div class="margin-slide-body">'+bodyHtml+'</div><img src="'+heroImage+'" alt="" loading="lazy" decoding="async" onerror="this.style.display=\'none\';"/></div>';
         }
         const compactClass=compact?' margin-slide-compact':'';
+        const titleClass=smallTitle?'margin-slide-title margin-slide-title-small':'margin-slide-title';
         return '<section class="margin-slide'+compactClass+'" id="'+slideId+'"><div class="margin-slide-inner">'
-          +'<h2 class="margin-slide-title">'+title+'</h2>'+bodyBlock
+          +'<h2 class="'+titleClass+'">'+title+'</h2>'+bodyBlock
           +'</div></section>';
       }
 
@@ -2397,7 +2436,7 @@
         const title=s&&s.title?s.title:(s&&s.label?s.label:'Untitled');
         const body=Array.isArray(s&&s.body)?s.body:[];
         const outlineHtml=renderOutline(s&&s.items,slug);
-        const ownSlide=renderSlideSection(slug+'-'+id,title,body,s&&s.image,outlineHtml,s&&s.imagePosition,s&&s.compact);
+        const ownSlide=renderSlideSection(slug+'-'+id,title,body,s&&s.image,outlineHtml,s&&s.imagePosition,s&&s.compact,s&&s.smallTitle);
 
         // Each .subsection() becomes its own real slide (slide 2, 3,
         // 4...), in the order it was added, right after this
@@ -2408,7 +2447,7 @@
           const subId=sub&&sub.id?sub.id:id+'-sub-'+j;
           const subTitle=sub&&sub.title?sub.title:(sub&&sub.label?sub.label:'Untitled');
           const subBody=Array.isArray(sub&&sub.body)?sub.body:[];
-          return renderSlideSection(slug+'-'+subId,subTitle,subBody,sub&&sub.image,'',sub&&sub.imagePosition,sub&&sub.compact);
+          return renderSlideSection(slug+'-'+subId,subTitle,subBody,sub&&sub.image,'',sub&&sub.imagePosition,sub&&sub.compact,sub&&sub.smallTitle);
         }).join('');
 
         return ownSlide+subSlides;
