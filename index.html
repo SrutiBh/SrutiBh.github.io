@@ -1049,6 +1049,7 @@
       font-weight:550;     /* <-- TITLE subtitle weight (matches "UX Research Portfolio") */
       color:#000;          /* <-- TITLE subtitle color (matches "UX Research Portfolio") */
       margin:0;
+      text-align:justify; text-justify:inter-word;
     }
 
     /* One slide = one full "chapter". min-height keeps each chapter
@@ -1162,6 +1163,7 @@
       /* font-size: 1.35rem;   <-- uncomment to set MARKING ITEM size independently of CONTENT above */
       /* color: #000;          <-- uncomment to set MARKING ITEM color independently of CONTENT above */
       margin-bottom:.6rem;
+      text-align:justify; text-justify:inter-word;
     }
 
     /* Optional two-column layout for slides that want text alongside an
@@ -2180,7 +2182,7 @@
       .title('Project M.A.R.G.I.N.')
       .subtitle('Multimodal Accessible Real-time Graphical Interaction &amp; Navigation for the Visually Impaired')
       .cover('images/projects/margin.jpg')
-      .team('Solo')
+      .team('Myself (Planning, recruiting, moderation/interviewing, prompts design, data analysis, MVP design, prototype development, presenting)')
       .duration('1 week')
       .uxrMethod(['Guerrilla interview','Somesthetic roleplaying','Questionnaire'])
       .deliverable(['MVP Prototype','Presentation'])
@@ -2188,9 +2190,9 @@
         .linkTo('landing')
         .compact()
         .smallTitle()
-        .subheading('Computer-Based Assessment Platforms Have Evolved. Accessibility Has Not','Description here.')
-        .subheading('Existing Accommodations Limit Independence And Efficiency','Description here.')
-        .subheading('The Accessibility Gap Extends Beyond Examinations','Description here.')
+        .subheading('Computer-Based Assessment Platforms Have Evolved. Accessibility Has Not','High-stakes computer-based examinations such as the GRE and GMAT increasingly rely on complex graphical reasoning. Yet graph interaction remains predominantly visual, limiting independent access for blind and low-vision candidates under strict time constraints.')
+        .subheading('Existing Accommodations Limit Independence And Efficiency','Current accommodations primarily depend on human readers or scribes to verbally interpret graphs. While enabling participation, they introduce interpretation latency, cognitive overhead, potential information leakage, and reduced testing efficiency.')
+        .subheading('The Accessibility Gap Extends Beyond Examinations','Similar challenges exist across all STEM workplaces where graphical information supports learning, collaboration, and decision-making. Existing assistive technologies provide limited support for independent, real-time graphical exploration.')
         .subsection('problem-statement','Problem Statement')
           .compact()
           .smallTitle()
