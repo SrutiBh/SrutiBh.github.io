@@ -1343,7 +1343,7 @@
     .margin-info-row4{
       display:grid; grid-template-columns:repeat(4,219px);
       row-gap:.35rem; column-gap:2.5rem;
-      justify-content:space-between; align-items:center;
+      justify-content:space-between; align-items:start;
     }
     .margin-info-row4 > *{ width:219px; }
     .margin-info-empty{ min-height:1px; }
@@ -2392,14 +2392,15 @@
       // 3, all genuinely aligned across columns (not just visually
       // close). Empty cells (e.g. Duration has no bullets) still get
       // a placeholder div so the grid keeps its shape.
-      const row1=fields.map(function(f){ return '<h3 class="margin-subsection-title">'+f.label+'</h3>'; }).join('');
-      const row2=fields.map(function(f){ return '<p class="margin-info-list margin-info-lead">'+(f.lead||'&nbsp;')+'</p>'; }).join('');
-      const row3=fields.map(function(f){
+      const row1=fields.map(function(f,i){ return '<h3 class="margin-subsection-title" style="grid-row:1;grid-column:'+(i+1)+';">'+f.label+'</h3>'; }).join('');
+      const row2=fields.map(function(f,i){ return '<p class="margin-info-list margin-info-lead" style="grid-row:2;grid-column:'+(i+1)+';">'+(f.lead||'&nbsp;')+'</p>'; }).join('');
+      const row3=fields.map(function(f,i){
+        const col='grid-row:3;grid-column:'+(i+1)+';';
         return f.items.length
-          ? '<ul class="margin-list margin-info-list margin-info-list-sub">'+f.items.map(function(m){ return '<li>'+m+'</li>'; }).join('')+'</ul>'
-          : '<div class="margin-info-empty"></div>';
+          ? '<ul class="margin-list margin-info-list margin-info-list-sub" style="'+col+'">'+f.items.map(function(m){ return '<li>'+m+'</li>'; }).join('')+'</ul>'
+          : '<div class="margin-info-empty" style="'+col+'"></div>';
       }).join('');
-      return '<div class="margin-info-row4">'+row1+row2+row3+'</div>';
+      return '<div class="margin-info-row4" style="grid-template-rows:auto auto auto;">'+row1+row2+row3+'</div>';
     }
 
     function renderProjectDetail(viewId,data){
