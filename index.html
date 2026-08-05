@@ -2823,28 +2823,49 @@
     });
 
     /* Project chapter scroll-spy — as you scroll through any project's
-       chapters, this watches which one is currently most visible and
-       marks that chapter's nav button as .active (giving it the
-       "pressed" look), clearing .active from every other button. The
-       landing/cover slide has no matching nav button, so it's simply
-       skipped when it comes into view — nothing gets marked active for
-       it. Scoped to .project-detail-view (shared by every project's
-       container) rather than one hardcoded id, so this observes every
+       chapters, this finds whichever chapter's bounds actually CONTAIN
+       a fixed trigger line near the top of the viewport (just below
+       the sticky nav strip) and marks that chapter's nav button as
+       .active, clearing .active from every other button. Checked
+       directly via getBoundingClientRect() on every scroll (rAF-
+       throttled) rather than relying on IntersectionObserver's one-
+       shot enter/exit events — a containment check is correct for a
+       slide of any height, including one many screens tall (e.g.
+       Research Activities, with 5 phases of content): it doesn't
+       matter how long you're scrolled through its middle, it still
+       directly contains the trigger line the whole time. The landing/
+       cover slide has no matching nav button, so it's simply skipped.
+       Scoped to .project-detail-view (shared by every project's
+       container) rather than one hardcoded id, so this covers every
        project's chapters, not just margin's. */
     (function(){
       const marginSlides=document.querySelectorAll('.project-detail-view .margin-slide[id]');
       if(!marginSlides.length)return;
-      const marginScrollSpy=new IntersectionObserver(function(entries){
-        entries.forEach(function(entry){
-          if(!entry.isIntersecting)return;
-          const matchingBtn=document.querySelector('.margin-nav-btn[data-jump="'+entry.target.id+'"]');
-          if(!matchingBtn)return; // e.g. the landing slide, which has no nav button
-          const scope=entry.target.closest('.project-detail-view')||document;
-          scope.querySelectorAll('.margin-nav-btn').forEach(function(b){b.classList.remove('active');});
-          matchingBtn.classList.add('active');
+      const TRIGGER_Y=110; // matches the sticky nav strip's clearance
+      let ticking=false;
+      function updateScrollSpy(){
+        ticking=false;
+        let current=null;
+        marginSlides.forEach(function(slide){
+          const rect=slide.getBoundingClientRect();
+          if(rect.top<=TRIGGER_Y && rect.bottom>TRIGGER_Y){
+            current=slide;
+          }
         });
-      },{threshold:0.5});
-      marginSlides.forEach(function(slide){marginScrollSpy.observe(slide);});
+        if(!current)return;
+        const matchingBtn=document.querySelector('.margin-nav-btn[data-jump="'+current.id+'"]');
+        if(!matchingBtn)return; // e.g. the landing slide, which has no nav button
+        const scope=current.closest('.project-detail-view')||document;
+        scope.querySelectorAll('.margin-nav-btn').forEach(function(b){b.classList.remove('active');});
+        matchingBtn.classList.add('active');
+      }
+      window.addEventListener('scroll',function(){
+        if(!ticking){ ticking=true; requestAnimationFrame(updateScrollSpy); }
+      },{passive:true});
+      window.addEventListener('resize',function(){
+        if(!ticking){ ticking=true; requestAnimationFrame(updateScrollSpy); }
+      });
+      updateScrollSpy();
     })();
 
     const HOME_GALLERY=[
