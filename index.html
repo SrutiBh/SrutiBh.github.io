@@ -1129,6 +1129,15 @@
       margin:1.75rem 0 .75rem;
     }
     .margin-subsection-title:first-child{ margin-top:0; }
+    /* The rule above is for a subsection heading at the very top of a
+       chapter body (no redundant gap under the slide's own title).
+       Roles happens to be the first child inside the info-row grid
+       too, so it was picking up that same reset while Duration/
+       Method/Deliverable (not first-children) kept their normal top
+       margin — pushing Roles' text to a different vertical position
+       than the other three headers even though all four sit in the
+       same grid row. Overridden here, specifically for this context. */
+    .margin-info-row4 > .margin-subsection-title:first-child{ margin-top:1.75rem; }
     /* Description text matching the About page's paragraph style
        exactly — used by {type:'subheading'} content blocks (a
        heading + description pair inside a chapter body), distinct
@@ -1332,18 +1341,14 @@
        content width — matching every paragraph/list elsewhere on the
        page — without reintroducing uneven spacing. */
     .margin-info-row4{
-      display:grid; grid-template-columns:repeat(4,max-content); gap:2.5rem;
-      justify-content:space-between;
+      display:grid; grid-template-columns:repeat(4,219px); gap:2.5rem;
+      justify-content:space-between; align-items:center;
     }
-    .margin-info-row4-col{ max-width:220px; }
-    .margin-info-row4-col p{
-      font-family:var(--font-serif); font-size:1.6rem; line-height:1.6;
-      font-weight:400; color:#000; margin:0 0 1rem;
-      text-align:justify; text-justify:inter-word;
-    }
+    .margin-info-row4 > *{ width:219px; }
+    .margin-info-empty{ min-height:1px; }
     @media(max-width:900px){
       .margin-info-row4{ grid-template-columns:1fr 1fr; gap:1.5rem 2rem; }
-      .margin-info-row4-col{ max-width:none; }
+      .margin-info-row4 > *{ max-width:none; }
     }
     @media(max-width:640px){
       .margin-info-row4{ grid-template-columns:1fr; gap:1.5rem; }
@@ -2350,7 +2355,7 @@
        reads "Like This" regardless of how it was typed in the data. */
     function renderInfoList(value){
       return Array.isArray(value)
-        ? '<ul class="margin-list margin-info-list">'+value.map(function(m){ return '<li>'+m+'</li>'; }).join('')+'</ul>'
+        ? '<ul class="margin-list margin-info-list margin-info-list-sub">'+value.map(function(m){ return '<li>'+m+'</li>'; }).join('')+'</ul>'
         : '<p class="margin-info-list">'+(value||'')+'</p>';
     }
     /* Roles gets its own renderer: a lead line ("Myself") at the
@@ -2366,15 +2371,28 @@
       return renderInfoList(value);
     }
     function renderProjectInfoRow(data){
-      const items=[
-        {label:'Roles',html:renderRolesField(data.team)},
-        {label:'Duration',html:'<p>'+(data.duration||'')+'</p>'},
-        {label:'Used UXR Method',html:renderInfoList(data.uxrMethod)},
-        {label:'Deliverable',html:renderInfoList(data.deliverable)}
+      const teamIsObj=data.team && typeof data.team==='object' && !Array.isArray(data.team);
+      const fields=[
+        { label:'Roles', lead: teamIsObj?(data.team.lead||''):(typeof data.team==='string'?data.team:''), items: teamIsObj&&Array.isArray(data.team.items)?data.team.items:[] },
+        { label:'Duration', lead: data.duration||'', items: [] },
+        { label:'Method', lead:'', items: Array.isArray(data.uxrMethod)?data.uxrMethod:(data.uxrMethod?[data.uxrMethod]:[]) },
+        { label:'Deliverable', lead:'', items: Array.isArray(data.deliverable)?data.deliverable:(data.deliverable?[data.deliverable]:[]) }
       ];
-      return '<div class="margin-info-row4">'+items.map(function(it){
-        return '<div class="margin-info-row4-col"><h3 class="margin-subsection-title">'+it.label+'</h3>'+it.html+'</div>';
-      }).join('')+'</div>';
+      // Emitting all 4 headers, then all 4 leads, then all 4 bullet
+      // cells — in that order — is what makes this a real 3-row grid:
+      // a 4-column CSS Grid naturally wraps every 4 items into its own
+      // row, so headers land in row 1, leads in row 2, bullets in row
+      // 3, all genuinely aligned across columns (not just visually
+      // close). Empty cells (e.g. Duration has no bullets) still get
+      // a placeholder div so the grid keeps its shape.
+      const row1=fields.map(function(f){ return '<h3 class="margin-subsection-title">'+f.label+'</h3>'; }).join('');
+      const row2=fields.map(function(f){ return '<p class="margin-info-list margin-info-lead">'+(f.lead||'&nbsp;')+'</p>'; }).join('');
+      const row3=fields.map(function(f){
+        return f.items.length
+          ? '<ul class="margin-list margin-info-list margin-info-list-sub">'+f.items.map(function(m){ return '<li>'+m+'</li>'; }).join('')+'</ul>'
+          : '<div class="margin-info-empty"></div>';
+      }).join('');
+      return '<div class="margin-info-row4">'+row1+row2+row3+'</div>';
     }
 
     function renderProjectDetail(viewId,data){
