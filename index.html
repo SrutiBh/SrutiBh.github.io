@@ -935,7 +935,7 @@
     }
     .margin-nav-inner{
       flex:1; min-width:0;
-      display:flex; flex-wrap:nowrap; gap:.6rem;
+      display:flex; flex-wrap:nowrap; justify-content:center; gap:.6rem;
       overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none;
       scroll-behavior:smooth;
     }
@@ -1040,6 +1040,7 @@
       font-size:2.4rem;              /* <-- TITLE size */
       color:var(--color-navy-dark);  /* <-- TITLE color */
       margin:0 0 .35rem;
+      text-align:center;
     }
     /* Subtitle line right under the title (e.g. "Feeling Vision for
        Graph Navigation"). Same idea — edit font-size / color here. */
@@ -1049,7 +1050,7 @@
       font-weight:550;     /* <-- TITLE subtitle weight (matches "UX Research Portfolio") */
       color:#000;          /* <-- TITLE subtitle color (matches "UX Research Portfolio") */
       margin:0;
-      text-align:justify; text-justify:inter-word;
+      text-align:center;
     }
 
     /* One slide = one full "chapter". min-height keeps each chapter
@@ -1095,6 +1096,7 @@
       font-size:2.6rem;              /* <-- SECTION title size */
       color:var(--color-navy-dark);  /* <-- SECTION title color */
       margin:0 0 2rem;
+      text-align:center;
     }
     /* Set via .smallTitle() in createProject() — for a slide whose
        title is really a sub-heading within its chapter (e.g. "Study
@@ -1103,11 +1105,13 @@
        title matching a nav button. Matches the landing info row's
        label style exactly (same size/font/color as Team/Duration/Used
        UXR Method) — not bold, unlike the default .margin-slide-title
-       above. */
+       above. Stays left-aligned (unlike the centered chapter titles
+       above) since it reads as a label, not a standalone heading. */
     .margin-slide-title.margin-slide-title-small{
       font-family:var(--font-serif); font-weight:400;
       font-size:33px; color:#2B3752;
       margin:0 0 1.25rem;
+      text-align:left;
     }
 
     /* ----------------------------------------------------------------
@@ -1199,18 +1203,29 @@
        ---------------------------------------------------------------- */
     .margin-list{
       font-family:var(--font-serif); font-size:1.35rem; color:#000; line-height:1.7;
-      max-width:56rem; margin:0 0 1.25rem; padding-left:1.4rem;
+      margin:0 0 1.25rem; padding-left:1.4rem;
       text-align:justify; text-justify:inter-word;
     }
     .margin-list li{ margin-bottom:.6rem; }
+    /* Opt-in variant — matches .margin-desc-text's exact font-size
+       (1.6rem), used only where explicitly requested via .list()'s
+       optional second argument, e.g. .list([...], true). The default
+       .margin-list size above is untouched for every other list. */
+    .margin-list.margin-list-large{ font-size:1.6rem; }
     .margin-item-list li{ margin-bottom:2rem; }
     .margin-item-list .margin-desc-text{ margin:.5rem 0 0; }
-    /* The bold lead-in line (from .subheading()'s first argument) was
-       inheriting .margin-list's smaller 1.35rem body size, while its
-       own description right below it (.margin-desc-text) renders at
-       1.6rem — so the heading looked smaller than its own caption.
-       Matched here to the same 1.6rem/serif as the description. */
-    .margin-item-list li strong{ font-size:30px; font-weight:400; color:#000; font-family:var(--font-serif); }
+    /* Matches "Research Objectives" (.margin-slide-title) exactly —
+       same font-family, weight, size, and color — so Phase 1/2/etc.
+       (and any other .subheading() item heading) reads consistently
+       with that reference style. */
+    .margin-item-heading{ font-size:30px; font-weight:400; color:#000; font-family:var(--font-serif); }
+    /* Wraps a "large" .subheading() item (e.g. Phase 1-6) — renders as
+       a real slide title (.margin-slide-title.margin-slide-title-small,
+       the exact classes Study Context and Research Objectives use),
+       not a bulleted list item, so it's guaranteed to look identical
+       to those, not just visually close. */
+    .margin-standalone-heading{ margin-bottom:2rem; }
+    .margin-standalone-heading .margin-slide-title-small{ margin-bottom:.5rem; }
 
     /* Used UXR Method / Deliverable on the landing slide's info row —
        scoped separately from the general .margin-list above (used all
@@ -2178,11 +2193,11 @@
 
         heroImage(src,position){ requireTarget('heroImage'); currentTarget.image=src; currentTarget.imagePosition=position; return api; },
         paragraph(text){ requireTarget('paragraph'); currentTarget.body.push({type:'paragraph',text:text}); return api; },
-        list(items){ requireTarget('list'); currentTarget.body.push({type:'list',items:items}); return api; },
+        list(items,large){ requireTarget('list'); currentTarget.body.push({type:'list',items:items,large:!!large}); return api; },
         table(headers,rows){ requireTarget('table'); currentTarget.body.push({type:'table',headers:headers,rows:rows}); return api; },
         stats(items){ requireTarget('stats'); currentTarget.body.push({type:'stats',items:items}); return api; },
         image(src,alt,caption){ requireTarget('image'); currentTarget.body.push({type:'image',src:src,alt:alt||'',caption:caption||''}); return api; },
-        subheading(heading,text){ requireTarget('subheading'); currentTarget.body.push({type:'subheading',heading:heading,text:text||''}); return api; },
+        subheading(heading,text,large){ requireTarget('subheading'); currentTarget.body.push({type:'subheading',heading:heading,text:text||'',large:!!large}); return api; },
 
         build(){
           PROJECT_DETAIL_DATA[slug]=data;
@@ -2217,22 +2232,23 @@
           .compact()
           .smallTitle()
           .list([
-            "Understand how blind users detect and analyze graphs.",
-            "Discover pain-points of blind users in graph navigation.",
+            'Understand how blind users detect and analyze graphs.',
+            'Discover pain-points of blind users in graph navigation.',
             'Define core interaction requirements for a multimodal graph accessibility MVP.',
             'Identify interactive technology innovation opportunities for graph accessibility.'
-          ])
-      .section('strategy','Research Strategy')
-        .paragraph('Overall research strategy here — the questions you set out to answer and why you chose this approach.')
+          ],true)
       .section('activities','Research Activities')
-        .paragraph('Write what you actually did here — studies run, prototypes built, sessions conducted, etc.')
         .heroImage('images/projects/graph_blind.jpg')
-      .section('synthesis','Research Synthesis')
-        .paragraph('Write how you pulled the findings together here — patterns, themes, or key insights that emerged.')
+        .subheading('Phase 1','Interviewed blind users, recruited through whatever access was available, to understand their current graph interpretation workflows and challenges.',true)
+        .subheading('Phase 2','Synthesized the interview findings into a persona and journey map, capturing motivations, activities, and pain points around graph interpretation.',true)
+        .subheading('Phase 3','Ran soma design roleplay sessions to discover what features the persona would need to understand graphs quickly and independently.',true)
+        .subheading('Phase 4','Developed the MVP prototype based on the interaction requirements identified through the roleplay sessions.',true)
+        .subheading('Phase 5','Conducted a heuristic evaluation of the MVP prototype using soma design roleplay testing.',true)
+        .subheading('Phase 6','Submitted the final prototype and presentation.',true)
       .section('impact','Impact')
         .paragraph('Impact of the work here — what changed as a result, for users, the team, or the product.')
-      .section('business','Business Opportunity')
-        .paragraph('Business case here — market relevance, potential applications, or commercial angle.')
+      .section('voice-of-users','Voice of Users')
+        .paragraph('Write what users said here — direct quotes, feedback, or reactions from participants.')
       .section('reflections','Personal Reflections')
         .paragraph("Write your personal reflections here — what you learned, what you'd do differently, what stayed with you.")
       .build();
@@ -2291,7 +2307,7 @@
       if(!block || typeof block!=='object') return '';
       switch(block.type){
         case 'list':
-          return '<ul class="margin-list">'+(block.items||[]).map(function(i){ return '<li>'+i+'</li>'; }).join('')+'</ul>';
+          return '<ul class="margin-list'+(block.large?' margin-list-large':'')+'">'+(block.items||[]).map(function(i){ return '<li>'+i+'</li>'; }).join('')+'</ul>';
         case 'table': {
           const headers=Array.isArray(block.headers)?block.headers:[];
           const rows=Array.isArray(block.rows)?block.rows:[];
@@ -2431,9 +2447,28 @@
               group.push(body[i]);
               i++;
             }
-            out.push('<ul class="margin-list margin-item-list">'+group.map(function(b){
-              return '<li><strong>'+(b.heading||'')+'</strong>'+(b.text?'<div class="margin-desc-text">'+b.text+'</div>':'')+'</li>';
-            }).join('')+'</ul>');
+            // Large items (e.g. Phase 1-6) render standalone, reusing
+            // the exact same classes a real slide title uses — no
+            // bullet, no list wrapper. Non-large items (e.g. Study
+            // Context's own items) keep the original bulleted-list
+            // treatment, grouped together as before.
+            let j=0;
+            while(j<group.length){
+              if(group[j].large){
+                const b=group[j];
+                out.push('<div class="margin-standalone-heading"><h3 class="margin-slide-title margin-slide-title-small">'+(b.heading||'')+'</h3>'+(b.text?'<p class="margin-desc-text">'+b.text+'</p>':'')+'</div>');
+                j++;
+              } else {
+                const bulletGroup=[];
+                while(j<group.length && !group[j].large){
+                  bulletGroup.push(group[j]);
+                  j++;
+                }
+                out.push('<ul class="margin-list margin-item-list">'+bulletGroup.map(function(b){
+                  return '<li><strong class="margin-item-heading">'+(b.heading||'')+'</strong>'+(b.text?'<div class="margin-desc-text">'+b.text+'</div>':'')+'</li>';
+                }).join('')+'</ul>');
+              }
+            }
           } else {
             out.push(renderContentBlock(block));
             i++;
@@ -2836,6 +2871,9 @@
       opts=opts||{};
       if(VALID_VIEWS.indexOf(view)===-1)view='home';
       document.body.classList.toggle('margin-view-active',Object.prototype.hasOwnProperty.call(PROJECT_DETAIL_DATA,view));
+      if(Object.prototype.hasOwnProperty.call(PROJECT_DETAIL_DATA,view)){
+        document.body.classList.add('sidebar-collapsed'); // project pages start with the sidebar minimized by default — the toggle button still opens it on request
+      }
       document.querySelectorAll('.view').forEach(function(sec){sec.classList.toggle('active',sec.dataset.view===view);});
       document.querySelectorAll('#topbar [data-view], .site-sidebar [data-view]').forEach(function(btn){btn.classList.toggle('active',btn.dataset.view===view);});
       const mainEl=document.getElementById('main-content');
