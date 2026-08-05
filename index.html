@@ -1150,7 +1150,7 @@
     /* The research question on the landing slide — same .margin-desc-text
        type (font/weight/size), just a bit of breathing room above it so
        it doesn't crowd the italic subtitle right before it. */
-    .margin-research-question{ margin-top:1rem; margin-bottom:1rem; }
+    .margin-research-question{ margin-top:1rem; margin-bottom:0; }
 
     /* ----------------------------------------------------------------
        CONTENT — the actual paragraph text of each chapter (what you
@@ -1314,7 +1314,7 @@
        than the image just being top-anchored above whatever height it
        happens to render at. */
     .margin-landing-photo{
-      width:100%; max-width:996px; height:500px; margin:0 0 1rem;
+      width:100%; max-width:996px; height:500px; margin:1rem 0 1rem;
       display:flex; align-items:center; justify-content:center;
       overflow:hidden; border-radius:.75rem;
     }
@@ -1341,7 +1341,8 @@
        content width — matching every paragraph/list elsewhere on the
        page — without reintroducing uneven spacing. */
     .margin-info-row4{
-      display:grid; grid-template-columns:repeat(4,219px); gap:2.5rem;
+      display:grid; grid-template-columns:repeat(4,219px);
+      row-gap:.35rem; column-gap:2.5rem;
       justify-content:space-between; align-items:center;
     }
     .margin-info-row4 > *{ width:219px; }
