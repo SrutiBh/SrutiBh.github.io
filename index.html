@@ -2198,7 +2198,7 @@
         },
 
         heroImage(src,position){ requireTarget('heroImage'); currentTarget.image=src; currentTarget.imagePosition=position; return api; },
-        paragraph(text){ requireTarget('paragraph'); currentTarget.body.push({type:'paragraph',text:text}); return api; },
+        paragraph(text,large){ requireTarget('paragraph'); currentTarget.body.push({type:'paragraph',text:text,large:!!large}); return api; },
         list(items,large){ requireTarget('list'); currentTarget.body.push({type:'list',items:items,large:!!large}); return api; },
         table(headers,rows){ requireTarget('table'); currentTarget.body.push({type:'table',headers:headers,rows:rows}); return api; },
         stats(items){ requireTarget('stats'); currentTarget.body.push({type:'stats',items:items}); return api; },
@@ -2244,13 +2244,19 @@
             'Identify interactive technology innovation opportunities for graph accessibility.'
           ],true)
       .section('activities','Research Activities')
-        .heroImage('images/projects/graph_blind.jpg')
-        .subheading('Phase 1','Interviewed blind users, recruited through whatever access was available, to understand their current graph interpretation workflows and challenges.',true)
-        .subheading('Phase 2','Synthesized the interview findings into a persona and journey map, capturing motivations, activities, and pain points around graph interpretation.',true)
-        .subheading('Phase 3','Ran soma design roleplay sessions to discover what features the persona would need to understand graphs quickly and independently.',true)
-        .subheading('Phase 4','Developed the MVP prototype based on the interaction requirements identified through the roleplay sessions.',true)
-        .subheading('Phase 5','Conducted a heuristic evaluation of the MVP prototype using soma design roleplay testing.',true)
-        .subheading('Phase 6','Submitted the final prototype and presentation.',true)
+        .subheading('Phase 1 · Discovering User Needs','Conducted exploratory interviews with blind professionals to understand their graph interpretation workflows, accessibility challenges, and testing context.',true)
+        .list(['Participant Recruitment','Research Constraints'],true)
+        .subheading('Phase 2 · Insight Synthesis','Synthesized interview findings and participant scenarios into two personas representing distinct graph interpretation needs and accessibility challenges.',true)
+        .subheading('Persona 1','Write Persona 1\'s details here.')
+        .image('images/projects/persona1.jpg','Persona 1')
+        .subheading('Persona 2','Write Persona 2\'s details here.')
+        .image('images/projects/persona2.jpg','Persona 2')
+        .subheading('Phase 3 · Concept Exploration','Used soma design roleplay to explore interaction concepts and identify requirements for independent, real-time graph interpretation.',true)
+        .list(['Design Constraints','Method Selection','Key Insights'],true)
+        .subheading('Phase 4 · MVP Development & Evaluation','Developed an MVP for graph sonification using Python and PyQt based on the identified interaction requirements.',true)
+        .paragraph('Evaluated the prototype through a heuristic assessment, examining the presence or absence of predefined usability heuristics.',true)
+        .paragraph('Insert heuristic evaluation table (Yes/No) here.',true)
+        .subheading('Phase 5 · Final Delivery','Presented the final prototype at the University of Jyväskylä, Finland. The work was positively received by a lecturer affiliated with ETS and involved in GRE-related assessment work.',true)
       .section('impact','Impact')
         .paragraph('Impact of the work here — what changed as a result, for users, the team, or the product.')
       .section('voice-of-users','Voice of Users')
@@ -2333,7 +2339,7 @@
             +(block.text?'<p class="margin-desc-text">'+block.text+'</p>':'');
         case 'paragraph':
         default:
-          return '<p>'+(block.text||'')+'</p>';
+          return '<p'+(block.large?' class="margin-desc-text"':'')+'>'+(block.text||'')+'</p>';
       }
     }
 
