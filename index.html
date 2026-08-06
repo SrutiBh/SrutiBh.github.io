@@ -2198,7 +2198,7 @@
         },
 
         heroImage(src,position){ requireTarget('heroImage'); currentTarget.image=src; currentTarget.imagePosition=position; return api; },
-        paragraph(text,large){ requireTarget('paragraph'); currentTarget.body.push({type:'paragraph',text:text,large:!!large}); return api; },
+        paragraph(text,large){ requireTarget('paragraph'); currentTarget.body.push({type:'paragraph',text:text,large:large}); return api; },
         list(items,large){ requireTarget('list'); currentTarget.body.push({type:'list',items:items,large:!!large}); return api; },
         table(headers,rows){ requireTarget('table'); currentTarget.body.push({type:'table',headers:headers,rows:rows}); return api; },
         stats(items){ requireTarget('stats'); currentTarget.body.push({type:'stats',items:items}); return api; },
@@ -2244,19 +2244,30 @@
             'Identify interactive technology innovation opportunities for graph accessibility.'
           ],true)
       .section('activities','Research Activities')
-        .subheading('Phase 1 · Discovering User Needs','Conducted exploratory interviews with blind professionals to understand their graph interpretation workflows, accessibility challenges, and testing context.',true)
-        .list(['Participant Recruitment','Research Constraints'],true)
-        .subheading('Phase 2 · Insight Synthesis','Synthesized interview findings and participant scenarios into two personas representing distinct graph interpretation needs and accessibility challenges.',true)
-        .subheading('Persona 1','Write Persona 1\'s details here.')
+        .subheading('Phase 1 · Discover User Needs','',true)
+        .subheading('Exploratory Interviews Maximized Research Value Within Project Constraints','A research prioritization exercise assessed multiple UX research methods against expected insight, participant accessibility, implementation effort, and project timeline. Exploratory interviews emerged as the highest-value approach, while contextual inquiry, surveys, and design fiction workshops were deferred due to limited access to current GRE test takers.')
+        // TODO: replace with the real research method prioritization matrix image once available
+        .image('images/projects/research-method-matrix.jpg','Research Method Prioritization Matrix')
+        .subheading('Former GRE Test Takers Provided Relevant Domain Expertise','Former blind GRE test takers currently working in the technology sector across the United States and Australia were contacted with only two participants (subject 1 and subject 2) giving availability. Although no longer active test takers, they continue to interpret graphical information in professional settings, making their workflows highly relevant to the research objective.')
+        .subheading('The Study Produced Actionable Insights Despite Recruitment Constraints','A broader participant pool could have strengthened ecological validity and enabled complementary methods such as contextual inquiry and post-test design fiction workshop, survey. Nevertheless, the interviews consistently revealed users\' workflow and accessibility barriers, providing sufficient evidence to inform concept generation.')
+        .subheading('Phase 2 · Synthesize Insights','',true)
+        .subheading('Personas Translated Qualitative Evidence into Design Requirements','Interview findings were synthesized into two personas as follows. The personas consolidated dispersed qualitative observations into a shared framework to inform design decisions and concept development.')
+        // TODO: replace with the real Persona 1 image once available
         .image('images/projects/persona1.jpg','Persona 1')
-        .subheading('Persona 2','Write Persona 2\'s details here.')
+        // TODO: replace with the real Persona 2 image once available
         .image('images/projects/persona2.jpg','Persona 2')
-        .subheading('Phase 3 · Concept Exploration','Used soma design roleplay to explore interaction concepts and identify requirements for independent, real-time graph interpretation.',true)
-        .list(['Design Constraints','Method Selection','Key Insights'],true)
-        .subheading('Phase 4 · MVP Development & Evaluation','Developed an MVP for graph sonification using Python and PyQt based on the identified interaction requirements.',true)
-        .paragraph('Evaluated the prototype through a heuristic assessment, examining the presence or absence of predefined usability heuristics.',true)
-        .paragraph('Insert heuristic evaluation table (Yes/No) here.',true)
-        .subheading('Phase 5 · Final Delivery','Presented the final prototype at the University of Jyväskylä, Finland. The work was positively received by a lecturer affiliated with ETS and involved in GRE-related assessment work.',true)
+        .subheading('Soma Design Revealed High-Value Interaction Opportunities','Two somaesthetic roleplay sessions were conducted using paper-based graphs with myself (subject 3) and another participant (subject 4). The sessions generated multiple multimodal interaction concepts, including sonification, haptic feedback, and AI-guided assistance.')
+        .subheading('Feature Prioritization Balanced User Value Against Implementation Effort','Potential features for the deliverable prototype were evaluated following the Eisenhower Decision Principles to support efficiency of meeting the presentation deadline.')
+        // TODO: replace with the real Eisenhower Decision Matrix image once available
+        .image('images/projects/eisenhower-matrix.jpg','Eisenhower Decision Matrix')
+        .subheading('Phase 4 · Develop & Evaluate MVP (Minimum Value Prototype)','',true)
+        .subheading('Developed an Interactive Digital Sonification Prototype for Independent Graph Exploration in Real-Time','Using Python and PyQt, I have developed a prototype for interactive graph sonification. The delivered interface did not use any AI. This MVP is designed to listen to the graph and identify graphical data, pattern based on auditory feedback that the participant can explore by themselves in-real time without requiring assistance from human or AI.')
+        .subheading('Heuristic Evaluation Assessed Core Usability Principles','The prototype was evaluated following heuristic conditions to ensure its usability.')
+        // TODO: replace with the actual heuristic evaluation table once available
+        .paragraph('Insert heuristic evaluation table here.',true)
+        .subheading('Phase 5 · Deliver Solution','',true)
+        .paragraph('The prototype was accepted as applicable by an ETS-affiliated employee.','item')
+        .paragraph('The completed prototype was presented at the University of Jyväskylä, Finland. Feedback from a lecturer affiliated with ETS and involved in GRE-related assessment work provided independent validation of the solution\'s relevance to high-stakes computer-based assessments.',true)
       .section('impact','Impact')
         .paragraph('Impact of the work here — what changed as a result, for users, the team, or the product.')
       .section('voice-of-users','Voice of Users')
@@ -2339,7 +2350,8 @@
             +(block.text?'<p class="margin-desc-text">'+block.text+'</p>':'');
         case 'paragraph':
         default:
-          return '<p'+(block.large?' class="margin-desc-text"':'')+'>'+(block.text||'')+'</p>';
+          const paraClass=block.large==='item'?' class="margin-item-heading"':block.large?' class="margin-desc-text"':'';
+          return '<p'+paraClass+'>'+(block.text||'')+'</p>';
       }
     }
 
