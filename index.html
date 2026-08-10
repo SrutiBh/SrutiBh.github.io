@@ -2275,10 +2275,20 @@
         .subheading('Established a Foundation for Multimodal Expansion','Designed an extensible data-mapping pipeline that can support future tactile dimensions—including vibration, stiffness, texture, and thermal feedback—alongside configurable auditory parameters.')
         .subheading('Expanded the Design Space for Personalized Interaction','Identified opportunities to let users select sensory representations that fit their exploration strategies, spanning auditory cues such as pitch, volume, sound texture, musical tones, binary beeps, and spatial audio, alongside future haptic and spatial feedback.')
         .subheading('Secured Domain-Expert Validation','Presented the prototype at the University of Jyväskylä and received feedback from an ETS-affiliated lecturer involved in GRE-related assessment work, supporting the relevance of software-based sonification to graphical accessibility in high-stakes testing.')
+      /* Voice of Users — commented off for now, not deleted, in case
+         real participant quotes become available later.
       .section('voice-of-users','Voice of Users')
         .paragraph('Write what users said here — direct quotes, feedback, or reactions from participants.')
+      */
       .section('reflections','Personal Reflections')
-        .paragraph("Write your personal reflections here — what you learned, what you'd do differently, what stayed with you.")
+        .list([
+          'This was my first opportunity to hear directly from blind STEM professionals and students about their experiences with technology in education and workplaces.',
+          'I learned that accessibility is deeply individual: what works for one blind user may be unsuitable for another.',
+          'I learned not to assume that applying AI is inherently better; some users prefer to retain control rather than rely on AI-based recommendations, making it interesting for me to learn more about AI for blind users.',
+          'I learned that gender, personality, background, and lived experience can impact technology preferences and interaction strategies for visually impaired users.',
+          'Coming from a visual computing background, I gained a stronger understanding of how non-visual modalities are important in understanding visual information in the absence of visual abilities.',
+          'Since completing this project, I have become increasingly interested in advancing accessibility for human interaction within "phygital" (physical-digital) technologies.'
+        ],true)
       .build();
 
     // Education Technology project — same format as M.A.R.G.I.N. above:
@@ -2687,6 +2697,7 @@
         const target=btn.dataset.viewLink;
         setHash(target);
         showView(target);
+        document.body.classList.add('sidebar-collapsed'); // clicking Portfolio/Interests minimizes the sidebar, same as clicking a project
       });
     });
 
@@ -2982,6 +2993,7 @@
         const view=btn.dataset.view;
         setHash(view);
         showView(view,{projectId:null});
+        document.body.classList.add('sidebar-collapsed'); // Work/About/Career minimize the sidebar; the name button (below, separate handler) deliberately does not
       });
     });
     const heroScrollBtn=document.getElementById('heroScrollBtn');
