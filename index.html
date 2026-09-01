@@ -158,8 +158,7 @@
        bottom of every page (see .footer-sticky-wrap in the HTML).
        background image is images/others/footer_bg.jpg.
        ================================================================ */
-    .footer-bar{background:url('images/others/footer_bg.jpg') center/cover no-repeat;color:#000;font-family:'Lora',serif;text-align:center;padding:.4rem 3rem;position:relative;min-height:56px;display:flex;align-items:center;justify-content:center;}
-    .footer-berry-img{position:absolute;right:2rem;bottom:0;height:90px;width:auto;pointer-events:none;}
+    .footer-bar{background:url('images/others/gg.jpg') center/cover no-repeat;color:#000;font-family:'Lora',serif;text-align:center;padding:.4rem 3rem;position:relative;min-height:56px;display:flex;align-items:center;justify-content:center;}
     .sidebar-social{display:flex;align-items:flex-end;gap:1.1rem;color:#000;}
     .sidebar-social a{ color:inherit; display:flex; transition:transform .18s ease; }
     .sidebar-social a:hover{ color:#000; transform:scale(1.12); }
@@ -262,13 +261,13 @@
       display:none; flex-direction:column; justify-content:space-between;
       padding:2.5rem 1.25rem; z-index:80; overflow-y:auto;
     }
-    .site-sidebar::before{
+    /* .site-sidebar::before{
       content:''; position:absolute; top:0; left:0; right:0; bottom:0;
       background:
         linear-gradient(90deg, rgba(255,255,255,.88) 0%, rgba(255,255,255,.88) 65%, rgba(255,255,255,1) 100%),
         url('images/others/red.jpg') center/cover no-repeat;
       z-index:-1;
-    }
+    } */
     /* .site-sidebar::after{
       content:''; position:absolute; top:2.5rem; bottom:2.5rem; right:0;
       width:1px;
@@ -754,6 +753,10 @@
     p.hero-tagline{
       font-family:var(--font-serif); font-size:30px; line-height:1.6;
       font-weight:400; font-style:italic; color:#000; max-width:100%; margin:20px 0 0 0; text-align:left;
+    }
+    .work-page-tagline{
+      font-family:var(--font-serif); font-size:20px; line-height:1.5;
+      font-weight:400; font-style:normal; color:#000; margin:0 0 1.5rem; text-align:center;
     }
     .hero-tagline-big{ font-size:33px; }
     .hero-new-inner p.hero-kicker{
@@ -1468,6 +1471,7 @@
     <div class="new-section">
       <div class="new-section-inner">
 
+        <p class="work-page-tagline reveal" data-i18n="work.tagline">I vibe check AI, so that no uncanny valley can surprise you</p>
         <div id="homeWorkPane">
           <div class="work-grid reveal" id="homeWorkGrid"></div>
           <h3 class="gallery-subhead my-other-work-heading reveal" data-i18n="gallery.otherWork">My Other Work</h3>
@@ -1621,7 +1625,6 @@
   <div class="footer-sticky-wrap">
     <footer class="footer-bar">
       <p>© Sruti Bhattacharjee. <span data-i18n="footer.rights">All rights reserved.</span></p>
-      <img class="footer-berry-img" src="images/others/gg.jpg" alt="" aria-hidden="true"/>
     </footer>
   </div>
  
@@ -1705,6 +1708,7 @@
         'about.nav.contact':'Contact Me','about.nav.work':'My Work','about.nav.portfolio':'My Portfolio','about.nav.career':'My Career',
         'menu.about':'About','menu.contact':'Contact','menu.portfolio':'Work','menu.career':'Formation',
         'a11y.skiplink':'Skip to main content','aria.menu':'Menu','gallery.otherWork':'My Other Work',
+        'work.tagline':'I vibe check AI, so that no uncanny valley can surprise you',
         'landing.caption':'Welcome to My Portfolio'
       },
       fr:{
@@ -3427,9 +3431,13 @@ const PLACES=[
        MAIN CONTENT TOP OFFSET — pads the Work/Interests pages (the
        only two using .new-section) down so their content (the cards)
        starts level with the "Work" row in the sidebar nav, instead of
-       the very top of the sidebar. Re-measured on load, resize, and
-       language switch, since the name/role text above it can wrap
-       differently and shift that row's position.
+       the very top of the sidebar. On the Work page specifically, the
+       new tagline line sits in that gap, so its own height is
+       subtracted from the padding first — the tagline occupies the
+       freed space and the cards below it still land on the same row.
+       Re-measured on load, resize, and language switch, since both the
+       sidebar name/role text and the tagline itself can wrap
+       differently and shift things.
        ============================================================ */
     function syncMainContentTopToSidebarRole(){
       const sidebarEl=document.getElementById('siteSidebar');
@@ -3438,7 +3446,16 @@ const PLACES=[
       if(!sidebarEl||!workNavEl||!sections.length)return;
       if(getComputedStyle(sidebarEl).display==='none')return; // sidebar isn't shown right now (mobile, or a collapsed project page) — keep the last computed offset rather than collapsing it to 0
       const offset=Math.round(workNavEl.getBoundingClientRect().top);
-      sections.forEach(function(section){ section.style.paddingTop=offset+'px'; });
+      const taglineEl=document.querySelector('.work-page-tagline');
+      sections.forEach(function(section){
+        let sectionOffset=offset;
+        if(taglineEl && section.contains(taglineEl)){
+          const taglineMarginBottom=parseFloat(getComputedStyle(taglineEl).marginBottom)||0;
+          const taglineHeight=Math.round(taglineEl.getBoundingClientRect().height+taglineMarginBottom);
+          sectionOffset=Math.max(0, offset-taglineHeight);
+        }
+        section.style.paddingTop=sectionOffset+'px';
+      });
     }
     window.addEventListener('resize',function(){
       requestAnimationFrame(()=>requestAnimationFrame(syncMainContentTopToSidebarRole));
@@ -3628,18 +3645,54 @@ const PLACES=[
         this.lastY = this.rawPointerY-rect.top;
       }
 
+      /* Renders one soft, uneven watercolor blotch to an offscreen canvas
+         — a handful of overlapping low-alpha washes plus a slightly
+         darker blurred rim (like pigment migrating outward as a wash
+         dries), matching the reference image's texture. Built once per
+         drop rather than redrawn every frame, since the blur filter is
+         the expensive part; the main loop just drawImage()s the result. */
+      _createBlobSprite(color, radius){
+        const size = Math.ceil(radius * 2.6);
+        const off = document.createElement('canvas');
+        off.width = size; off.height = size;
+        const octx = off.getContext('2d');
+        const cx = size / 2, cy = size / 2;
+        const [r, g, b] = color;
+        const blotchCount = 5 + Math.floor(Math.random() * 3);
+        octx.filter = `blur(${Math.max(1, Math.round(radius * 0.16))}px)`;
+        for(let i = 0; i < blotchCount; i++){
+          const ang = Math.random() * Math.PI * 2;
+          const dist = Math.random() * radius * 0.3;
+          const bx = cx + Math.cos(ang) * dist;
+          const by = cy + Math.sin(ang) * dist;
+          const br = radius * (0.55 + Math.random() * 0.5);
+          octx.beginPath();
+          octx.arc(bx, by, br, 0, Math.PI * 2);
+          octx.fillStyle = `rgba(${r},${g},${b},${(0.16 + Math.random() * 0.12).toFixed(2)})`;
+          octx.fill();
+        }
+        octx.filter = `blur(${Math.max(1, Math.round(radius * 0.1))}px)`;
+        octx.beginPath();
+        octx.arc(cx, cy, radius * 0.9, 0, Math.PI * 2);
+        octx.lineWidth = radius * 0.24;
+        octx.strokeStyle = `rgba(${r},${g},${b},0.22)`;
+        octx.stroke();
+        return off;
+      }
+
       _spawnDrop(x, y, dirX, dirY, speed){
         const color = HeroPaintTrail.COLOR_PALETTE[Math.floor(Math.random() * HeroPaintTrail.COLOR_PALETTE.length)];
         const push = Math.min(260, 60 + speed * 3.2);
+        const radius = 20 + Math.random() * 22;
         this.points.push({
           x, y,
           vx: dirX * push,
           vy: dirY * push,
-          radius: 15 + Math.random() * 16,
-          color,
+          radius,
+          sprite: this._createBlobSprite(color, radius),
           born: performance.now()
         });
-        if(this.points.length > 200) this.points.splice(0, this.points.length - 200);
+        if(this.points.length > 90) this.points.splice(0, this.points.length - 90);
       }
 
       _handleMove(clientX, clientY){
@@ -3671,8 +3724,6 @@ const PLACES=[
         this.lastX = x; this.lastY = y;
       }
 
-      static _lerp(a, b, t){ return a + (b - a) * t; }
-
       _draw(){
         const now = performance.now();
         const ctx = this.ctx;
@@ -3683,7 +3734,6 @@ const PLACES=[
           const age = now - p.born;
           const growT = Math.min(1, age / 90);
           const grown = 1 - Math.pow(1 - growT, 2); // quick simple grow-in
-          const radius = p.radius * grown;
 
           if(age < HeroPaintTrail.SETTLE_DURATION){
             const dt = Math.min(16, 1000/60);
@@ -3697,17 +3747,13 @@ const PLACES=[
           const fadeT = age > HeroPaintTrail.FADE_START
             ? Math.min(1, (age - HeroPaintTrail.FADE_START) / HeroPaintTrail.FADE_DURATION)
             : 0;
-          const [pr, pg, pb] = p.color;
-          const cr = HeroPaintTrail._lerp(pr, 255, fadeT);
-          const cg = HeroPaintTrail._lerp(pg, 255, fadeT);
-          const cb = HeroPaintTrail._lerp(pb, 255, fadeT);
-          const alpha = 0.82 * (1 - fadeT * 0.85);
+          const alpha = 0.9 * (1 - fadeT);
+          const size = p.sprite.width * grown;
 
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, Math.max(radius, 0), 0, Math.PI*2);
-          ctx.fillStyle = `rgba(${cr},${cg},${cb},${alpha})`;
-          ctx.fill();
+          ctx.globalAlpha = Math.max(alpha, 0);
+          ctx.drawImage(p.sprite, p.x - size/2, p.y - size/2, size, size);
         });
+        ctx.globalAlpha = 1;
 
         // Only keep looping while the hero is actually visible or there
         // are still drops mid-animation (letting them finish fading out
