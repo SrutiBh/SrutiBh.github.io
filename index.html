@@ -2992,4 +2992,787 @@
     function setHash(h){
       try{ if(location.hash!=='#'+h)location.hash=h; }catch(err){ }
     }
-    document.querySelectorAll('#topbar [
+    document.querySelectorAll('#topbar [data-view], .site-sidebar [data-view]').forEach(function(btn){
+      btn.addEventListener('click',function(e){
+        e.preventDefault();
+        const view=btn.dataset.view;
+        setHash(view);
+        showView(view,{projectId:null});
+        // Used to add 'sidebar-collapsed' here on every nav click, which
+        // hides .site-sidebar entirely — that also hid the paint-trail
+        // blob (now living in the sidebar background) every time you
+        // clicked Work/About/Career/Interests. Removed so the sidebar,
+        // and the blob with it, stays put across normal navigation.
+      });
+    });
+    const heroScrollBtn=document.getElementById('heroScrollBtn');
+    if(heroScrollBtn)heroScrollBtn.addEventListener('click',function(){
+      const el=document.getElementById('homeAbout');
+      if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+    });
+    window.addEventListener('hashchange',function(){
+      const route=parseHash();
+      showView(route.view,{silent:true,projectId:route.projectId});
+    });
+
+    const LANG_LABEL={en:'En',fr:'FR',sv:'SV',de:'DE',no:'NO'};
+ 
+    function applyStaticTranslations(lang){
+      const dict=TRANSLATIONS[lang]||TRANSLATIONS.en;
+      document.querySelectorAll('[data-i18n]').forEach(function(el){
+        const key=el.getAttribute('data-i18n');
+        if(dict[key]!==undefined) el.innerHTML=dict[key];
+      });
+      document.querySelectorAll('[data-i18n-aria]').forEach(function(el){
+        const key=el.getAttribute('data-i18n-aria');
+        if(dict[key]!==undefined) el.setAttribute('aria-label',dict[key]);
+      });
+      document.documentElement.setAttribute('lang',lang);
+      document.querySelectorAll('.lang-current').forEach(function(el){el.textContent=LANG_LABEL[lang]||'EN';});
+      document.querySelectorAll('.lang-opt').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});
+    }
+ 
+    function setLanguage(lang){
+      if(!TRANSLATIONS[lang])lang='en';
+      currentLang=lang;
+      try{ localStorage.setItem('siteLang',lang); }catch(e){ }
+      applyStaticTranslations(lang);
+      if(journeyMap&&journeyMap.selectedIdx>-1)journeyMap.selectPlace(journeyMap.selectedIdx);
+      document.querySelectorAll('.lang-dd.open').forEach(function(dd){setDropdownOpen(dd,false);});
+      if(typeof window.__syncHeroHeightToBioEnd==='function'){
+        const heroEl=document.getElementById('heroSection');
+        if(heroEl&&heroEl.classList.contains('active')){
+          requestAnimationFrame(()=>requestAnimationFrame(window.__syncHeroHeightToBioEnd));
+        }
+      }
+      if(typeof window.__syncHeroAvatarHeight==='function'){
+        requestAnimationFrame(()=>requestAnimationFrame(window.__syncHeroAvatarHeight));
+      }
+      if(typeof window.__syncMainContentTopToSidebarRole==='function'){
+        requestAnimationFrame(()=>requestAnimationFrame(window.__syncMainContentTopToSidebarRole));
+      }
+    }
+ 
+    function setDropdownOpen(dd,open){
+      dd.classList.toggle('open',open);
+      const btn=dd.querySelector('.lang-btn,.menu-btn');
+      if(btn)btn.setAttribute('aria-expanded',open?'true':'false');
+    }
+    document.addEventListener('keydown',function(e){
+      if(e.key!=='Escape')return;
+      const openDd=document.querySelector('.lang-dd.open,.menu-dd.open');
+      if(!openDd)return;
+      setDropdownOpen(openDd,false);
+      const btn=openDd.querySelector('.lang-btn,.menu-btn');
+      if(btn)btn.focus();
+    });
+ 
+    document.querySelectorAll('.lang-dd').forEach(function(dd){
+      const btn=dd.querySelector('.lang-btn');
+      btn.addEventListener('click',function(e){
+        e.stopPropagation();
+        const willOpen=!dd.classList.contains('open');
+        document.querySelectorAll('.lang-dd').forEach(function(o){setDropdownOpen(o,false);});
+        document.querySelectorAll('.menu-dd.open').forEach(function(o){setDropdownOpen(o,false);});
+        setDropdownOpen(dd,willOpen);
+      });
+      dd.querySelectorAll('.lang-opt').forEach(function(opt){
+        opt.addEventListener('click',function(e){e.stopPropagation();setLanguage(opt.dataset.lang);});
+      });
+    });
+    document.addEventListener('click',function(){document.querySelectorAll('.lang-dd.open').forEach(function(dd){setDropdownOpen(dd,false);});});
+ 
+    document.querySelectorAll('.menu-dd').forEach(function(dd){
+      const btn=dd.querySelector('.menu-btn');
+      btn.addEventListener('click',function(e){
+        e.stopPropagation();
+        const willOpen=!dd.classList.contains('open');
+        document.querySelectorAll('.menu-dd').forEach(function(o){setDropdownOpen(o,false);});
+        document.querySelectorAll('.lang-dd.open').forEach(function(o){setDropdownOpen(o,false);});
+        setDropdownOpen(dd,willOpen);
+      });
+      dd.querySelectorAll('.menu-opt[data-scroll-target]').forEach(function(opt){
+        opt.addEventListener('click',function(e){
+          e.stopPropagation();
+          setDropdownOpen(dd,false);
+          const targetId=opt.dataset.scrollTarget;
+          setHash('home');
+          showView('home',{silent:true});
+          requestAnimationFrame(function(){
+            const el=document.getElementById(targetId);
+            if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+          });
+        });
+      });
+      dd.querySelectorAll('.menu-opt[data-view]').forEach(function(opt){
+        opt.addEventListener('click',function(e){
+          e.stopPropagation();
+          setDropdownOpen(dd,false);
+          const view=opt.dataset.view;
+          setHash(view);
+          showView(view,{projectId:null});
+        });
+      });
+    });
+    document.addEventListener('click',function(){document.querySelectorAll('.menu-dd.open').forEach(function(dd){setDropdownOpen(dd,false);});});
+ 
+    document.querySelectorAll('.footer-link[data-view]').forEach(function(opt){
+      opt.addEventListener('click',function(e){
+        e.preventDefault();
+        const view=opt.dataset.view;
+        setHash(view);
+        showView(view,{projectId:null});
+      });
+    });
+    document.querySelectorAll('.footer-link[data-scroll-target]').forEach(function(opt){
+      opt.addEventListener('click',function(e){
+        e.preventDefault();
+        const targetId=opt.dataset.scrollTarget;
+        setHash('home');
+        showView('home',{silent:true});
+        requestAnimationFrame(function(){
+          const el=document.getElementById(targetId);
+          if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+        });
+      });
+    });
+ 
+const PLACES=[
+      {city:"Kanpur",mark:"spire",top:"#BFEA7A",rim:"#9ED65A",years:["2015","2017","2019"],groups:[{org:"IIT Kanpur, India",logo:"images/logos/iitk.jpg",alt:"IIT Kanpur",experiences:[{title:"Winter Internship",year:"2015",note:"Tessellation and Topological Pattern Generation and Recognition",title_fr:"Stage d'hiver",title_zh:"寒假实习",note_fr:"Génération et reconnaissance de motifs topologiques par pavage",note_zh:"镶嵌与拓扑图案的生成与识别",title_de:"Winterpraktikum",note_de:"Erzeugung und Erkennung von Tessellierungs- und topologischen Mustern",title_ja:"冬季インターンシップ",note_ja:"テッセレーションおよびトポロジカルパターンの生成と認識",title_sv:"Vinterpraktik",note_sv:"Tessellering samt generering och igenkänning av topologiska mönster",title_no:"Vinterpraktikant",note_no:"Tessellering samt generering og gjenkjenning av topologiske mønstre",tags:["Persistent Homology","Simplicial Complexes","Periodic-Aperiodic","Convex-Concave"]},{title:"OffCycle Internship",year:"2017",note:"Old Document Restoration using Image Processing, Video Subtitle Removal using Inpainting",title_fr:"Stage hors cycle",title_zh:"非周期实习",note_fr:"Restauration de documents anciens par traitement d'image, suppression de sous-titres vidéo par inpainting",note_zh:"利用图像处理技术修复旧文档,利用图像修复技术去除视频字幕",title_de:"Praktikum außerhalb des Zyklus",note_de:"Restaurierung alter Dokumente mittels Bildverarbeitung, Entfernung von Videountertiteln mittels Inpainting",title_ja:"オフサイクルインターンシップ",note_ja:"画像処理を用いた古文書の修復、インペインティングを用いた動画字幕の除去",title_sv:"Praktik utanför ordinarie cykel",note_sv:"Restaurering av gamla dokument med bildbehandling, borttagning av videotextning med inpainting",title_no:"Praktikant utenfor ordinær syklus",note_no:"Restaurering av gamle dokumenter med bildebehandling, fjerning av videotekst med inpainting",tags:["Matlab","Fourier Transform","Singular value decomposition","Harmonic analysis","Morphological Operations","PDE"]},{title:"Research Assistantship",year:"2019",note:"Musical Script Generation from Harmonium Playing Video using Computer Vision",title_fr:"Assistanat de recherche",title_zh:"研究助理",note_fr:"Génération de partitions musicales à partir de vidéos de jeu à l'harmonium par vision par ordinateur",note_zh:"利用计算机视觉从演奏簧风琴的视频中生成乐谱",title_de:"Forschungsassistenz",note_de:"Erzeugung von Notenschrift aus Harmonium-Spielvideos mittels Computer Vision",title_ja:"研究助手",note_ja:"コンピュータビジョンを用いたハルモニウム演奏動画からの楽譜生成",title_sv:"Forskningsassistenttjänst",note_sv:"Generering av notskrift från harmoniumspelande video med datorseende",title_no:"Forskningsassistentstilling",note_no:"Generering av notasjon fra harmoniumspillende video med datasyn",tags:["Python","Pytorch","OpenCV","Matlab"]}]}]},
+      {city:"Chennai",mark:"arch",top:"#C7F66C",rim:"#9BE548",years:["2016"],groups:[{org:"IIT Madras, India",logo:"images/logos/iitm.png",alt:"IIT Madras",experiences:[{title:"Summer Internship",year:"2016",note:"Cloth Simulation and Modelling",title_fr:"Stage d'été",title_zh:"暑期实习",note_fr:"Simulation et modélisation de tissus",note_zh:"布料模拟与建模",title_de:"Sommerpraktikum",note_de:"Stoffsimulation und -modellierung",title_ja:"夏季インターンシップ",note_ja:"布のシミュレーションとモデリング",title_sv:"Sommarpraktik",note_sv:"Tygsimulering och modellering",title_no:"Sommerpraktikant",note_no:"Tøysimulering og modellering",tags:["OpenGL","Visual C++","Bullet Physics","Rigid_Body-Cloth-Collision"]}]}]},
+      {city:"Kharagpur",mark:"spire",top:"#AEEF57",rim:"#84D933",years:["2017","2018","2019","2020"],groups:[{org:"IIT Kharagpur, India",logo:"images/logos/iitkgp.png",alt:"IIT Kharagpur",experiences:[{title:"Visiting Undergraduate Thesis Student",year:"2017",note:"Effectiveness of Image Processing Methods on Counterfeit Integrated Circuit (IC) Detection",title_fr:"Étudiante invitée en mémoire de licence",title_zh:"本科毕业论文访问学生",note_fr:"Efficacité des méthodes de traitement d'image pour la détection de circuits intégrés contrefaits",note_zh:"图像处理方法在假冒集成电路(IC)检测中的有效性",title_de:"Gast-Bachelorarbeitsstudentin",note_de:"Wirksamkeit von Bildverarbeitungsmethoden bei der Erkennung gefälschter integrierter Schaltkreise (IC)",title_ja:"学部卒業論文訪問学生",note_ja:"画像処理手法による偽造集積回路(IC)検出の有効性",title_sv:"Gäststudent för kandidatuppsats",note_sv:"Effektiviteten av bildbehandlingsmetoder för upptäckt av förfalskade integrerade kretsar (IC)",title_no:"Gjestestudent for bacheloroppgave",note_no:"Effektiviteten av bildebehandlingsmetoder for oppdagelse av forfalskede integrerte kretser (IC)",tags:["Matlab","OpenCV"]},{title:"Visiting Undergraduate Thesis Student",year:"2018",note:"Effectiveness of Computer Vision Methods on Counterfeit Integrated Circuit (IC) Detection",title_fr:"Étudiante invitée en mémoire de licence",title_zh:"本科毕业论文访问学生",note_fr:"Efficacité des méthodes de vision par ordinateur pour la détection de circuits intégrés contrefaits",note_zh:"计算机视觉方法在假冒集成电路(IC)检测中的有效性",title_de:"Gast-Bachelorarbeitsstudentin",note_de:"Wirksamkeit von Computer-Vision-Methoden bei der Erkennung gefälschter integrierter Schaltkreise (IC)",title_ja:"学部卒業論文訪問学生",note_ja:"コンピュータビジョン手法による偽造集積回路(IC)検出の有効性",title_sv:"Gäststudent för kandidatuppsats",note_sv:"Effektiviteten av datorseende-metoder för upptäckt av förfalskade integrerade kretsar (IC)",title_no:"Gjestestudent for bacheloroppgave",note_no:"Effektiviteten av datasyn-metoder for oppdagelse av forfalskede integrerte kretser (IC)",tags:["Dataset Generation","Masked RCNN","YOLOv2","Tensorflow","Anaconda Spyder","Python","OpenCV","Matplotlib"]},{title:"Remote Research Assistant",year:"2019",note:"Changes in Emotional Perception for Indian Classical Music Listeners",title_fr:"Assistante de recherche à distance",title_zh:"远程研究助理",note_fr:"Évolution de la perception émotionnelle chez les auditeurs de musique classique indienne",note_zh:"印度古典音乐听众情绪感知的变化",title_de:"Externe Forschungsassistentin",note_de:"Veränderungen der emotionalen Wahrnehmung bei Hörern indischer klassischer Musik",title_ja:"リモート研究助手",note_ja:"インド古典音楽聴取者の感情知覚の変化",title_sv:"Distansforskningsassistent",note_sv:"Förändringar i emotionell perception hos lyssnare av indisk klassisk musik",title_no:"Fjernforskningsassistent",note_no:"Endringer i emosjonell persepsjon hos lyttere av indisk klassisk musikk",tags:["Matlab"]},{title:"Research Associate",year:"2020",note:"DeepFakeFace Video Detection",title_fr:"Associée de recherche",title_zh:"研究助理(副研究员)",note_fr:"Détection vidéo de deepfakes faciaux",note_zh:"DeepFake换脸视频检测",title_de:"Wissenschaftliche Mitarbeiterin",note_de:"Erkennung von DeepFake-Gesichtsvideos",title_ja:"リサーチアソシエイト",note_ja:"ディープフェイク顔動画の検出",title_sv:"Forskningsmedarbetare",note_sv:"Detektering av deepfake-ansiktsvideor",title_no:"Forskningsmedarbeider",note_no:"Deteksjon av deepfake-ansiktsvideoer",tags:["Python","Pytorch","Interframe Differences"]}]}]},
+      {city:"Chicago",mark:"pavilion",top:"#b8bfb8",rim:"#969d96",years:["2018","2019"],groups:[{org:"UIUC, USA",logo:"images/logos/uiuc.png",alt:"UIUC",experiences:[{title:"Remote Intern",year:"2018–2019",note:"Infant's Emotion-based Need Detection using PyraMiD-LSTM",title_fr:"Stagiaire à distance",title_zh:"远程实习生",note_fr:"Détection des besoins des nourrissons basée sur les émotions à l'aide de PyraMiD-LSTM",note_zh:"利用PyraMiD-LSTM进行基于情绪的婴儿需求检测",title_de:"Externe Praktikantin",note_de:"Emotionsbasierte Bedürfniserkennung bei Säuglingen mittels PyraMiD-LSTM",title_ja:"リモートインターン",note_ja:"PyraMiD-LSTMを用いた乳児の感情に基づくニーズ検出",title_sv:"Distanspraktikant",note_sv:"Känslobaserad behovsdetektering hos spädbarn med PyraMiD-LSTM",title_no:"Fjernpraktikant",note_no:"Følelsesbasert behovsgjenkjenning hos spedbarn med PyraMiD-LSTM",tags:["Python","PyTorch","DyNet","XNMT","Signal Processing"]}]}]},
+      {city:"Lyon",mark:"arch",top:"#c2c9c0",rim:"#a0a89e",years:["2019"],groups:[{org:"CNRS at Claude Bernard Lyon 1, France",logo:"images/logos/cnrs.png",alt:"CNRS",experiences:[{title:"Remote Research",year:"2019",note:"Symmetry Pattern Detection and Analysis",title_fr:"Recherche à distance",title_zh:"远程研究",note_fr:"Détection et analyse de motifs de symétrie",note_zh:"对称图案检测与分析",title_de:"Externe Forschung",note_de:"Erkennung und Analyse von Symmetriemustern",title_ja:"リモート研究",note_ja:"対称パターンの検出と分析",title_sv:"Distansforskning",note_sv:"Detektering och analys av symmetrimönster",title_no:"Fjernforskning",note_no:"Deteksjon og analyse av symmetrimønstre",tags:["Tessellation","Computational Crystallography","Frieze group","Wallpaper Group","Point Group","Space group"]}]}]},
+      {city:"Kolkata",mark:"pavilion",top:"#85B7EB",rim:"#378ADD",years:["2019"],groups:[{org:"NSHM College, India",logo:"images/logos/nshm.png",alt:"NSHM",experiences:[{title:"Visiting Lecturer",year:"2019",note:"Guest Lecturer for the course '3D Computer Graphics using OpenGL and C++'",title_fr:"Chargée de cours invitée",title_zh:"客座讲师",note_fr:"Enseignante invitée pour le cours « Infographie 3D avec OpenGL et C++ »",note_zh:"担任课程《使用OpenGL与C++的三维计算机图形学》客座讲师",title_de:"Gastdozentin",note_de:"Gastdozentin für den Kurs „3D-Computergrafik mit OpenGL und C++“",title_ja:"客員講師",note_ja:"「OpenGLとC++による3Dコンピュータグラフィックス」講座のゲスト講師",title_sv:"Gästföreläsare",note_sv:"Gästföreläsare för kursen \u201d3D-datorgrafik med OpenGL och C++\u201d",title_no:"Gjesteforeleser",note_no:"Gjesteforeleser for kurset \u00ab3D-datagrafikk med OpenGL og C++\u00bb",tags:["Visual Studio","C++","OpenGL","Co-ordinate Geometry","Vectors"]}]}]},
+      {city:"Stockholm",mark:"spire",top:"#FF9A2E",rim:"#E07010",years:["2020-2022","2024-2025"],groups:[{org:"KTH Royal Institute of Technology, Sweden",logo:"images/logos/kth.png",alt:"KTH",experiences:[{title:"Teaching Assistant",year:"2020, 2022, 2024, 2025",note:"Computer Visualisation, Machine Learning, Python Programming Fundamentals, Multivariable Calculus, Computer Networking",title_fr:"Assistante d'enseignement",title_zh:"助教",note_fr:"Visualisation informatique, apprentissage automatique, fondamentaux de la programmation Python, calcul à plusieurs variables, réseaux informatiques",note_zh:"计算机可视化、机器学习、Python编程基础、多元微积分、计算机网络",title_de:"Wissenschaftliche Hilfskraft (Lehre)",note_de:"Computervisualisierung, Maschinelles Lernen, Grundlagen der Python-Programmierung, Mehrdimensionale Analysis, Computernetzwerke",title_ja:"ティーチングアシスタント",note_ja:"コンピュータビジュアライゼーション、機械学習、Pythonプログラミング基礎、多変数微積分、コンピュータネットワーク",title_sv:"Undervisningsassistent",note_sv:"Datorvisualisering, maskininlärning, grunderna i Python-programmering, flervariabelanalys, datornätverk",title_no:"Undervisningsassistent",note_no:"Datavisualisering, maskinlæring, grunnleggende Python-programmering, flervariabelanalyse, datanettverk",tags:["Python","Pytorch","OpenGL","C++","Inviwo","Tomcat 9","Docker","DBMS/SQL","Spring","Netbeans 12 JDK 8","Java","Jakarta Mail"]},{title:"Research Assistant",year:"2021-2022",note:"Machine Learning for Digital Pathology",title_fr:"Assistante de recherche",title_zh:"研究助理",note_fr:"Apprentissage automatique pour la pathologie numérique",note_zh:"用于数字病理学的机器学习",title_de:"Forschungsassistentin",note_de:"Maschinelles Lernen für digitale Pathologie",title_ja:"研究助手",note_ja:"デジタル病理学のための機械学習",title_sv:"Forskningsassistent",note_sv:"Maskininlärning för digital patologi",title_no:"Forskningsassistent",note_no:"Maskinlæring for digital patologi",tags:["PyQT","Pytorch","HTML","JavaScript","PyQT"]}]},{org:"Ericsson, Sweden",logo:"images/logos/Ericsson2.jpg",alt:"Ericsson",experiences:[{title:"Summer R&D Intern",year:"2021",note:" Examined Impact of Network Changes on Perception in Haptic Teleoperation System",title_fr:"Stagiaire R&D d'été",title_zh:"暑期研发实习生",note_fr:"Étude de l'impact des changements de réseau sur la perception dans un système de téléopération haptique",note_zh:"研究了网络变化对触觉遥操作系统中感知的影响",title_de:"Sommerpraktikantin F&E",note_de:"Untersuchung des Einflusses von Netzwerkänderungen auf die Wahrnehmung in haptischen Teleoperationssystemen",title_ja:"夏季研究開発インターン",note_ja:"触覚遠隔操作システムにおける知覚へのネットワーク変化の影響を調査",title_sv:"Sommarpraktikant inom FoU",note_sv:" Undersökte hur nätverksförändringar påverkar perception i haptiska teleoperationssystem",title_no:"Sommerpraktikant innen FoU",note_no:" Undersøkte hvordan nettverksendringer påvirker persepsjon i haptiske teleoperasjonssystemer",tags:["Python","ROS","Omni Haptic","Miro","Kanban","A/B Testing"]}]}]},
+      {city:"Lausanne",mark:"pavilion",top:"#F9E04B",rim:"#E6C418",years:["2021","2022","2023"],groups:[{org:"EPFL, Switzerland",logo:"images/logos/epfl.png",alt:"EPFL",experiences:[{title:"Graduate Exchange in Computer and Communication Sciences",year:"2021 – 2022",note:"MSc Courses",title_fr:"Échange de troisième cycle en sciences informatiques et de la communication",title_zh:"计算机与通信科学研究生交换项目",note_fr:"Cours de master",note_zh:"硕士课程",title_de:"Graduiertenaustausch in Informatik und Kommunikationswissenschaften",note_de:"Master-Kurse",title_ja:"コンピュータ・コミュニケーション科学における大学院交換留学",note_ja:"修士課程コース",title_sv:"Utbytesstudent inom data- och kommunikationsvetenskap",note_sv:"Masterkurser",title_no:"Utvekslingsstudent innen data- og kommunikasjonsvitenskap",note_no:"Masterkurs",tags:["Digital Humanities","Computer Vision","Virtual Reality","City Design"]},{title:"Visiting Graduate Thesis Student in Computer Science",year:"2022 – 2023",note:"Teacher's Perspective and Tacit Knowledge in Virtual Reality based Education Technology Development",title_fr:"Étudiante invitée en mémoire de master en informatique",title_zh:"计算机科学硕士论文访问学生",note_fr:"Perspective des enseignants et connaissances tacites dans le développement de technologies éducatives basées sur la réalité virtuelle",note_zh:"基于虚拟现实的教育技术开发中的教师视角与隐性知识",title_de:"Gast-Masterarbeitsstudentin in Informatik",note_de:"Perspektive der Lehrenden und implizites Wissen bei der Entwicklung VR-basierter Bildungstechnologie",title_ja:"コンピュータサイエンス修士論文訪問学生",note_ja:"VRベース教育テクノロジー開発における教師の視点と暗黙知",title_sv:"Gästmasterstudent i datavetenskap",note_sv:"Lärarperspektiv och tyst kunskap i utveckling av VR-baserad utbildningsteknik",title_no:"Gjeste-masterstudent i informatikk",note_no:"Lærerperspektiv og taus kunnskap i utvikling av VR-basert utdanningsteknologi",tags:["Startup","VRLE","UX Research"]}]},{org:"University of Lausanne, Switzerland",logo:"images/logos/UNIL.jpg",alt:"UNIL",experiences:[{title:"Research Assistant",year:"2023",note:"Collaborative Programming Learning Media for Novices in Hybrid Classes",title_fr:"Assistante de recherche",title_zh:"研究助理",note_fr:"Supports d'apprentissage collaboratif de la programmation pour débutants en classes hybrides",note_zh:"面向混合课堂编程初学者的协作式学习媒介",title_de:"Forschungsassistentin",note_de:"Kollaborative Lernmedien für Programmier-Einsteiger in hybriden Klassen",title_ja:"研究助手",note_ja:"ハイブリッドクラスにおける初心者向け協働プログラミング学習メディア",title_sv:"Forskningsassistent",note_sv:"Kollaborativa läromedel för programmeringsnybörjare i hybridklasser",title_no:"Forskningsassistent",note_no:"Kollaborative læremidler for programmeringsnybegynnere i hybridklasser",tags:["UX Research","EdTech"]}]}]},
+      {city:"Jyväskylä",mark:"arch",top:"#F9E04B",rim:"#E6C418",years:["2025"],groups:[{org:"University of Jyväskylä, Finland",logo:"images/logos/jyu_transparent.png",alt:"JYU",experiences:[{title:"Summer Trainee",year:"2025",note:"Accessible Multimodal Interactive Graph Navigation System",title_fr:"Stagiaire d'été",title_zh:"暑期实习生",note_fr:"Système accessible de navigation graphique interactive multimodale",note_zh:"无障碍多模态交互式图形导航系统",title_de:"Barrierefreies multimodales interaktives Graphennavigationssystem",title_ja:"アクセシブルなマルチモーダル・インタラクティブグラフナビゲーションシステム",note_de:"Barrierefreies multimodales interaktives Graphennavigationssystem",note_ja:"アクセシブルなマルチモーダル・インタラクティブグラフナビゲーションシステム",title_sv:"Sommarpraktikant",note_sv:"Tillgängligt multimodalt interaktivt system för grafnavigering",title_no:"Sommerpraktikant",note_no:"Tilgjengelig multimodalt interaktivt system for grafnavigering",tags:["Accessibility","Multimodal Design","Figma","Claude AI","Python"]}]}]},
+      {city:"Paris",mark:"arch",top:"#E8B6C6",rim:"#D48CA5",years:["2025-Present"],groups:[{org:"CAEL - Centre d'Animation Expression Loisirs de Bourg-La-Reine",logo:"images/logos/cael.png",alt:"CAEL",experiences:[{title:"French Language Training",year:"2025-Present",note:"Ateliers Sociolinguistisques A1−A2",title_fr:"Formation en langue française",title_zh:"法语培训",note_fr:"Ateliers Sociolinguistisques A1−A2",note_zh:"社会语言学工作坊 A1−A2",title_de:"Französischsprachtraining",note_de:"Soziolinguistische Workshops A1−A2",title_ja:"フランス語トレーニング",note_ja:"社会言語学ワークショップ A1−A2",title_sv:"Franskspråksträning",note_sv:"Ateliers Sociolinguistiques A1−A2",title_no:"Fransk språktrening",note_no:"Ateliers Sociolinguistiques A1−A2",tags:["French","DELF A2"]}]}]}
+    ];
+ 
+    const POSITIONS=[{x:-100,y:500},{x:-100,y:1300},{x:400,y:900},{x:820,y:350},{x:820,y:1450},{x:1400,y:900},{x:2500,y:900},{x:1950,y:500},{x:1950,y:1300},{x:3100,y:900}];
+    /* ================================================================
+       JOURNEY MAP — the draggable/zoomable career map on the Career
+       page. Was previously ~15 loose closure variables (S, selectedIdx,
+       suppressClose, cardState, ddrag, resizeDir, etc.) sharing one
+       function scope — hard to see what state existed without reading
+       every line. Now a real class: every piece of state is a named
+       instance property (this.camera, this.drag, this.resize, etc.),
+       and every behavior is a method. Functionally identical to the
+       previous version — this is a structural cleanup, not a redesign.
+       ================================================================ */
+    class JourneyMap {
+      constructor(rootEl, places, positions){
+        this.shell = rootEl;
+        this.world = document.getElementById('jworld');
+        this.vp = document.getElementById('jvp');
+        this.detail = document.getElementById('jdetail');
+        this.detailBody = document.getElementById('jdetailBody');
+        this.dtitle = document.getElementById('jdtitle');
+        this.dsub = document.getElementById('jdsubtitle');
+        this.dcards = document.getElementById('jcards');
+        this.detailHeader = document.getElementById('jdetailHeader');
+
+        // Pan/zoom camera (was the loose "S" object)
+        this.camera = { s:1, x:0, y:0, ts:1, tx:0, ty:0, minS:.05, maxS:2.2 };
+
+        this.islands = places.map((p,i)=>({...p, ...positions[i], el:null}));
+        this.selectedIdx = -1;
+        this.suppressClose = false;
+        this.cardState = { left:null, top:null, width:null, height:null };
+
+        // Detail-card drag state (was ddrag/ddx/ddy/dStartL/dStartT)
+        this.drag = { active:false, x:0, y:0, startLeft:0, startTop:0 };
+        // Detail-card resize state (was rdrag/resizeDir/rdx/rdy/rStart*)
+        this.resize = { active:false, dir:'', x:0, y:0, startW:0, startH:0, startLeft:0, startTop:0 };
+        this.MIN_W = 240;
+        this.MIN_H = 80;
+
+        this._init();
+      }
+
+      _markHTML(t){
+        return t==='spire' ? '<div class="jmark-spire"></div>'
+          : t==='arch' ? '<div class="jmark-arch"></div>'
+          : '<div class="jmark-pavilion"></div>';
+      }
+
+      _yearsLabel(p){
+        if(!p.years || !p.years.length) return '';
+        const lines = [];
+        for(let i=0;i<p.years.length;i+=2) lines.push(p.years.slice(i,i+2).join(', '));
+        return lines.join('<br>');
+      }
+
+      _buildIslands(){
+        this.islands.forEach((p,i)=>{
+          const el = document.createElement('div');
+          el.className = 'jisland';
+          el.style.cssText = `left:${p.x}px;top:${p.y}px`;
+          el.setAttribute('role','button');
+          el.setAttribute('tabindex','0');
+          el.setAttribute('aria-label', p.city);
+          el.innerHTML = `<div class="jinner"><div class="jlabel"><div class="jcity">${p.city}</div></div><div class="jbody"><div class="jtop" style="background:${p.top}"></div><div class="jrim" style="background:${p.rim}"></div><div class="jbot"></div>${this._markHTML(p.mark)}<div class="jtree" style="left:114px;top:108px"></div><div class="jtree" style="left:168px;top:88px;transform:scale(1.15)"></div><div class="jtree" style="left:82px;top:96px;transform:scale(0.85)"></div><div class="jstone" style="left:158px;top:162px"></div><div class="jstone" style="left:178px;top:170px"></div></div></div><div class="jyears">${this._yearsLabel(p)}</div>`;
+          el.addEventListener('click', e=>{ e.stopPropagation(); this.selectPlace(i); });
+          el.addEventListener('keydown', e=>{
+            if(e.key==='Enter'||e.key===' '){ e.preventDefault(); e.stopPropagation(); this.selectPlace(i); }
+          });
+          this.world.appendChild(el);
+          p.el = el;
+        });
+      }
+
+      _saveCardState(){
+        if(!this.detail.classList.contains('open')) return;
+        this.cardState.left = this.detail.style.left;
+        this.cardState.top = this.detail.style.top;
+        this.cardState.width = this.detail.style.width;
+        this.cardState.height = this.detail.style.height;
+      }
+
+      _applyCardState(){
+        if(this.cardState.left!==null) this.detail.style.left = this.cardState.left;
+        if(this.cardState.top!==null) this.detail.style.top = this.cardState.top;
+        if(this.cardState.width!==null) this.detail.style.width = this.cardState.width;
+        if(this.cardState.height!==null) this.detail.style.height = this.cardState.height;
+      }
+
+      selectPlace(i){
+        this.suppressClose = true;
+        this.selectedIdx = i;
+        const p = this.islands[i];
+        this.islands.forEach((is,j)=>is.el.classList.toggle('sel', j===i));
+        this.dtitle.textContent = p.city;
+        this.dsub.textContent = '';
+        this.dcards.innerHTML = (p.groups||[]).map(g=>{
+          const logoImg = `<img src="${g.logo||''}" alt="${g.alt||g.org||p.city}" loading="lazy" decoding="async" onerror="var p=this.parentElement;p.innerHTML='🏛️';p.style.fontSize='1.25rem';">`;
+          const roles = (g.experiences||[]).map(e=>{
+            const tt = e['title_'+currentLang] || e.title;
+            const nn = e['note_'+currentLang] || e.note;
+            return `<div class="jrole"><div class="jct">${tt}</div><div class="jcy">${e.year}</div><div class="jcn">${nn}</div><div class="jtags">${(e.tags||[]).map(t=>`<span class="jtag">${t}</span>`).join('')}</div></div>`;
+          }).join('');
+          return `<div class="jcard"><div class="jcard-head"><div class="jlogo">${logoImg}</div><div class="jorg-wrap"><div class="jorg">${g.org||p.city}</div></div></div><div class="jroles">${roles}</div></div>`;
+        }).join('');
+        const wasOpen = this.detail.classList.contains('open');
+        if(wasOpen){
+          this._saveCardState();
+          this.detail.style.transition = 'none';
+          this._applyCardState();
+          requestAnimationFrame(()=>{ this.detail.style.transition = ''; });
+        } else {
+          this.detail.classList.add('open');
+          if(this.cardState.left!==null) this._applyCardState();
+          else this._positionDetail();
+        }
+        this.focusOn(p.x, p.y, 1.1);
+        setTimeout(()=>{ this.suppressClose = false; }, 50);
+      }
+
+      closeDetail(){
+        if(this.detail.classList.contains('open')) this._saveCardState();
+        this.detail.classList.remove('open');
+        this.islands.forEach(is=>is.el.classList.remove('sel'));
+        this.selectedIdx = -1;
+      }
+
+      focusOn(wx, wy, zoom){
+        const vw = this.vp.clientWidth, vh = this.vp.clientHeight, cam = this.camera;
+        cam.ts = Math.max(cam.minS, Math.min(cam.maxS, zoom));
+        cam.tx = vw*.5 - wx*cam.ts;
+        cam.ty = vh*.5 - wy*cam.ts;
+      }
+
+      fitAll(){
+        const vw = this.vp.clientWidth||680, vh = this.vp.clientHeight||620;
+        let minX=Infinity, maxX=-Infinity, minY=Infinity, maxY=-Infinity;
+        this.islands.forEach(p=>{
+          minX=Math.min(minX,p.x-300); maxX=Math.max(maxX,p.x+300);
+          minY=Math.min(minY,p.y-380); maxY=Math.max(maxY,p.y+720);
+        });
+        const cW=maxX-minX, cH=maxY-minY, s=Math.min(vw/cW, vh/cH), cam=this.camera;
+        cam.ts = Math.max(cam.minS, Math.min(cam.maxS, s));
+        cam.tx = (vw-cW*cam.ts)*.5 - minX*cam.ts;
+        cam.ty = (vh-cH*cam.ts)*.5 - minY*cam.ts + 100;
+      }
+
+      resetView(){ this.fitAll(); this.closeDetail(); }
+
+      _positionDetail(){
+        const vw = this.vp.clientWidth;
+        this.detail.style.left = Math.max(14, Math.round(vw*0.237)) + 'px';
+        this.detail.style.top = '0px';
+        this.detail.style.right = 'auto';
+        this.detail.style.bottom = 'auto';
+        this._saveCardState();
+      }
+
+      _clampDetailPos(){
+        const vw=this.vp.clientWidth, vh=this.vp.clientHeight, dw=this.detail.offsetWidth, dh=this.detail.offsetHeight;
+        this.detail.style.left = Math.max(0, Math.min(vw-dw, parseFloat(this.detail.style.left)||0)) + 'px';
+        this.detail.style.top = Math.max(0, Math.min(vh-dh, parseFloat(this.detail.style.top)||0)) + 'px';
+      }
+
+      _tick = () => {
+        const e = .13, cam = this.camera;
+        cam.s += (cam.ts-cam.s)*e;
+        cam.x += (cam.tx-cam.x)*e;
+        cam.y += (cam.ty-cam.y)*e;
+        this.world.style.transform = `translate(${cam.x}px,${cam.y}px) scale(${cam.s})`;
+        requestAnimationFrame(this._tick);
+      };
+
+      _bindEvents(){
+        this.vp.addEventListener('click', e=>{
+          if(this.detail.contains(e.target)) return;
+          if(this.suppressClose) return;
+          if(this.detail.classList.contains('open')) this.resetView();
+        });
+        document.addEventListener('click', e=>{
+          if(!this.detail.classList.contains('open')) return;
+          if(this.shell.contains(e.target)) return; // clicks inside the map are already handled above
+          if(this.suppressClose) return;
+          this.resetView();
+        });
+        ['pointerdown','click','dblclick'].forEach(evt=>{
+          this.detail.addEventListener(evt, e=>e.stopPropagation());
+        });
+        ['wheel','touchstart','touchmove'].forEach(evt=>{
+          this.detail.addEventListener(evt, e=>e.stopPropagation(), {passive:true});
+        });
+        this.detailBody.addEventListener('pointerdown', e=>e.stopPropagation());
+        this.detailBody.addEventListener('wheel', e=>e.stopPropagation(), {passive:true});
+
+        this.detailHeader.addEventListener('pointerdown', e=>{
+          if(e.target.closest('button')) return;
+          this.drag.active = true;
+          this.detailHeader.setPointerCapture(e.pointerId);
+          const r = this.detail.getBoundingClientRect(), vr = this.vp.getBoundingClientRect();
+          this.drag.startLeft = r.left-vr.left;
+          this.drag.startTop = r.top-vr.top;
+          this.drag.x = e.clientX; this.drag.y = e.clientY;
+          e.stopPropagation();
+        });
+        this.detailHeader.addEventListener('pointermove', e=>{
+          if(!this.drag.active) return;
+          const dx=e.clientX-this.drag.x, dy=e.clientY-this.drag.y;
+          const vw=this.vp.clientWidth, vh=this.vp.clientHeight, dw=this.detail.offsetWidth, dh=this.detail.offsetHeight;
+          this.detail.style.left = Math.max(0, Math.min(vw-dw, this.drag.startLeft+dx)) + 'px';
+          this.detail.style.top = Math.max(0, Math.min(vh-dh, this.drag.startTop+dy)) + 'px';
+          this._saveCardState();
+          e.stopPropagation();
+        });
+        this.detailHeader.addEventListener('pointerup', e=>{ this.drag.active=false; e.stopPropagation(); });
+
+        this.detail.querySelectorAll('.jresize').forEach(h=>{
+          h.addEventListener('pointerdown', e=>{
+            this.resize.active = true;
+            this.resize.dir = h.dataset.dir;
+            h.setPointerCapture(e.pointerId);
+            const r = this.detail.getBoundingClientRect(), vr = this.vp.getBoundingClientRect();
+            this.resize.startW = r.width; this.resize.startH = r.height;
+            this.resize.startLeft = r.left-vr.left; this.resize.startTop = r.top-vr.top;
+            this.resize.x = e.clientX; this.resize.y = e.clientY;
+            e.stopPropagation();
+          });
+          h.addEventListener('pointermove', e=>{
+            if(!this.resize.active) return;
+            const dx=e.clientX-this.resize.x, dy=e.clientY-this.resize.y;
+            const vw=this.vp.clientWidth, vh=this.vp.clientHeight, dir=this.resize.dir;
+            let nW=this.resize.startW, nH=this.resize.startH, nL=this.resize.startLeft, nT=this.resize.startTop;
+            if(dir.includes('e')) nW = Math.max(this.MIN_W, Math.min(vw-nL, this.resize.startW+dx));
+            if(dir.includes('s')) nH = Math.max(this.MIN_H, Math.min(vh-nT, this.resize.startH+dy));
+            if(dir.includes('w')){
+              nL = Math.max(0, Math.min(this.resize.startLeft+this.resize.startW-this.MIN_W, this.resize.startLeft+dx));
+              nW = this.resize.startW - (nL-this.resize.startLeft);
+            }
+            if(dir.includes('n')){
+              nT = Math.max(0, Math.min(this.resize.startTop+this.resize.startH-this.MIN_H, this.resize.startTop+dy));
+              nH = this.resize.startH - (nT-this.resize.startTop);
+            }
+            if(nL+nW>vw) nW = vw-nL;
+            if(nT+nH>vh) nH = vh-nT;
+            this.detail.style.left = nL+'px';
+            this.detail.style.top = nT+'px';
+            this.detail.style.width = nW+'px';
+            this.detail.style.height = nH+'px';
+            this._saveCardState();
+            e.stopPropagation();
+          });
+          h.addEventListener('pointerup', e=>{ this.resize.active=false; this.resize.dir=''; e.stopPropagation(); });
+        });
+
+        window.addEventListener('resize', ()=>{
+          if(!this.detail.classList.contains('open')) this.fitAll();
+          else this._clampDetailPos();
+        });
+      }
+
+      _init(){
+        this._buildIslands();
+        this._bindEvents();
+        requestAnimationFrame(()=>requestAnimationFrame(()=>{
+          this.fitAll();
+          this.camera.s = this.camera.ts;
+          this.camera.x = this.camera.tx;
+          this.camera.y = this.camera.ty;
+          this._tick();
+        }));
+      }
+    }
+
+    let journeyMap = null;
+    if(document.getElementById('jshell')){
+      journeyMap = new JourneyMap(document.getElementById('jshell'), PLACES, POSITIONS);
+    }
+    applyStaticTranslations(currentLang);
+    (function(){ const route=parseHash(); showView(route.view,{silent:true,projectId:route.projectId}); })();
+
+    /* ============================================================
+       MAIN CONTENT TOP OFFSET — pads the Work/Interests pages (the
+       only two using .new-section) down so their content (the cards)
+       starts level with the "Work" row in the sidebar nav, instead of
+       the very top of the sidebar. The Work page's tagline is
+       positioned separately, absolutely, centered in the middle of
+       that whitespace gap (halfway between the top of the page and
+       where the cards start) rather than tied to any particular
+       sidebar row. Re-measured on load, resize, and language switch,
+       since the sidebar name/role text and the tagline itself can both
+       wrap differently and shift things.
+       ============================================================ */
+    function syncMainContentTopToSidebarRole(){
+      const sidebarEl=document.getElementById('siteSidebar');
+      const workNavEl=document.querySelector('.sidebar-nav-opt[data-view="portfolio"]');
+      const sections=document.querySelectorAll('.new-section');
+      if(!sidebarEl||!workNavEl||!sections.length)return;
+      if(getComputedStyle(sidebarEl).display==='none')return; // sidebar isn't shown right now (mobile, or a collapsed project page) — keep the last computed offset rather than collapsing it to 0
+      const offset=Math.round(workNavEl.getBoundingClientRect().top);
+      sections.forEach(function(section){ section.style.paddingTop=offset+'px'; });
+
+      const taglineEl=document.querySelector('.work-page-tagline');
+      if(taglineEl){
+        const taglineHeight=taglineEl.getBoundingClientRect().height;
+        // .new-section-inner's own top edge is already at `offset` (the
+        // cards' start point) — so to land at the midpoint of the 0..offset
+        // whitespace above it, this has to go *up* (negative) from there.
+        const mid=Math.round(-(offset/2) - taglineHeight/2);
+        taglineEl.style.top=mid+'px';
+      }
+    }
+    window.addEventListener('resize',function(){
+      requestAnimationFrame(()=>requestAnimationFrame(syncMainContentTopToSidebarRole));
+    });
+    window.__syncMainContentTopToSidebarRole=syncMainContentTopToSidebarRole;
+    requestAnimationFrame(()=>requestAnimationFrame(syncMainContentTopToSidebarRole));
+ 
+    /* ============================================================
+       HERO HEIGHT — sizes the Home hero section to its own content's
+       natural height (greeting + avatar + tagline + buttons) plus a
+       small buffer. Previously this synced to where the About page's
+       bio text ended instead, but that coupling stopped making sense
+       once both pages' font sizes/content grew independently — it was
+       producing a hero area far taller than its own content needed.
+       Re-measured on load, on resize, and after a language switch,
+       since text reflow changes how many lines wrap.
+       ============================================================ */
+    function syncHeroHeightToBioEnd(){
+      const heroSection=document.getElementById('heroSection');
+      const inner=document.querySelector('.hero-new-inner');
+      if(!heroSection||!inner)return;
+      // Must run after the avatar's own height sync, or this measures the
+      // avatar at its huge natural/unstyled size (940x1136) instead of its
+      // final synced size, wildly inflating the result.
+      if(typeof window.__syncHeroAvatarHeight==='function')window.__syncHeroAvatarHeight();
+      const wasHeightStyle=heroSection.style.height;
+      heroSection.style.height='auto';
+      const contentHeight=inner.getBoundingClientRect().height;
+      heroSection.style.height=wasHeightStyle;
+      const heroExtraHeight=20; // breathing-room buffer around the content, split evenly top/bottom via justify-content:center
+      const contentTarget=Math.round(contentHeight+heroExtraHeight);
+      const footerEl=document.querySelector('.footer-sticky-wrap');
+      const footerHeight=footerEl?footerEl.getBoundingClientRect().height:0;
+      const viewportTarget=Math.round(window.innerHeight-footerHeight); // leave exactly enough room for the footer below, so hero+footer together fit in one viewport with no scroll needed
+      const target=Math.max(contentTarget, viewportTarget);
+      if(target>0){
+        heroSection.style.minHeight=target+'px';
+        heroSection.style.height=target+'px';
+      }
+    }
+    window.addEventListener('resize',function(){
+      const hero=document.getElementById('heroSection');
+      if(hero&&hero.classList.contains('active'))syncHeroHeightToBioEnd();
+    });
+    window.__syncHeroHeightToBioEnd=syncHeroHeightToBioEnd;
+    // Safety net: if Home was already the active view on first load (e.g.
+    // #home was in the URL), the showView()-triggered call in the other
+    // script block ran before this function existed yet (script tags run
+    // in order, and this one is defined later). Catch that case here.
+    (function(){
+      const heroEl=document.getElementById('heroSection');
+      if(heroEl&&heroEl.classList.contains('active')){
+        requestAnimationFrame(()=>requestAnimationFrame(syncHeroHeightToBioEnd));
+      }
+    })();
+
+    /* Sets the side avatar's height to exactly match the two greeting
+       lines beside it, measured directly rather than relying on CSS
+       flex-stretch (which doesn't work here — see the CSS comment on
+       .hero-side-avatar for why). Re-run on load, resize, and language
+       change, since text reflow/line-wrapping changes the target height. */
+    /* Sets the side avatar's height so its bottom edge lands exactly on
+       the real VISIBLE bottom of "Sruti is here" — not just the
+       container div's box-bottom. Those two aren't the same thing: with
+       line-height:1.6, the div's box extends a few px below where the
+       text's glyphs actually stop (confirmed by measurement: ~8px gap),
+       so matching box-height alone left the image sitting visibly lower
+       than the text. Using a Range over the last text node gets the
+       true glyph-level bottom instead. */
+    function syncHeroAvatarHeight(){
+      const linesEl=document.querySelector('.hero-greeting-lines');
+      const avatarEl=document.querySelector('.hero-side-avatar');
+      if(!linesEl||!avatarEl)return;
+      const containerTop=linesEl.getBoundingClientRect().top;
+      const walker=document.createTreeWalker(linesEl,NodeFilter.SHOW_TEXT);
+      let lastTextNode=null,n;
+      while(n=walker.nextNode()){ if(n.textContent.trim())lastTextNode=n; }
+      let visualBottom=null;
+      if(lastTextNode){
+        const range=document.createRange();
+        range.selectNodeContents(lastTextNode);
+        visualBottom=range.getBoundingClientRect().bottom;
+      }
+      const h=visualBottom!==null?(visualBottom-containerTop):linesEl.getBoundingClientRect().height;
+      if(h>0)avatarEl.style.height=h+'px';
+    }
+    requestAnimationFrame(()=>requestAnimationFrame(syncHeroAvatarHeight));
+    window.addEventListener('resize',syncHeroAvatarHeight);
+    window.__syncHeroAvatarHeight=syncHeroAvatarHeight;
+    });
+  </script>
+ 
+  <script>
+  document.addEventListener('DOMContentLoaded', function(){
+    const canvas = document.getElementById('heroTrailCanvas');
+    // The paint-trail canvas now lives in the sidebar (as its interactive
+    // background) instead of the Home hero. Kept the variable/property
+    // name "heroSection" below to minimize churn in the class, which only
+    // ever cares about "the element the canvas fills and tracks the
+    // pointer within" — not specifically the old hero section.
+    const heroSection = document.getElementById('siteSidebar');
+    if(!canvas || !heroSection) return;
+
+    /* ================================================================
+       HERO PAINT TRAIL — soft color-bloom cursor trail, now living in the
+       sidebar background. Was previously 4 separate global functions on
+       window
+       (window.__resetHeroPaint, __resizeHeroCanvas,
+       __spawnImmediateIfCursorInside, __startHeroPaintLoopIfNeeded)
+       plus a dozen closure variables (points, lastX/Y, rawPointerX/Y,
+       distSinceSpawn, heroPaintLoopActive...) sharing one scope. Same
+       behavior, now one class with one exposed instance
+       (window.heroPaintTrail) and a small, named method surface
+       (.reset(), .resize(), .spawnImmediateIfCursorInside(),
+       .startIfNeeded()) instead of four loosely-related globals.
+       ================================================================ */
+    class HeroPaintTrail {
+      static COLOR_PALETTE = [
+        [252, 216, 228], // FCD8E4 — soft pink
+        [172, 255, 72],  // ACFF48 — vivid young-leaf green
+        [180, 228, 240]  // B4E4F0 — sky blue
+      ];
+      static SETTLE_DURATION = 1100;
+      static POINT_LIFESPAN = 10000;
+      static FADE_START = 6000;
+      static FADE_DURATION = HeroPaintTrail.POINT_LIFESPAN - HeroPaintTrail.FADE_START;
+      static MIN_SPAWN_GAP = 40;
+
+      constructor(canvas, heroSection){
+        this.canvas = canvas;
+        this.heroSection = heroSection;
+        this.ctx = canvas.getContext('2d');
+        this.points = [];
+        this.lastX = null; this.lastY = null;
+        this.rawPointerX = null; this.rawPointerY = null; // tracked at all times, regardless of hero active state
+        this.distSinceSpawn = 0;
+        this.loopActive = true;
+
+        this.resize();
+        window.addEventListener('resize', () => this.resize());
+        window.addEventListener('pointermove', (e) => this._handleMove(e.clientX, e.clientY), { passive:true });
+        window.addEventListener('touchmove', (e) => {
+          if(e.touches && e.touches[0]) this._handleMove(e.touches[0].clientX, e.touches[0].clientY);
+        }, { passive:true });
+
+        this._draw = this._draw.bind(this);
+        this._draw();
+      }
+
+      reset(){ this.points = []; }
+
+      /* The old hero section was a `.view`, toggled active/inactive by
+         showView(), so checking classList.contains('active') was enough
+         to know whether it was on-screen. The sidebar isn't a `.view` —
+         it's shown/hidden via body-level classes (landing-active,
+         sidebar-collapsed) — so visibility is checked directly instead. */
+      _isContainerVisible(){
+        const cs = getComputedStyle(this.heroSection);
+        return cs.display !== 'none' && cs.visibility !== 'hidden';
+      }
+
+      resize(){
+        this.canvas.width = this.heroSection.clientWidth;
+        this.canvas.height = this.heroSection.clientHeight;
+      }
+
+      startIfNeeded(){
+        if(!this.loopActive){ this.loopActive = true; requestAnimationFrame(this._draw); }
+      }
+
+      /* Called right when the Home view becomes active. mousemove/
+         pointermove events only fire on actual movement — if the
+         cursor is already resting over the interactive area from
+         before (e.g. right after the landing-page zoom transition
+         lands), nothing would spawn until the user physically moved
+         the mouse, which feels like a dead/broken area for a beat.
+         Uses the continuously-tracked raw pointer position to spawn a
+         bubble immediately if the cursor already happens to be inside
+         the hero bounds the moment it appears. */
+      spawnImmediateIfCursorInside(){
+        if(this.rawPointerX===null||this.rawPointerY===null) return;
+        const rect = this.heroSection.getBoundingClientRect();
+        if(this.rawPointerX<rect.left||this.rawPointerX>rect.right||this.rawPointerY<rect.top||this.rawPointerY>rect.bottom) return;
+        this._spawnDrop(this.rawPointerX-rect.left, this.rawPointerY-rect.top, 0, 0, 0);
+        this.distSinceSpawn = 0;
+        this.lastX = this.rawPointerX-rect.left;
+        this.lastY = this.rawPointerY-rect.top;
+      }
+
+      /* Renders one soft, uneven watercolor blotch to an offscreen canvas
+         — a handful of overlapping low-alpha washes plus a slightly
+         darker blurred rim (like pigment migrating outward as a wash
+         dries), matching the reference image's texture. Built once per
+         drop rather than redrawn every frame, since the blur filter is
+         the expensive part; the main loop just drawImage()s the result. */
+      _createBlobSprite(color, radius){
+        const size = Math.ceil(radius * 2.6);
+        const off = document.createElement('canvas');
+        off.width = size; off.height = size;
+        const octx = off.getContext('2d');
+        const cx = size / 2, cy = size / 2;
+        const [r, g, b] = color;
+        const blotchCount = 5 + Math.floor(Math.random() * 3);
+        octx.filter = `blur(${Math.max(1, Math.round(radius * 0.16))}px)`;
+        for(let i = 0; i < blotchCount; i++){
+          const ang = Math.random() * Math.PI * 2;
+          const dist = Math.random() * radius * 0.3;
+          const bx = cx + Math.cos(ang) * dist;
+          const by = cy + Math.sin(ang) * dist;
+          const br = radius * (0.55 + Math.random() * 0.5);
+          octx.beginPath();
+          octx.arc(bx, by, br, 0, Math.PI * 2);
+          octx.fillStyle = `rgba(${r},${g},${b},${(0.16 + Math.random() * 0.12).toFixed(2)})`;
+          octx.fill();
+        }
+        octx.filter = `blur(${Math.max(1, Math.round(radius * 0.1))}px)`;
+        octx.beginPath();
+        octx.arc(cx, cy, radius * 0.9, 0, Math.PI * 2);
+        octx.lineWidth = radius * 0.24;
+        octx.strokeStyle = `rgba(${r},${g},${b},0.22)`;
+        octx.stroke();
+        return off;
+      }
+
+      _spawnDrop(x, y, dirX, dirY, speed){
+        const color = HeroPaintTrail.COLOR_PALETTE[Math.floor(Math.random() * HeroPaintTrail.COLOR_PALETTE.length)];
+        const push = Math.min(260, 60 + speed * 3.2);
+        const radius = 20 + Math.random() * 22;
+        this.points.push({
+          x, y,
+          vx: dirX * push,
+          vy: dirY * push,
+          radius,
+          sprite: this._createBlobSprite(color, radius),
+          born: performance.now()
+        });
+        if(this.points.length > 90) this.points.splice(0, this.points.length - 90);
+      }
+
+      _handleMove(clientX, clientY){
+        this.rawPointerX = clientX; this.rawPointerY = clientY;
+        if(!this._isContainerVisible()){
+          this.lastX = null; this.lastY = null;
+          return;
+        }
+        const rect = this.heroSection.getBoundingClientRect();
+        if(clientX < rect.left || clientX > rect.right || clientY < rect.top || clientY > rect.bottom){
+          this.lastX = null; this.lastY = null;
+          return;
+        }
+        const x = clientX - rect.left, y = clientY - rect.top;
+        if(this.lastX !== null){
+          const dx = x - this.lastX, dy = y - this.lastY;
+          const dist = Math.hypot(dx, dy);
+          this.distSinceSpawn += dist;
+          if(this.distSinceSpawn >= HeroPaintTrail.MIN_SPAWN_GAP){
+            const dirX = dist > 0.01 ? dx / dist : 0;
+            const dirY = dist > 0.01 ? dy / dist : 0;
+            this._spawnDrop(x, y, dirX, dirY, dist);
+            this.distSinceSpawn = 0;
+          }
+        } else {
+          this._spawnDrop(x, y, 0, 0, 0);
+          this.distSinceSpawn = 0;
+        }
+        this.lastX = x; this.lastY = y;
+      }
+
+      _draw(){
+        const now = performance.now();
+        const ctx = this.ctx;
+        ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
+        this.points = this.points.filter(p => now - p.born < HeroPaintTrail.POINT_LIFESPAN);
+
+        this.points.forEach(p => {
+          const age = now - p.born;
+          const growT = Math.min(1, age / 90);
+          const grown = 1 - Math.pow(1 - growT, 2); // quick simple grow-in
+
+          if(age < HeroPaintTrail.SETTLE_DURATION){
+            const dt = Math.min(16, 1000/60);
+            p.x += p.vx * (dt/1000);
+            p.y += p.vy * (dt/1000);
+            const friction = Math.pow(0.02, dt/HeroPaintTrail.SETTLE_DURATION);
+            p.vx *= friction;
+            p.vy *= friction;
+          }
+
+          const fadeT = age > HeroPaintTrail.FADE_START
+            ? Math.min(1, (age - HeroPaintTrail.FADE_START) / HeroPaintTrail.FADE_DURATION)
+            : 0;
+          const alpha = 0.9 * (1 - fadeT);
+          const size = p.sprite.width * grown;
+
+          ctx.globalAlpha = Math.max(alpha, 0);
+          ctx.drawImage(p.sprite, p.x - size/2, p.y - size/2, size, size);
+        });
+        ctx.globalAlpha = 1;
+
+        // Only keep looping while the hero is actually visible or there
+        // are still drops mid-animation (letting them finish fading out
+        // naturally after navigating away) — otherwise stop entirely
+        // instead of waking the main thread every ~16ms forever on
+        // every page of the site. startIfNeeded() (called from showView
+        // when returning to Home) restarts it.
+        if(this._isContainerVisible() || this.points.length){
+          requestAnimationFrame(this._draw);
+        } else {
+          this.loopActive = false;
+        }
+      }
+    }
+
+    window.heroPaintTrail = new HeroPaintTrail(canvas, heroSection);
+  });
+  </script>
+</body>
+</html>
+ 
