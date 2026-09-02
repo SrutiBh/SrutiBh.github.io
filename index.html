@@ -147,18 +147,19 @@
     .shadow-2xl{box-shadow:0 25px 50px -12px rgba(0,0,0,.25)}
     .bg-slate-700{background-color:var(--color-text-body)}
     .bg-slate-800{background-color:var(--color-footer-navy)}
-    body:not(.landing-active) .footer-pre{margin-left:250px;width:calc(100% - 250px);}
     /* Sticky footer via flexbox: body is a full-height flex column (see
        body{} above), and margin-top:auto on this element pushes it to
        the bottom of the screen when the active page's content is
        shorter than one viewport. flex-shrink:0 stops it from ever
        being compressed if content runs long. It's still a normal flow
        element otherwise — it just scrolls with the page like content
-       does once that content is taller than the screen. */
-    .footer-pre{position:relative;width:100%;z-index:90;margin-top:auto;flex-shrink:0;}
-    @media(max-width:900px){
-      body:not(.landing-active) .footer-pre{margin-left:0;width:100%;}
-    }
+       does once that content is taller than the screen.
+       Always full width (no sidebar-based offset) — the sidebar is a
+       separate position:fixed, opaque panel with a higher z-index, so
+       it simply sits on top of the footer's left edge wherever the two
+       overlap; the footer itself never needs to know the sidebar is
+       there. */
+    .footer-pre{position:relative;width:100%;z-index:70;margin-top:auto;flex-shrink:0;margin-left:0;}
     /* ================================================================
        SITE FOOTER — social icon chips + "© Sruti Bhattacharjee..." bar
        pinned to the bottom of every page (see .footer-pre in the HTML;
@@ -231,7 +232,7 @@
       background:#fff;
       border-right:none;
       display:none; flex-direction:column; justify-content:space-between;
-      padding:2.5rem 1.25rem; z-index:80; overflow-y:auto;
+      padding:2.5rem 1.25rem; z-index:90; overflow-y:auto;
     }
     .site-sidebar::before{
       content:''; position:absolute; top:0; left:0; right:0; bottom:0;
@@ -263,7 +264,6 @@
        blank gap on the left. */
     body.sidebar-collapsed:not(.landing-active) > .view:not(.landing-view){ margin-left:0; width:100%; }
     body.sidebar-collapsed:not(.landing-active) #main-content{ margin-left:auto; }
-    body.sidebar-collapsed .footer-pre{ margin-left:0 !important; width:100% !important; }
 
     /* Sidebar hide/show toggle - a single 3D white icon button, fixed
        independently of the sidebar itself (not nested inside it), so
