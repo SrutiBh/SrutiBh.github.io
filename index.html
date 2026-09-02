@@ -155,7 +155,7 @@
        being compressed if content runs long. It's still a normal flow
        element otherwise — it just scrolls with the page like content
        does once that content is taller than the screen. */
-    .footer-sticky-wrap{position:relative;width:100%;z-index:90;margin-top:auto;flex-shrink:0;}
+    .footer-sticky-wrap{position:relative;width:100%;z-index:90;grid-row:2;}
     body.landing-active .footer-sticky-wrap{display:none;}
     @media(max-width:900px){
       body:not(.landing-active) .footer-sticky-wrap{margin-left:0;width:100%;}
@@ -243,7 +243,13 @@
     }
  
     html{min-height:100%;overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%;}
-    body{font-family:var(--font-serif);background-color:#fff;display:flex;flex-direction:column;min-height:100vh;min-height:100dvh;overflow-x:clip;margin:0;position:relative;}
+    body{font-family:var(--font-serif);background-color:#fff;display:grid;grid-template-rows:1fr auto;min-height:100vh;min-height:100dvh;overflow-x:clip;margin:0;position:relative;}
+    /* #page-content is grid row 1 (1fr — stretches to fill any leftover
+       space so the footer below it lands exactly at the screen's
+       bottom edge on short pages), .footer-sticky-wrap is grid row 2
+       (auto — sized to its own content, never stretched or squashed).
+       This holds every .view section (only one visible at a time). */
+    #page-content{grid-row:1;min-width:0;}
     body.project-page-active{background-color:var(--color-white);} /* project case study pages use a pure white background throughout, not the site's usual off-white */
     /* STICKY FOOTER — on short pages (e.g. Contact), pushes the footer block
        down to the bottom of the viewport instead of leaving a blank gap
@@ -1455,6 +1461,7 @@
   </aside>
 
  
+  <div id="page-content">
   <header class="hero-new min-h-[100dvh] relative view" id="heroSection" data-view="home">
     <!-- "Hi, I'm Sruti" greeting + avatar pic + tagline — commented out
          for now, will be repurposed elsewhere later.
@@ -1627,7 +1634,7 @@
       </div>
     </div>
   </section>
- 
+  </div>
  
   <div class="footer-sticky-wrap">
     <footer class="footer-bar">
