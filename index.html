@@ -148,14 +148,12 @@
     .bg-slate-700{background-color:var(--color-text-body)}
     .bg-slate-800{background-color:var(--color-footer-navy)}
     body:not(.landing-active) .footer-sticky-wrap{margin-left:250px;width:calc(100% - 250px);}
-    /* Truly fixed to the bottom of the viewport — always visible, never
-       scrolls away, identical on every page. --footer-h is kept in sync
-       with the footer's real (possibly wrapped) height by JS (search
-       "syncFooterHeight"); body's padding-bottom uses the same variable
-       so page content always clears it instead of hiding underneath. */
-    .footer-sticky-wrap{position:fixed;bottom:0;left:0;width:100%;z-index:90;}
-    body{padding-bottom:var(--footer-h,56px);}
-    body.landing-active{padding-bottom:0;}
+    /* Normal document flow, not fixed to the viewport — sits right
+       after each page's content. margin-top:auto (combined with body's
+       display:flex;flex-direction:column;min-height:100dvh) pushes it
+       down to the bottom of the screen on short pages, and it scrolls
+       away naturally on long ones, same as ordinary page content. */
+    .footer-sticky-wrap{position:relative;width:100%;z-index:90;margin-top:auto;}
     body.landing-active .footer-sticky-wrap{display:none;}
     @media(max-width:900px){
       body:not(.landing-active) .footer-sticky-wrap{margin-left:0;width:100%;}
@@ -331,10 +329,19 @@
        (same row) and the same right offset as .site-lang-topright
        (same column). */
     .margin-project-nav-buttons{
-      position:fixed; bottom:calc(var(--footer-h,56px) + 1.5rem); right:1.5rem; z-index:95;
+      position:fixed; bottom:2.5rem; right:1.5rem; z-index:95;
       display:none; gap:12px;
     }
     body.margin-view-active .margin-project-nav-buttons{ display:flex; }
+    /* Applied by JS (search "pinProjectNavButtons") once the footer
+       scrolls close enough that the fixed position above would start
+       overlapping it. Switches from tracking the viewport to sitting
+       at a fixed point on the page — same clearance above the footer
+       that a project slide's own bottom padding already keeps (5rem,
+       see .margin-slide), so the buttons stop moving at exactly the
+       same distance from the footer that ordinary content has
+       everywhere else on the site. */
+    .margin-project-nav-buttons.docked{ position:absolute; bottom:auto; }
     .margin-project-nav-btn{
       width:70px; height:58px;
       display:flex; align-items:center; justify-content:center;
@@ -987,12 +994,11 @@
     .margin-nav-btn:hover::after{ transform:scaleX(1); }
 
     /* ----------------------------------------------------------------
-       While the M.A.R.G.I.N. page specifically is open: the chapter
-       nav strip sits fixed at the very top, sharing the same row as
-       the language switcher (top:1.5rem) rather than its own separate
-       bar. The site footer itself is fixed/always-visible on every
-       page now (see .footer-sticky-wrap), this page included — no
-       special-casing needed for it here anymore. Scoped to
+       While the M.A.R.G.I.N. page specifically is open: the footer
+       stays in its normal (non-sticky) position at the end of the
+       page content, and the chapter nav strip sits fixed at the very
+       top instead, sharing the same row as the language switcher
+       (top:1.5rem) rather than its own separate bar. Scoped to
        body.margin-view-active so nothing else on the site is affected.
        ---------------------------------------------------------------- */
     body.margin-view-active .margin-nav-strip{
@@ -2716,9 +2722,6 @@
     if(sidebarMinimizeBtn){
       sidebarMinimizeBtn.addEventListener('click',function(){
         document.body.classList.toggle('sidebar-collapsed');
-        if(typeof syncFooterHeight==='function'){
-          requestAnimationFrame(()=>requestAnimationFrame(syncFooterHeight));
-        }
       });
     }
 
@@ -2745,22 +2748,39 @@
       showView(nextKey);
     });
 
-    /* Keeps --footer-h (used by body's bottom padding, the fixed
-       footer's own layout, and the M.A.R.G.I.N. back/next buttons'
-       clearance above it) in sync with the footer's real rendered
-       height — which can change if its text wraps differently at a
-       new viewport width or after a language switch. Re-measured on
-       load, on resize, and after a language switch. */
-    function syncFooterHeight(){
+    /* Keeps the back/next buttons from floating on top of the site
+       footer. While there's still room, they behave exactly as before
+       (position:fixed, pinned to the viewport). Once the footer scrolls
+       close enough that the fixed spot would land on or past it, they
+       switch to a fixed point on the page instead — sitting the same
+       5rem above the footer that a project slide's own bottom padding
+       already keeps (see .margin-slide), so they come to rest at the
+       same clearance from the footer that ordinary page content has
+       everywhere else on the site, rather than overlapping it. */
+    function pinProjectNavButtons(){
+      const el=document.querySelector('.margin-project-nav-buttons');
       const footer=document.querySelector('.footer-sticky-wrap');
-      if(!footer)return;
-      const h=footer.getBoundingClientRect().height;
-      if(h>0)document.documentElement.style.setProperty('--footer-h',h+'px');
+      if(!el||!footer)return;
+      if(!document.body.classList.contains('margin-view-active')){
+        el.classList.remove('docked');
+        el.style.top='';
+        return;
+      }
+      const gap=80; // 5rem — matches .margin-slide's own bottom padding
+      const elHeight=el.getBoundingClientRect().height;
+      const footerTop=footer.getBoundingClientRect().top;
+      const fixedTop=window.innerHeight-2.5*16-elHeight; // where it currently sits while position:fixed
+      if(footerTop<fixedTop+elHeight+gap-2.5*16){
+        el.classList.add('docked');
+        el.style.top=Math.round(window.scrollY+footerTop-gap-elHeight)+'px';
+      } else {
+        el.classList.remove('docked');
+        el.style.top='';
+      }
     }
-    window.addEventListener('resize',syncFooterHeight,{passive:true});
-    window.addEventListener('DOMContentLoaded',syncFooterHeight);
-    syncFooterHeight();
-    window.__syncFooterHeight=syncFooterHeight;
+    window.addEventListener('scroll',pinProjectNavButtons,{passive:true});
+    window.addEventListener('resize',pinProjectNavButtons);
+    window.__pinProjectNavButtons=pinProjectNavButtons;
 
     /* ============================================================
        PROJECT M.A.R.G.I.N. — jump-nav + back-link wiring. The actual
@@ -2965,8 +2985,8 @@
           journeyMap.camera.y=journeyMap.camera.ty;
         });});
       }
-      if(typeof syncFooterHeight==='function'){
-        requestAnimationFrame(()=>requestAnimationFrame(syncFooterHeight));
+      if(typeof pinProjectNavButtons==='function'){
+        requestAnimationFrame(()=>requestAnimationFrame(pinProjectNavButtons));
       }
       if(!opts.silent){
         requestAnimationFrame(function(){
@@ -3035,9 +3055,6 @@
       }
       if(typeof window.__syncMainContentTopToSidebarRole==='function'){
         requestAnimationFrame(()=>requestAnimationFrame(window.__syncMainContentTopToSidebarRole));
-      }
-      if(typeof window.__syncFooterHeight==='function'){
-        requestAnimationFrame(()=>requestAnimationFrame(window.__syncFooterHeight));
       }
     }
  
