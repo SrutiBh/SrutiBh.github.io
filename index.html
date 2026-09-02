@@ -720,9 +720,9 @@
       font-weight:400; font-style:italic; color:#000; max-width:100%; margin:20px 0 0 0; text-align:left;
     }
     .work-page-tagline{
-      position:absolute; top:0; left:0;
+      position:relative;
       font-family:var(--font-serif); font-size:22px; line-height:1.4;
-      font-weight:450; font-style:normal; color:#000; margin:0; text-align:left;
+      font-weight:450; font-style:normal; color:#000; margin:0 0 2rem; text-align:left;
     }
     .work-tagline-lines{ margin:14px 0 0 0; font-size:28px; }
     .hero-tagline-big{ font-size:33px; }
@@ -3404,16 +3404,6 @@ const PLACES=[
       if(getComputedStyle(sidebarEl).display==='none')return; // sidebar isn't shown right now (mobile, or a collapsed project page) — keep the last computed offset rather than collapsing it to 0
       const offset=Math.round(workNavEl.getBoundingClientRect().top);
       sections.forEach(function(section){ section.style.paddingTop=offset+'px'; });
-
-      const taglineEl=document.querySelector('.work-page-tagline');
-      if(taglineEl){
-        const taglineHeight=taglineEl.getBoundingClientRect().height;
-        // .new-section-inner's own top edge is already at `offset` (the
-        // cards' start point) — so to land at the midpoint of the 0..offset
-        // whitespace above it, this has to go *up* (negative) from there.
-        const mid=Math.round(-(offset/2) - taglineHeight/2);
-        taglineEl.style.top=mid+'px';
-      }
     }
     window.addEventListener('resize',function(){
       requestAnimationFrame(()=>requestAnimationFrame(syncMainContentTopToSidebarRole));
