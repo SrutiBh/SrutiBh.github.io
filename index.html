@@ -75,7 +75,7 @@
        anything renders.
        ================================================================ */
     :root{
-      --font-serif:'Times New Roman',Times,serif;
+      --font-serif:'Lora','Times New Roman',Times,serif;
       --color-navy:#15203d;
       --color-navy-dark:#0f172a;
       --color-footer-navy:#1e293b;
@@ -165,13 +165,13 @@
        pinned to the bottom of every page (see .footer-pre in the HTML;
        it positions itself directly, no wrapper element).
        ================================================================ */
-    .sidebar-social{display:flex;align-items:flex-end;gap:1.1rem;color:#000;}
+    .sidebar-social{position:absolute;left:1.25rem;right:1.25rem;bottom:10px;height:35px;display:flex;align-items:center;gap:1.1rem;color:#000;}
     .sidebar-social a{ color:inherit; display:flex; transition:transform .18s ease; }
     .sidebar-social a:hover{ color:#000; transform:scale(1.12); }
     .sidebar-social a:hover svg{ stroke-width:2.6; }
     .sidebar-social svg{ width:24px; height:24px; }
-    .footer-pre{background:#FFFFDE;text-align:center;min-height:35px;display:flex;align-items:center;justify-content:center;padding:0 1.5rem;}
-    .footer-pre p{margin:0;font-size:.8rem;}
+    .footer-pre{background:var(--n-cream);text-align:center;min-height:35px;display:flex;align-items:center;justify-content:center;padding:0 1.5rem;}
+    .footer-pre p{margin:0;font-size:.8rem;color:var(--color-navy);}
     @media(max-width:360px){
       .footer-pre{padding-left:.75rem;padding-right:.75rem;}
     }
@@ -209,7 +209,7 @@
     }
  
     html{min-height:100%;overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%;}
-    body{font-family:var(--font-serif);background-color:#fff;display:flex;flex-direction:column;min-height:100vh;min-height:100dvh;overflow-x:clip;margin:0;position:relative;}
+    body{font-family:var(--font-serif);background-color:var(--n-cream);display:flex;flex-direction:column;min-height:100vh;min-height:100dvh;overflow-x:clip;margin:0;position:relative;}
     /* #page-content just groups every .view section (header + all the
        page sections; only one is visible at a time) so they sit as one
        block ahead of .footer-pre, which is the flex item that actually
@@ -229,16 +229,10 @@
        ============================================================ */
     .site-sidebar{
       position:fixed; top:0; left:0; width:250px; height:100vh; height:100dvh;
-      background:#fff;
+      background:var(--n-cream);
       border-right:none;
       display:none; flex-direction:column; justify-content:space-between;
       padding:2.5rem 1.25rem; z-index:90; overflow-y:auto;
-    }
-    .site-sidebar::before{
-      content:''; position:absolute; top:0; left:0; right:0; bottom:0;
-      background:url('images/others/page_wallpaper.jpg') right top/420px auto no-repeat;
-      opacity:.4;
-      z-index:-1;
     }
     /* .site-sidebar::after{
       content:''; position:absolute; top:2.5rem; bottom:2.5rem; right:0;
@@ -262,7 +256,7 @@
     /* When the sidebar is hidden, page content no longer needs to leave
        room for it — this reclaims that space rather than leaving a
        blank gap on the left. */
-    body.sidebar-collapsed:not(.landing-active) > .view:not(.landing-view){ margin-left:0; width:100%; }
+    body.sidebar-collapsed:not(.landing-active) #page-content{ margin-left:0; width:100%; }
     body.sidebar-collapsed:not(.landing-active) #main-content{ margin-left:auto; }
 
     /* Sidebar hide/show toggle - a single 3D white icon button, fixed
@@ -320,7 +314,7 @@
     .margin-project-nav-btn:active{ transform:scale(0.94); }
     .sidebar-top{ display:flex; flex-direction:column; gap:0; }
     .sidebar-name{ position:relative; display:inline-block; text-align:left; background:none; border:none; padding:0; cursor:pointer; font:inherit; }
-    .sidebar-name-text{ font-family:var(--font-serif); font-weight:550; font-size:36px; line-height:1.25; color:#000; }
+    .sidebar-name-text{ font-family:var(--font-serif); font-weight:550; font-size:34px; line-height:1.25; color:#000; }
     .sidebar-role{ font-family:var(--font-serif); font-size:20px; font-weight:550; font-style:italic; color:#000; margin:.6rem 0 3rem 0; white-space:nowrap; }
     .sidebar-nav{ display:flex; flex-direction:column; gap:32px; }
     .sidebar-nav-opt{
@@ -382,7 +376,7 @@
     @media(max-width:760px){.work-grid-3{grid-template-columns:1fr 1fr;}}
     @media(max-width:480px){.work-grid-3{grid-template-columns:1fr;}}
     .work-card{position:relative;display:flex;flex-direction:column;width:100%;border:none;border-radius:.5rem;cursor:pointer;padding:.65rem .65rem 0;background:#fff;text-align:center;font-family:inherit;box-shadow:0 12px 26px rgba(15,23,42,.16),0 2px 6px rgba(15,23,42,.08);}
-    .work-card::before{content:'';position:absolute;top:-9px;left:50%;width:17px;height:17px;border-radius:50%;transform:translateX(-50%);background:radial-gradient(circle at 32% 28%, #dcffa8, var(--n-green) 55%, #7fbf2e 100%);box-shadow:0 3px 5px rgba(15,23,42,.35),inset -2px -2px 3px rgba(0,0,0,.15);z-index:2;}
+    .work-card::before{content:'';position:absolute;top:-9px;left:50%;width:17px;height:17px;border-radius:50%;transform:translateX(-50%);background:radial-gradient(circle at 32% 28%, #3d7a63, var(--n-green) 60%, #123a2e 100%);box-shadow:0 3px 5px rgba(15,23,42,.35),inset -2px -2px 3px rgba(0,0,0,.15);z-index:2;}
     .work-card.is-disabled{cursor:default;}
     .work-card.is-disabled:hover .work-card-img{transform:none;filter:none;}
     .work-card.is-disabled:hover .work-card-overlay{opacity:0;}
@@ -582,7 +576,7 @@
     .jisland.sel .jinner{transform:scale(1.07)}
  
     .jlabel{position:absolute;left:50%;top:-72px;transform:translateX(-50%);text-align:center;pointer-events:none;white-space:nowrap;}
-    .jcity{font-family:'Comic Sans MS','Comic Neue','Comic Sans',cursive;font-size:3.6rem;font-weight:400;letter-spacing:.14em;color:#000;-webkit-font-smoothing:antialiased;}
+    .jcity{font-family:var(--font-serif);font-size:3.6rem;font-weight:700;letter-spacing:.02em;color:#000;-webkit-font-smoothing:antialiased;}
     .jtop{position:absolute;left:50%;top:28px;width:248px;height:148px;transform:translateX(-50%);clip-path:polygon(10% 24%,25% 10%,67% 6%,88% 20%,94% 48%,81% 76%,40% 91%,13% 77%,5% 48%);}
     .jrim{position:absolute;left:50%;top:155px;width:268px;height:22px;transform:translateX(-50%);clip-path:polygon(6% 24%,23% 2%,68% 0%,91% 18%,96% 54%,79% 100%,34% 100%,10% 82%,4% 52%);}
     .jbot{position:absolute;left:50%;top:164px;width:172px;height:130px;transform:translateX(-50%);background:linear-gradient(180deg,#a0714f 0%,#7a5235 50%,#5c3d22 100%);clip-path:polygon(26% 0,77% 0,100% 19%,84% 55%,63% 100%,40% 92%,17% 58%,0 18%);}
@@ -590,7 +584,7 @@
     .jtree::before{content:"";position:absolute;left:7px;bottom:0;width:5px;height:15px;background:#6b4423;border-radius:2px}
     .jtree::after{content:"";position:absolute;left:0;top:0;width:18px;height:28px;background:#22a855;clip-path:polygon(50% 0,100% 44%,76% 44%,100% 100%,0 100%,24% 44%,0 44%)}
     .jstone{position:absolute;width:10px;height:8px;background:#c8d6e0;border-radius:4px;opacity:.6}
-    .jyears{position:absolute;left:50%;top:314px;transform:translateX(-50%);width:340px;font-family:'Comic Sans MS','Comic Neue','Comic Sans',cursive;font-size:2.1rem;font-weight:400;letter-spacing:.12em;color:#000;white-space:normal;pointer-events:none;text-align:center;line-height:1.3;-webkit-font-smoothing:antialiased;}
+    .jyears{position:absolute;left:50%;top:314px;transform:translateX(-50%);width:340px;font-family:var(--font-serif);font-style:italic;font-size:1.7rem;font-weight:400;letter-spacing:.02em;color:#000;white-space:normal;pointer-events:none;text-align:center;line-height:1.3;-webkit-font-smoothing:antialiased;}
     .jmark-spire{position:absolute;left:50%;top:42px;transform:translateX(-50%);width:8px;height:38px}
     .jmark-spire::before{content:"";position:absolute;left:3px;bottom:0;width:2px;height:28px;background:rgba(240,246,255,.85)}
     .jmark-spire::after{content:"";position:absolute;left:50%;top:0;width:10px;height:10px;transform:translateX(-50%);border-radius:999px;background:rgba(225,238,255,.92)}
@@ -727,9 +721,10 @@
     }
     .work-page-tagline{
       position:absolute; top:0; left:0;
-      font-family:var(--font-serif); font-size:30px; line-height:1.4;
+      font-family:var(--font-serif); font-size:22px; line-height:1.4;
       font-weight:450; font-style:normal; color:#000; margin:0; text-align:left;
     }
+    .work-tagline-lines{ margin:14px 0 0 0; font-size:28px; }
     .hero-tagline-big{ font-size:33px; }
     .hero-new-inner p.hero-kicker{
       font-family:var(--font-serif); font-size:25px; font-weight:400;
@@ -763,7 +758,7 @@
     .n-gallery-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1.1rem; margin-bottom:3rem; }
     @media(max-width:760px){ .n-gallery-grid{ grid-template-columns:repeat(2,1fr); } }
     .n-gallery-item{ position:relative; background:#fff; border-radius:.5rem; padding:.65rem .65rem .75rem; box-shadow:0 1px 3px rgba(15,23,42,.06),0 6px 18px rgba(15,23,42,.08); transition:box-shadow .22s ease,transform .22s ease; }
-    .n-gallery-item::before{content:'';position:absolute;top:-9px;left:50%;width:17px;height:17px;border-radius:50%;transform:translateX(-50%);background:radial-gradient(circle at 32% 28%, #dcffa8, var(--n-green) 55%, #7fbf2e 100%);box-shadow:0 3px 5px rgba(15,23,42,.35),inset -2px -2px 3px rgba(0,0,0,.15);z-index:2;}
+    .n-gallery-item::before{content:'';position:absolute;top:-9px;left:50%;width:17px;height:17px;border-radius:50%;transform:translateX(-50%);background:radial-gradient(circle at 32% 28%, #3d7a63, var(--n-green) 60%, #123a2e 100%);box-shadow:0 3px 5px rgba(15,23,42,.35),inset -2px -2px 3px rgba(0,0,0,.15);z-index:2;}
     .n-gallery-item:hover{ box-shadow:0 4px 10px rgba(15,23,42,.10),0 14px 30px rgba(15,23,42,.14); transform:translateY(-2px); }
     .n-gallery-item img{ width:100%; aspect-ratio:1/1; object-fit:cover; display:block; border-radius:.3rem; }
     .n-gallery-caption{ font-family:var(--font-serif); font-size:1.1rem; font-weight:700; color:#000; margin:.5rem 0 0; padding:0; text-transform:none; letter-spacing:.02em; }
@@ -801,17 +796,12 @@
        into that point (same mechanic/timing as the earlier archway
        concept) and reveals the Home view.
        ============================================================ */
-    body:not(.landing-active)::before{
-      content:''; position:absolute; inset:0; z-index:-1;
-      background:url('images/others/page_wallpaper.jpg') right top/420px auto no-repeat;
-      opacity:.4;
-    }
     body.landing-active #topbar{ display:none; }
     body.landing-active .footer-pre{ display:none; }
-    body:not(.landing-active) > .view:not(.landing-view){ margin-left:250px; width:calc(100% - 250px); }
+    body:not(.landing-active) #page-content{ margin-left:250px; width:calc(100% - 250px); }
     body:not(.landing-active) #main-content{ margin-left:calc(250px + (100% - 250px - 996px)/2); margin-right:auto; width:996px; }
     @media(max-width:900px){
-      body:not(.landing-active) > .view:not(.landing-view){ margin-left:0; width:100%; }
+      body:not(.landing-active) #page-content{ margin-left:0; width:100%; }
       body:not(.landing-active) #main-content{ margin-left:0; width:100%; }
     }
     .landing-view.active{ position:relative; min-height:100dvh; overflow:hidden; }
@@ -1352,22 +1342,12 @@
   <div class="margin-project-nav-buttons">
     <button type="button" class="margin-project-nav-btn" id="marginBackToWorkBtn" aria-label="Back to portfolio">
       <svg xmlns="http://www.w3.org/2000/svg" width="70" height="58" viewBox="0 0 54 44">
-        <defs>
-          <pattern id="marginBackBtnImg" patternUnits="userSpaceOnUse" x="0" y="0" width="54" height="44">
-            <image href="images/others/gg.jpg" x="0" y="0" width="54" height="44" preserveAspectRatio="xMidYMid slice" opacity="0.15"/>
-          </pattern>
-        </defs>
-        <path d="M19 11 Q17 11 16 12.3 L7 20 Q5 22 7 24 L16 31.7 Q17 33 19 33 L20 33 Q20 33 20 31 L20 28.5 L47 28.5 Q50 28.5 50 25.5 L50 18.5 Q50 15.5 47 15.5 L20 15.5 L20 12.8 Q20 11 19 11 Z" fill="url(#marginBackBtnImg)" stroke="#000" stroke-width="1"/>
+        <path d="M19 11 Q17 11 16 12.3 L7 20 Q5 22 7 24 L16 31.7 Q17 33 19 33 L20 33 Q20 33 20 31 L20 28.5 L47 28.5 Q50 28.5 50 25.5 L50 18.5 Q50 15.5 47 15.5 L20 15.5 L20 12.8 Q20 11 19 11 Z" fill="var(--n-cream)" stroke="#000" stroke-width="1"/>
       </svg>
     </button>
     <button type="button" class="margin-project-nav-btn" id="marginNextProjectBtn" aria-label="Next project">
       <svg xmlns="http://www.w3.org/2000/svg" width="70" height="58" viewBox="0 0 54 44">
-        <defs>
-          <pattern id="marginNextBtnImg" patternUnits="userSpaceOnUse" x="0" y="0" width="54" height="44">
-            <image href="images/others/gg.jpg" x="0" y="0" width="54" height="44" preserveAspectRatio="xMidYMid slice" opacity="0.15"/>
-          </pattern>
-        </defs>
-        <path d="M35 11 Q37 11 38 12.3 L47 20 Q49 22 47 24 L38 31.7 Q37 33 35 33 L34 33 Q34 33 34 31 L34 28.5 L7 28.5 Q4 28.5 4 25.5 L4 18.5 Q4 15.5 7 15.5 L34 15.5 L34 12.8 Q34 11 35 11 Z" fill="url(#marginNextBtnImg)" stroke="#000" stroke-width="1"/>
+        <path d="M35 11 Q37 11 38 12.3 L47 20 Q49 22 47 24 L38 31.7 Q37 33 35 33 L34 33 Q34 33 34 31 L34 28.5 L7 28.5 Q4 28.5 4 25.5 L4 18.5 Q4 15.5 7 15.5 L34 15.5 L34 12.8 Q34 11 35 11 Z" fill="var(--n-cream)" stroke="#000" stroke-width="1"/>
       </svg>
     </button>
   </div>
@@ -1444,7 +1424,13 @@
     <div class="new-section">
       <div class="new-section-inner">
 
-        <p class="work-page-tagline reveal" data-i18n="work.tagline">I vibe-check AI to fix bugs like uncanny valley</p>
+        <div class="work-page-tagline reveal" data-i18n="work.tagline">
+          <div class="hero-greeting-flex">
+            <div class="hero-greeting-lines">Hi,</div>
+            <img class="hero-side-avatar" src="images/others/selfi_anim2.png" alt="" onerror="this.style.display='none';"/>
+          </div>
+          <p class="work-tagline-lines">I am a UX Researcher and Tinkerer<br>I vibe-check AI to fix bugs like uncanny valley</p>
+        </div>
         <div id="homeWorkPane">
           <div class="work-grid reveal" id="homeWorkGrid"></div>
           <h3 class="gallery-subhead my-other-work-heading reveal" data-i18n="gallery.otherWork">My Other Work</h3>
@@ -1679,7 +1665,7 @@
         'about.nav.contact':'Contact Me','about.nav.work':'My Work','about.nav.portfolio':'My Portfolio','about.nav.career':'My Career',
         'menu.about':'About','menu.contact':'Contact','menu.portfolio':'Work','menu.career':'Formation',
         'a11y.skiplink':'Skip to main content','aria.menu':'Menu','gallery.otherWork':'My Other Work',
-        'work.tagline':'I vibe-check AI to fix bugs like uncanny valley',
+        'work.tagline':'<div class="hero-greeting-flex"><div class="hero-greeting-lines">Hi,</div><img class="hero-side-avatar" src="images/others/selfi_anim2.png" alt="" onerror="this.style.display=\'none\';"/></div><p class="work-tagline-lines">I am a UX Researcher and Tinkerer<br>I vibe-check AI to fix bugs like uncanny valley</p>',
         'landing.caption':'Welcome to My Portfolio'
       },
       fr:{
