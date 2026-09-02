@@ -266,8 +266,8 @@
        every 10 seconds (see sidebarTogglePop keyframes above) so it
        stays noticeable even after a while. */
     .sidebar-minimize-btn{
-      position:fixed; top:1rem; left:195px; z-index:95;
-      width:34px; height:34px;
+      position:fixed; top:1rem; left:222px; z-index:95;
+      width:25px; height:25px;
       display:flex; align-items:center; justify-content:center;
       background:none; border:none; cursor:ew-resize; padding:0;
       filter:drop-shadow(0 3px 6px rgba(60,70,90,.3));
@@ -314,18 +314,18 @@
     .margin-project-nav-btn:active{ transform:scale(0.94); }
     .sidebar-top{ display:flex; flex-direction:column; gap:0; }
     .sidebar-name{ position:relative; display:inline-block; text-align:left; background:none; border:none; padding:0; cursor:pointer; font:inherit; }
-    .sidebar-name-text{ font-family:var(--font-serif); font-weight:550; font-size:34px; line-height:1.25; color:#000; }
+    .sidebar-name-text{ font-family:var(--font-serif); font-weight:600; font-size:22px; line-height:1.25; color:#000; white-space:nowrap; }
     .sidebar-role{ font-family:var(--font-serif); font-size:20px; font-weight:550; font-style:italic; color:#000; margin:.6rem 0 3rem 0; white-space:nowrap; }
     .sidebar-nav{ display:flex; flex-direction:column; gap:32px; }
     .sidebar-nav-opt{
-      font-family:var(--font-serif); font-size:1.3rem; font-weight:400;
+      font-family:var(--font-serif); font-size:20px; font-weight:450;
       color:#000; background:none; border:none; padding:0; text-align:left;
       cursor:pointer; text-decoration:none; width:fit-content;
       transition:font-weight .18s ease, transform .18s ease;
       transform-origin:left center;
     }
     .sidebar-nav-opt:hover{ font-weight:500; transform:scale(1.12); }
-    .sidebar-nav-opt.active{ color:#000; font-weight:500; font-size:24px; }
+    .sidebar-nav-opt.active{ color:#000; font-weight:500; font-size:21px; }
     .sidebar-nav-opt.active:hover{ font-weight:500; }
     @media(max-width:900px){
       .site-sidebar{ display:none !important; }
@@ -387,12 +387,12 @@
     .work-card:hover .work-card-overlay,
     .work-card:focus-visible .work-card-overlay{opacity:1;}
     .work-card-title{font-family:var(--font-serif);font-size:1.4rem;font-weight:700;color:#fff;line-height:1.25;text-align:left;}
-    .work-card-meta{font-family:var(--font-serif);font-size:1.3rem;font-weight:540;letter-spacing:.02em;color:#000;padding:1rem .3rem 1.15rem;}
+    .work-card-meta{font-family:var(--font-serif);font-size:17px;font-weight:480;letter-spacing:.02em;color:#000;padding:1rem .3rem 1.15rem;}
  
     /* Matches .about-desc-title exactly (same style used for "About Me" /
        "Education" / "Career Journey" on the Home page) so section names
        here read consistently with the rest of the site. */
-    .gallery-subhead{font-family:var(--font-serif);font-size:33px;font-weight:400;color:#2B3752;margin:130px 0 75px;}
+    .gallery-subhead{font-family:var(--font-serif);font-size:25px;font-weight:450;color:#000;margin:60px 0 1.1rem;}
     .my-other-work-heading{color:#2B3752;}
     .about-block:first-of-type .gallery-subhead{margin-top:0;}
  
@@ -489,7 +489,7 @@
     }
     .about-bio{font-family:var(--font-serif);font-size:1.1rem;line-height:1.65;color:var(--color-text-muted);font-weight:400;}
  
-    .about-desc-title{font-family:var(--font-serif);font-size:33px;font-weight:400;color:#2B3752;margin:0 0 1.1rem 0;}
+    .about-desc-title{font-family:var(--font-serif);font-size:25px;font-weight:450;color:#000;margin:0 0 1.1rem 0;}
     .about-desc-text{font-family:var(--font-serif);font-size:1.6rem;line-height:1.6;font-weight:400;color:#000;margin:0;text-align:justify;text-justify:inter-word;}
     /* 1 line-height of gap between bio paragraphs specifically
        (1.6rem font-size * 1.6 line-height = 2.56rem), scoped to
@@ -721,10 +721,11 @@
     }
     .work-page-tagline{
       position:relative;
-      font-family:var(--font-serif); font-size:22px; line-height:1.4;
-      font-weight:450; font-style:normal; color:#000; margin:0 0 2rem; text-align:left;
+      font-family:var(--font-serif); font-size:28px; line-height:1.4;
+      font-weight:550; font-style:italic; color:#000; margin:0 0 2rem; text-align:left;
     }
-    .work-tagline-lines{ margin:14px 0 0 0; font-size:28px; }
+    .work-page-tagline p{ margin:0; }
+    .work-page-tagline p + p{ margin-top:1.2em; }
     .hero-tagline-big{ font-size:33px; }
     .hero-new-inner p.hero-kicker{
       font-family:var(--font-serif); font-size:25px; font-weight:400;
@@ -748,8 +749,8 @@
     .new-section{ background:#fff; padding:5rem 1rem 4rem; }
     .new-section-inner{ max-width:996px; margin:0 auto; position:relative; }
     .new-section-heading{
-      font-family:var(--font-serif); font-weight:400; font-size:33px;
-      text-transform:none; letter-spacing:normal; color:#2B3752;
+      font-family:var(--font-serif); font-weight:450; font-size:25px;
+      text-transform:none; letter-spacing:normal; color:#000;
       margin:0 0 1.1rem 0;
     }
     .new-section-heading.second{ margin-top:5vh; }
@@ -1366,7 +1367,7 @@
   </div>
 
   <button type="button" class="sidebar-minimize-btn" id="sidebarMinimizeBtn" aria-label="Hide menu">
-    <svg xmlns="http://www.w3.org/2000/svg" width="34" height="30" viewBox="0 0 34 30">
+    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="22.06" viewBox="0 0 34 30">
       <defs>
         <pattern id="minimizeBtnImg" patternUnits="userSpaceOnUse" x="0" y="0" width="34" height="30">
           <image href="images/others/gg.jpg" x="0" y="0" width="34" height="30" preserveAspectRatio="xMidYMid slice" opacity="0.15"/>
@@ -1381,7 +1382,7 @@
     <canvas id="heroTrailCanvas"></canvas>
     <div class="sidebar-top">
       <button type="button" class="sidebar-name" id="sidebarNameBtn">
-        <span class="sidebar-name-text">Sruti<br>Bhattacharjee</span>
+        <span class="sidebar-name-text">Sruti Bhattacharjee</span>
       </button>
       <p class="sidebar-role" data-i18n="home.kicker">UX Research Portfolio</p>
       <nav class="sidebar-nav" id="sidebarNav">
@@ -1389,7 +1390,7 @@
         <button type="button" class="sidebar-nav-opt" data-view="career" data-i18n="menu.career">Career</button>
         <button type="button" class="sidebar-nav-opt" data-view="about" data-i18n="menu.about">About</button>
         <button type="button" class="sidebar-nav-opt" data-view="interests" data-i18n="section.interests">Interests</button>
-        <a class="sidebar-nav-opt" href="papers/cv_1page.pdf" target="_blank" rel="noopener noreferrer" data-i18n="nav.cv">CV</a>
+        <a class="sidebar-nav-opt" href="https://www.claudeusercontent.com/papers/cv_1page.pdf" target="_blank" rel="noopener noreferrer" data-i18n="nav.cv">CV</a>
       </nav>
     </div>
     <div class="sidebar-social">
@@ -1424,16 +1425,11 @@
     <div class="new-section">
       <div class="new-section-inner">
 
-        <div class="work-page-tagline reveal" data-i18n="work.tagline">
-          <div class="hero-greeting-flex">
-            <div class="hero-greeting-lines">Hi,</div>
-            <img class="hero-side-avatar" src="images/others/selfi_anim2.png" alt="" onerror="this.style.display='none';"/>
-          </div>
-          <p class="work-tagline-lines">I am a UX Researcher and Tinkerer<br>I vibe-check AI to fix bugs like uncanny valley</p>
-        </div>
+        <div class="work-page-tagline reveal" data-i18n="work.tagline"><p>Hi,<br>I am Sruti</p><p>I am a ux researcher and a tinkerer. I vibe-check AI to fix bugs like uncanny valley.</p></div>
         <div id="homeWorkPane">
+          <h3 class="gallery-subhead" data-i18n="gallery.research">UX Research Projects</h3>
           <div class="work-grid reveal" id="homeWorkGrid"></div>
-          <h3 class="gallery-subhead my-other-work-heading reveal" data-i18n="gallery.otherWork">My Other Work</h3>
+          <h3 class="gallery-subhead my-other-work-heading reveal" data-i18n="gallery.otherWork">Tinkering Projects</h3>
           <div class="work-grid-3 reveal" id="homeWorkSliderCards"></div>
         </div>
 
@@ -1664,8 +1660,8 @@
         'footer.nav.contact':'Contact','footer.nav.work':'Work','footer.nav.about':'About','footer.nav.portfolio':'Portfolio',
         'about.nav.contact':'Contact Me','about.nav.work':'My Work','about.nav.portfolio':'My Portfolio','about.nav.career':'My Career',
         'menu.about':'About','menu.contact':'Contact','menu.portfolio':'Work','menu.career':'Formation',
-        'a11y.skiplink':'Skip to main content','aria.menu':'Menu','gallery.otherWork':'My Other Work',
-        'work.tagline':'<div class="hero-greeting-flex"><div class="hero-greeting-lines">Hi,</div><img class="hero-side-avatar" src="images/others/selfi_anim2.png" alt="" onerror="this.style.display=\'none\';"/></div><p class="work-tagline-lines">I am a UX Researcher and Tinkerer<br>I vibe-check AI to fix bugs like uncanny valley</p>',
+        'a11y.skiplink':'Skip to main content','aria.menu':'Menu','gallery.otherWork':'Tinkering Projects','gallery.research':'UX Research Projects',
+        'work.tagline':'<p>Hi,<br>I am Sruti</p><p>I am a ux researcher and a tinkerer. I vibe-check AI to fix bugs like uncanny valley.</p>',
         'landing.caption':'Welcome to My Portfolio'
       },
       fr:{
@@ -3398,28 +3394,16 @@ const PLACES=[
        ============================================================ */
     function syncMainContentTopToSidebarRole(){
       const sidebarEl=document.getElementById('siteSidebar');
-      const workNavEl=document.querySelector('.sidebar-nav-opt[data-view="portfolio"]');
-      const sections=document.querySelectorAll('.new-section');
-      if(!sidebarEl||!workNavEl||!sections.length)return;
+      const navEl=document.getElementById('sidebarNav');
+      const heading=document.querySelector('#homeWorkPane h3'); // "UX Research Projects" — only exists on the Work/Portfolio page
+      if(!sidebarEl||!navEl)return;
       if(getComputedStyle(sidebarEl).display==='none')return; // sidebar isn't shown right now (mobile, or a collapsed project page) — keep the last computed offset rather than collapsing it to 0
-      const offset=Math.round(workNavEl.getBoundingClientRect().top);
-      const taglineEl=document.querySelector('.work-page-tagline');
-      sections.forEach(function(section){
-        // The Portfolio section's own top padding is reduced by exactly the
-        // tagline block's rendered height (it sits in normal flow just
-        // above the cards, see "Namaste"/"Hi" saga in chat) — this keeps
-        // the cards landing at the same vertical position they always
-        // have, instead of being pushed further down by the tagline's
-        // own height on top of the usual offset. Other sections (e.g.
-        // Interests) don't contain the tagline, so they keep the plain
-        // offset unchanged.
-        if(taglineEl && section.contains(taglineEl)){
-          const taglineSpace=taglineEl.getBoundingClientRect().height+32; // +32 = its own 2rem bottom margin
-          section.style.paddingTop=Math.max(0,Math.round(offset-taglineSpace))+'px';
-        } else {
-          section.style.paddingTop=offset+'px';
-        }
-      });
+      if(!heading)return; // not on the Work page right now — leave the nav block at whatever position it was last shifted to, rather than snapping back (avoids a jarring jump when navigating between pages)
+      navEl.style.marginTop='0px'; // reset first so the next measurement reflects the nav's true, unshifted position
+      const navTop=navEl.getBoundingClientRect().top;
+      const headingTop=heading.getBoundingClientRect().top;
+      const shift=Math.max(0,Math.round(headingTop-navTop));
+      navEl.style.marginTop=shift+'px';
     }
     window.addEventListener('resize',function(){
       requestAnimationFrame(()=>requestAnimationFrame(syncMainContentTopToSidebarRole));
