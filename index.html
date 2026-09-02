@@ -148,12 +148,11 @@
     .bg-slate-700{background-color:var(--color-text-body)}
     .bg-slate-800{background-color:var(--color-footer-navy)}
     body:not(.landing-active) .footer-sticky-wrap{margin-left:250px;width:calc(100% - 250px);}
-    /* Normal document flow, not fixed to the viewport — sits right
-       after each page's content. margin-top:auto (combined with body's
-       display:flex;flex-direction:column;min-height:100dvh) pushes it
-       down to the bottom of the screen on short pages, and it scrolls
-       away naturally on long ones, same as ordinary page content. */
-    .footer-sticky-wrap{position:relative;width:100%;z-index:90;margin-top:auto;}
+    /* Plain, ordinary footer: the last element on the page, in normal
+       document flow. It always sits directly after whatever content
+       came before it — no viewport-height forcing, no flex tricks, no
+       exceptions per page. */
+    .footer-sticky-wrap{position:relative;width:100%;z-index:90;}
     body.landing-active .footer-sticky-wrap{display:none;}
     @media(max-width:900px){
       body:not(.landing-active) .footer-sticky-wrap{margin-left:0;width:100%;}
@@ -241,7 +240,7 @@
     }
  
     html{min-height:100%;overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%;}
-    body{font-family:var(--font-serif);background-color:#fff;display:flex;flex-direction:column;min-height:100vh;min-height:100dvh;overflow-x:clip;margin:0;position:relative;}
+    body{font-family:var(--font-serif);background-color:#fff;overflow-x:clip;margin:0;position:relative;}
     body.project-page-active{background-color:var(--color-white);} /* project case study pages use a pure white background throughout, not the site's usual off-white */
     /* STICKY FOOTER — on short pages (e.g. Contact), pushes the footer block
        down to the bottom of the viewport instead of leaving a blank gap
