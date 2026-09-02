@@ -148,11 +148,14 @@
     .bg-slate-700{background-color:var(--color-text-body)}
     .bg-slate-800{background-color:var(--color-footer-navy)}
     body:not(.landing-active) .footer-sticky-wrap{margin-left:250px;width:calc(100% - 250px);}
-    /* Plain, ordinary footer: the last element on the page, in normal
-       document flow. It always sits directly after whatever content
-       came before it — no viewport-height forcing, no flex tricks, no
-       exceptions per page. */
-    .footer-sticky-wrap{position:relative;width:100%;z-index:90;}
+    /* Sticky footer via flexbox: body is a full-height flex column (see
+       body{} above), and margin-top:auto on this element pushes it to
+       the bottom of the screen when the active page's content is
+       shorter than one viewport. flex-shrink:0 stops it from ever
+       being compressed if content runs long. It's still a normal flow
+       element otherwise — it just scrolls with the page like content
+       does once that content is taller than the screen. */
+    .footer-sticky-wrap{position:relative;width:100%;z-index:90;margin-top:auto;flex-shrink:0;}
     body.landing-active .footer-sticky-wrap{display:none;}
     @media(max-width:900px){
       body:not(.landing-active) .footer-sticky-wrap{margin-left:0;width:100%;}
@@ -240,7 +243,7 @@
     }
  
     html{min-height:100%;overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%;}
-    body{font-family:var(--font-serif);background-color:#fff;overflow-x:clip;margin:0;position:relative;}
+    body{font-family:var(--font-serif);background-color:#fff;display:flex;flex-direction:column;min-height:100vh;min-height:100dvh;overflow-x:clip;margin:0;position:relative;}
     body.project-page-active{background-color:var(--color-white);} /* project case study pages use a pure white background throughout, not the site's usual off-white */
     /* STICKY FOOTER — on short pages (e.g. Contact), pushes the footer block
        down to the bottom of the viewport instead of leaving a blank gap
