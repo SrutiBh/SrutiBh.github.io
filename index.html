@@ -3403,7 +3403,23 @@ const PLACES=[
       if(!sidebarEl||!workNavEl||!sections.length)return;
       if(getComputedStyle(sidebarEl).display==='none')return; // sidebar isn't shown right now (mobile, or a collapsed project page) — keep the last computed offset rather than collapsing it to 0
       const offset=Math.round(workNavEl.getBoundingClientRect().top);
-      sections.forEach(function(section){ section.style.paddingTop=offset+'px'; });
+      const taglineEl=document.querySelector('.work-page-tagline');
+      sections.forEach(function(section){
+        // The Portfolio section's own top padding is reduced by exactly the
+        // tagline block's rendered height (it sits in normal flow just
+        // above the cards, see "Namaste"/"Hi" saga in chat) — this keeps
+        // the cards landing at the same vertical position they always
+        // have, instead of being pushed further down by the tagline's
+        // own height on top of the usual offset. Other sections (e.g.
+        // Interests) don't contain the tagline, so they keep the plain
+        // offset unchanged.
+        if(taglineEl && section.contains(taglineEl)){
+          const taglineSpace=taglineEl.getBoundingClientRect().height+32; // +32 = its own 2rem bottom margin
+          section.style.paddingTop=Math.max(0,Math.round(offset-taglineSpace))+'px';
+        } else {
+          section.style.paddingTop=offset+'px';
+        }
+      });
     }
     window.addEventListener('resize',function(){
       requestAnimationFrame(()=>requestAnimationFrame(syncMainContentTopToSidebarRole));
