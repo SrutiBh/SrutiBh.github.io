@@ -478,15 +478,36 @@
  
     .about-section{background:#fff;padding:5rem 1rem 0;}
     .about-inner{max-width:996px;margin:0 auto;padding-bottom:4rem;}
-    .about-block{margin-top:4rem;}
+    .about-block{margin-top:90px;}
+    .about-me-row-reverse{margin-top:64px;}
     .about-me-row{ display:block; }
     .about-me-row::after{ content:""; display:table; clear:both; }
-    .about-me-photo{ float:right; max-width:320px; margin:0 0 1.5rem 2.5rem; }
-    .about-me-photo img{display:block;max-width:100%;height:auto;margin-top:-32px;}
+    .about-me-photo{ float:left; max-width:320px; margin:0 2.5rem 1.5rem 0; }
+    .about-photo-img-wrap img{display:block;max-width:100%;height:auto;margin-top:-32px;}
+    .about-photo-caption{font-family:var(--font-serif);font-size:.85rem;font-style:italic;color:var(--color-text-faint-onlight);margin:.5rem 0 0;text-align:center;}
     .about-me-text{ display:block; }
+    .about-me-row-reverse .about-me-photo-left{ float:right; margin:0 0 1.5rem 2.5rem; }
     @media(max-width:760px){
       .about-me-photo{ float:none; max-width:280px; margin:0 0 1.5rem; }
+      .about-me-row-reverse .about-me-photo-left{ float:none; margin:0 0 1.5rem; }
     }
+    .about-skills-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:2.5rem; }
+    .about-skills-title{font-family:var(--font-serif);font-size:20px;font-weight:450;color:#000;margin:0 0 .75rem 0;}
+    .about-goals-placeholder{ font-style:italic; color:var(--color-text-faint-onlight); }
+    @media(max-width:760px){
+      .about-skills-grid{ grid-template-columns:1fr; gap:2rem; }
+    }
+    /* About page reference-match: blue bold headings, italic navy body
+       text (except the Goals column, which stays upright), captions
+       left-aligned instead of centered. Scoped to #aboutView only, so
+       Career's "Education"/"Journey" headings (which share the same
+       base classes) keep the black styling used site-wide. */
+    #aboutView .about-desc-title,
+    #aboutView .about-skills-title{ color:#2A3FE0; font-weight:700; }
+    #aboutView .about-desc-text{ font-style:italic; color:var(--color-navy); }
+    #aboutView .about-skills-col:last-child .about-desc-text{ font-style:normal; }
+    #aboutView .about-goals-placeholder{ font-style:italic !important; color:var(--color-text-faint-onlight) !important; }
+    #aboutView .about-photo-caption{ text-align:left; font-style:normal; }
     .about-bio{font-family:var(--font-serif);font-size:1.1rem;line-height:1.65;color:var(--color-text-muted);font-weight:400;}
  
     .about-desc-title{font-family:var(--font-serif);font-size:25px;font-weight:450;color:#000;margin:0 0 1.1rem 0;}
@@ -1498,11 +1519,51 @@
     <div class="about-inner">
       <div class="about-me-row reveal">
         <div class="about-me-photo">
-          <img src="images/others/selfie.png" alt="Sruti Bhattacharjee" loading="lazy" decoding="async" onerror="this.style.display='none';this.parentElement.style.display='flex';this.parentElement.style.alignItems='center';this.parentElement.style.justifyContent='center';this.parentElement.innerHTML='<span style=&quot;font-size:3rem&quot;>👩‍💻</span>'"/>
+          <div class="about-photo-img-wrap">
+            <img src="images/profile/landing.jpg" alt="Sruti Bhattacharjee" loading="lazy" decoding="async" onerror="this.style.display='none';this.parentElement.style.display='flex';this.parentElement.style.alignItems='center';this.parentElement.style.justifyContent='center';this.parentElement.innerHTML='<span style=&quot;font-size:3rem&quot;>👩‍💻</span>'"/>
+          </div>
+          <p class="about-photo-caption">Add a caption for this photo</p>
         </div>
         <div class="about-me-text">
-          <div class="about-me-bio reveal" data-i18n="home.bio"><p class="about-desc-text">I'm a mixed-method UX Research practitioner with a background in Multimodal Perception Analysis and Visual Computing. My interdisciplinary experience in AI and Human&ndash;Computer Interaction helps me uncover user needs and challenges to shape interactive, accessible, and immersive experiences. I aspire to advance ethical human&ndash;AI symbiosis through evidence-based product decisions.</p></div>
+          <h2 class="about-desc-title">About Me</h2>
+          <div class="about-me-bio">
+            <p class="about-desc-text">As a UX Researcher, I work to understand whether a product is desirable, usable, and responsible. My passion for technological innovation and my personal concerns around human safety and wellbeing in the modern age of AI motivated my transition from Applied AI (Computer Vision, Computer Graphics, and Signal Processing) to Human-Centred AI &amp; Technology. I am particularly interested in addressing the needs of underserved user groups, including infants, teenagers, adult women, and people with disabilities.</p>
           </div>
+        </div>
+      </div>
+
+      <div class="about-block">
+        <h2 class="about-desc-title">My Journey to UX</h2>
+        <p class="about-desc-text">Although I am not an expert in UX research yet, I am a veteran of empathetic inquisitivity. I am always curious to learn new skills for growth (personal, professional) &amp; efficiency (solo, team), and open to unlearning when needed &mdash; that curiosity is what carried me from Applied AI into Human-Centred AI &amp; Technology in the first place.</p>
+      </div>
+
+      <div class="about-block about-skills-grid">
+        <div class="about-skills-col">
+          <h3 class="about-skills-title">Transferrable Skills</h3>
+          <p class="about-desc-text">I have lived in 4 countries and worked (roommate and teammate) with people from diverse professional and geographical backgrounds. I believe it's always important to use insights from diverse schools of thoughts to enhance any product, whether the product is a technology or myself.</p>
+        </div>
+        <div class="about-skills-col">
+          <h3 class="about-skills-title">Qualitative Research</h3>
+          <p class="about-desc-text">My research toolkit spans Diary Studies, A/B Testing, Soma Design, Contextual Inquiry, Surveys, Interviewing, Design Fiction, and Co-design Workshops &mdash; from 38 semi-structured student interviews for Jupyter Thebe to task-based interviews examining collaborative workplace technologies at Furhat Robotics.</p>
+        </div>
+        <div class="about-skills-col">
+          <h3 class="about-skills-title">Goals</h3>
+          <p class="about-desc-text about-goals-placeholder">Add a paragraph here about what you want to grow into next &mdash; I don't have this in your existing bio or resume, so I didn't want to invent it for you.</p>
+        </div>
+      </div>
+
+      <div class="about-me-row about-me-row-reverse reveal">
+        <div class="about-me-photo about-me-photo-left">
+          <div class="about-photo-img-wrap">
+            <img src="images/profile/svalbard.jpg" alt="Sruti Bhattacharjee" loading="lazy" decoding="async" onerror="this.style.display='none';this.parentElement.style.display='flex';this.parentElement.style.alignItems='center';this.parentElement.style.justifyContent='center';this.parentElement.innerHTML='<span style=&quot;font-size:3rem&quot;>👩‍💻</span>'"/>
+          </div>
+          <p class="about-photo-caption">Add a caption for this photo</p>
+        </div>
+        <div class="about-me-text">
+          <h2 class="about-desc-title">What I Do When I'm Not Working</h2>
+          <p class="about-desc-text">When I work, I always listen to some kind of music &mdash; currently Celtic and Viking music for productivity. At workplace, you can expect me to listen to all your personal and professional excitements and worries, take great pictures of you when you want, and occasionally arrive with a batch of homemade, sugar-free, protein-heavy cakes.</p>
+          <p class="about-desc-text">When I don't work, I love trying different activities. Currently, I am learning French and discovering neuroscience-backed hacks for adult women's wellness and productivity, while slowly polishing my skills in improv acting, chess, and LEGO.</p>
+        </div>
       </div>
     </div>
   </section>
