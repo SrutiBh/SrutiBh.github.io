@@ -170,7 +170,7 @@
     .sidebar-social a:hover{ color:#000; transform:scale(1.12); }
     .sidebar-social a:hover svg{ stroke-width:2.6; }
     .sidebar-social svg{ width:24px; height:24px; }
-    .footer-pre{background:var(--n-cream);text-align:center;min-height:35px;display:flex;align-items:center;justify-content:center;padding:0 1.5rem;}
+    .footer-pre{background:var(--n-cream);text-align:center;min-height:28px;display:flex;align-items:center;justify-content:center;padding:0 1.5rem;}
     .footer-pre p{margin:0;font-size:.8rem;color:var(--color-navy);}
     @media(max-width:360px){
       .footer-pre{padding-left:.75rem;padding-right:.75rem;}
@@ -1445,7 +1445,7 @@
     <div class="new-section">
       <div class="new-section-inner">
 
-        <div class="work-page-tagline reveal" data-i18n="work.tagline"><p>Hi,<br>I am Sruti</p><p>I am a ux researcher and a tinkerer. I vibe-check AI to fix bugs like uncanny valley.</p></div>
+        <div class="work-page-tagline" data-i18n="work.tagline"><p>Hi,<br>I am Sruti</p><p>I am a ux researcher and a tinkerer. I vibe-check AI to fix bugs like uncanny valley.</p></div>
         <div id="homeWorkPane">
           <h3 class="gallery-subhead" data-i18n="gallery.research">UX Research Projects</h3>
           <div class="work-grid reveal" id="homeWorkGrid"></div>
@@ -3453,14 +3453,14 @@ const PLACES=[
     function syncMainContentTopToSidebarRole(){
       const sidebarEl=document.getElementById('siteSidebar');
       const navEl=document.getElementById('sidebarNav');
-      const heading=document.querySelector('#homeWorkPane h3'); // "UX Research Projects" — only exists on the Work/Portfolio page
+      const heading=document.querySelector('.work-page-tagline p:last-child'); // "I am a ux researcher and a tinkerer..." — only exists on the Work/Portfolio page
       if(!sidebarEl||!navEl)return;
       if(getComputedStyle(sidebarEl).display==='none')return; // sidebar isn't shown right now (mobile, or a collapsed project page) — keep the last computed offset rather than collapsing it to 0
       if(!heading)return; // not on the Work page right now — leave the nav block at whatever position it was last shifted to, rather than snapping back (avoids a jarring jump when navigating between pages)
       navEl.style.marginTop='0px'; // reset first so the next measurement reflects the nav's true, unshifted position
       const navTop=navEl.getBoundingClientRect().top;
       const headingTop=heading.getBoundingClientRect().top;
-      const shift=Math.max(0,Math.round(headingTop-navTop));
+      const shift=Math.max(0,Math.round(headingTop-navTop)+10);
       navEl.style.marginTop=shift+'px';
     }
     window.addEventListener('resize',function(){
