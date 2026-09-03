@@ -482,9 +482,10 @@
     .about-me-row-reverse{margin-top:64px;}
     .about-me-row{ display:flex; align-items:flex-start; gap:30px; }
     .about-me-row-reverse{ flex-direction:row-reverse; }
-    .about-me-photo{ flex:0 0 420px; max-width:420px; }
+    .about-me-photo{ flex:1 1 0; max-width:none; }
+    .about-me-row-reverse .about-me-photo{ flex:1.5 1 0; }
     .about-photo-img-wrap img{display:block;width:100%;height:auto;}
-    .about-me-text{ flex:1 1 auto; min-width:0; }
+    .about-me-text{ flex:1 1 0; min-width:0; }
     @media(max-width:760px){
       .about-me-row{ flex-direction:column; }
       .about-me-row-reverse{ flex-direction:column; }
