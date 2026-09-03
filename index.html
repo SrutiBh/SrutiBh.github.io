@@ -480,16 +480,15 @@
     .about-inner{max-width:996px;margin:0 auto;padding-bottom:4rem;}
     .about-block{margin-top:90px;}
     .about-me-row-reverse{margin-top:64px;}
-    .about-me-row{ display:block; }
-    .about-me-row::after{ content:""; display:table; clear:both; }
-    .about-me-photo{ float:left; max-width:320px; margin:0 2.5rem 1.5rem 0; }
-    .about-photo-img-wrap img{display:block;max-width:100%;height:auto;margin-top:-32px;}
-    .about-photo-caption{font-family:var(--font-serif);font-size:.85rem;font-style:italic;color:var(--color-text-faint-onlight);margin:.5rem 0 0;text-align:center;}
-    .about-me-text{ display:block; }
-    .about-me-row-reverse .about-me-photo-left{ float:right; margin:0 0 1.5rem 2.5rem; }
+    .about-me-row{ display:flex; align-items:flex-start; gap:30px; }
+    .about-me-row-reverse{ flex-direction:row-reverse; }
+    .about-me-photo{ flex:0 0 420px; max-width:420px; }
+    .about-photo-img-wrap img{display:block;width:100%;height:auto;}
+    .about-me-text{ flex:1 1 auto; min-width:0; }
     @media(max-width:760px){
-      .about-me-photo{ float:none; max-width:280px; margin:0 0 1.5rem; }
-      .about-me-row-reverse .about-me-photo-left{ float:none; margin:0 0 1.5rem; }
+      .about-me-row{ flex-direction:column; }
+      .about-me-row-reverse{ flex-direction:column; }
+      .about-me-photo{ flex:0 0 auto; max-width:320px; }
     }
     .about-skills-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:2.5rem; }
     .about-skills-title{font-family:var(--font-serif);font-size:20px;font-weight:450;color:#000;margin:0 0 .75rem 0;}
@@ -507,7 +506,6 @@
     #aboutView .about-desc-text{ font-style:italic; color:var(--color-navy); }
     #aboutView .about-skills-col:last-child .about-desc-text{ font-style:normal; }
     #aboutView .about-goals-placeholder{ font-style:italic !important; color:var(--color-text-faint-onlight) !important; }
-    #aboutView .about-photo-caption{ text-align:left; font-style:normal; }
     .about-bio{font-family:var(--font-serif);font-size:1.1rem;line-height:1.65;color:var(--color-text-muted);font-weight:400;}
  
     .about-desc-title{font-family:var(--font-serif);font-size:25px;font-weight:450;color:#000;margin:0 0 1.1rem 0;}
@@ -1522,7 +1520,6 @@
           <div class="about-photo-img-wrap">
             <img src="images/profile/landing.jpg" alt="Sruti Bhattacharjee" loading="lazy" decoding="async" onerror="this.style.display='none';this.parentElement.style.display='flex';this.parentElement.style.alignItems='center';this.parentElement.style.justifyContent='center';this.parentElement.innerHTML='<span style=&quot;font-size:3rem&quot;>👩‍💻</span>'"/>
           </div>
-          <p class="about-photo-caption">Add a caption for this photo</p>
         </div>
         <div class="about-me-text">
           <h2 class="about-desc-title">About Me</h2>
@@ -1553,11 +1550,10 @@
       </div>
 
       <div class="about-me-row about-me-row-reverse reveal">
-        <div class="about-me-photo about-me-photo-left">
+        <div class="about-me-photo">
           <div class="about-photo-img-wrap">
             <img src="images/profile/svalbard.jpg" alt="Sruti Bhattacharjee" loading="lazy" decoding="async" onerror="this.style.display='none';this.parentElement.style.display='flex';this.parentElement.style.alignItems='center';this.parentElement.style.justifyContent='center';this.parentElement.innerHTML='<span style=&quot;font-size:3rem&quot;>👩‍💻</span>'"/>
           </div>
-          <p class="about-photo-caption">Add a caption for this photo</p>
         </div>
         <div class="about-me-text">
           <h2 class="about-desc-title">What I Do When I'm Not Working</h2>
