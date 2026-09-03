@@ -377,7 +377,7 @@
     @media(max-width:480px){.work-grid-3{grid-template-columns:1fr;}}
     .work-card{position:relative;display:flex;flex-direction:column;width:100%;border:none;border-radius:.5rem;cursor:pointer;padding:.65rem .65rem 0;background:#fff;text-align:center;font-family:inherit;box-shadow:0 12px 26px rgba(15,23,42,.16),0 2px 6px rgba(15,23,42,.08);}
     .work-card::before{content:'';position:absolute;top:-9px;left:50%;width:17px;height:17px;border-radius:50%;transform:translateX(-50%);background:radial-gradient(circle at 32% 28%, #3d7a63, var(--n-green) 60%, #123a2e 100%);box-shadow:0 3px 5px rgba(15,23,42,.35),inset -2px -2px 3px rgba(0,0,0,.15);z-index:2;}
-    .work-card.is-disabled{cursor:default;}
+    .work-card.is-disabled{cursor:default;pointer-events:none;}
     .work-card.is-disabled:hover .work-card-img{transform:none;filter:none;}
     .work-card.is-disabled:hover .work-card-overlay{opacity:0;}
     .work-card-thumb{position:relative;width:100%;aspect-ratio:4/3.2;border-radius:.15rem;overflow:hidden;background:linear-gradient(135deg,#e8ecf5 0%,#c0cbea 100%);}
@@ -482,7 +482,7 @@
     .about-me-row{ display:block; margin-top:30px; }
     .about-me-row::after{ content:""; display:table; clear:both; }
     .about-me-photo{ float:left; width:32%; margin:15px 40px 30px 0; }
-    .about-me-row-reverse .about-me-photo{ float:right; width:52%; margin:15px 0 60px 60px; }
+    .about-me-row-reverse .about-me-photo{ float:right; width:52%; margin:15px 0 30px 60px; }
     .about-me-text{ display:block; transform:translateY(-3px); }
     @media(max-width:760px){
       .about-me-photo{ float:none; width:100%; max-width:320px; margin:0 0 30px; }
@@ -512,6 +512,31 @@
     .about-closing-title{ margin-top:90px; }
     .about-row-title{ margin-bottom:0; }
     .about-desc-text{font-family:var(--font-serif);font-size:1.6rem;line-height:1.6;font-weight:400;color:#000;margin:0;text-align:justify;text-justify:inter-word;}
+    .growth-table-wrap{ overflow-x:auto; border:1px solid var(--n-border); border-radius:.5rem; }
+    .growth-table{ width:100%; border-collapse:collapse; font-family:'Inter', sans-serif; font-size:15px; min-width:760px; }
+    .growth-table th{ font-family:var(--font-serif); font-weight:550; font-size:16px; text-align:left; color:#fff; background:#2B3752; padding:.85rem 1rem; white-space:nowrap; }
+    .growth-table td{ padding:.85rem 1rem; color:#000; border-top:1px solid var(--n-border); vertical-align:top; line-height:1.5; }
+    .growth-table tbody tr:nth-child(even){ background:var(--n-cream); }
+    .growth-table td:first-child{ font-weight:600; white-space:nowrap; }
+    .persona-card{ display:flex; flex-direction:column; gap:1.75rem; }
+    .persona-basics{ display:grid; grid-template-columns:repeat(3,1fr); gap:1rem 2rem; background:#fff; border:1.5px solid var(--n-border); border-radius:.75rem; padding:1.25rem 1.5rem; }
+    @media(max-width:700px){ .persona-basics{ grid-template-columns:1fr 1fr; } }
+    .persona-basic-item{ display:flex; flex-direction:column; gap:.15rem; }
+    .persona-label{ font-family:'Inter', sans-serif; font-size:13px; font-weight:500; text-transform:uppercase; letter-spacing:.05em; color:var(--n-ink-muted); }
+    .persona-value{ font-family:var(--font-serif); font-size:18px; font-weight:450; color:#000; }
+    .persona-notes-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:1.25rem; }
+    @media(max-width:700px){ .persona-notes-grid{ grid-template-columns:1fr; } }
+    .persona-note{ position:relative; border-radius:.5rem; padding:1.25rem 1.35rem 1.4rem; box-shadow:0 1px 3px rgba(15,23,42,.06),0 6px 18px rgba(15,23,42,.08); }
+    .persona-note::before{content:'';position:absolute;top:-9px;left:28px;width:17px;height:17px;border-radius:50%;background:radial-gradient(circle at 32% 28%, #3d7a63, var(--n-green) 60%, #123a2e 100%);box-shadow:0 3px 5px rgba(15,23,42,.35),inset -2px -2px 3px rgba(0,0,0,.15);z-index:2;}
+    .persona-note-wide{ grid-column:1 / -1; }
+    .persona-note-pink{ background:var(--n-pink); }
+    .persona-note-blue{ background:var(--n-blue); }
+    .persona-note-green{ background:#DCEEDF; }
+    .persona-note-cream{ background:var(--n-cream); border:1.5px solid var(--n-border); }
+    .persona-note-title{ font-family:var(--font-serif); font-size:19px; font-weight:600; color:#000; margin:0 0 .6rem; }
+    .persona-note-list{ font-family:'Inter', sans-serif; font-size:15px; line-height:1.55; color:#1a1a1a; margin:0; padding-left:1.2rem; }
+    .persona-note-list li{ margin-bottom:.4rem; }
+    .persona-note-list li:last-child{ margin-bottom:0; }
     /* 1 line-height of gap between bio paragraphs specifically
        (1.6rem font-size * 1.6 line-height = 2.56rem), scoped to
        the bio only so the shared .about-desc-text rule above is
@@ -1533,10 +1558,103 @@
           <div class="about-me-bio">
             <p class="about-desc-text">I am a veteran of empathetic inquisitiveness. I have been wondering, asking questions, and observing the world around me for as long as I can remember.</p>
             <p class="about-desc-text">Hailing from a small village in India, I possess a lifelong fascination with understanding people and tinkering to solve immediate challenges. This inclination first manifested when I designed a handmade toilet prototype for my 78-year-old grandmother following her cerebral stroke. Little did I know that what I then considered a simple act of empathy and common sense would eventually form the foundation of my future profession.</p>
-            <p class="about-desc-text">This innate curiosity ultimately guided me into engineering, rendering me a first-generation woman in tech, programming, and gaming. This path also paved the way for me to become the sole member of my family to relocate abroad.</p>
+            <p class="about-desc-text">This innate curiosity ultimately guided me into engineering, rendering me a first-generation woman in tech, programming, and gaming in my local area and family-line. This path also paved the way for me to become the sole member of my family to relocate abroad.</p>
           </div>
         </div>
       </div>
+
+      <!--
+      <div class="persona-card">
+          <div class="persona-notes-grid">
+            <div class="persona-note persona-note-cream">
+              <h3 class="persona-note-title">Background</h3>
+              <ul class="persona-note-list">
+                <li>UX Research: Semi-Structured Interviews, Unstructured Interviews, Survey, Design Fiction, Co-Design Workshop</li>
+                <li>AI: Computer Vision, Natural Language Processing, LSTM, Conformal Prediction, Inverse Reinforcement Learning</li>
+                <li>Spatial Technology: Virtual Reality, Telepresence Robot, Teleoperation Robotic System</li>
+              </ul>
+            </div>
+            <div class="persona-note persona-note-green">
+              <h3 class="persona-note-title">Motivation</h3>
+              <ul class="persona-note-list">
+                <li>Inform design and development elements of AI from user-perspectives</li>
+                <li>Make AI, responsible, accesible, and neurodiversity inclusive</li>
+                <li>Make AI safe for children and women</li>
+              </ul>
+            </div>
+            <div class="persona-note persona-note-blue">
+              <h3 class="persona-note-title">Goals</h3>
+              <ul class="persona-note-list">
+                <li>Gain industrial experience in UXR for AI</li>
+                <li>Gain financial freedom</li>
+              </ul>
+            </div>
+            <div class="persona-note persona-note-pink">
+              <h3 class="persona-note-title">Concerns</h3>
+              <ul class="persona-note-list">
+                <li>Advanced technologies remain largely developer-centric</li>
+                <li>Women, Kids, Disabled and Neurodiverse groups are still overlooked niche domains</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      -->
+
+      <!--
+      <div class="about-block">
+        <h2 class="about-desc-title">Growth, Operationalized</h2>
+        <div class="growth-table-wrap">
+          <table class="growth-table">
+            <thead>
+              <tr>
+                <th>Trait</th>
+                <th>From (Early)</th>
+                <th>To (Now)</th>
+                <th>Shows up in</th>
+                <th>Evidence</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Curiosity</td>
+                <td>Idle wondering &amp; observing</td>
+                <td>Structured research questions</td>
+                <td>UX Research practice</td>
+                <td>Diary studies, contextual inquiry, interviews</td>
+              </tr>
+              <tr>
+                <td>Empathy</td>
+                <td>Instinctive kindness (the toilet prototype)</td>
+                <td>Design principle for inclusion</td>
+                <td>Human-centered AI focus</td>
+                <td>Designing for women, children, older &amp; neurodiverse users</td>
+              </tr>
+              <tr>
+                <td>Risk-taking</td>
+                <td>Leaving home alone, first-gen</td>
+                <td>Career pivot (AI dev &rarr; responsible AI)</td>
+                <td>Graduate studies in HCI</td>
+                <td>Left Applied AI for Human-Centered Technology</td>
+              </tr>
+              <tr>
+                <td>Technical grounding</td>
+                <td>Computer Vision, AI models</td>
+                <td>Critical lens on AI's blind spots</td>
+                <td>UX Research on AI systems</td>
+                <td>Noticed detection-vs-generation asymmetry</td>
+              </tr>
+              <tr>
+                <td>Growth mindset</td>
+                <td>&ldquo;Little did I know&hellip;&rdquo;</td>
+                <td>Active learn/unlearn/relearn cycle</td>
+                <td>Ongoing practice</td>
+                <td>Double Diamond cycles, open to being challenged</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      -->
 
       <div class="about-block">
         <h2 class="about-desc-title">My Journey to UX Research</h2>
@@ -1569,7 +1687,7 @@
           </div>
         </div>
         <div class="about-me-text">
-          <p class="about-desc-text">When I work, I am never without music. These days, Celtic and Viking music are driving my productivity. Outside work, I enjoy adventure travel and learning things simply because they intrigue me. Here is a picture from my solo trip to Svalbard, 81&deg; north.</p>
+          <p class="about-desc-text">When I work, I am rarely without music. These days, Celtic and Viking music are driving my productivity. Outside work, I enjoy adventure travel and learning things simply because they intrigue me. Here is a picture from my solo trip to Svalbard, 81&deg; north.</p>
           <p class="about-desc-text">Currently, I am learning French and exploring neuroscience-backed approaches to adult women&rsquo;s wellness and productivity, while slowly polishing my skills in improv acting, chess, and LEGO.</p>
         </div>
       </div>
@@ -1961,7 +2079,7 @@
     const WORK_CATEGORY='ux';
     const PROJECTS=[
       {id:10,cat:'ux',meta:'Accessibility<br>Interview &middot; Somaesthetics',img:'images/projects/cover.jpg',imgAlt:'Preview image of Project M.A.R.G.I.N.',links:[],projectSlug:'margin'},
-      {id:2,cat:'ux',meta:'Education Technology<br>Participatory Design &middot; Design Fiction &middot; Interview',img:'images/projects/unil.jpg',imgAlt:'Preview image of hybrid class research project',links:[],projectSlug:'edtech'},
+      {id:2,cat:'ux',meta:'Education Technology<br>Participatory Design &middot; Design Fiction &middot; Interview',img:'images/projects/unil.jpg',imgAlt:'Preview image of hybrid class research project',links:[]},
       {id:3,cat:'ux',meta:'Multimodal Telecommunication<br>Interview &middot; Survey',img:'images/projects/VRvsRobovsZoomfinal.png',imgAlt:'Preview image of remote communication project',imgFit:'contain',links:[]},
       {id:1,cat:'ux',meta:'Coming Soon',img:'images/projects/vrle_classroom.jpeg',imgAlt:'Preview image of VR learning environment project',links:[]},
       {id:4,cat:'interaction',meta:'EPFL',img:'images/projects/protest_project.png',imgAlt:'Augmented City interaction design',links:[]},
@@ -2662,7 +2780,7 @@
       const projectsToShow=PROJECTS.filter(function(p){return p.cat===WORK_CATEGORY;});
       wrap.innerHTML=projectsToShow.map(function(p){
         const fitStyle=p.imgFit?(' style="object-fit:'+p.imgFit+';background:#e8ecf5;"'):'';
-        const disabledClass=p.id===1?' is-disabled':'';
+        const disabledClass=p.projectSlug?'':' is-disabled';
         return '<button type="button" class="work-card reveal'+disabledClass+'" data-id="'+p.id+'"'+(p.projectSlug?' data-project-slug="'+p.projectSlug+'"':'')+'>'
           +'<span class="work-card-thumb">'
             +'<img class="work-card-img" src="'+p.img+'" alt="'+p.imgAlt+'" loading="lazy" decoding="async"'+fitStyle+'>'
@@ -2697,7 +2815,7 @@
       const projectsToShow=PROJECTS.filter(function(p){return p.slider===true;});
       wrap.innerHTML=projectsToShow.map(function(p){
         const fitStyle=p.imgFit?(' style="object-fit:'+p.imgFit+';background:#e8ecf5;"'):'';
-        return '<button type="button" class="work-card reveal" data-id="'+p.id+'">'
+        return '<button type="button" class="work-card reveal is-disabled" data-id="'+p.id+'">'
           +'<span class="work-card-thumb">'
             +'<img class="work-card-img" src="'+p.img+'" alt="'+p.imgAlt+'" loading="lazy" decoding="async"'+fitStyle+'>'
             +'<span class="work-card-overlay"><span class="work-card-title" data-i18n="proj.'+p.id+'.title">'+tr('proj.'+p.id+'.title')+'</span></span>'
