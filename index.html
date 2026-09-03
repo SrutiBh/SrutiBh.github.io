@@ -23,7 +23,7 @@
   <meta name="twitter:image" content="https://srutibhattacharjee.com/images/profile/glass_profile.jpeg">
  
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Nunito:wght@400;500;600;700;800&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Nunito:wght@400;500;600;700;800&family=Comic+Neue:wght@400;700&family=Karla:wght@400;500;600&display=swap" rel="stylesheet">
  
   <script type="application/ld+json">
   {
@@ -392,8 +392,8 @@
     /* Matches .about-desc-title exactly (same style used for "About Me" /
        "Education" / "Career Journey" on the Home page) so section names
        here read consistently with the rest of the site. */
-    .gallery-subhead{font-family:var(--font-serif);font-size:25px;font-weight:450;color:#000;margin:60px 0 1.1rem;}
-    .my-other-work-heading{color:#2B3752;}
+    .gallery-subhead{font-family:var(--font-serif);font-size:35px;font-weight:550;color:#000;margin:60px 0 1.1rem;}
+    .my-other-work-heading{color:#000;}
     .about-block:first-of-type .gallery-subhead{margin-top:0;}
  
     .work-sub{display:none;}
@@ -501,13 +501,14 @@
        Career's "Education"/"Journey" headings (which share the same
        base classes) keep the black styling used site-wide. */
     #aboutView .about-desc-title,
-    #aboutView .about-skills-title{ color:#2A3FE0; font-weight:700; }
-    #aboutView .about-desc-text{ font-style:italic; color:var(--color-navy); }
+    #aboutView .about-skills-title{ color:#000; font-weight:550; font-size:35px; }
+    #aboutView .about-desc-text{ font-style:normal; color:#000; font-family:'Inter', sans-serif; font-size:26px; font-weight:400; }
     #aboutView .about-skills-col:last-child .about-desc-text{ font-style:normal; }
     #aboutView .about-goals-placeholder{ font-style:italic !important; color:var(--color-text-faint-onlight) !important; }
     .about-bio{font-family:var(--font-serif);font-size:1.1rem;line-height:1.65;color:var(--color-text-muted);font-weight:400;}
  
-    .about-desc-title{font-family:var(--font-serif);font-size:25px;font-weight:450;color:#000;margin:0 0 1.1rem 0;}
+    .about-desc-title{font-family:var(--font-serif);font-size:26px;font-weight:550;color:#000;margin:0 0 1.1rem 0;}
+    .about-me-heading{ font-size:35px; }
     .about-closing-title{ margin-top:90px; }
     .about-row-title{ margin-bottom:0; }
     .about-desc-text{font-family:var(--font-serif);font-size:1.6rem;line-height:1.6;font-weight:400;color:#000;margin:0;text-align:justify;text-justify:inter-word;}
@@ -526,6 +527,7 @@
     #careerView .jshell{
       width:996px; max-width:100%; margin-left:auto; margin-right:auto;
     }
+    #careerView .about-desc-title{ font-size:35px; }
     /* Collapsed by default: each row is sized (via JS, see
        initEduRowUnfold) to fit exactly the logo plus equal left/right
        padding — so the logo sits truly centered. On hover it widens to
@@ -741,8 +743,8 @@
     }
     .work-page-tagline{
       position:relative;
-      font-family:var(--font-serif); font-size:28px; line-height:1.4;
-      font-weight:550; font-style:italic; color:#000; margin:0 0 2rem; text-align:left;
+      font-family:'Inter', sans-serif; font-size:28px; line-height:1.4;
+      font-weight:400; font-style:normal; color:#000; margin:0 0 2rem; text-align:left;
     }
     .work-page-tagline p{ margin:0; }
     .work-page-tagline p + p{ margin-top:1.2em; }
@@ -769,7 +771,7 @@
     .new-section{ background:#fff; padding:5rem 1rem 4rem; }
     .new-section-inner{ max-width:996px; margin:0 auto; position:relative; }
     .new-section-heading{
-      font-family:var(--font-serif); font-weight:450; font-size:25px;
+      font-family:var(--font-serif); font-weight:550; font-size:35px;
       text-transform:none; letter-spacing:normal; color:#000;
       margin:0 0 1.1rem 0;
     }
@@ -1516,7 +1518,7 @@
 
   <section class="view about-section" data-view="about" id="aboutView">
     <div class="about-inner">
-      <h2 class="about-desc-title about-row-title">About Me</h2>
+      <h2 class="about-desc-title about-row-title about-me-heading">About Me</h2>
       <div class="about-me-row">
         <div class="about-me-photo">
           <div class="about-photo-img-wrap">
