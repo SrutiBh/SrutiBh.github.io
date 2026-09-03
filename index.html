@@ -386,8 +386,8 @@
     .work-card-overlay{position:absolute;inset:0;display:flex;align-items:flex-end;padding:1.5rem;background:linear-gradient(0deg,rgba(15,23,42,.75) 0%,rgba(15,23,42,0) 55%);opacity:0;transition:opacity .25s ease;}
     .work-card:hover .work-card-overlay,
     .work-card:focus-visible .work-card-overlay{opacity:1;}
-    .work-card-title{font-family:var(--font-serif);font-size:1.4rem;font-weight:700;color:#fff;line-height:1.25;text-align:left;}
-    .work-card-meta{font-family:var(--font-serif);font-size:17px;font-weight:480;letter-spacing:.02em;color:#000;padding:1rem .3rem 1.15rem;}
+    .work-card-title{font-family:var(--font-serif);font-size:1.4rem;font-weight:450;color:#fff;line-height:1.25;text-align:left;}
+    .work-card-meta{font-family:var(--font-serif);font-size:17px;font-weight:450;letter-spacing:.02em;color:#000;padding:1rem .3rem 1.15rem;}
  
     /* Matches .about-desc-title exactly (same style used for "About Me" /
        "Education" / "Career Journey" on the Home page) so section names
@@ -561,10 +561,10 @@
     .edu-row .edu-logo-wbut{width:132px;height:132px;}
     .edu-row .edu-logo-iitkgp{width:110px;height:110px;}
     .edu-row-text{min-width:0;align-self:center;}
-    .edu-row-text h3{font-family:var(--font-serif);font-size:1.6rem;font-weight:400;color:#2B3752;margin:0 0 .35rem;}
-    .edu-row-text .edu-inst{font-family:var(--font-serif);font-size:1.6rem;font-weight:400;color:#000;margin:0 0 .25rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .edu-row-text h3{font-family:var(--font-serif);font-size:26px;font-weight:450;color:#000;margin:0 0 .35rem;}
+    .edu-row-text .edu-inst{font-family:var(--font-serif);font-size:26px;font-weight:400;color:#000;margin:0 0 .25rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
     @media(max-width:700px){.edu-row-text .edu-inst{white-space:normal;overflow:visible;text-overflow:clip;}}
-    .edu-row-text .edu-dates{font-family:var(--font-serif);font-size:1.3rem;font-weight:400;color:var(--color-text-faint-onlight);margin:0;}
+    .edu-row-text .edu-dates{font-family:var(--font-serif);font-size:21px;font-weight:400;color:var(--color-text-faint-onlight);margin:0;}
  
     .about-highlight-row{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:center;margin:3rem 0;}
     .about-highlight-text{font-size:1.35rem;line-height:1.5;color:var(--color-navy-dark);font-weight:600;}
@@ -784,7 +784,7 @@
     .n-gallery-item::before{content:'';position:absolute;top:-9px;left:50%;width:17px;height:17px;border-radius:50%;transform:translateX(-50%);background:radial-gradient(circle at 32% 28%, #3d7a63, var(--n-green) 60%, #123a2e 100%);box-shadow:0 3px 5px rgba(15,23,42,.35),inset -2px -2px 3px rgba(0,0,0,.15);z-index:2;}
     .n-gallery-item:hover{ box-shadow:0 4px 10px rgba(15,23,42,.10),0 14px 30px rgba(15,23,42,.14); transform:translateY(-2px); }
     .n-gallery-item img{ width:100%; aspect-ratio:1/1; object-fit:cover; display:block; border-radius:.3rem; }
-    .n-gallery-caption{ font-family:var(--font-serif); font-size:1.1rem; font-weight:700; color:#000; margin:.5rem 0 0; padding:0; text-transform:none; letter-spacing:.02em; }
+    .n-gallery-caption{ font-family:var(--font-serif); font-size:1.1rem; font-weight:450; color:#000; margin:.5rem 0 0; padding:0; text-transform:none; letter-spacing:.02em; }
  
     .n-book-list{ display:flex; flex-direction:column; gap:1rem; }
     .n-book-row{ position:relative; display:flex; align-items:center; gap:1.25rem; background:#fff; border:1.5px solid #dce2f0; border-radius:.75rem; padding:1rem 1.25rem; text-decoration:none; box-shadow:0 1px 3px rgba(15,23,42,.06),0 6px 18px rgba(15,23,42,.08); transition:box-shadow .22s ease,transform .22s ease; }
@@ -793,8 +793,8 @@
     .n-book-row:hover{ box-shadow:0 4px 10px rgba(15,23,42,.10),0 14px 30px rgba(15,23,42,.14); transform:translateY(-2px); }
     .n-book-cover{ flex-shrink:0; width:52px; height:76px; border-radius:.25rem; overflow:hidden; background:var(--color-bg-hover); }
     .n-book-cover img{ width:100%; height:100%; object-fit:cover; display:block; }
-    .n-book-title{ font-family:var(--font-serif); font-weight:400; font-size:1.55rem; color:#000; line-height:1.6; margin:0 0 .25rem; }
-    .n-book-author{ font-family:var(--font-serif); font-weight:400; font-size:1.1rem; color:var(--color-text-faint-onlight); line-height:1.6; margin:0; }
+    .n-book-title{ font-family:var(--font-serif); font-weight:400; font-size:26px; color:#000; line-height:1.6; margin:0 0 .25rem; }
+    .n-book-author{ font-family:var(--font-serif); font-weight:400; font-size:21px; color:var(--color-text-faint-onlight); line-height:1.6; margin:0; }
     .n-tabs{ display:flex; justify-content:flex-end; gap:2.2rem; margin-bottom:97.5px; }
     #heroSection .n-tabs{ margin-bottom:0; }
     .n-tab-btn{
