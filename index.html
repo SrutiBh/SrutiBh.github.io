@@ -489,6 +489,22 @@
       .about-me-row-reverse .about-me-photo{ float:none; width:100%; margin:0 0 30px; }
     }
     .about-photo-img-wrap img{display:block;width:100%;height:auto;}
+    /* "Beyond the desk": photo sits beside the FIRST paragraph only and is
+       cropped to exactly that paragraph's height; the second paragraph
+       then runs across the full row underneath. The photo is absolutely
+       positioned inside its grid cell, so the paragraph alone sets the
+       row height. Adjust object-position below to change the crop focus. */
+    .beyond-top{ display:grid; grid-template-columns:minmax(0,1fr) 52%; column-gap:60px; margin-bottom:2rem; }
+    #aboutView .beyond-row .beyond-top .about-desc-text{ margin:0; }
+    .beyond-row .beyond-top .about-me-photo{ float:none; width:auto; max-width:none; margin:0; position:relative; }
+    .beyond-row .beyond-top .about-photo-img-wrap{ position:absolute; left:0; right:0; top:.35em; bottom:.35em; overflow:hidden; font-size:26px; }
+    .beyond-row .beyond-top .about-photo-img-wrap img{ width:100%; height:100%; object-fit:cover; object-position:center 70%; }
+    @media(max-width:760px){
+      .beyond-top{ grid-template-columns:1fr; row-gap:30px; }
+      .beyond-row .beyond-top .about-me-photo{ order:-1; }
+      .beyond-row .beyond-top .about-photo-img-wrap{ position:static; }
+      .beyond-row .beyond-top .about-photo-img-wrap img{ height:auto; }
+    }
     .about-skills-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:2.5rem; }
     .about-skills-title{font-family:var(--font-serif);font-size:20px;font-weight:450;color:#000;margin:0 0 .75rem 0;}
     .about-goals-placeholder{ font-style:italic; color:var(--color-text-faint-onlight); }
@@ -1547,7 +1563,7 @@
 
   <section class="view about-section" data-view="about" id="aboutView">
     <div class="about-inner">
-      <h2 class="about-desc-title about-row-title about-me-heading">About Me</h2>
+      <h2 class="about-desc-title about-row-title about-me-heading" data-i18n="about.heading">About Me</h2>
       <div class="about-me-row">
         <div class="about-me-photo">
           <div class="about-photo-img-wrap">
@@ -1556,8 +1572,8 @@
         </div>
         <div class="about-me-text">
           <div class="about-me-bio">
-            <p class="about-desc-text">I am a veteran of empathetic inquisitiveness. I bring my empathetic instinct, polished by experience working on academic projects covering all stages of the Double Diamond, in UX Research and Responsible Intelligent Product Development.</p>
-            <p class="about-desc-text">As a woman, growing up in a small Indian village, I have always been passionate about understanding people and tinkering to solve their needs. At 9 years old, without any knowledge of design, development, or UX research, I designed a handmade toilet prototype for my 78-year-old grandmother following her cerebral stroke. This innate curiosity ultimately guided me into engineering, rendering me a first-generation woman in technology in my family line.</p>
+            <p class="about-desc-text" data-i18n="about.p1">I am a veteran of empathetic inquisitiveness. I bring my empathetic instinct, polished by experience working on academic projects covering all stages of the Double Diamond, in UX Research and Responsible Intelligent Product Development.</p>
+            <p class="about-desc-text" data-i18n="about.p2">As a woman, growing up in a small Indian village, I have always been passionate about understanding people and tinkering to solve their needs. At 9 years old, without any knowledge of design, development, or UX research, I designed a handmade toilet prototype for my 78-year-old grandmother following her cerebral stroke. This innate curiosity ultimately guided me into engineering, rendering me a first-generation woman in technology in my family line.</p>
           </div>
         </div>
       </div>
@@ -1680,16 +1696,18 @@
       </div>
       -->
 
-      <h2 class="about-desc-title about-closing-title about-row-title">Beyond the desk</h2>
-      <div class="about-me-row about-me-row-reverse">
-        <div class="about-me-photo">
-          <div class="about-photo-img-wrap">
-            <img src="images/profile/svalbard.jpg" alt="Sruti Bhattacharjee" loading="lazy" decoding="async" onerror="this.style.display='none';this.parentElement.style.display='flex';this.parentElement.style.alignItems='center';this.parentElement.style.justifyContent='center';this.parentElement.innerHTML='<span style=&quot;font-size:3rem&quot;>👩‍💻</span>'"/>
-          </div>
-        </div>
+      <h2 class="about-desc-title about-closing-title about-row-title" data-i18n="about.beyond">Beyond the desk</h2>
+      <div class="about-me-row about-me-row-reverse beyond-row">
         <div class="about-me-text">
-          <p class="about-desc-text">When I work, I am rarely without music. These days, Celtic and Viking music are driving my productivity. Outside work, I enjoy adventure travel and learning things simply because they intrigue me. Here is a picture from my solo trip to Svalbard, 81&deg; north.</p>
-          <p class="about-desc-text">Currently, I am learning French and exploring neuroscience-backed approaches to adult women&rsquo;s wellness and productivity, while slowly polishing my skills in improv acting and chess.</p>
+          <div class="beyond-top">
+              <p class="about-desc-text" data-i18n="about.p3">When I work, I am rarely without music. These days, Celtic and Viking music are driving my productivity. Outside work, I enjoy adventure travel and learning things simply because they intrigue me. Here is a picture from my solo trip to Svalbard, 81&deg; north.</p>
+            <div class="about-me-photo">
+              <div class="about-photo-img-wrap">
+                <img src="images/profile/svalbard.jpg" alt="Sruti Bhattacharjee" loading="lazy" decoding="async" onerror="this.style.display='none';this.parentElement.style.display='flex';this.parentElement.style.alignItems='center';this.parentElement.style.justifyContent='center';this.parentElement.innerHTML='<span style=&quot;font-size:3rem&quot;>👩‍💻</span>'"/>
+              </div>
+            </div>
+          </div>
+          <p class="about-desc-text" data-i18n="about.p4">Currently, I am learning French and exploring neuroscience-backed approaches to adult women&rsquo;s wellness and productivity, while slowly polishing my skills in improv acting and chess.</p>
         </div>
       </div>
     </div>
@@ -1797,11 +1815,15 @@
  
     const TRANSLATIONS={
       en:{
+        'about.heading':'About Me',
+        'about.beyond':'Beyond the desk',
+        'about.p3':'When I work, I am rarely without music. These days, Celtic and Viking music are driving my productivity. Outside work, I enjoy adventure travel and learning things simply because they intrigue me. Here is a picture from my solo trip to Svalbard, 81&deg; north.',
+        'about.p4':'Currently, I am learning French and exploring neuroscience-backed approaches to adult women&rsquo;s wellness and productivity, while slowly polishing my skills in improv acting and chess.',
         'nav.work':'Work','nav.journey':'Journey','nav.education':'Education','nav.cv':'Resume','nav.contact':'Contact Me',
         'hero.subtitle':'UX Researcher',
         'section.about':'About Me','section.education':'Education','section.experience':'Career Journey','section.portfolio':'Portfolio','section.interests':'Interests','section.contact':'Contact Me',
-        'about.p1':'I am a Human-Centric Computer Engineer specializing in Interactive Technology Design and Development based on User Experience and User Perception Analysis.',
-        'about.p2':"I'm open to new roles and collaborations. Feel free to reach out if my background aligns with your team's goals.",
+        'about.p1':'I am a veteran of empathetic inquisitiveness. I bring my empathetic instinct, polished by experience working on academic projects covering all stages of the Double Diamond, in UX Research and Responsible Intelligent Product Development.',
+        'about.p2':'As a woman, growing up in a small Indian village, I have always been passionate about understanding people and tinkering to solve their needs. At 9 years old, without any knowledge of design, development, or UX research, I designed a handmade toilet prototype for my 78-year-old grandmother following her cerebral stroke. This innate curiosity ultimately guided me into engineering, rendering me a first-generation woman in technology in my family line.',
         'word.present':'Present',
         'edu.1.degree':'Master of Science, Interactive Media Technology',
         'edu.2.degree':'Graduate Exchange Student, Computer and Communication Sciences',
@@ -1853,11 +1875,17 @@
         'landing.caption':'Welcome to My Portfolio'
       },
       fr:{
+        'gallery.research':'Projets De Recherche UX',
+        'work.tagline':'<p>Salut,<br>Je suis Sruti</p><p>Je fais le vibe-check des technologies IA et non-IA pour éviter des bugs comme la vallée dérangeante.</p>',
+        'about.heading':'À Propos De Moi',
+        'about.beyond':'Au-delà du bureau',
+        'about.p3':'Quand je travaille, la musique n’est jamais loin. Ces temps-ci, la musique celtique et viking stimule ma productivité. En dehors du travail, j’aime les voyages d’aventure et apprendre des choses simplement parce qu’elles m’intriguent. Voici une photo de mon voyage en solo au Svalbard, à 81&deg; nord.',
+        'about.p4':'En ce moment, j’apprends le français et j’explore des approches fondées sur les neurosciences pour le bien-être et la productivité des femmes adultes, tout en peaufinant peu à peu mes compétences en théâtre d’improvisation et aux échecs.',
         'nav.work':'Travaux','nav.journey':'Parcours','nav.education':'Formation','nav.cv':'CV','nav.contact':'Me Contacter',
         'hero.subtitle':'Chercheuse UX',
         'section.about':'\u00c0 Propos De Moi','section.education':'Formation','section.experience':'Parcours De Carri\u00e8re','section.portfolio':'Portfolio','section.interests':'Int\u00e9r\u00eats','section.contact':'Me Contacter',
-        'about.p1':"Je suis ing\u00e9nieure en informatique centr\u00e9e sur l'humain, sp\u00e9cialis\u00e9e dans la conception et le d\u00e9veloppement de technologies interactives, fond\u00e9es sur la recherche en exp\u00e9rience utilisateur et l'analyse de la perception utilisateur.",
-        'about.p2':"Je suis ouverte \u00e0 de nouveaux postes et collaborations. N'h\u00e9sitez pas \u00e0 me contacter si mon profil correspond aux objectifs de votre \u00e9quipe.",
+        'about.p1':'Je suis une vétérane de la curiosité empathique. J’apporte mon instinct empathique, affiné par l’expérience de projets académiques couvrant toutes les étapes du Double Diamant, à la recherche UX et au développement responsable de produits intelligents.',
+        'about.p2':'En tant que femme ayant grandi dans un petit village indien, j’ai toujours été passionnée par la compréhension des gens et le bricolage pour répondre à leurs besoins. À 9 ans, sans aucune connaissance en design, en développement ou en recherche UX, j’ai conçu un prototype de toilettes fait main pour ma grand-mère de 78 ans, après son accident vasculaire cérébral. Cette curiosité innée m’a finalement menée vers l’ingénierie, faisant de moi la première femme de ma lignée familiale à travailler dans la technologie.',
         'word.present':'Pr\u00e9sent',
         'edu.1.degree':"Master en Technologie des M\u00e9dias Interactifs",
         'edu.2.degree':'\u00c9tudiante en \u00e9change, Sciences Informatiques et Communication',
@@ -1865,11 +1893,11 @@
         'edu.4.degree':'\u00c9tudiante invit\u00e9e de premier cycle, Informatique et Ing\u00e9nierie',
         'tab.all':'Tous les Projets','tab.ux':'Recherche UX','tab.interaction':"Design d'Interaction",'tab.visual':'Informatique Visuelle',
         'lbl.image':'Image','lbl.video':'Vid\u00e9o','lbl.gif':'GIF','lbl.code':'Code',
-        'proj.1.title':'Repenser les EVRA pour une P\u00e9dagogie Efficace',
+        'proj.1.title':'En Cours',
         'proj.1.desc':"Formulation de la mani\u00e8re dont les environnements d'apprentissage en r\u00e9alit\u00e9 virtuelle peuvent offrir un soutien p\u00e9dagogique pour un apprentissage efficace.",
         'proj.2.title':'EdTech pour les Apprenants Novices en Programmation dans des Classes Collaboratives Hybrides',
         'proj.2.desc':"\u00c9tude des besoins de conception en EdTech pour faciliter un apprentissage efficace chez les \u00e9tudiants novices en programmation dans des environnements d'apprentissage collaboratif hybride.",
-        'proj.3.title':'Appel Vid\u00e9o, RV et Robot de T\u00e9l\u00e9pr\u00e9sence pour les Interactions de Groupe et la Pens\u00e9e Cr\u00e9ative',
+        'proj.3.title':'Impact des Nouveaux Médias sur la Collaboration de Groupe Hybride Efficace',
         'proj.3.desc':'Comparaison de trois m\u00e9dias multimodaux existants pour la communication \u00e0 distance et leurs impacts sur la pens\u00e9e ind\u00e9pendante.',
         'proj.4.title':'Ville Augment\u00e9e \u2014 Agir pour Manifester',
         'proj.4.desc':"Conception d'une application visant \u00e0 am\u00e9liorer l'urbanisme et la collaboration lors d'\u00e9v\u00e9nements publics collaboratifs comme les manifestations, tout en promouvant l'art urbain.",
@@ -1877,9 +1905,9 @@
         'proj.5.desc':'Mise en \u0153uvre et analyse de l\u2019impact de la latence et de la gigue sur la perception de la rigidit\u00e9 haptique dans les syst\u00e8mes de t\u00e9l\u00e9op\u00e9ration haptique.',
         'proj.6.title':"Repenser l'Appel Vid\u00e9o pour l'Apprentissage \u00e0 Distance",
         'proj.6.desc':"\u00c9tude de l'impact de Zoom et d'autres applications vid\u00e9o sur l'exp\u00e9rience des enseignants, et refonte d'une nouvelle interface pour une meilleure utilisabilit\u00e9.",
-        'proj.7.title':'Reconnaissance des Expressions Faciales en R\u00e9alit\u00e9 Virtuelle par Apprentissage Automatique',
+        'proj.7.title':'Reconnaissance des Expressions Faciales en Réalité Virtuelle',
         'proj.7.desc':"D\u00e9veloppement d'un pipeline de reconnaissance des \u00e9motions pour avatars en RV.",
-        'proj.8.title':'Venice Time Machine\u202f: D\u00e9tection des Hauteurs des B\u00e2timents en 2020',
+        'proj.8.title':'Projet Venice Time Machine',
         'proj.8.desc':"D\u00e9veloppement d'un mod\u00e8le 3D de Venise pour pr\u00e9server la hauteur actuelle des b\u00e2timents et leur emplacement g\u00e9ographique \u00e0 partir des donn\u00e9es de Google Earth.",
         'proj.9.title':'Jeu Rogue-Mike',
         'proj.9.desc':'D\u00e9veloppement d\u2019un jeu vid\u00e9o sur Windows utilisant C# et Unreal Engine.',
@@ -1892,7 +1920,7 @@
         'lbl.backToWork':'Retour aux Travaux',
         'home.bio':"Je suis une praticienne en recherche UX \u00e0 m\u00e9thodes mixtes, avec une formation en analyse de la perception multimodale et en informatique visuelle. Mon exp\u00e9rience interdisciplinaire en IA et en interaction homme-machine m'aide \u00e0 cerner les besoins et les difficult\u00e9s des utilisateurs afin de fa\u00e7onner des exp\u00e9riences interactives, accessibles et immersives. J'aspire \u00e0 faire progresser une symbiose \u00e9thique entre l'humain et l'IA \u00e0 travers des d\u00e9cisions produit fond\u00e9es sur des donn\u00e9es probantes.",
         'home.greeting':"Bonjour<br>Je suis Sruti",
-        'home.kicker':"Chercheuse UX &amp; Sensemaker",
+        'home.kicker':'Portfolio De Recherche UX',
         'home.tagline':"Je d\u00e9fends l'humain dans l'interaction humain\u2013IA.",
         'home.quote':"Entrez, installez-vous, restez un moment.",
         'contact.heading':'Travaillons Ensemble',
@@ -1901,18 +1929,24 @@
         'country.india':'Inde','country.sweden':'Su\u00e8de','country.switzerland':'Suisse',
         'footer.nav.contact':'Contact','footer.nav.work':'Travaux','footer.nav.about':'\u00c0 Propos','footer.nav.portfolio':'Portfolio',
         'about.nav.contact':'Me Contacter','about.nav.work':'Mes Travaux','about.nav.portfolio':'Mon Portfolio','about.nav.career':'Mon Parcours',
-        'menu.about':'\u00c0 Propos','menu.contact':'Contact','menu.portfolio':'Travaux','menu.career':'Carri\u00e8re',
-        'a11y.skiplink':'Passer au contenu principal','aria.menu':'Menu','gallery.otherWork':'Mes Autres Travaux',
+        'menu.about':'\u00c0 Propos','menu.contact':'Contact','menu.portfolio':'Travaux','menu.career':'Formation',
+        'a11y.skiplink':'Passer au contenu principal','aria.menu':'Menu','gallery.otherWork':'Projets De Bricolage',
         'landing.caption':'Bienvenue Sur Mon Portfolio',
-        'proj.10.title':'Ressentir la Vision pour la Navigation en Graphes',
+        'proj.10.title':'Projet Margin',
         'proj.10.desc':'Description provisoire \u2014 \u00e0 remplacer par le r\u00e9sum\u00e9 r\u00e9el du projet.'
       },
       sv:{
+        'gallery.research':'UX-forskningsprojekt',
+        'work.tagline':'<p>Hej,<br>Jag är Sruti</p><p>Jag vibe-checkar AI- och icke-AI-teknik för att förhindra buggar som den kusliga dalen.</p>',
+        'about.heading':'Om Mig',
+        'about.beyond':'Bortom skrivbordet',
+        'about.p3':'När jag arbetar är jag sällan utan musik. Just nu är det keltisk musik och vikingamusik som driver min produktivitet. Utanför jobbet gillar jag äventyrsresor och att lära mig saker bara för att de fascinerar mig. Här är en bild från min soloresa till Svalbard, 81&deg; nord.',
+        'about.p4':'Just nu lär jag mig franska och utforskar neurovetenskapligt förankrade metoder för vuxna kvinnors välmående och produktivitet, samtidigt som jag sakta finslipar mina färdigheter i improvisationsteater och schack.',
         'nav.work':'Arbete','nav.journey':'Resa','nav.education':'Utbildning','nav.cv':'CV','nav.contact':'Kontakta Mig',
         'hero.subtitle':'UX-forskare',
         'section.about':'Om Mig','section.education':'Utbildning','section.experience':'Karri\u00e4rresa','section.portfolio':'Portfolio','section.interests':'Intressen','section.contact':'Kontakta Mig',
-        'about.p1':'Jag \u00e4r en m\u00e4nniskocentrerad dataingenj\u00f6r som specialiserar mig p\u00e5 design och utveckling av interaktiv teknik baserat p\u00e5 anv\u00e4ndarupplevelse och anv\u00e4ndarperceptionsanalys.',
-        'about.p2':'Jag \u00e4r \u00f6ppen f\u00f6r nya roller och samarbeten. H\u00f6r g\u00e4rna av dig om min bakgrund passar ditt teams m\u00e5l.',
+        'about.p1':'Jag är en veteran inom empatisk nyfikenhet. Jag bidrar med min empatiska instinkt, finslipad genom akademiska projekt som täcker alla steg i Double Diamond, till UX-forskning och ansvarsfull utveckling av intelligenta produkter.',
+        'about.p2':'Som kvinna som växte upp i en liten indisk by har jag alltid brunnit för att förstå människor och meka fram lösningar på deras behov. Som 9-åring, utan några kunskaper i design, utveckling eller UX-forskning, designade jag en handgjord toalettprototyp åt min 78-åriga farmor efter hennes stroke. Denna medfödda nyfikenhet ledde mig till slut in på ingenjörsbanan och gjorde mig till den första kvinnan inom teknik i min släkt.',
         'word.present':'Nuvarande',
         'edu.1.degree':'Masterexamen, Interaktiv Medieteknik',
         'edu.2.degree':'Utbytesstudent, Data- och Kommunikationsvetenskap',
@@ -1920,11 +1954,11 @@
         'edu.4.degree':'G\u00e4studerande p\u00e5 grundniv\u00e5, Datavetenskap och Teknik',
         'tab.all':'Alla Projekt','tab.ux':'UX-forskning','tab.interaction':'Interaktionsdesign','tab.visual':'Visuell Databehandling',
         'lbl.image':'Bild','lbl.video':'Video','lbl.gif':'GIF','lbl.code':'Kod',
-        'proj.1.title':'Omdesign av VRLE f\u00f6r Effektiv Pedagogik',
+        'proj.1.title':'Pågående',
         'proj.1.desc':'Utforskar hur virtual reality-baserade l\u00e4rmilj\u00f6er kan ge pedagogiskt st\u00f6d f\u00f6r effektivt l\u00e4rande.',
         'proj.2.title':'EdTech f\u00f6r Nyb\u00f6rjare inom Programmering i Hybrida Samarbetsklasser',
         'proj.2.desc':'Unders\u00f6kte designbehoven f\u00f6r EdTech f\u00f6r att underl\u00e4tta effektivt l\u00e4rande f\u00f6r nyb\u00f6rjare inom programmering i hybrida samarbetsmilj\u00f6er.',
-        'proj.3.title':'Videosamtal, VR och Telepresence-robot f\u00f6r Gruppinteraktioner och Kreativt T\u00e4nkande',
+        'proj.3.title':'Nya Mediers Påverkan på Effektivt Hybrid Gruppsamarbete',
         'proj.3.desc':'J\u00e4mf\u00f6rde tre befintliga multimodala medier f\u00f6r distanskommunikation och deras inverkan p\u00e5 sj\u00e4lvst\u00e4ndigt t\u00e4nkande.',
         'proj.4.title':'Augmented City \u2014 Agera f\u00f6r att Protestera',
         'proj.4.desc':'Designade en app f\u00f6r att f\u00f6rb\u00e4ttra stadsplanering och samarbete under kollaborativa offentliga evenemang som protester, samt fr\u00e4mja gatukonst.',
@@ -1932,9 +1966,9 @@
         'proj.5.desc':'Implementerade och analyserade effekten av latens och jitter p\u00e5 haptisk styvhetsperception i haptiska teleoperationssystem.',
         'proj.6.title':'Omdesign av Videosamtal f\u00f6r Distansundervisning',
         'proj.6.desc':'Unders\u00f6kte hur Zoom och andra videobaserade applikationer p\u00e5verkar l\u00e4rares upplevelse och omdesignade ett nytt gr\u00e4nssnitt f\u00f6r f\u00f6rb\u00e4ttrad anv\u00e4ndbarhet.',
-        'proj.7.title':'Igenk\u00e4nning av Ansiktsuttryck i Virtual Reality med Maskininl\u00e4rning',
+        'proj.7.title':'Igenkänning av Ansiktsuttryck i Virtual Reality',
         'proj.7.desc':'Byggde en pipeline f\u00f6r k\u00e4nsloigenk\u00e4nning hos VR-avatarer.',
-        'proj.8.title':'Venice Time Machine: H\u00f6jddetektering av Byggnader 2020',
+        'proj.8.title':'Venice Time Machine-projektet',
         'proj.8.desc':'Utvecklade en 3D-modell av Venedig f\u00f6r att bevara nuvarande byggnadsh\u00f6jd och geografisk plats baserat p\u00e5 Google Earth-data.',
         'proj.9.title':'Rogue-Mike-spelet',
         'proj.9.desc':'Utvecklade ett Windows-baserat videospel med C# och Unreal Engine.',
@@ -1947,7 +1981,7 @@
         'lbl.backToWork':'Tillbaka till Arbete',
         'home.bio':'Jag \u00e4r en UX-forskare med blandade metoder och en bakgrund inom multimodal perceptionsanalys och visuell databehandling. Min tv\u00e4rvetenskapliga erfarenhet inom AI och m\u00e4nniska-datorinteraktion hj\u00e4lper mig att f\u00f6rst\u00e5 anv\u00e4ndares behov och utmaningar f\u00f6r att forma interaktiva, tillg\u00e4ngliga och uppslukande upplevelser. Jag str\u00e4var efter att fr\u00e4mja en etisk symbios mellan m\u00e4nniska och AI genom evidensbaserade produktbeslut.',
         'home.greeting':'Hej Hej<br>Jag \u00e4r Sruti',
-        'home.kicker':'UX-forskare &amp; Sensemaker',
+        'home.kicker':'UX-forskningsportfolio',
         'home.tagline':'Jag talar f\u00f6r m\u00e4nniskan i m\u00e4nniska\u2013AI-interaktion.',
         'home.quote':'Kom in, g\u00f6r dig hemmastadd, stanna ett tag.',
         'contact.heading':'L\u00e5t Oss Samarbeta',
@@ -1956,18 +1990,24 @@
         'country.india':'Indien','country.sweden':'Sverige','country.switzerland':'Schweiz',
         'footer.nav.contact':'Kontakt','footer.nav.work':'Arbete','footer.nav.about':'Om','footer.nav.portfolio':'Portfolio',
         'about.nav.contact':'Kontakta Mig','about.nav.work':'Mitt Arbete','about.nav.portfolio':'Min Portfolio','about.nav.career':'Min Karri\u00e4r',
-        'menu.about':'Om Mig','menu.contact':'Kontakt','menu.portfolio':'Arbete','menu.career':'Karri\u00e4r',
-        'a11y.skiplink':'Hoppa till huvudinneh\u00e5llet','aria.menu':'Meny','gallery.otherWork':'Mitt \u00d6vriga Arbete',
+        'menu.about':'Om Mig','menu.contact':'Kontakt','menu.portfolio':'Arbete','menu.career':'Utbildning',
+        'a11y.skiplink':'Hoppa till huvudinneh\u00e5llet','aria.menu':'Meny','gallery.otherWork':'Mekprojekt',
         'landing.caption':'V\u00e4lkommen Till Min Portfolio',
-        'proj.10.title':'Kännbar Syn för Grafnavigering',
+        'proj.10.title':'Projekt Margin',
         'proj.10.desc':'Platsh\u00e5llartext \u2014 ers\u00e4tt med den riktiga projektsammanfattningen.'
       },
       de:{
+        'gallery.research':'UX-Research-Projekte',
+        'work.tagline':'<p>Hi,<br>Ich bin Sruti</p><p>Ich mache den Vibe-Check für KI- und Nicht-KI-Technologien, um Bugs wie das Uncanny Valley zu verhindern.</p>',
+        'about.heading':'Über Mich',
+        'about.beyond':'Jenseits des Schreibtischs',
+        'about.p3':'Wenn ich arbeite, bin ich selten ohne Musik. Zurzeit treiben keltische und Wikinger-Musik meine Produktivität an. Außerhalb der Arbeit liebe ich Abenteuerreisen und lerne gern Dinge, einfach weil sie mich faszinieren. Hier ist ein Foto von meiner Solo-Reise nach Spitzbergen, 81&deg; Nord.',
+        'about.p4':'Zurzeit lerne ich Französisch und erkunde neurowissenschaftlich fundierte Ansätze für das Wohlbefinden und die Produktivität erwachsener Frauen, während ich nach und nach meine Fähigkeiten im Improtheater und im Schach verfeinere.',
         'nav.work':'Arbeiten','nav.journey':'Werdegang','nav.education':'Ausbildung','nav.cv':'Lebenslauf','nav.contact':'Kontakt',
         'hero.subtitle':'UX-Researcherin',
         'section.about':'\u00dcber Mich','section.education':'Ausbildung','section.experience':'Karriereweg','section.portfolio':'Portfolio','section.interests':'Interessen','section.contact':'Kontakt',
-        'about.p1':'Ich bin eine Human-Centric Computer Engineer, spezialisiert auf interaktives Technologiedesign und -entwicklung auf Basis von Nutzererfahrungs- und Nutzerwahrnehmungsanalyse.',
-        'about.p2':'Ich bin offen f\u00fcr neue Positionen und Kooperationen. Kontaktieren Sie mich gerne, wenn mein Hintergrund zu den Zielen Ihres Teams passt.',
+        'about.p1':'Ich bin eine Veteranin der empathischen Neugier. Meinen empathischen Instinkt, geschärft durch akademische Projekte über alle Phasen des Double Diamond hinweg, bringe ich in UX Research und die verantwortungsvolle Entwicklung intelligenter Produkte ein.',
+        'about.p2':'Als Frau, die in einem kleinen indischen Dorf aufgewachsen ist, wollte ich schon immer Menschen verstehen und tüfteln, um ihre Bedürfnisse zu erfüllen. Mit 9 Jahren, ganz ohne Kenntnisse in Design, Entwicklung oder UX Research, entwarf ich einen handgefertigten Toiletten-Prototyp für meine 78-jährige Großmutter nach ihrem Schlaganfall. Diese angeborene Neugier führte mich schließlich ins Ingenieurwesen und machte mich zur ersten Frau in der Technik in meiner Familie.',
         'word.present':'Heute',
         'edu.1.degree':'Master of Science, Interaktive Medientechnologie',
         'edu.2.degree':'Austauschstudentin, Informatik und Kommunikationswissenschaften',
@@ -1975,11 +2015,11 @@
         'edu.4.degree':'Gaststudentin (Bachelor), Informatik und Ingenieurwesen',
         'tab.all':'Alle Projekte','tab.ux':'UX-Forschung','tab.interaction':'Interaktionsdesign','tab.visual':'Visuelles Computing',
         'lbl.image':'Bild','lbl.video':'Video','lbl.gif':'GIF','lbl.code':'Code',
-        'proj.1.title':'Neugestaltung von VRLE f\u00fcr effektive P\u00e4dagogik',
+        'proj.1.title':'In Arbeit',
         'proj.1.desc':'Untersuchung, wie VR-basierte Lernumgebungen p\u00e4dagogische Unterst\u00fctzung f\u00fcr effektives Lernen bieten k\u00f6nnen.',
         'proj.2.title':'EdTech f\u00fcr Programmier-Einsteiger in hybriden kollaborativen Klassen',
         'proj.2.desc':'Untersuchung der Designanforderungen von EdTech zur F\u00f6rderung effektiven Lernens bei Programmier-Einsteigern in hybriden kollaborativen Lernumgebungen.',
-        'proj.3.title':'Videoanruf, VR und Telepr\u00e4senzroboter f\u00fcr Gruppeninteraktionen und kreatives Denken',
+        'proj.3.title':'Einfluss neuer Medien auf effektive hybride Gruppenzusammenarbeit',
         'proj.3.desc':'Vergleich dreier bestehender multimodaler Medien f\u00fcr Fernkommunikation und deren Einfluss auf unabh\u00e4ngiges Denken.',
         'proj.4.title':'Augmented City \u2014 Handeln f\u00fcr den Protest',
         'proj.4.desc':'Entwicklung einer App zur Verbesserung von Stadtplanung und Zusammenarbeit bei kollaborativen \u00f6ffentlichen Veranstaltungen wie Protesten und zur F\u00f6rderung von Stra\u00dfenkunst.',
@@ -1987,9 +2027,9 @@
         'proj.5.desc':'Umsetzung und Analyse der Auswirkungen von Latenz und Jitter auf die haptische Steifigkeitswahrnehmung in haptischen Teleoperationssystemen.',
         'proj.6.title':'Neugestaltung von Videoanrufen f\u00fcr Fernunterricht',
         'proj.6.desc':'Untersuchung der Auswirkungen von Zoom und anderen videobasierten Anwendungen auf die Erfahrung von Lehrkr\u00e4ften und Neugestaltung einer Oberfl\u00e4che f\u00fcr bessere Nutzbarkeit.',
-        'proj.7.title':'Gesichtsausdruckserkennung in Virtual Reality mittels maschinellem Lernen',
+        'proj.7.title':'Gesichtsausdruckserkennung in Virtual Reality',
         'proj.7.desc':'Entwicklung einer Pipeline zur Emotionserkennung f\u00fcr VR-Avatare.',
-        'proj.8.title':'Venice Time Machine: Erkennung der Geb\u00e4udeh\u00f6hen 2020',
+        'proj.8.title':'Venice-Time-Machine-Projekt',
         'proj.8.desc':'Entwicklung eines 3D-Modells von Venedig zur Erhaltung der aktuellen Geb\u00e4udeh\u00f6hen und geografischen Lage basierend auf Google-Earth-Daten.',
         'proj.9.title':'Rogue-Mike-Spiel',
         'proj.9.desc':'Entwicklung eines Windows-Videospiels mit C# und Unreal Engine.',
@@ -2002,7 +2042,7 @@
         'lbl.backToWork':'Zur\u00fcck zu Arbeiten',
         'home.bio':'Ich bin eine UX-Researcherin mit gemischten Methoden und einem Hintergrund in multimodaler Wahrnehmungsanalyse und visuellem Computing. Meine interdisziplin\u00e4re Erfahrung in KI und Mensch-Computer-Interaktion hilft mir, Nutzerbed\u00fcrfnisse und Herausforderungen zu erkennen, um interaktive, barrierefreie und immersive Erlebnisse zu gestalten. Ich strebe danach, eine ethische Mensch-KI-Symbiose durch evidenzbasierte Produktentscheidungen voranzutreiben.',
         'home.greeting':'Gr\u00fcezi,<br>Ich bin Sruti',
-        'home.kicker':'UX-Researcherin &amp; Sensemaker',
+        'home.kicker':'UX-Research-Portfolio',
         'home.tagline':'Ich setze mich f\u00fcr den Menschen in der Mensch\u2013KI-Interaktion ein.',
         'home.quote':'Komm rein, mach es dir bequem, bleib eine Weile.',
         'contact.heading':'Lass Uns Zusammenarbeiten',
@@ -2011,18 +2051,24 @@
         'country.india':'Indien','country.sweden':'Schweden','country.switzerland':'Schweiz',
         'footer.nav.contact':'Kontakt','footer.nav.work':'Arbeiten','footer.nav.about':'\u00dcber','footer.nav.portfolio':'Portfolio',
         'about.nav.contact':'Kontakt','about.nav.work':'Meine Arbeit','about.nav.portfolio':'Mein Portfolio','about.nav.career':'Meine Karriere',
-        'menu.about':'\u00dcber','menu.contact':'Kontakt','menu.portfolio':'Arbeiten','menu.career':'Karriere',
-        'a11y.skiplink':'Zum Hauptinhalt springen','aria.menu':'Men\u00fc','gallery.otherWork':'Weitere Arbeiten',
+        'menu.about':'\u00dcber','menu.contact':'Kontakt','menu.portfolio':'Arbeiten','menu.career':'Ausbildung',
+        'a11y.skiplink':'Zum Hauptinhalt springen','aria.menu':'Men\u00fc','gallery.otherWork':'Bastelprojekte',
         'landing.caption':'Willkommen Auf Meinem Portfolio',
-        'proj.10.title':'Fühlbares Sehen für Graphnavigation',
+        'proj.10.title':'Projekt Margin',
         'proj.10.desc':'Platzhaltertext \u2014 durch die echte Projektzusammenfassung ersetzen.'
       },
       no:{
+        'gallery.research':'UX-forskningsprosjekter',
+        'work.tagline':'<p>Hei,<br>Jeg er Sruti</p><p>Jeg vibe-sjekker AI- og ikke-AI-teknologier for å forhindre bugs som den uhyggelige dalen.</p>',
+        'about.heading':'Om Meg',
+        'about.beyond':'Utenfor skrivebordet',
+        'about.p3':'Når jeg jobber, er jeg sjelden uten musikk. For tiden er det keltisk musikk og vikingmusikk som driver produktiviteten min. Utenom jobben liker jeg eventyrreiser og å lære ting rett og slett fordi de fascinerer meg. Her er et bilde fra soloturen min til Svalbard, 81&deg; nord.',
+        'about.p4':'For tiden lærer jeg fransk og utforsker nevrovitenskapelig forankrede tilnærminger til voksne kvinners velvære og produktivitet, samtidig som jeg sakte finpusser ferdighetene mine i improteater og sjakk.',
         'nav.work':'Arbeid','nav.journey':'Reise','nav.education':'Utdanning','nav.cv':'CV','nav.contact':'Kontakt Meg',
         'hero.subtitle':'UX-forsker',
         'section.about':'Om Meg','section.education':'Utdanning','section.experience':'Karrierereise','section.portfolio':'Portef\u00f8lje','section.interests':'Interesser','section.contact':'Kontakt Meg',
-        'about.p1':'Jeg er en menneskesentrert dataingeni\u00f8r som spesialiserer meg p\u00e5 design og utvikling av interaktiv teknologi basert p\u00e5 brukeropplevelse og brukerpersepsjonsanalyse.',
-        'about.p2':'Jeg er \u00e5pen for nye roller og samarbeid. Ta gjerne kontakt hvis min bakgrunn passer med teamets m\u00e5l.',
+        'about.p1':'Jeg er en veteran innen empatisk nysgjerrighet. Jeg bidrar med mitt empatiske instinkt, finslipt gjennom akademiske prosjekter som dekker alle stadiene i Double Diamond, til UX-forskning og ansvarlig utvikling av intelligente produkter.',
+        'about.p2':'Som kvinne som vokste opp i en liten indisk landsby, har jeg alltid vært lidenskapelig opptatt av å forstå mennesker og mekke løsninger på deres behov. Som 9-åring, uten noen kunnskap om design, utvikling eller UX-forskning, designet jeg en håndlaget toalettprototype til min 78 år gamle bestemor etter hennes hjerneslag. Denne medfødte nysgjerrigheten ledet meg til slutt inn i ingeniørfaget og gjorde meg til den første kvinnen innen teknologi i min slekt.',
         'word.present':'N\u00e5v\u00e6rende',
         'edu.1.degree':'Mastergrad, Interaktiv Medieteknologi',
         'edu.2.degree':'Utvekslingsstudent, Data- og Kommunikasjonsvitenskap',
@@ -2030,11 +2076,11 @@
         'edu.4.degree':'Gjestestudent p\u00e5 bachelorniv\u00e5, Datavitenskap og Ingeni\u00f8rfag',
         'tab.all':'Alle Prosjekter','tab.ux':'UX-forskning','tab.interaction':'Interaksjonsdesign','tab.visual':'Visuell Databehandling',
         'lbl.image':'Bilde','lbl.video':'Video','lbl.gif':'GIF','lbl.code':'Kode',
-        'proj.1.title':'Redesign av VRLE for Effektiv Pedagogikk',
+        'proj.1.title':'Pågår',
         'proj.1.desc':'Utforsker hvordan VR-baserte l\u00e6ringsmilj\u00f8er kan gi pedagogisk st\u00f8tte for effektiv l\u00e6ring.',
         'proj.2.title':'EdTech for Nybegynnere innen Programmering i Hybride Samarbeidsklasser',
         'proj.2.desc':'Unders\u00f8kte designbehovene for EdTech for \u00e5 legge til rette for effektiv l\u00e6ring for nybegynnere innen programmering i hybride samarbeidsmilj\u00f8er.',
-        'proj.3.title':'Videosamtale, VR og Telepresence-robot for Gruppeinteraksjoner og Kreativ Tenkning',
+        'proj.3.title':'Nye Mediers Påvirkning på Effektivt Hybrid Gruppesamarbeid',
         'proj.3.desc':'Sammenlignet tre eksisterende multimodale medier for fjernkommunikasjon og deres innvirkning p\u00e5 selvstendig tenkning.',
         'proj.4.title':'Augmented City \u2014 Handle for \u00e5 Protestere',
         'proj.4.desc':'Designet en app for \u00e5 forbedre byplanlegging og samarbeid under kollaborative offentlige arrangementer som protester, og fremme gatekunst.',
@@ -2042,9 +2088,9 @@
         'proj.5.desc':'Implementerte og analyserte effekten av latens og jitter p\u00e5 haptisk stivhetspersepsjon i haptiske teleoperasjonssystemer.',
         'proj.6.title':'Redesign av Videosamtale for Fjernundervisning',
         'proj.6.desc':'Unders\u00f8kte hvordan Zoom og andre videobaserte applikasjoner p\u00e5virker l\u00e6reres opplevelse, og redesignet et nytt grensesnitt for forbedret brukervennlighet.',
-        'proj.7.title':'Gjenkjenning av Ansiktsuttrykk i Virtual Reality med Maskinl\u00e6ring',
+        'proj.7.title':'Gjenkjenning av Ansiktsuttrykk i Virtual Reality',
         'proj.7.desc':'Bygde en pipeline for f\u00f8lelsesgjenkjenning hos VR-avatarer.',
-        'proj.8.title':'Venice Time Machine: H\u00f8ydedeteksjon av Bygninger 2020',
+        'proj.8.title':'Venice Time Machine-prosjektet',
         'proj.8.desc':'Utviklet en 3D-modell av Venezia for \u00e5 bevare n\u00e5v\u00e6rende bygningsh\u00f8yde og geografisk plassering basert p\u00e5 Google Earth-data.',
         'proj.9.title':'Rogue-Mike-spillet',
         'proj.9.desc':'Utviklet et Windows-basert videospill med C# og Unreal Engine.',
@@ -2057,7 +2103,7 @@
         'lbl.backToWork':'Tilbake til Arbeid',
         'home.bio':'Jeg er en UX-forsker med blandede metoder og bakgrunn innen multimodal persepsjonsanalyse og visuell databehandling. Min tverrfaglige erfaring innen AI og menneske-maskin-interaksjon hjelper meg med \u00e5 avdekke brukerbehov og utfordringer for \u00e5 forme interaktive, tilgjengelige og oppslukende opplevelser. Jeg \u00f8nsker \u00e5 fremme en etisk symbiose mellom menneske og AI gjennom evidensbaserte produktbeslutninger.',
         'home.greeting':'Hei Hei<br>Jeg er Sruti',
-        'home.kicker':'UX-forsker &amp; Sensemaker',
+        'home.kicker':'UX-forskningsportefølje',
         'home.tagline':'Jeg taler menneskets sak i menneske\u2013AI-interaksjon.',
         'home.quote':'Kom inn, gj\u00f8r deg hjemme, bli en stund.',
         'contact.heading':'La Oss Samarbeide',
@@ -2066,10 +2112,10 @@
         'country.india':'India','country.sweden':'Sverige','country.switzerland':'Sveits',
         'footer.nav.contact':'Kontakt','footer.nav.work':'Arbeid','footer.nav.about':'Om','footer.nav.portfolio':'Portef\u00f8lje',
         'about.nav.contact':'Kontakt Meg','about.nav.work':'Mitt Arbeid','about.nav.portfolio':'Min Portef\u00f8lje','about.nav.career':'Min Karriere',
-        'menu.about':'Om','menu.contact':'Kontakt','menu.portfolio':'Arbeid','menu.career':'Karriere',
-        'a11y.skiplink':'Hopp til hovedinnhold','aria.menu':'Meny','gallery.otherWork':'Mitt \u00d8vrige Arbeid',
+        'menu.about':'Om','menu.contact':'Kontakt','menu.portfolio':'Arbeid','menu.career':'Utdanning',
+        'a11y.skiplink':'Hopp til hovedinnhold','aria.menu':'Meny','gallery.otherWork':'Mekkeprosjekter',
         'landing.caption':'Velkommen Til Min Portef\u00f8lje',
-        'proj.10.title':'Følbar Syn for Grafnavigering',
+        'proj.10.title':'Prosjekt Margin',
         'proj.10.desc':'Plassholdertekst \u2014 erstatt med den faktiske prosjektsammendraget.'
       }
     };
