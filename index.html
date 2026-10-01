@@ -490,15 +490,15 @@
     }
     .about-photo-img-wrap img{display:block;width:100%;height:auto;}
     /* "Beyond the desk": photo sits beside the FIRST paragraph only and is
-       cropped to exactly that paragraph's height; the second paragraph
+       scaled down (not cropped) to fit that paragraph's height; the second paragraph
        then runs across the full row underneath. The photo is absolutely
        positioned inside its grid cell, so the paragraph alone sets the
-       row height. Adjust object-position below to change the crop focus. */
-    .beyond-top{ display:grid; grid-template-columns:minmax(0,1fr) 52%; column-gap:60px; margin-bottom:2rem; }
+       row height. */
+    .beyond-top{ display:grid; grid-template-columns:minmax(0,1fr) 42%; column-gap:50px; margin-bottom:2rem; }
     #aboutView .beyond-row .beyond-top .about-desc-text{ margin:0; }
     .beyond-row .beyond-top .about-me-photo{ float:none; width:auto; max-width:none; margin:0; position:relative; }
     .beyond-row .beyond-top .about-photo-img-wrap{ position:absolute; left:0; right:0; top:.35em; bottom:.35em; overflow:hidden; font-size:26px; }
-    .beyond-row .beyond-top .about-photo-img-wrap img{ width:100%; height:100%; object-fit:cover; object-position:center 70%; }
+    .beyond-row .beyond-top .about-photo-img-wrap img{ width:100%; height:100%; object-fit:contain; object-position:right center; } /* whole photo shown, scaled down to the paragraph's height — never cropped */
     @media(max-width:760px){
       .beyond-top{ grid-template-columns:1fr; row-gap:30px; }
       .beyond-row .beyond-top .about-me-photo{ order:-1; }
@@ -1572,7 +1572,7 @@
         </div>
         <div class="about-me-text">
           <div class="about-me-bio">
-            <p class="about-desc-text" data-i18n="about.p1">I am a veteran of empathetic inquisitiveness. I bring my empathetic instinct, polished by experience working on academic projects covering all stages of the Double Diamond, in UX Research and Responsible Intelligent Product Development.</p>
+            <p class="about-desc-text" data-i18n="about.p1">I am a veteran of empathetic inquisitiveness. I bring my empathetic instinct, polished by experience working on academic projects covering all stages of the Double Diamond, into UX Research for Responsible Intelligent Product Development.</p>
             <p class="about-desc-text" data-i18n="about.p2">As a woman, growing up in a small Indian village, I have always been passionate about understanding people and tinkering to solve their needs. At 9 years old, without any knowledge of design, development, or UX research, I designed a handmade toilet prototype for my 78-year-old grandmother following her cerebral stroke. This innate curiosity ultimately guided me into engineering, rendering me a first-generation woman in technology in my family line.</p>
           </div>
         </div>
@@ -1822,7 +1822,7 @@
         'nav.work':'Work','nav.journey':'Journey','nav.education':'Education','nav.cv':'Resume','nav.contact':'Contact Me',
         'hero.subtitle':'UX Researcher',
         'section.about':'About Me','section.education':'Education','section.experience':'Career Journey','section.portfolio':'Portfolio','section.interests':'Interests','section.contact':'Contact Me',
-        'about.p1':'I am a veteran of empathetic inquisitiveness. I bring my empathetic instinct, polished by experience working on academic projects covering all stages of the Double Diamond, in UX Research and Responsible Intelligent Product Development.',
+        'about.p1':'I am a veteran of empathetic inquisitiveness. I bring my empathetic instinct, polished by experience working on academic projects covering all stages of the Double Diamond, into UX Research for Responsible Intelligent Product Development.',
         'about.p2':'As a woman, growing up in a small Indian village, I have always been passionate about understanding people and tinkering to solve their needs. At 9 years old, without any knowledge of design, development, or UX research, I designed a handmade toilet prototype for my 78-year-old grandmother following her cerebral stroke. This innate curiosity ultimately guided me into engineering, rendering me a first-generation woman in technology in my family line.',
         'word.present':'Present',
         'edu.1.degree':'Master of Science, Interactive Media Technology',
@@ -1884,7 +1884,7 @@
         'nav.work':'Travaux','nav.journey':'Parcours','nav.education':'Formation','nav.cv':'CV','nav.contact':'Me Contacter',
         'hero.subtitle':'Chercheuse UX',
         'section.about':'\u00c0 Propos De Moi','section.education':'Formation','section.experience':'Parcours De Carri\u00e8re','section.portfolio':'Portfolio','section.interests':'Int\u00e9r\u00eats','section.contact':'Me Contacter',
-        'about.p1':'Je suis une vétérane de la curiosité empathique. J’apporte mon instinct empathique, affiné par l’expérience de projets académiques couvrant toutes les étapes du Double Diamant, à la recherche UX et au développement responsable de produits intelligents.',
+        'about.p1':'Je suis une vétérane de la curiosité empathique. J’apporte mon instinct empathique, affiné par l’expérience de projets académiques couvrant toutes les étapes du Double Diamant, à la recherche UX au service du développement responsable de produits intelligents.',
         'about.p2':'En tant que femme ayant grandi dans un petit village indien, j’ai toujours été passionnée par la compréhension des gens et le bricolage pour répondre à leurs besoins. À 9 ans, sans aucune connaissance en design, en développement ou en recherche UX, j’ai conçu un prototype de toilettes fait main pour ma grand-mère de 78 ans, après son accident vasculaire cérébral. Cette curiosité innée m’a finalement menée vers l’ingénierie, faisant de moi la première femme de ma lignée familiale à travailler dans la technologie.',
         'word.present':'Pr\u00e9sent',
         'edu.1.degree':"Master en Technologie des M\u00e9dias Interactifs",
@@ -1945,7 +1945,7 @@
         'nav.work':'Arbete','nav.journey':'Resa','nav.education':'Utbildning','nav.cv':'CV','nav.contact':'Kontakta Mig',
         'hero.subtitle':'UX-forskare',
         'section.about':'Om Mig','section.education':'Utbildning','section.experience':'Karri\u00e4rresa','section.portfolio':'Portfolio','section.interests':'Intressen','section.contact':'Kontakta Mig',
-        'about.p1':'Jag är en veteran inom empatisk nyfikenhet. Jag bidrar med min empatiska instinkt, finslipad genom akademiska projekt som täcker alla steg i Double Diamond, till UX-forskning och ansvarsfull utveckling av intelligenta produkter.',
+        'about.p1':'Jag är en veteran inom empatisk nyfikenhet. Jag bidrar med min empatiska instinkt, finslipad genom akademiska projekt som täcker alla steg i Double Diamond, till UX-forskning för ansvarsfull utveckling av intelligenta produkter.',
         'about.p2':'Som kvinna som växte upp i en liten indisk by har jag alltid brunnit för att förstå människor och meka fram lösningar på deras behov. Som 9-åring, utan några kunskaper i design, utveckling eller UX-forskning, designade jag en handgjord toalettprototyp åt min 78-åriga farmor efter hennes stroke. Denna medfödda nyfikenhet ledde mig till slut in på ingenjörsbanan och gjorde mig till den första kvinnan inom teknik i min släkt.',
         'word.present':'Nuvarande',
         'edu.1.degree':'Masterexamen, Interaktiv Medieteknik',
@@ -2006,7 +2006,7 @@
         'nav.work':'Arbeiten','nav.journey':'Werdegang','nav.education':'Ausbildung','nav.cv':'Lebenslauf','nav.contact':'Kontakt',
         'hero.subtitle':'UX-Researcherin',
         'section.about':'\u00dcber Mich','section.education':'Ausbildung','section.experience':'Karriereweg','section.portfolio':'Portfolio','section.interests':'Interessen','section.contact':'Kontakt',
-        'about.p1':'Ich bin eine Veteranin der empathischen Neugier. Meinen empathischen Instinkt, geschärft durch akademische Projekte über alle Phasen des Double Diamond hinweg, bringe ich in UX Research und die verantwortungsvolle Entwicklung intelligenter Produkte ein.',
+        'about.p1':'Ich bin eine Veteranin der empathischen Neugier. Meinen empathischen Instinkt, geschärft durch akademische Projekte über alle Phasen des Double Diamond hinweg, bringe ich in UX Research für die verantwortungsvolle Entwicklung intelligenter Produkte ein.',
         'about.p2':'Als Frau, die in einem kleinen indischen Dorf aufgewachsen ist, wollte ich schon immer Menschen verstehen und tüfteln, um ihre Bedürfnisse zu erfüllen. Mit 9 Jahren, ganz ohne Kenntnisse in Design, Entwicklung oder UX Research, entwarf ich einen handgefertigten Toiletten-Prototyp für meine 78-jährige Großmutter nach ihrem Schlaganfall. Diese angeborene Neugier führte mich schließlich ins Ingenieurwesen und machte mich zur ersten Frau in der Technik in meiner Familie.',
         'word.present':'Heute',
         'edu.1.degree':'Master of Science, Interaktive Medientechnologie',
@@ -2067,7 +2067,7 @@
         'nav.work':'Arbeid','nav.journey':'Reise','nav.education':'Utdanning','nav.cv':'CV','nav.contact':'Kontakt Meg',
         'hero.subtitle':'UX-forsker',
         'section.about':'Om Meg','section.education':'Utdanning','section.experience':'Karrierereise','section.portfolio':'Portef\u00f8lje','section.interests':'Interesser','section.contact':'Kontakt Meg',
-        'about.p1':'Jeg er en veteran innen empatisk nysgjerrighet. Jeg bidrar med mitt empatiske instinkt, finslipt gjennom akademiske prosjekter som dekker alle stadiene i Double Diamond, til UX-forskning og ansvarlig utvikling av intelligente produkter.',
+        'about.p1':'Jeg er en veteran innen empatisk nysgjerrighet. Jeg bidrar med mitt empatiske instinkt, finslipt gjennom akademiske prosjekter som dekker alle stadiene i Double Diamond, til UX-forskning for ansvarlig utvikling av intelligente produkter.',
         'about.p2':'Som kvinne som vokste opp i en liten indisk landsby, har jeg alltid vært lidenskapelig opptatt av å forstå mennesker og mekke løsninger på deres behov. Som 9-åring, uten noen kunnskap om design, utvikling eller UX-forskning, designet jeg en håndlaget toalettprototype til min 78 år gamle bestemor etter hennes hjerneslag. Denne medfødte nysgjerrigheten ledet meg til slutt inn i ingeniørfaget og gjorde meg til den første kvinnen innen teknologi i min slekt.',
         'word.present':'N\u00e5v\u00e6rende',
         'edu.1.degree':'Mastergrad, Interaktiv Medieteknologi',
