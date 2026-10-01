@@ -494,11 +494,15 @@
        then runs across the full row underneath. The photo is absolutely
        positioned inside its grid cell, so the paragraph alone sets the
        row height. */
-    .beyond-top{ display:grid; grid-template-columns:minmax(0,1fr) 42%; column-gap:50px; margin-bottom:2rem; }
+    .beyond-top{ display:grid; grid-template-columns:minmax(0,1fr) 42%; column-gap:60px; margin-bottom:2rem; } /* photo column width is then fitted by JS (search "fitBeyondDeskPhoto") so the photo fills it exactly and the text takes all remaining space */
     #aboutView .beyond-row .beyond-top .about-desc-text{ margin:0; }
     .beyond-row .beyond-top .about-me-photo{ float:none; width:auto; max-width:none; margin:0; position:relative; }
     .beyond-row .beyond-top .about-photo-img-wrap{ position:absolute; left:0; right:0; top:.35em; bottom:.35em; overflow:hidden; font-size:26px; }
     .beyond-row .beyond-top .about-photo-img-wrap img{ width:100%; height:100%; object-fit:contain; object-position:right center; } /* whole photo shown, scaled down to the paragraph's height — never cropped */
+    .beyond-top.beyond-stacked{ grid-template-columns:1fr; row-gap:30px; }
+    .beyond-row .beyond-top.beyond-stacked .about-me-photo{ order:-1; max-width:520px; }
+    .beyond-row .beyond-top.beyond-stacked .about-photo-img-wrap{ position:static; }
+    .beyond-row .beyond-top.beyond-stacked .about-photo-img-wrap img{ height:auto; }
     @media(max-width:760px){
       .beyond-top{ grid-template-columns:1fr; row-gap:30px; }
       .beyond-row .beyond-top .about-me-photo{ order:-1; }
@@ -1700,14 +1704,14 @@
       <div class="about-me-row about-me-row-reverse beyond-row">
         <div class="about-me-text">
           <div class="beyond-top">
-              <p class="about-desc-text" data-i18n="about.p3">When I work, I am rarely without music. These days, Celtic and Viking music are driving my productivity. Outside work, I enjoy adventure travel and learning things simply because they intrigue me. Here is a picture from my solo trip to Svalbard, 81&deg; north.</p>
+              <p class="about-desc-text" data-i18n="about.p3">When I work, I am rarely without music. Currently, Celtic songs and Viking music are driving my productivity. Outside work, I enjoy adventure travel and learning things simply because they intrigue me. Here is a picture from my solo trip to Svalbard, 81&deg; north.</p>
             <div class="about-me-photo">
               <div class="about-photo-img-wrap">
                 <img src="images/profile/svalbard.jpg" alt="Sruti Bhattacharjee" loading="lazy" decoding="async" onerror="this.style.display='none';this.parentElement.style.display='flex';this.parentElement.style.alignItems='center';this.parentElement.style.justifyContent='center';this.parentElement.innerHTML='<span style=&quot;font-size:3rem&quot;>👩‍💻</span>'"/>
               </div>
             </div>
           </div>
-          <p class="about-desc-text" data-i18n="about.p4">Currently, I am learning French and exploring neuroscience-backed approaches to adult women&rsquo;s wellness and productivity, while slowly polishing my skills in improv acting and chess.</p>
+          <p class="about-desc-text" data-i18n="about.p4">Presently, I am learning French and exploring neuroscience-based formulas for adult women&rsquo;s wellness and productivity, while slowly polishing my skills in improv acting and chess.</p>
         </div>
       </div>
     </div>
@@ -1817,8 +1821,8 @@
       en:{
         'about.heading':'About Me',
         'about.beyond':'Beyond the desk',
-        'about.p3':'When I work, I am rarely without music. These days, Celtic and Viking music are driving my productivity. Outside work, I enjoy adventure travel and learning things simply because they intrigue me. Here is a picture from my solo trip to Svalbard, 81&deg; north.',
-        'about.p4':'Currently, I am learning French and exploring neuroscience-backed approaches to adult women&rsquo;s wellness and productivity, while slowly polishing my skills in improv acting and chess.',
+        'about.p3':'When I work, I am rarely without music. Currently, Celtic songs and Viking music are driving my productivity. Outside work, I enjoy adventure travel and learning things simply because they intrigue me. Here is a picture from my solo trip to Svalbard, 81&deg; north.',
+        'about.p4':'Presently, I am learning French and exploring neuroscience-based formulas for adult women&rsquo;s wellness and productivity, while slowly polishing my skills in improv acting and chess.',
         'nav.work':'Work','nav.journey':'Journey','nav.education':'Education','nav.cv':'Resume','nav.contact':'Contact Me',
         'hero.subtitle':'UX Researcher',
         'section.about':'About Me','section.education':'Education','section.experience':'Career Journey','section.portfolio':'Portfolio','section.interests':'Interests','section.contact':'Contact Me',
@@ -1879,8 +1883,8 @@
         'work.tagline':'<p>Salut,<br>Je suis Sruti</p><p>Je fais le vibe-check des technologies IA et non-IA pour éviter des bugs comme la vallée dérangeante.</p>',
         'about.heading':'À Propos De Moi',
         'about.beyond':'Au-delà du bureau',
-        'about.p3':'Quand je travaille, la musique n’est jamais loin. Ces temps-ci, la musique celtique et viking stimule ma productivité. En dehors du travail, j’aime les voyages d’aventure et apprendre des choses simplement parce qu’elles m’intriguent. Voici une photo de mon voyage en solo au Svalbard, à 81&deg; nord.',
-        'about.p4':'En ce moment, j’apprends le français et j’explore des approches fondées sur les neurosciences pour le bien-être et la productivité des femmes adultes, tout en peaufinant peu à peu mes compétences en théâtre d’improvisation et aux échecs.',
+        'about.p3':'Quand je travaille, la musique n’est jamais loin. En ce moment, les chansons celtiques et la musique viking stimulent ma productivité. En dehors du travail, j’aime les voyages d’aventure et apprendre des choses simplement parce qu’elles m’intriguent. Voici une photo de mon voyage en solo au Svalbard, à 81&deg; nord.',
+        'about.p4':'Actuellement, j’apprends le français et j’explore des formules fondées sur les neurosciences pour le bien-être et la productivité des femmes adultes, tout en peaufinant peu à peu mes compétences en théâtre d’improvisation et aux échecs.',
         'nav.work':'Travaux','nav.journey':'Parcours','nav.education':'Formation','nav.cv':'CV','nav.contact':'Me Contacter',
         'hero.subtitle':'Chercheuse UX',
         'section.about':'\u00c0 Propos De Moi','section.education':'Formation','section.experience':'Parcours De Carri\u00e8re','section.portfolio':'Portfolio','section.interests':'Int\u00e9r\u00eats','section.contact':'Me Contacter',
@@ -1940,8 +1944,8 @@
         'work.tagline':'<p>Hej,<br>Jag är Sruti</p><p>Jag vibe-checkar AI- och icke-AI-teknik för att förhindra buggar som den kusliga dalen.</p>',
         'about.heading':'Om Mig',
         'about.beyond':'Bortom skrivbordet',
-        'about.p3':'När jag arbetar är jag sällan utan musik. Just nu är det keltisk musik och vikingamusik som driver min produktivitet. Utanför jobbet gillar jag äventyrsresor och att lära mig saker bara för att de fascinerar mig. Här är en bild från min soloresa till Svalbard, 81&deg; nord.',
-        'about.p4':'Just nu lär jag mig franska och utforskar neurovetenskapligt förankrade metoder för vuxna kvinnors välmående och produktivitet, samtidigt som jag sakta finslipar mina färdigheter i improvisationsteater och schack.',
+        'about.p3':'När jag arbetar är jag sällan utan musik. Just nu är det keltiska sånger och vikingamusik som driver min produktivitet. Utanför jobbet gillar jag äventyrsresor och att lära mig saker bara för att de fascinerar mig. Här är en bild från min soloresa till Svalbard, 81&deg; nord.',
+        'about.p4':'För närvarande lär jag mig franska och utforskar neurovetenskapligt baserade formler för vuxna kvinnors välmående och produktivitet, samtidigt som jag sakta finslipar mina färdigheter i improvisationsteater och schack.',
         'nav.work':'Arbete','nav.journey':'Resa','nav.education':'Utbildning','nav.cv':'CV','nav.contact':'Kontakta Mig',
         'hero.subtitle':'UX-forskare',
         'section.about':'Om Mig','section.education':'Utbildning','section.experience':'Karri\u00e4rresa','section.portfolio':'Portfolio','section.interests':'Intressen','section.contact':'Kontakta Mig',
@@ -2001,8 +2005,8 @@
         'work.tagline':'<p>Hi,<br>Ich bin Sruti</p><p>Ich mache den Vibe-Check für KI- und Nicht-KI-Technologien, um Bugs wie das Uncanny Valley zu verhindern.</p>',
         'about.heading':'Über Mich',
         'about.beyond':'Jenseits des Schreibtischs',
-        'about.p3':'Wenn ich arbeite, bin ich selten ohne Musik. Zurzeit treiben keltische und Wikinger-Musik meine Produktivität an. Außerhalb der Arbeit liebe ich Abenteuerreisen und lerne gern Dinge, einfach weil sie mich faszinieren. Hier ist ein Foto von meiner Solo-Reise nach Spitzbergen, 81&deg; Nord.',
-        'about.p4':'Zurzeit lerne ich Französisch und erkunde neurowissenschaftlich fundierte Ansätze für das Wohlbefinden und die Produktivität erwachsener Frauen, während ich nach und nach meine Fähigkeiten im Improtheater und im Schach verfeinere.',
+        'about.p3':'Wenn ich arbeite, bin ich selten ohne Musik. Zurzeit treiben keltische Lieder und Wikinger-Musik meine Produktivität an. Außerhalb der Arbeit liebe ich Abenteuerreisen und lerne gern Dinge, einfach weil sie mich faszinieren. Hier ist ein Foto von meiner Solo-Reise nach Spitzbergen, 81&deg; Nord.',
+        'about.p4':'Derzeit lerne ich Französisch und erkunde neurowissenschaftlich basierte Formeln für das Wohlbefinden und die Produktivität erwachsener Frauen, während ich nach und nach meine Fähigkeiten im Improtheater und im Schach verfeinere.',
         'nav.work':'Arbeiten','nav.journey':'Werdegang','nav.education':'Ausbildung','nav.cv':'Lebenslauf','nav.contact':'Kontakt',
         'hero.subtitle':'UX-Researcherin',
         'section.about':'\u00dcber Mich','section.education':'Ausbildung','section.experience':'Karriereweg','section.portfolio':'Portfolio','section.interests':'Interessen','section.contact':'Kontakt',
@@ -2062,8 +2066,8 @@
         'work.tagline':'<p>Hei,<br>Jeg er Sruti</p><p>Jeg vibe-sjekker AI- og ikke-AI-teknologier for å forhindre bugs som den uhyggelige dalen.</p>',
         'about.heading':'Om Meg',
         'about.beyond':'Utenfor skrivebordet',
-        'about.p3':'Når jeg jobber, er jeg sjelden uten musikk. For tiden er det keltisk musikk og vikingmusikk som driver produktiviteten min. Utenom jobben liker jeg eventyrreiser og å lære ting rett og slett fordi de fascinerer meg. Her er et bilde fra soloturen min til Svalbard, 81&deg; nord.',
-        'about.p4':'For tiden lærer jeg fransk og utforsker nevrovitenskapelig forankrede tilnærminger til voksne kvinners velvære og produktivitet, samtidig som jeg sakte finpusser ferdighetene mine i improteater og sjakk.',
+        'about.p3':'Når jeg jobber, er jeg sjelden uten musikk. For tiden er det keltiske sanger og vikingmusikk som driver produktiviteten min. Utenom jobben liker jeg eventyrreiser og å lære ting rett og slett fordi de fascinerer meg. Her er et bilde fra soloturen min til Svalbard, 81&deg; nord.',
+        'about.p4':'Nå for tiden lærer jeg fransk og utforsker nevrovitenskapelig baserte formler for voksne kvinners velvære og produktivitet, samtidig som jeg sakte finpusser ferdighetene mine i improteater og sjakk.',
         'nav.work':'Arbeid','nav.journey':'Reise','nav.education':'Utdanning','nav.cv':'CV','nav.contact':'Kontakt Meg',
         'hero.subtitle':'UX-forsker',
         'section.about':'Om Meg','section.education':'Utdanning','section.experience':'Karrierereise','section.portfolio':'Portef\u00f8lje','section.interests':'Interesser','section.contact':'Kontakt Meg',
@@ -3612,6 +3616,91 @@ const PLACES=[
       journeyMap = new JourneyMap(document.getElementById('jshell'), PLACES, POSITIONS);
     }
     applyStaticTranslations(currentLang);
+
+    /* "Beyond the desk" — sizes the photo column to the photo's real width.
+       The photo is scaled (never cropped) to the first paragraph's height,
+       so its width depends on that height, which in turn depends on how
+       wide the text column is. We start from the CSS default (42%) and
+       repeatedly set the column to the photo's actual width; each step can
+       only make the text wider and shorter, so it settles in a few passes.
+       Re-runs on resize, once the photo/fonts load, and when the language
+       changes the paragraph text. Below 760px the CSS stacks them instead. */
+    /* BEYOND_PHOTO_TARGET = roughly how much of the row the photo should
+       take (0.36 = ~36%). Raise it for a bigger photo / narrower paragraph,
+       lower it for the opposite. For each possible paragraph line count the
+       script finds the widest text column that still wraps to that many
+       lines, sizes the uncropped photo to exactly that paragraph height,
+       keeps the 60px gap, and picks the option closest to the target.
+       Any leftover width (the text can't fill it without losing a line)
+       is left as space to the right of the photo. */
+    const BEYOND_PHOTO_TARGET=0.36;
+    function fitBeyondDeskPhoto(){
+      const top=document.querySelector('.beyond-row .beyond-top');
+      if(!top)return;
+      const img=top.querySelector('img');
+      const para=top.querySelector('.about-desc-text');
+      top.style.gridTemplateColumns=''; top.style.columnGap=''; top.classList.remove('beyond-stacked');
+      if(!img||!para||!img.naturalWidth||window.innerWidth<=760||!top.offsetParent)return;
+      const ratio=img.naturalWidth/img.naturalHeight;
+      const wrap=img.parentElement;
+      const W=top.clientWidth;
+      const gap=parseFloat(getComputedStyle(top).columnGap)||0;
+      const L=parseFloat(getComputedStyle(para).lineHeight)||(parseFloat(getComputedStyle(para).fontSize)*1.6);
+      const insets=para.getBoundingClientRect().height-wrap.getBoundingClientRect().height; // trims the photo to the text's visible top/bottom rather than its line boxes
+      const minText=220;
+      const linesAt=function(t){ top.style.gridTemplateColumns=t+'px 1px'; return Math.round(para.getBoundingClientRect().height/L); };
+      const options=[];
+      for(let n=2;n<=30;n++){
+        const w=Math.floor((n*L-insets)*ratio);
+        if(w<=0)continue;
+        const maxT=Math.floor(W-gap-w);
+        if(maxT<minText)break;
+        const atMax=linesAt(maxT);
+        if(atMax===n){ options.push({t:maxT,w:w,g:gap,slack:0,dev:0}); continue; }
+        if(atMax>n){
+          // Even at its widest the text needs more than n lines, so a photo of
+          // exactly this height doesn't fit. Rare fallback (some window widths):
+          // use the narrowest text width that does fit n lines and let the
+          // photo be slightly shorter than the paragraph, centred beside it.
+          let lo2=maxT,hi2=W-gap-40;
+          if(linesAt(hi2)>n)continue;
+          while(hi2-lo2>1){ const mid=(lo2+hi2)>>1; if(linesAt(mid)>n)lo2=mid; else hi2=mid; }
+          if(linesAt(hi2)!==n)continue;
+          options.push({t:hi2,w:W-gap-hi2,g:gap,slack:0,dev:w-(W-gap-hi2)}); // photo a bit short
+          const g2=W-hi2-w;
+          if(g2>=24)options.push({t:hi2,w:w,g:g2,slack:0,dev:gap-g2}); // or: exact photo, gap a bit narrower
+          continue;
+        }
+        // widest text width (<= maxT) that still wraps to n lines
+        let lo=minText,hi=maxT;
+        if(linesAt(lo)<n)continue;
+        while(hi-lo>1){ const mid=(lo+hi)>>1; if(linesAt(mid)>=n)lo=mid; else hi=mid; }
+        if(linesAt(lo)===n)options.push({t:lo,w:w,g:gap,slack:maxT-lo,dev:0});
+      }
+      if(!options.length){ top.style.gridTemplateColumns=''; top.classList.add('beyond-stacked'); return; }
+      const goal=BEYOND_PHOTO_TARGET*W;
+      const exact=options.filter(function(o){return o.dev===0;});
+      const pool=exact.length?exact:options;
+      const score=function(o){ return Math.abs(o.w-goal)+8*o.dev; };
+      const pick=pool.reduce(function(a,o){ return score(o)<score(a)?o:a; });
+      if(pick.dev>0.12*pick.w){ // no side-by-side layout comes close at this width — stack photo above text instead (same as on phones)
+        top.style.gridTemplateColumns=''; top.style.columnGap=''; top.classList.add('beyond-stacked'); return;
+      }
+      top.style.gridTemplateColumns=pick.t+'px '+pick.w+'px';
+      if(pick.g!==gap)top.style.columnGap=pick.g+'px'; // any leftover sliver goes to the right of the photo; the text-photo gap stays exactly 60px
+    }
+    (function(){
+      const img=document.querySelector('.beyond-row .beyond-top img');
+      const para=document.querySelector('.beyond-row .beyond-top .about-desc-text');
+      let raf=0;
+      const schedule=function(){ cancelAnimationFrame(raf); raf=requestAnimationFrame(fitBeyondDeskPhoto); };
+      if(img){ if(img.complete)schedule(); img.addEventListener('load',schedule); }
+      if(para&&window.MutationObserver)new MutationObserver(schedule).observe(para,{childList:true,characterData:true,subtree:true});
+      window.addEventListener('resize',schedule);
+      window.addEventListener('hashchange',function(){ setTimeout(schedule,50); });
+      if(document.fonts&&document.fonts.ready)document.fonts.ready.then(schedule);
+      schedule();
+    })();
     (function(){ const route=parseHash(); showView(route.view,{silent:true,projectId:route.projectId}); })();
 
     /* ============================================================
