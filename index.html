@@ -23,6 +23,7 @@
   <meta name="twitter:image" content="https://srutibhattacharjee.com/images/profile/glass_profile.jpeg">
  
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Questrial&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Nunito:wght@400;500;600;700;800&family=Comic+Neue:wght@400;700&family=Karla:wght@400;500;600&family=Carlito:ital,wght@0,400;0,700;1,400&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
  
   <script type="application/ld+json">
@@ -1506,6 +1507,55 @@
     .skh-tag-filter button:focus-visible{ outline:2px solid #8C3B2E; outline-offset:2px; }
     .skh-entry--full{ grid-template-columns:180px 1fr; gap:28px; align-items:start; padding:30px 0; border-bottom:1px solid #EDE8DF; }
     #researchList .skh-entry--full[hidden]{ display:none !important; }
+    .skh-entry__case-link{ display:inline-block; margin-top:.5rem; font-size:.95rem; color:inherit; text-decoration:underline; text-underline-offset:3px; }
+
+    /* ----------------------------------------------------------------
+       FURHAT PROJECT PAGE — old-website layout (see #furhatProjectView).
+       Everything scoped under .fh-page so nothing else is affected.
+       ---------------------------------------------------------------- */
+    .fh-page{ font-family:'Roboto',Arial,sans-serif; color:#111; font-size:1.1rem; line-height:1.6; background:#fff; }
+    .fh-wrap{ max-width:1180px; margin:0 auto; padding:0 2rem; }
+    .fh-page p{ margin:0 0 1.1rem; }
+    .fh-page ul{ margin:0 0 1.5rem; padding-left:1.4rem; }
+    .fh-page li{ margin-bottom:1.1rem; }
+    .fh-hero{ background:#FCEEE6; padding:3.5rem 0; }
+    .fh-hero-inner{ display:grid; grid-template-columns:1fr 1fr; gap:3.5rem; align-items:center; }
+    .fh-title{ font-family:'Questrial','Roboto',Arial,sans-serif; font-size:2.5rem; line-height:1.25; font-weight:400; margin:0 0 2.5rem; text-align:justify; text-align-last:left; }
+    .fh-summary{ font-size:1.35rem; line-height:1.6; text-align:justify; margin:0; }
+    .fh-hero-img{ width:100%; display:block; }
+    .fh-info{ display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; text-align:center; padding:2.5rem 0 1.5rem; border-bottom:1px solid #eee; margin-bottom:1.5rem; }
+    .fh-info h3,.fh-h{ font-weight:400; font-size:1.6rem; margin:0 0 1.5rem; text-align:center; }
+    .fh-info p{ margin:0; }
+    .fh-two{ display:grid; grid-template-columns:1fr 1fr; gap:3rem; margin-bottom:1rem; }
+    .fh-role{ margin-bottom:1.6rem !important; }
+    .fh-img{ width:100%; display:block; margin:1rem 0 3rem; }
+    .fh-method{ max-width:1100px; margin-left:auto; margin-right:auto; }
+    .fh-hb{ font-weight:700; font-size:1.6rem; text-align:center; margin:2.5rem 0 1.5rem; }
+    .fh-row{ display:grid; grid-template-columns:30% 1fr; gap:2rem; align-items:center; margin:1.5rem 0; }
+    .fh-label{ font-weight:700; font-size:1.1rem; text-align:center; margin:0; }
+    .fh-video{ width:100%; display:block; background:#000; margin:1.5rem 0 3rem; }
+    .fh-table-wrap{ overflow-x:auto; margin:1rem 0 2rem; }
+    /* Tables use the left sidebar's colours: #F3F0EA fill, #E4DFD5 lines */
+    .fh-table{ width:100%; border-collapse:collapse; background:#F3F0EA; border:1px solid #E4DFD5; font-size:1rem; line-height:1.45; }
+    .fh-table th,.fh-table td{ border:1px solid #E4DFD5; padding:.6rem .75rem; vertical-align:top; color:#111; }
+    .fh-table thead th{ background:#E9E4DA; font-weight:700; text-align:center; vertical-align:middle; }
+    .fh-table td:not(:first-child){ text-align:center; white-space:nowrap; width:6.5rem; }
+    .fh-modalities{ table-layout:fixed; min-width:720px; }
+    .fh-modalities td{ text-align:center !important; white-space:normal !important; width:auto !important; }
+    .fh-modalities thead .fh-mod-sub th{ background:#F3F0EA; font-weight:600; }
+    .fh-results{ padding-left:18%; }
+    .fh-results p{ margin:0; }
+    .fh-results ul{ margin:0; }
+    .fh-results li{ margin:0; }
+    .fh-footer{ background:#0A37A0; color:#fff; text-align:center; padding:1rem; font-family:Georgia,'Times New Roman',serif; margin-top:3rem; }
+    @media (max-width:760px){
+      .fh-hero-inner,.fh-two,.fh-info,.fh-row{ grid-template-columns:1fr; }
+      .fh-wrap{ padding:0 1rem; }
+      .fh-title{ font-size:1.9rem; margin-bottom:1.25rem; }
+      .fh-label{ text-align:left; }
+      .fh-results{ padding-left:0; }
+    }
+
     .skh-entry--full.is-first{ padding-top:0; }
     .skh-entry--full.is-last{ border-bottom:0; }
     .skh-entry__thumb--full{ width:180px; height:130px; object-fit:cover; display:block; }
@@ -1885,6 +1935,7 @@
               <p class="skh-entry__title skh-entry__title--full" data-i18n="proj.3.title">New Media Impact on Effective Hybrid Group Collaboration</p>
               <p class="skh-entry__excerpt" data-i18n="proj.3.desc">Compared three existing multimodal media for remote communication and their impacts on independent thinking.</p>
               <p class="skh-entry__used" data-i18n="v2.u3">Multimodal Telecommunication | Interview | Survey</p>
+              <a class="skh-entry__case-link" href="#furhat">Read case study &rarr;</a>
             </div>
           </article>
           <article class="skh-entry skh-entry--full" data-cat="ux-research">
@@ -2111,6 +2162,193 @@
     <!-- Populated entirely by renderProjectDetail() at load time — see
          the comment above. Do not hand-edit markup here. -->
   </section>
+
+  <!-- ================================================================
+       FURHAT PROJECT PAGE — recreated from the old website's layout
+       (not the M.A.R.G.I.N. slide template). Plain HTML, edit directly.
+       All images/videos: images/projects/furhat/
+       Opened from the portfolio list via the "#furhat" link.
+       ================================================================ -->
+  <section class="view fh-page" data-view="furhat" id="furhatProjectView">
+
+    <!-- Hero: title + summary left, image right, peach band -->
+    <div class="fh-hero">
+      <div class="fh-wrap fh-hero-inner">
+        <div class="fh-hero-text">
+          <h1 class="fh-title">Video Call, VR and Telepresence Robots in Group Interactions</h1>
+          <p class="fh-summary">The study compared three existing multimodal medias for remote communication and how they affect creative work: video conference calls, virtual reality, and a telepresence robot.</p>
+        </div>
+        <img class="fh-hero-img" src="images/projects/furhat/one.avif" alt="VR headset user, Furhat robot face and vTime XR avatars" loading="lazy">
+      </div>
+    </div>
+
+    <div class="fh-wrap">
+
+      <!-- Team / Tools / Timeline -->
+      <div class="fh-info">
+        <div><h3>Team</h3><p>4 people group</p></div>
+        <div><h3>Tools</h3><p>Zoom, VTime XR, Oculus Quest 2, Furhat Robot</p></div>
+        <div><h3>Timeline</h3><p>6 Weeks,<br>Nov 25, '20-Jan 15, '21</p></div>
+      </div>
+
+      <!-- Overview / Challenge -->
+      <div class="fh-two">
+        <div>
+          <h3 class="fh-h">Overview</h3>
+          <ul>
+            <li>The Covid-19 pandemic prompted the widespread use of remote communication for interpersonal interaction and group work</li>
+            <li>Humans are using multimodality extensively to communicate with each other, either simultaneously(in face-to-face conversations) or alternatively (using speech, writing, gestures, visuals, and touch)</li>
+            <li>This study aimed to identify key modality components for interactive communication media by analyzing the effect of different media on group communication and collaborative group work</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="fh-h">Challenge</h3>
+          <ul>
+            <li>This study was the first to use the Furhat Robot as a telepresence robot for remote group communication</li>
+            <li>Arranging participants during the pandemic</li>
+            <li>Only one week for participant recruitment</li>
+            <li>Experiment Design and Prototype Development within two weeks</li>
+          </ul>
+        </div>
+      </div>
+
+      <img class="fh-img" src="images/projects/furhat/two.avif" alt="Photos from the study sessions" loading="lazy">
+
+      <!-- Study Objectives / My Role -->
+      <div class="fh-two">
+        <div>
+          <h3 class="fh-h">Study Objectives</h3>
+          <ul>
+            <li>Investigate the impact of remote group communication and remote collaborative work through Furhat Robot as a telepresence Robot compared to Zoom and Virtual Reality</li>
+            <li>Formulate usability insights for three different remote communication media</li>
+            <li>Examine the strengths and weaknesses of multimodal interactive communication media interfaces</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="fh-h">My Role</h3>
+          <p class="fh-role">1. Writing interview protocol (English version)</p>
+          <p class="fh-role">2. Examine different Oculus VR apps for group communication</p>
+          <p class="fh-role">3. Testing Unity prototype to manipulate Furhat head using Oculus HMD</p>
+          <p class="fh-role">4. Assisting group mates in data analysis and report documentation</p>
+        </div>
+      </div>
+
+      <!-- Method -->
+      <h3 class="fh-h">Method</h3>
+      <img class="fh-img fh-method" src="images/projects/furhat/three.avif" alt="Experiment Design, Setup Environment, Participant Recruitment, Conduct Experiment, Data Analysis, Report Result" loading="lazy">
+
+      <!-- What I learned -->
+      <h3 class="fh-h">What I learned</h3>
+      <ul>
+        <li>Used Oculus and VR first time and learned of different available group communication platforms in VR</li>
+        <li>Developed prototype to manipulate Furhat Robot head and its gaze using HMD using C#</li>
+        <li>Learned importance of different modalities in telecommunication interface design and development</li>
+        <li>Learned different approaches to enabling perception of bodily presence using different modalities</li>
+      </ul>
+
+      <!-- Emerging Technologies -->
+      <h2 class="fh-hb">Emerging Technologies</h2>
+      <p>In this project, three multimodal emerging technologies were used between the participants and interviewer in order to understand which modalities affect how the users. We used Zoom (video-based communication), VTime XR (Virtual Reality based communication media) and Furhat Robot manipulated by Oculus HMD ( Telepresence based communication media). The Furhat Robot manipulation prototype was developed using Unity and C#. The prototype enabled us to manipulate the head movement, and gaze of the robot from a distance using Oculus HMD. The interviewer used the HMD to manipulate the robot and the participants talked with the robot.</p>
+      <div class="fh-table-wrap">
+        <table class="fh-table fh-modalities">
+          <thead>
+            <tr><th colspan="2">vTime XR (Virtual Reality)</th><th colspan="2">FurHat (telepresence)</th><th colspan="2">Zoom (Video conference)</th></tr>
+            <tr class="fh-mod-sub"><th>Operator</th><th>Participants</th><th>Operator</th><th>Participants</th><th>Operator</th><th>Participants</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Upper body movements, including partial hand gestures</td><td>Upper body movements, including partial hand gestures</td><td>Head movements</td><td>Upper body movements, including full hand gestures</td><td>Upper body movements, including full hand gestures</td><td>Upper body movements, including full hand gestures</td></tr>
+            <tr><td>-</td><td>-</td><td>-</td><td>Facial expressions</td><td>Facial expressions</td><td>Facial expressions</td></tr>
+            <tr><td>Shared virtual environment</td><td>Shared virtual environment</td><td>Shared physical environment</td><td>Shared physical environment</td><td>-</td><td>Shared physical environment (partial)</td></tr>
+            <tr><td>Synchronised audio</td><td>Synchronised audio</td><td>Synchronised audio</td><td>Synchronised audio</td><td>Synchronised audio</td><td>Synchronised audio</td></tr>
+            <tr><td>Gaze (partial)</td><td>Gaze (partial)</td><td>Gaze (partial)</td><td>Gaze</td><td>-</td><td>Gaze</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Experimental Design -->
+      <h2 class="fh-hb">Experimental Design</h2>
+
+      <div class="fh-row">
+        <h4 class="fh-label">Setup</h4>
+        <div>
+          <p>The experiment was held at the KTH campus in Stockholm, Sweden. The interviews and experiments were conducted in Swedish. It took us three big rooms. One room for the interviewer and the other room for the participants, the observer. Another room was particularly used for the VR experiment to let one participant stay there whereas others stayed in the other two rooms. For Furhat and Zoom, only two rooms were used.</p>
+          <p>From one room to another, a PC that runs the unity prototype for Furhat control was connected to the Furhat and an Oculus HMD. The Oculus was in the interviewer's room with the interviewer and the Furhat was in the other room for the participants to interact with. Through the Oculus HMD, the interviewer was able to watch and hear the participants using Furhat and manipulate the Furhat head movements and gaze. For Zoom, we simply stayed in the same setup space, and for VR we got divided into three rooms.</p>
+        </div>
+      </div>
+      <img class="fh-img" src="images/projects/furhat/five.avif" alt="Furhat setup in the participants' room and the interviewer wearing the Oculus HMD" loading="lazy">
+
+      <div class="fh-row">
+        <h4 class="fh-label">Experimental Task</h4>
+        <div>
+          <p>The experimental task consisted of a storytelling exercise, where the participants were given several parameters to create a story around. In each exercise, they were given a setting, three characters, three objects. They were also given a scenario, which they were prompted to explain how it came about. A total of six exercises were created, with a wide range of settings, characters, and objects. They were designed to stimulate creativity within participants.</p>
+          <p><strong>Setting:</strong> a busy day on a street in New York<br>
+          <strong>Characters:</strong> a middle-aged man, the man's boss, and a talking cat<br>
+          <strong>Objects:</strong> a large bag of unidentified, white powder, a birthday cake, and a pair of bloody scissors<br>
+          <strong>Scenario:</strong> the middle-aged man finds himself sitting in the middle of a busy street. He is wearing a suit and tie, which are covered in white powder. What has happened?</p>
+        </div>
+      </div>
+
+      <video class="fh-video" src="images/projects/furhat/fur_1.mp4" controls playsinline preload="metadata"></video>
+
+      <div class="fh-row">
+        <h4 class="fh-label">Questionnaire</h4>
+        <div>
+          <p>After each experiment, the participants were asked to fill out questionnaires, with questions on, for example, how creative they felt like they could be in the different settings and how distracted they were by the technology at hand. First, there was an initial questionnaire with questions about the participants' age and previous experience with the three different technologies used in the experiment. For each technology used, there were ten questions about how participants experienced completing the experimental task while being aided by that specific technology. The questions were answered on a seven-point Likert scale, and they touched upon topics such as the naturalness of the conversation, engagement, perceived presence, and creativity.</p>
+        </div>
+      </div>
+
+      <div class="fh-table-wrap">
+        <table class="fh-table">
+          <thead><tr><th>Questionnaire</th><th>Zoom</th><th>Furhat</th><th>VR</th></tr></thead>
+          <tbody>
+            <tr><td>How easy did you find it to be creative during the task?</td><td>4,75</td><td>6,25</td><td>5,5</td></tr>
+            <tr><td>How much did it seem as if you and the people in your group were together physically in the same place?</td><td>2,5</td><td>5</td><td>3,75</td></tr>
+            <tr><td>During the conversation how well were you able to observe the body language of the other participants?</td><td>4</td><td>5,25</td><td>4,625</td></tr>
+            <tr><td>How well did you understand who the other participants were addressing?</td><td>5.75</td><td>5</td><td>5,375</td></tr>
+            <tr><td>How well were you able to determine the mood of the remote participants?</td><td>5.5</td><td>5</td><td>5,25</td></tr>
+            <tr><td>How natural did the interaction with the other participants feel?</td><td>4</td><td>5,25</td><td>4,625</td></tr>
+            <tr><td>How close did you feel to the other participants?</td><td>4</td><td>4</td><td>4</td></tr>
+            <tr><td>To what extent did you feel the technology used was distracting you from the conversation at hand?</td><td>3,5</td><td>2,5</td><td>3</td></tr>
+            <tr><td>To what extent did you feel that you could express yourself and take part in the conversation as you would if it were a face-to-face conversation?</td><td>3,5</td><td>5,75</td><td>4,625</td></tr>
+            <tr><td>To what extent did you feel as though all participants could equally contribute to the conversation?</td><td>4</td><td>6</td><td>5</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="fh-row">
+        <h4 class="fh-label">Interview</h4>
+        <div>
+          <p>Once the final questionnaire was filled out, the participants partook in a semi-structured interview where they were asked questions about the experience as a whole. They were asked to reflect upon what they liked and did not like in the different settings if there was a setting they preferred over the others, how the interaction between participants compared between settings, and how creative they felt like they could be.</p>
+        </div>
+      </div>
+
+      <!-- Results -->
+      <h2 class="fh-hb">Results</h2>
+      <div class="fh-results">
+        <p>VTime XR (VR):</p>
+        <ul><li>Fun, but distracting</li><li>The discrepancy between real persons and avatars</li></ul>
+        <p>Zoom (Video call):</p>
+        <ul><li>Easy and familiar</li><li>Lack of presence</li></ul>
+        <p>FurHat (Teleoperation Robot):</p>
+        <ul><li>Physical embodiment made the operator feel present</li><li>Did not feel human</li><li>Gaze felt scary sometimes</li></ul>
+      </div>
+
+      <!-- Key Findings -->
+      <h2 class="fh-hb">Key Findings</h2>
+      <p>Given the setup, the study found the following UX recommendation for future multimodal remote communication media design and developement</p>
+      <ul>
+        <li>While designing the UI, it is important to keep the user experience formal and similar to physical environment</li>
+        <li>Visual modality effects on user's indepent thinking</li>
+        <li>Haptic, Motion and Sound modalities can be used to make the media more realistic</li>
+        <li>The UI where modalities are combined for user experience can overwhelm the user if they don't feel it similar to physical space</li>
+        <li>Furhat will be helpful in hybrid setup more than VR if Furhat can access to the remote participant's facial expression completely  by showing their avatar on Furhat face</li>
+        <li>VR will be most helpful if all the participants are remote and needs to pursue interactive activities</li>
+      </ul>
+    </div>
+
+    <footer class="fh-footer">&copy; by Sruti Bhattacharjee</footer>
+  </section>
+
  
 
   <section class="view about-section" data-view="about" id="aboutView">
@@ -3893,7 +4131,7 @@
     renderHomeGallery();
     renderHomeBooks();
  
-    const VALID_VIEWS=['home','portfolio','research','interests','about','career','work'].concat(Object.keys(PROJECT_DETAIL_DATA));
+    const VALID_VIEWS=['home','portfolio','research','interests','about','career','work','furhat'].concat(Object.keys(PROJECT_DETAIL_DATA));
     function parseHash(){
       const h=(location.hash||'#portfolio').replace('#','');
       const m=h.match(/^project-(\d+)$/);
@@ -4710,11 +4948,7 @@ const PLACES=[
 
       reset(){ this.points = []; }
 
-      /* The old hero section was a `.view`, toggled active/inactive by
-         showView(), so checking classList.contains('active') was enough
-         to know whether it was on-screen. The sidebar isn't a `.view` —
-         it's shown/hidden via body-level classes (landing-active,
-         sidebar-collapsed) — so visibility is checked directly instead. */
+ 
       _isContainerVisible(){
         const cs = getComputedStyle(this.heroSection);
         return cs.display !== 'none' && cs.visibility !== 'hidden';
@@ -4729,15 +4963,7 @@ const PLACES=[
         if(!this.loopActive){ this.loopActive = true; requestAnimationFrame(this._draw); }
       }
 
-      /* Called right when the Home view becomes active. mousemove/
-         pointermove events only fire on actual movement — if the
-         cursor is already resting over the interactive area from
-         before (e.g. right after the landing-page zoom transition
-         lands), nothing would spawn until the user physically moved
-         the mouse, which feels like a dead/broken area for a beat.
-         Uses the continuously-tracked raw pointer position to spawn a
-         bubble immediately if the cursor already happens to be inside
-         the hero bounds the moment it appears. */
+
       spawnImmediateIfCursorInside(){
         if(this.rawPointerX===null||this.rawPointerY===null) return;
         const rect = this.heroSection.getBoundingClientRect();
@@ -4748,12 +4974,7 @@ const PLACES=[
         this.lastY = this.rawPointerY-rect.top;
       }
 
-      /* Renders one soft, uneven watercolor blotch to an offscreen canvas
-         — a handful of overlapping low-alpha washes plus a slightly
-         darker blurred rim (like pigment migrating outward as a wash
-         dries), matching the reference image's texture. Built once per
-         drop rather than redrawn every frame, since the blur filter is
-         the expensive part; the main loop just drawImage()s the result. */
+
       _createBlobSprite(color, radius){
         const size = Math.ceil(radius * 2.6);
         const off = document.createElement('canvas');
@@ -4858,12 +5079,7 @@ const PLACES=[
         });
         ctx.globalAlpha = 1;
 
-        // Only keep looping while the hero is actually visible or there
-        // are still drops mid-animation (letting them finish fading out
-        // naturally after navigating away) — otherwise stop entirely
-        // instead of waking the main thread every ~16ms forever on
-        // every page of the site. startIfNeeded() (called from showView
-        // when returning to Home) restarts it.
+     
         if(this._isContainerVisible() || this.points.length){
           requestAnimationFrame(this._draw);
         } else {
@@ -4875,6 +5091,7 @@ const PLACES=[
     window.heroPaintTrail = new HeroPaintTrail(canvas, heroSection);
   });
   </script>
+
 </body>
 </html>
  
